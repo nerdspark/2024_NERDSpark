@@ -8,8 +8,8 @@ package frc.robot.Util;
 public class JoystickMap {
 
     // Joystick map constants: (1:1 for start, can be changed later)
-    public static final double[] joystickIncrement = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
-    public static final double[] joystickPowerOutput = {0, 0.075, 0.1, 0.15, 0.2, 0.35, 0.5, 0.65, 0.8, 0.9, 1};
+    public static final double[] joystickIncrement =   {0.00, 0.03, 0.04, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 1};
+    public static final double[] joystickPowerOutput = {0.00, 0.00, 0.02, 0.04, 0.08, 0.12, 0.17, 0.22, 0.26, 0.36, 0.60, 0.80, 1.00, 1};
 
     public static double JoystickPowerCalculate(double joystickReading) {
 
