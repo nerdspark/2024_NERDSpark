@@ -8,4 +8,7 @@ package frc.robot;
 public final class Constants {
     public static final int intakeMotorId = 0;
     public static final int deployMotorId = 0;
+    public static final int shooterMotor2ID = 0;
+    public static final int shooterMotor1ID = 0;
+    public static final int anglemotorID = 0;
 }

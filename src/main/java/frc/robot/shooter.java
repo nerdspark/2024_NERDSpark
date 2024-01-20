@@ -19,9 +19,9 @@ public class shooter extends SubsystemBase {
     private final RelativeEncoder angleMotorEncoder;
 
     public shooter() {
-        shooterMotor1 = new CANSparkMax(0, CANSparkMax.MotorType.kBrushless);
-        shooterMotor2 = new CANSparkMax(0, CANSparkMax.MotorType.kBrushless);
-        angleMotor = new CANSparkMax(0, CANSparkMax.MotorType.kBrushless);
+        shooterMotor1 = new CANSparkMax(Constants.shooterMotor1ID, CANSparkMax.MotorType.kBrushless);
+        shooterMotor2 = new CANSparkMax(Constants.shooterMotor2ID, CANSparkMax.MotorType.kBrushless);
+        angleMotor = new CANSparkMax(Constants.anglemotorID, CANSparkMax.MotorType.kBrushless);
         angleMotorPIDController = angleMotor.getPIDController();
         angleMotorEncoder = angleMotor.getEncoder();
     }
