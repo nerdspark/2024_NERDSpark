@@ -13,19 +13,14 @@ public class JoystickMap {
 
     public static double JoystickPowerCalculate(double joystickReading) {
 
-        double s = 0; // power output from robot (-1 to 1)
+        double power = 0; // power output from robot (-1 to 1)
 
-        double joystickReadingAbsValue = 0; // absolute value of Joystick Reading
-        if (joystickReading < 0) {
-            joystickReadingAbsValue = -joystickReading;
-        } else {
-            joystickReadingAbsValue = joystickReading;
-        }
+        
 
         int low = 0, high = joystickIncrement.length - 1; // find where joystickReading is inbetween array values
         while (high - low > 1) {
             int mid = (low + high) / 2;
-            if (joystickIncrement[mid] > joystickReadingAbsValue) {
+            if (joystickIncrement[mid] > Math.abs(joystickReading)) {
                 high = mid;
             } else {
                 low = mid;
@@ -34,13 +29,13 @@ public class JoystickMap {
 
         double joystickIncrementSlope = (joystickPowerOutput[high] - joystickPowerOutput[low])
                 / (joystickIncrement[high] - joystickIncrement[low]);
-        s = joystickIncrementSlope * (joystickReadingAbsValue - joystickIncrement[low])
+        power = joystickIncrementSlope * (Math.abs(joystickReading) - joystickIncrement[low])
                 + joystickPowerOutput[low]; // calculate necesary power output
 
         if (joystickReading < 0) {
-            s = -s;
+            power = -power;
         }
 
-        return s;
+        return power;
     }
 }
