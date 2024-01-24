@@ -1,4 +1,4 @@
-package frc.robot.generated;
+package frc.robot.Generated;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
