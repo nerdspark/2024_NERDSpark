@@ -10,7 +10,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class shooter extends SubsystemBase {
+public class Shooter extends SubsystemBase {
     /** Creates a new shooter. */
     private final CANSparkMax shooterMotor1;
 
@@ -19,7 +19,7 @@ public class shooter extends SubsystemBase {
     private final SparkPIDController angleMotorPIDController;
     private final RelativeEncoder angleMotorEncoder;
 
-    public shooter() {
+    public Shooter() {
         shooterMotor1 = new CANSparkMax(Constants.shooterMotor1ID, CANSparkMax.MotorType.kBrushless);
         shooterMotor2 = new CANSparkMax(Constants.shooterMotor2ID, CANSparkMax.MotorType.kBrushless);
         angleMotor = new CANSparkMax(Constants.anglemotorID, CANSparkMax.MotorType.kBrushless);

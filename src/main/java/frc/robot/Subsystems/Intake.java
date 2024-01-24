@@ -10,7 +10,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class Intake extends SubsystemBase {
 
     private CANSparkMax deployMotor;
     private CANSparkMax intakeMotor;
@@ -19,7 +19,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private RelativeEncoder deployEncoder;
 
     /** Creates a new ExampleSubsystem. */
-    public IntakeSubsystem() {
+    public Intake() {
         deployMotor = new CANSparkMax(Constants.deployMotorId, CANSparkMax.MotorType.kBrushless);
         intakeMotor = new CANSparkMax(Constants.intakeMotorId, CANSparkMax.MotorType.kBrushless);
 
