@@ -11,4 +11,16 @@ public final class Constants {
     public static final int shooterMotor2ID = 0;
     public static final int shooterMotor1ID = 0;
     public static final int anglemotorID = 0;
+    public static final Mode currentMode = Mode.REAL;
+
+    public static enum Mode {
+        /** Running on a real robot. */
+        REAL,
+
+        /** Running a physics simulator. */
+        SIM,
+
+        /** Replaying from a log file. */
+        REPLAY
+    }
 }

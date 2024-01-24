@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Generated.TunerConstants;
+import frc.robot.Subsystems.Intake.Intake;
+import frc.robot.Subsystems.Intake.IntakeIO;
+import frc.robot.Subsystems.Intake.IntakeIOSparkMax;
 
 public class RobotContainer {
     private double MaxSpeed = 6; // 6 meters per second desired top speed
@@ -34,6 +37,8 @@ public class RobotContainer {
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final Telemetry logger = new Telemetry(MaxSpeed);
     private final SendableChooser<Command> autoChooser;
+
+    private final Intake intake;
 
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -63,6 +68,16 @@ public class RobotContainer {
     }
 
     public RobotContainer() {
+        switch (Constants.currentMode) {
+            case REAL:
+                intake = new Intake(new IntakeIOSparkMax()); // Spark Max
+                break;
+
+            default:
+                // Replayed robot, disable IO implementations
+                intake = new Intake(new IntakeIO() {});
+                break;
+        }
         configureBindings();
 
         autoChooser = AutoBuilder.buildAutoChooser();
