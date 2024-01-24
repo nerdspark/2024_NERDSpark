@@ -5,25 +5,16 @@
 package frc.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-    private CANSparkMax deployMotor;
     private CANSparkMax intakeMotor;
-
-    private SparkPIDController deployMotorPIDcontroller;
-    private RelativeEncoder deployEncoder;
 
     /** Creates a new ExampleSubsystem. */
     public Intake() {
-        deployMotor = new CANSparkMax(Constants.deployMotorId, CANSparkMax.MotorType.kBrushless);
         intakeMotor = new CANSparkMax(Constants.intakeMotorId, CANSparkMax.MotorType.kBrushless);
-
-        deployMotorPIDcontroller = deployMotor.getPIDController();
     }
 
     /**
@@ -52,16 +43,8 @@ public class Intake extends SubsystemBase {
         intakeMotor.set(intakePower);
     }
 
-    public void setdeployPower(double pos) {
-        deployMotorPIDcontroller.setReference(pos, CANSparkMax.ControlType.kPosition);
-    }
-
     public double getIntakePower() {
         return intakeMotor.get();
-    }
-
-    public double getDeployPos() {
-        return deployEncoder.getPosition();
     }
 
     @Override
