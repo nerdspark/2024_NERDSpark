@@ -37,6 +37,7 @@ public class TunerConstants {
 
     // Theoretical free speed (m/s) at 12v applied output;
     // This needs to be tuned to your individual robot
+
     public static final double kSpeedAt12VoltsMps = 5.21;
 
     // Every 1 rotation of the azimuth results in kCoupleRatio drive motor turns;
@@ -45,6 +46,7 @@ public class TunerConstants {
 
     private static final double kDriveGearRatio = 6.122448979591837;
     private static final double kSteerGearRatio = 21.428571428571427;
+
     private static final double kWheelRadiusInches = 2;
 
     private static final boolean kSteerMotorReversed = true;
@@ -89,6 +91,7 @@ public class TunerConstants {
     private static final int kFrontLeftDriveMotorId = 15;
     private static final int kFrontLeftSteerMotorId = 16;
     private static final int kFrontLeftEncoderId = 23;
+
     private static final double kFrontLeftEncoderOffset = -0.02587890625;
 
     private static final double kFrontLeftXPosInches = 9.375;
@@ -98,6 +101,7 @@ public class TunerConstants {
     private static final int kFrontRightDriveMotorId = 13;
     private static final int kFrontRightSteerMotorId = 14;
     private static final int kFrontRightEncoderId = 22;
+
     private static final double kFrontRightEncoderOffset = 0.160400390625;
 
     private static final double kFrontRightXPosInches = 9.375;
@@ -107,6 +111,7 @@ public class TunerConstants {
     private static final int kBackLeftDriveMotorId = 17;
     private static final int kBackLeftSteerMotorId = 18;
     private static final int kBackLeftEncoderId = 24;
+
     private static final double kBackLeftEncoderOffset = 0.315185546875;
 
     private static final double kBackLeftXPosInches = -9.375;
@@ -116,6 +121,7 @@ public class TunerConstants {
     private static final int kBackRightDriveMotorId = 11;
     private static final int kBackRightSteerMotorId = 12;
     private static final int kBackRightEncoderId = 21;
+
     private static final double kBackRightEncoderOffset = 0.096435546875;
 
     private static final double kBackRightXPosInches = -9.375;

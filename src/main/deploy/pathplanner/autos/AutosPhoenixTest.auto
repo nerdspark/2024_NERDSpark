@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.0,
+      "y": 5.5
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "PhoenixTest1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "PhoenixTest2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "PhoenixTest3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "PhoenixTest4"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

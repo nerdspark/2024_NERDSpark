@@ -15,12 +15,13 @@ public class JoystickMap {
 
         double power = 0; // power output from robot (-1 to 1)
 
-        
+   
 
         int low = 0, high = joystickIncrement.length - 1; // find where joystickReading is inbetween array values
         while (high - low > 1) {
             int mid = (low + high) / 2;
             if (joystickIncrement[mid] > Math.abs(joystickReading)) {
+
                 high = mid;
             } else {
                 low = mid;
