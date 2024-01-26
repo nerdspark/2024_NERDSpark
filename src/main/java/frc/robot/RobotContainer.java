@@ -15,11 +15,19 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.FourBarCommand;
 import frc.robot.Commands.IntakeCommand;
+import frc.robot.Commands.ShooterCommand;
 import frc.robot.Generated.TunerConstants;
+import frc.robot.Subsystems.FourBar.FourBar;
+import frc.robot.Subsystems.FourBar.FourBarIO;
+import frc.robot.Subsystems.FourBar.FourBarIOSparkMax;
 import frc.robot.Subsystems.Intake.Intake;
 import frc.robot.Subsystems.Intake.IntakeIO;
 import frc.robot.Subsystems.Intake.IntakeIOSparkMax;
+import frc.robot.Subsystems.Shooter.Shooter;
+import frc.robot.Subsystems.Shooter.ShooterIO;
+import frc.robot.Subsystems.Shooter.ShooterIOSparkMax;
 
 public class RobotContainer {
     private double MaxSpeed = 6; // 6 meters per second desired top speed
@@ -40,6 +48,8 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     private final Intake intake;
+    private final Shooter shooter;
+    private final FourBar fourBar;
 
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -72,11 +82,15 @@ public class RobotContainer {
         switch (Constants.currentMode) {
             case REAL:
                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
+                shooter = new Shooter(new ShooterIOSparkMax());
+                fourBar = new FourBar(new FourBarIOSparkMax());
                 break;
 
             default:
                 // Replayed robot, disable IO implementations
                 intake = new Intake(new IntakeIO() {});
+                shooter = new Shooter(new ShooterIO() {});
+                fourBar = new FourBar(new FourBarIO() {});
                 break;
         }
         configureBindings();
@@ -85,6 +99,9 @@ public class RobotContainer {
         Shuffleboard.getTab("Autonomous").add(autoChooser);
 
         intake.setDefaultCommand(new IntakeCommand(intake, () -> joystick.getLeftTriggerAxis()));
+        shooter.setDefaultCommand(new ShooterCommand(
+                shooter, () -> joystick.getRightTriggerAxis(), () -> joystick.getRightTriggerAxis()));
+        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> joystick.getLeftX()));
     }
 
     public Command getAutonomousCommand() {
