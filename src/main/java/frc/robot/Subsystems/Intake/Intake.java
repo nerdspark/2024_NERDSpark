@@ -41,18 +41,13 @@ public class Intake extends SubsystemBase {
 
     }
 
-    public void setIntakePower(double intakePower) {
-        // intakeMotor.set(intakePower);
-    }
-
-    public double getIntakePower() {
-        return 0;
-        // intakeMotor.get();
-    }
-
     @Override
     public void simulationPeriodic() {
         // This method will be called once per scheduler run during simulation
 
+    }
+
+    public void setIntakePower(double power) {
+        io.setIntakePower(power);
     }
 }

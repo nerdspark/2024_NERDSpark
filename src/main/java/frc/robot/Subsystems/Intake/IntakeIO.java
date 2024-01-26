@@ -9,26 +9,23 @@ import org.littletonrobotics.junction.AutoLog;
 public interface IntakeIO {
     @AutoLog
     class IntakeIOInputs {
-        public static double m1_PositionRad = 0.0;
-        public double m1_VelocityRadPerSec = 0.0;
-        public double m1_AppliedVolts = 0.0;
-        public double[] m1_CurrentAmps = new double[] {};
+        public static double intakePosition1 = 0.0;
+        public double intakeVelocity1 = 0.0;
+        public double intakeAppliedVolts1 = 0.0;
+        public double[] intakeCurrentAmps1 = new double[] {};
 
-        public double m2_PositionRad = 0.0;
-        public double m2_VelocityRadPerSec = 0.0;
-        public double m2_AppliedVolts = 0.0;
-        public double[] m2_CurrentAmps = new double[] {};
+        public double intakePosition2 = 0.0;
+        public double intakeVelocity2 = 0.0;
+        public double intakeAppliedVolts2 = 0.0;
+        public double[] intakeCurrentAmps2 = new double[] {};
     }
 
     /** Updates the set of loggable inputs. */
     default void updateInputs(IntakeIOInputs inputs) {}
 
-    /** Set to Start Position */
-    default void moveArmToStartPosition() {}
+    default void setIntakePower(double intakePower) {}
 
-    /** Move Arm to Other side */
-    default void moveArmToOtherSide() {}
-
-    /** Move Arm to Other side */
-    default void moveArmToTestPosition() {}
+    default double getIntakePower() {
+        return 0;
+    }
 }
