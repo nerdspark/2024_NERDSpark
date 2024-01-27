@@ -4,11 +4,26 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
+
 /** Add your docs here. */
 public final class Constants {
-    public final class AmrConstants {
+    public final class ArmConstants {
         public static final double baseStageLength = 24; // inches
         public static final double secondStageLength = 18; // inches
+
+        public static final double shoulderRadPerRot = 2 * Math.PI;
+        public static final double elbowRadPerRot = 2 * Math.PI;
+        public static final double wristRadPerRot = 2 * Math.PI;
+
+        public static final double shoulderOffset = 0; // radians, fwd = 0
+        public static final double elbowOffset = 0;
+
+        public static final Translation2d armBasePosition = new Translation2d();
+        public static final double armForwardLimit = Units.inchesToMeters(12 + 5);
+        public static final double armBackwardLimit = Units.inchesToMeters(12 + 28 - 5);
+        public static final double armTopLimit = Units.inchesToMeters(48 - 8 - 4);
     }
 
     public static final int intakeMotorId = 0;

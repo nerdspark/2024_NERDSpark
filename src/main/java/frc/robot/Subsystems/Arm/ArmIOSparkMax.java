@@ -9,8 +9,10 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Subsystems.Arm.ArmIO.ArmIOInputs;
 
 public class ArmIOSparkMax implements ArmIO {
@@ -48,6 +50,12 @@ public class ArmIOSparkMax implements ArmIO {
         elbowRight.setInverted(false);
         elbowRight.setInverted(true);
 
+        shoulderLeftEncoder.setPositionConversionFactor(ArmConstants.shoulderRadPerRot);
+        shoulderRightEncoder.setPositionConversionFactor(ArmConstants.shoulderRadPerRot);
+        elbowLeftEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
+        elbowRightEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
+        wristEncoder.setPositionConversionFactor(ArmConstants.wristRadPerRot);
+
         shoulderLeftEncoder = shoulderLeft.getEncoder();
         shoulderRightEncoder = shoulderRight.getEncoder();
         elbowLeftEncoder = elbowLeft.getEncoder();
@@ -55,10 +63,10 @@ public class ArmIOSparkMax implements ArmIO {
         wristEncoder = wrist.getEncoder();
         gripperEncoder = gripper.getEncoder();
 
-        shoulderLeftEncoder.setPosition(0);
-        shoulderRightEncoder.setPosition(0);
-        elbowLeftEncoder.setPosition(0);
-        elbowRightEncoder.setPosition(0);
+        shoulderLeftEncoder.setPosition(ArmConstants.shoulderOffset);
+        shoulderRightEncoder.setPosition(ArmConstants.shoulderOffset);
+        elbowLeftEncoder.setPosition(ArmConstants.elbowOffset);
+        elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
         wristEncoder.setPosition(0);
         gripperEncoder.setPosition(0);
 
@@ -90,6 +98,20 @@ public class ArmIOSparkMax implements ArmIO {
         inputs.gripperVelocity = Units.rotationsPerMinuteToRadiansPerSecond(gripperEncoder.getVelocity());
         inputs.gripperAppliedVolts = gripper.getAppliedOutput() * gripper.getBusVoltage();
         inputs.gripperCurrentAmps = new double[] {gripper.getOutputCurrent()};
+    }
+
+    public void setArmPosition(Translation2d position) {
+        double distance = position.getNorm();
+        double armAngleDiff = Math.acos(((ArmConstants.baseStageLength * ArmConstants.baseStageLength)
+                        + (ArmConstants.secondStageLength * ArmConstants.secondStageLength)
+                        - (distance * distance))
+                / (2 * ArmConstants.baseStageLength * ArmConstants.secondStageLength));
+        double armBaseAngle = Math.acos(((distance * distance)
+                        + (ArmConstants.secondStageLength * ArmConstants.secondStageLength)
+                        - (ArmConstants.baseStageLength * ArmConstants.baseStageLength))
+                / (2 * distance * ArmConstants.secondStageLength));
+        setShoulderPosition(position.getAngle().getRadians() + armBaseAngle);
+        setElbowPosition(position.getAngle().getRadians() + armBaseAngle - armAngleDiff);
     }
 
     public void setShoulderPosition(double position) {
