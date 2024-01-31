@@ -18,22 +18,22 @@ public final class Constants {
 
         public static boolean USE_VISION = true;
 
-        public static final String LEFT_CAMERA_NAME = "Arducam_OV9281_USB_1";
+        public static final String LEFT_CAMERA_NAME = "Arducam_OV9281_USB_Blue";
         public static final String RIGHT_CAMERA_NAME = "Arducam_OV9281_USB_2";
 
         /**
          * Physical location of the left camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_LEFT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(13.00), Units.inchesToMeters(4), Units.inchesToMeters(2.5)),
+                new Translation3d(Units.inchesToMeters(15.5), Units.inchesToMeters(6.5), Units.inchesToMeters(2.5)),
                 new Rotation3d(0, Math.toRadians(0), Math.toRadians(0)));
 
         /**
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_RIGHT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(13), Units.inchesToMeters(-7), Units.inchesToMeters(2.5)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(0)));
+                new Translation3d(Units.inchesToMeters(15.5), Units.inchesToMeters(-7), Units.inchesToMeters(2.5)),
+                new Rotation3d(0, Math.toRadians(45), Math.toRadians(0)));
 
         /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
         public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;

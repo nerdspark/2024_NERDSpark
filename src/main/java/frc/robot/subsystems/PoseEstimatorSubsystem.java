@@ -42,13 +42,13 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     static {
         if (Constants.VisionConstants.USE_VISION == true) {
-            rightEstimator = new PhotonVisionRunnable(
-                    Constants.VisionConstants.RIGHT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_RIGHT_CAMERA);
+            // rightEstimator = new PhotonVisionRunnable(
+            //         Constants.VisionConstants.RIGHT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_RIGHT_CAMERA);
             leftEstimator = new PhotonVisionRunnable(
                     Constants.VisionConstants.LEFT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_LEFT_CAMERA);
 
             allNotifier = new Notifier(() -> {
-                rightEstimator.run();
+                // rightEstimator.run();
                 leftEstimator.run();
             });
         }
@@ -110,7 +110,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
         // Update pose estimator with drivetrain sensors
 
         if (Constants.VisionConstants.USE_VISION) {
-            estimatorChecker(rightEstimator);
+            // estimatorChecker(rightEstimator);
             estimatorChecker(leftEstimator);
         } else {
             if (allNotifier != null) allNotifier.close();
