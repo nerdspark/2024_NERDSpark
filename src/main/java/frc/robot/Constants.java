@@ -24,6 +24,8 @@ public final class Constants {
         public static final double armForwardLimit = Units.inchesToMeters(12 + 5);
         public static final double armBackwardLimit = Units.inchesToMeters(12 + 28 - 5);
         public static final double armTopLimit = Units.inchesToMeters(48 - 8 - 4);
+
+        public static final double secondStageGearRatio = 1.5;
     }
 
     public static final int intakeMotorId = 0;
