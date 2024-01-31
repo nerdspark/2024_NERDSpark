@@ -145,7 +145,7 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setElbowPosition(double position) {
-        position -= ((ArmConstants.secondStageGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
+        position -= ((ArmConstants.virtual4BarGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
         elbowLeftController.setReference(position, ControlType.kPosition);
         elbowRightController.setReference(position, ControlType.kPosition);
     }
@@ -156,7 +156,7 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public double getElbowPosition() {
-        return elbowLeftEncoder.getPosition() + ((ArmConstants.secondStageGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
+        return elbowLeftEncoder.getPosition() + ((ArmConstants.virtual4BarGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
     }
 
     public void setWristPosition(double position) {
