@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.765978217124939,
+      "y": 6.5786333084106445
+    },
+    "rotation": 64.44003864040269
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3ring1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3ring2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3ring3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}
