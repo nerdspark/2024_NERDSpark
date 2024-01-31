@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 1,
+      "y": 5.5
+    },
+    "rotation": 0.0
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -8,18 +14,18 @@
         {
           "type": "path",
           "data": {
-            "pathName": "pathplannertest1"
+            "pathName": "ChoreoTest1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "pathplannertest2"
+            "pathName": "ChreoTest2"
           }
         }
       ]
     }
   },
   "folder": null,
-  "choreoAuto": false
+  "choreoAuto": true
 }
