@@ -8,24 +8,20 @@ package frc.robot.Util;
 public class JoystickMap {
 
     // Joystick map constants: (1:1 for start, can be changed later)
-    public static final double[] joystickIncrement = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
-    public static final double[] joystickPowerOutput = {0, 0.05, 0.075, 0.1, 0.15, 0.25, 0.35, 0.5, 0.7, 0.9, 1};
+    public static final double[] joystickIncrement =   {0.00, 0.03, 0.04, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 1};
+    public static final double[] joystickPowerOutput = {0.00, 0.00, 0.02, 0.04, 0.08, 0.12, 0.17, 0.22, 0.26, 0.36, 0.60, 0.80, 1.00, 1};
 
     public static double JoystickPowerCalculate(double joystickReading) {
 
-        double s = 0; // power output from robot (-1 to 1)
+        double power = 0; // power output from robot (-1 to 1)
 
-        double joystickReadingAbsValue = 0; // absolute value of Joystick Reading
-        if (joystickReading < 0) {
-            joystickReadingAbsValue = -joystickReading;
-        } else {
-            joystickReadingAbsValue = joystickReading;
-        }
+   
 
         int low = 0, high = joystickIncrement.length - 1; // find where joystickReading is inbetween array values
         while (high - low > 1) {
             int mid = (low + high) / 2;
-            if (joystickIncrement[mid] > joystickReadingAbsValue) {
+            if (joystickIncrement[mid] > Math.abs(joystickReading)) {
+
                 high = mid;
             } else {
                 low = mid;
@@ -34,13 +30,13 @@ public class JoystickMap {
 
         double joystickIncrementSlope = (joystickPowerOutput[high] - joystickPowerOutput[low])
                 / (joystickIncrement[high] - joystickIncrement[low]);
-        s = joystickIncrementSlope * (joystickReadingAbsValue - joystickIncrement[low])
+        power = joystickIncrementSlope * (Math.abs(joystickReading) - joystickIncrement[low])
                 + joystickPowerOutput[low]; // calculate necesary power output
 
         if (joystickReading < 0) {
-            s = -s;
+            power = -power;
         }
 
-        return s;
+        return power;
     }
 }
