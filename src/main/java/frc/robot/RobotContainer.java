@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.CommandSwerveDrivetrain;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 
 public class RobotContainer {
   private double MaxSpeed = 6; // 6 meters per second desired top speed
@@ -26,10 +27,13 @@ public class RobotContainer {
   private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
 
+  private final PoseEstimatorSubsystem poseEstimator = new PoseEstimatorSubsystem(drivetrain);
+
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-      // .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-      .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
-                                                               // driving in open loop
+//             .withDeadband(MaxSpeed * 0.1)
+//             .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
+    // driving in open loop
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   private final Telemetry logger = new Telemetry(MaxSpeed);
@@ -64,6 +68,7 @@ public class RobotContainer {
 
     public RobotContainer() {
         configureBindings();
+        configureDashboard();
 
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
@@ -71,5 +76,15 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
+    }
+
+    private void configureDashboard() {
+        /**** Driver tab ****/
+
+        // /**** Vision tab ****/
+        final var visionTab = Shuffleboard.getTab("Vision");
+
+        // Pose estimation
+        poseEstimator.addDashboardWidgets(visionTab);
     }
 }
