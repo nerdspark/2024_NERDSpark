@@ -26,6 +26,12 @@ public final class Constants {
         public static final double armTopLimit = Units.inchesToMeters(48 - 8 - 4);
 
         public static final double virtual4BarGearRatio = 1.5;
+
+        public static final class ArmSetPoints {
+            public static final Translation2d home = new Translation2d();
+            public static final Translation2d pickup = new Translation2d();
+            public static final Translation2d amp = new Translation2d();
+        }
     }
 
     public static final int intakeMotorId = 0;

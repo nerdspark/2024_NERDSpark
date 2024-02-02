@@ -4,6 +4,7 @@
 
 package frc.robot.Subsystems.Arm;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.Subsystems.Arm.ArmIO.ArmIOInputs;
 import org.littletonrobotics.junction.AutoLog;
 
@@ -30,6 +31,10 @@ public interface ArmIO {
         public double gripperAppliedVolts = 0.0;
         public double[] gripperCurrentAmps = new double[] {};
     }
+
+    default void setArmPosition(Translation2d position, boolean inBend) {}
+
+    default void resetEncoders() {}
 
     /** Creates a new ArmIO. */
     default void updateInputs(ArmIOInputs inputs) {}

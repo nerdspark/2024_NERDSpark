@@ -15,10 +15,16 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.ArmCommand;
+import frc.robot.Commands.ArmResetCommand;
 import frc.robot.Commands.FourBarCommand;
 import frc.robot.Commands.IntakeCommand;
 import frc.robot.Commands.ShooterCommand;
+import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.Generated.TunerConstants;
+import frc.robot.Subsystems.Arm.Arm;
+import frc.robot.Subsystems.Arm.ArmIO;
+import frc.robot.Subsystems.Arm.ArmIOSparkMax;
 import frc.robot.Subsystems.FourBar.FourBar;
 import frc.robot.Subsystems.FourBar.FourBarIO;
 import frc.robot.Subsystems.FourBar.FourBarIOSparkMax;
@@ -50,6 +56,7 @@ public class RobotContainer {
     private final Intake intake;
     private final Shooter shooter;
     private final FourBar fourBar;
+    private final Arm arm;
 
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -84,6 +91,7 @@ public class RobotContainer {
                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
                 shooter = new Shooter(new ShooterIOSparkMax());
                 fourBar = new FourBar(new FourBarIOSparkMax());
+                arm = new Arm(new ArmIOSparkMax());
                 break;
 
             default:
@@ -91,6 +99,8 @@ public class RobotContainer {
                 intake = new Intake(new IntakeIO() {});
                 shooter = new Shooter(new ShooterIO() {});
                 fourBar = new FourBar(new FourBarIO() {});
+                arm = new Arm(new ArmIO() {});
+
                 break;
         }
         configureBindings();
@@ -102,6 +112,10 @@ public class RobotContainer {
         shooter.setDefaultCommand(new ShooterCommand(
                 shooter, () -> joystick.getRightTriggerAxis(), () -> joystick.getRightTriggerAxis()));
         fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> joystick.getLeftX()));
+        joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
+        joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
+        joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
+        joystick.y().onTrue(new ArmResetCommand(arm));
     }
 
     public Command getAutonomousCommand() {

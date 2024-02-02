@@ -4,6 +4,7 @@
 
 package frc.robot.Subsystems.Arm;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
@@ -24,6 +25,14 @@ public class Arm extends SubsystemBase {
 
     public void setShoulderPosition(double position) {
         io.setShoulderPosition(position);
+    }
+
+    public void setArmPosition(Translation2d position, boolean inBend) {
+        io.setArmPosition(position, inBend);
+    }
+
+    public void resetEncoders() {
+        io.resetEncoders();
     }
 
     public double getShoulderPosition() {

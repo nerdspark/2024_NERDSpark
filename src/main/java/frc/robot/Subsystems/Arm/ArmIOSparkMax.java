@@ -101,33 +101,42 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setArmPosition(Translation2d position, boolean inBend) {
-      double distance = position.getNorm();
+        double distance = position.getNorm();
 
-      double BaseAngleArmDiff = Math.acos(
-          ((distance*distance) + (ArmConstants.baseStageLength*ArmConstants.baseStageLength) - (ArmConstants.secondStageLength*ArmConstants.secondStageLength))
-          / (2 * distance * ArmConstants.baseStageLength));
-      double SecondAngleArmDiff = Math.acos(
-          ((distance*distance) - (ArmConstants.baseStageLength*ArmConstants.baseStageLength) + (ArmConstants.secondStageLength*ArmConstants.secondStageLength))
-          / (2 * distance * ArmConstants.secondStageLength));
+        double BaseAngleArmDiff = Math.acos(((distance * distance)
+                        + (ArmConstants.baseStageLength * ArmConstants.baseStageLength)
+                        - (ArmConstants.secondStageLength * ArmConstants.secondStageLength))
+                / (2 * distance * ArmConstants.baseStageLength));
+        double SecondAngleArmDiff = Math.acos(((distance * distance)
+                        - (ArmConstants.baseStageLength * ArmConstants.baseStageLength)
+                        + (ArmConstants.secondStageLength * ArmConstants.secondStageLength))
+                / (2 * distance * ArmConstants.secondStageLength));
 
-      double shoulderPosition = position.getAngle().getRadians() + (BaseAngleArmDiff * (inBend ? 1 : -1));
-      setShoulderPosition(shoulderPosition);
-      setElbowPosition(position.getAngle().getRadians() + (SecondAngleArmDiff * (inBend ? -1 : 1)));
-      
-      // System.out.println("shoulder" + (angle - BaseAngleArmDiff));
-      // System.out.println("elbow" + (angle + SecondAngleArmDiff));
+        double shoulderPosition = position.getAngle().getRadians() + (BaseAngleArmDiff * (inBend ? 1 : -1));
+        setShoulderPosition(shoulderPosition);
+        setElbowPosition(position.getAngle().getRadians() + (SecondAngleArmDiff * (inBend ? -1 : 1)));
+
+        // System.out.println("shoulder" + (angle - BaseAngleArmDiff));
+        // System.out.println("elbow" + (angle + SecondAngleArmDiff));
+    }
+
+    public void resetEncoders() {
+        shoulderLeftEncoder.setPosition(ArmConstants.shoulderOffset);
+        shoulderRightEncoder.setPosition(ArmConstants.shoulderOffset);
+        elbowLeftEncoder.setPosition(ArmConstants.elbowOffset);
+        elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
+        wristEncoder.setPosition(0);
+        gripperEncoder.setPosition(0);
     }
 
     public Translation2d getArmPosition() {
-      Translation2d jointPos = new Translation2d(
-        Math.cos(getShoulderPosition()) * ArmConstants.baseStageLength, 
-        Math.sin(getShoulderPosition()) * ArmConstants.baseStageLength
-      );
-      Translation2d jointToEndPos = new Translation2d(
-        Math.cos(getElbowPosition()) * ArmConstants.secondStageLength, 
-        Math.sin(getElbowPosition()) * ArmConstants.secondStageLength        
-      );
-      return jointPos.plus(jointToEndPos);
+        Translation2d jointPos = new Translation2d(
+                Math.cos(getShoulderPosition()) * ArmConstants.baseStageLength,
+                Math.sin(getShoulderPosition()) * ArmConstants.baseStageLength);
+        Translation2d jointToEndPos = new Translation2d(
+                Math.cos(getElbowPosition()) * ArmConstants.secondStageLength,
+                Math.sin(getElbowPosition()) * ArmConstants.secondStageLength);
+        return jointPos.plus(jointToEndPos);
     }
 
     public void setShoulderPosition(double position) {
@@ -156,7 +165,8 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public double getElbowPosition() {
-        return elbowLeftEncoder.getPosition() + ((ArmConstants.virtual4BarGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
+        return elbowLeftEncoder.getPosition()
+                + ((ArmConstants.virtual4BarGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
     }
 
     public void setWristPosition(double position) {

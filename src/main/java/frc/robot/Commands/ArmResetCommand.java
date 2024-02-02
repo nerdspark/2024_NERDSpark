@@ -4,31 +4,26 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Arm.Arm;
-import java.util.function.Supplier;
 
-public class ArmCommand extends Command {
+public class ArmResetCommand extends Command {
     private Arm arm;
-    private Supplier<Translation2d> position;
-    /** Creates a new ArmCommand. */
-    public ArmCommand(Arm arm, Supplier<Translation2d> position) {
+    /** Creates a new ArmResetCommand. */
+    public ArmResetCommand(Arm arm) {
         this.arm = arm;
-        this.position = position;
-        addRequirements(arm);
+        // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        arm.resetEncoders();
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-
-        arm.setArmPosition(position.get(), false);
-    }
+    public void execute() {}
 
     // Called once the command ends or is interrupted.
     @Override
