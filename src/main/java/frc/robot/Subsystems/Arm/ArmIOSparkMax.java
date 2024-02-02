@@ -36,6 +36,8 @@ public class ArmIOSparkMax implements ArmIO {
     private SparkPIDController elbowRightController;
     private SparkPIDController wristController;
 
+    private boolean inBend;
+
     /** Creates a new ArmIOSparkMax. */
     public ArmIOSparkMax() {
         shoulderLeft = new CANSparkMax(Constants.shoulderLeftID, MotorType.kBrushless);
@@ -75,6 +77,8 @@ public class ArmIOSparkMax implements ArmIO {
         elbowLeftController = elbowLeft.getPIDController();
         elbowRightController = elbowRight.getPIDController();
         wristController = wrist.getPIDController();
+
+        inBend = false;
     }
 
     @Override
@@ -100,7 +104,12 @@ public class ArmIOSparkMax implements ArmIO {
         inputs.gripperCurrentAmps = new double[] {gripper.getOutputCurrent()};
     }
 
+    public void setArmVelocity(Translation2d velocity) {
+        setArmPosition(getArmPosition().plus(velocity), inBend);
+    }
+
     public void setArmPosition(Translation2d position, boolean inBend) {
+        this.inBend = inBend;
         double distance = position.getNorm();
 
         double BaseAngleArmDiff = Math.acos(((distance * distance)
