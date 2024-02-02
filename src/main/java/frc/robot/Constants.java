@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import frc.robot.config.RobotIdentity;
 
 /** Add your docs here. */
 public final class Constants {
@@ -42,6 +43,7 @@ public final class Constants {
     public static final int gripperID = 0;
 
     public static final Mode currentMode = Mode.REAL;
+    public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
 
     public static enum Mode {
         /** Running on a real robot. */
