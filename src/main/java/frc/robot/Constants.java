@@ -18,8 +18,8 @@ public final class Constants {
 
         public static boolean USE_VISION = true;
 
-        public static final String LEFT_CAMERA_NAME = "Arducam_OV9281_USB_1";
-        public static final String RIGHT_CAMERA_NAME = "Arducam_OV9281_USB_2";
+        public static final String LEFT_CAMERA_NAME = "BlueCamera";
+        public static final String RIGHT_CAMERA_NAME = "BlackCamera";
 
         /**
          * Physical location of the left camera on the robot, relative to the center of the robot.
