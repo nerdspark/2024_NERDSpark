@@ -27,6 +27,9 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
 
+    // private final NoteVisionSubsystem noteVisionSubsystem = new
+    // NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+
     private final PoseEstimatorSubsystem poseEstimator = new PoseEstimatorSubsystem(drivetrain);
 
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()

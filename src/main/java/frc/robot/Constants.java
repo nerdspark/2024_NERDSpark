@@ -18,22 +18,23 @@ public final class Constants {
 
         public static boolean USE_VISION = true;
 
-        public static final String LEFT_CAMERA_NAME = "BlueCamera";
-        public static final String RIGHT_CAMERA_NAME = "BlackCamera";
+        public static final String FRONT_CAMERA_NAME = "BlueCamera"; // LEFT
+        public static final String BACK_CAMERA_NAME = "BlackCamera"; // RIGHT
+        public static final String NOTE_CAMERA_NAME = "NoteCamera";
 
         /**
          * Physical location of the left camera on the robot, relative to the center of the robot.
          */
-        public static final Transform3d ROBOT_TO_LEFT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(15.5), Units.inchesToMeters(6.5), Units.inchesToMeters(2.5)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(0)));
+        public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
+                new Translation3d(Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(2.5)),
+                new Rotation3d(0, Math.toRadians(30), Math.toRadians(0)));
 
         /**
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
-        public static final Transform3d ROBOT_TO_RIGHT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(15.5), Units.inchesToMeters(-7), Units.inchesToMeters(2.5)),
-                new Rotation3d(0, Math.toRadians(45), Math.toRadians(0)));
+        public static final Transform3d ROBOT_TO_BACK_CAMERA = new Transform3d(
+                new Translation3d(-Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(2.5)),
+                new Rotation3d(0, Math.toRadians(25), Math.toRadians(180)));
 
         /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
         public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
@@ -43,6 +44,11 @@ public final class Constants {
         public static final double NOISY_DISTANCE_METERS = 2.5;
         public static final double DISTANCE_WEIGHT = 7;
         public static final int TAG_PRESENCE_WEIGHT = 10;
+
+        // PLACEHOLDER
+        public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(20);
+        public static final double NOTE_HEIGHT_METERS = Units.inchesToMeters(2);
+        public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(30);
 
         /**
          * Standard deviations of model states. Increase these numbers to trust your

@@ -42,9 +42,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     static {
         if (Constants.VisionConstants.USE_VISION == true) {
             rightEstimator = new PhotonVisionRunnable(
-                    Constants.VisionConstants.RIGHT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_RIGHT_CAMERA);
+                    Constants.VisionConstants.BACK_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_BACK_CAMERA);
             leftEstimator = new PhotonVisionRunnable(
-                    Constants.VisionConstants.LEFT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_LEFT_CAMERA);
+                    Constants.VisionConstants.FRONT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
 
             allNotifier = new Notifier(() -> {
                 rightEstimator.run();
@@ -79,6 +79,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
      *
      * @param alliance alliance
      */
+
+     
     public void setAlliance(Alliance alliance) {
         boolean allianceChanged = false;
         switch (alliance) {
