@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -54,6 +55,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             driveBaseRadius = Math.max(driveBaseRadius, moduleLocation.getNorm());
         }
 
+        // this.seedFieldRelative(new Pose2d(1.5,6.4, new Rotation2d()));
+
         AutoBuilder.configureHolonomic(
                 () -> this.getState().Pose,
                 this::seedFieldRelative,
@@ -77,6 +80,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     }
 
     public ChassisSpeeds getCurrentRobotChassisSpeeds() {
+        SignalLogger.writeDoubleArray("Odometry", new double[] {
+        this.getState().Pose.getX(),
+        this.getState().Pose.getY(),
+        this.getState().Pose.getRotation().getDegrees()
+        });
         return m_kinematics.toChassisSpeeds(getState().ModuleStates);
     }
 

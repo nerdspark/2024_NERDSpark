@@ -16,7 +16,7 @@ public final class Constants {
 
     public static class VisionConstants {
 
-        public static boolean USE_VISION = true;
+        public static boolean USE_VISION = false;
 
         public static final String LEFT_CAMERA_NAME = "BlueCamera";
         public static final String RIGHT_CAMERA_NAME = "BlackCamera";
