@@ -14,8 +14,8 @@ public final class Constants {
         public static final double baseStageLength = 24; // inches
         public static final double secondStageLength = 18; // inches
 
-        public static final double shoulderRadPerRot = 2 * Math.PI;
-        public static final double elbowRadPerRot = 2 * Math.PI;
+        public static final double shoulderRadPerRot = 2 * Math.PI/64;
+        public static final double elbowRadPerRot = 2 * Math.PI/64;
         public static final double wristRadPerRot = 2 * Math.PI;
 
         public static final double shoulderOffset = 0; // radians, fwd = 0
@@ -29,9 +29,9 @@ public final class Constants {
         public static final double virtual4BarGearRatio = 1.5;
 
         public static final class ArmSetPoints {
-            public static final Translation2d home = new Translation2d();
-            public static final Translation2d pickup = new Translation2d();
-            public static final Translation2d amp = new Translation2d();
+            public static final Translation2d home = new Translation2d(20,0);
+            public static final Translation2d pickup = new Translation2d(20,0);
+            public static final Translation2d amp = new Translation2d(20,0);
         }
     }
 
