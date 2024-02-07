@@ -7,7 +7,7 @@ package frc.robot;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -21,7 +21,7 @@ import frc.robot.Commands.FourBarCommand;
 import frc.robot.Commands.IntakeCommand;
 import frc.robot.Commands.ShooterCommand;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
-import frc.robot.Generated.TunerConstants;
+// import frc.robot.Generated.TunerConstants;
 import frc.robot.Subsystems.Arm.Arm;
 import frc.robot.Subsystems.Arm.ArmIO;
 import frc.robot.Subsystems.Arm.ArmIOSparkMax;
@@ -41,84 +41,84 @@ public class RobotContainer {
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
-    private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+    // private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
 
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1)
-            .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
-    // driving in open loop
-    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-    private final Telemetry logger = new Telemetry(MaxSpeed);
-    private final SendableChooser<Command> autoChooser;
+    // private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+    //         .withDeadband(MaxSpeed * 0.1)
+    //         .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+    //         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
+    // // driving in open loop
+    // private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+    // private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+    // private final Telemetry logger = new Telemetry(MaxSpeed);
+    // private final SendableChooser<Command> autoChooser;
 
-    private final Intake intake;
-    private final Shooter shooter;
-    private final FourBar fourBar;
+    // private final Intake intake;
+    // private final Shooter shooter;
+    // private final FourBar fourBar;
     private final Arm arm;
 
     private void configureBindings() {
-        drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(
-                        () -> drive.withVelocityX(
-                                        -frc.robot.Util.JoystickMap.JoystickPowerCalculate(joystick.getLeftY())
-                                                * MaxSpeed) // Drive forward with
-                                // negative Y (forward)
-                                .withVelocityY(-frc.robot.Util.JoystickMap.JoystickPowerCalculate(joystick.getLeftX())
-                                        * MaxSpeed) // Drive left with negative X (left)
-                                .withRotationalRate(-joystick.getRightX()
-                                        * MaxAngularRate) // Drive counterclockwise with negative X (left)
-                        ));
+        // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+        //         drivetrain.applyRequest(
+        //                 () -> drive.withVelocityX(
+        //                                 -frc.robot.Util.JoystickMap.JoystickPowerCalculate(joystick.getLeftY())
+        //                                         * MaxSpeed) // Drive forward with
+        //                         // negative Y (forward)
+        //                         .withVelocityY(-frc.robot.Util.JoystickMap.JoystickPowerCalculate(joystick.getLeftX())
+        //                                 * MaxSpeed) // Drive left with negative X (left)
+        //                         .withRotationalRate(-joystick.getRightX()
+        //                                 * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        //                 ));
 
-        joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        joystick.b()
-                .whileTrue(drivetrain.applyRequest(
-                        () -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+        // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        // joystick.b()
+        //         .whileTrue(drivetrain.applyRequest(
+        //                 () -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
 
-        // reset the field-centric heading on left bumper press
-        joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+        // // reset the field-centric heading on left bumper press
+        // joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
-        if (Utils.isSimulation()) {
-            drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
-        }
-        drivetrain.registerTelemetry(logger::telemeterize);
+        // if (Utils.isSimulation()) {
+        //     drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+        // }
+        // drivetrain.registerTelemetry(logger::telemeterize);
     }
 
     public RobotContainer() {
         switch (Constants.currentMode) {
             case REAL:
-                intake = new Intake(new IntakeIOSparkMax()); // Spark Max
-                shooter = new Shooter(new ShooterIOSparkMax());
-                fourBar = new FourBar(new FourBarIOSparkMax());
+                // intake = new Intake(new IntakeIOSparkMax()); // Spark Max
+                // shooter = new Shooter(new ShooterIOSparkMax());
+                // fourBar = new FourBar(new FourBarIOSparkMax());
                 arm = new Arm(new ArmIOSparkMax());
                 break;
 
             default:
                 // Replayed robot, disable IO implementations
-                intake = new Intake(new IntakeIO() {});
-                shooter = new Shooter(new ShooterIO() {});
-                fourBar = new FourBar(new FourBarIO() {});
+                // intake = new Intake(new IntakeIO() {});
+                // shooter = new Shooter(new ShooterIO() {});
+                // fourBar = new FourBar(new FourBarIO() {});
                 arm = new Arm(new ArmIO() {});
 
                 break;
         }
         configureBindings();
 
-        autoChooser = AutoBuilder.buildAutoChooser();
-        Shuffleboard.getTab("Autonomous").add(autoChooser);
+        // autoChooser = AutoBuilder.buildAutoChooser();
+        // Shuffleboard.getTab("Autonomous").add(autoChooser);
 
-        intake.setDefaultCommand(new IntakeCommand(intake, () -> joystick.getLeftTriggerAxis()));
-        shooter.setDefaultCommand(new ShooterCommand(
-                shooter, () -> joystick.getRightTriggerAxis(), () -> joystick.getRightTriggerAxis()));
-        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> joystick.getLeftX()));
+        // intake.setDefaultCommand(new IntakeCommand(intake, () -> joystick.getLeftTriggerAxis()));
+        // shooter.setDefaultCommand(new ShooterCommand(
+        //         shooter, () -> joystick.getRightTriggerAxis(), () -> joystick.getRightTriggerAxis()));
+        // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> joystick.getLeftX()));
         joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
         joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
         joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
         joystick.y().onTrue(new ArmResetCommand(arm));
     }
 
-    public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
-    }
+    // public Command getAutonomousCommand() {
+    //     return autoChooser.getSelected();
+    // }
 }
