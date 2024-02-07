@@ -17,23 +17,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.ArmCommand;
 import frc.robot.Commands.ArmResetCommand;
-import frc.robot.Commands.FourBarCommand;
-import frc.robot.Commands.IntakeCommand;
-import frc.robot.Commands.ShooterCommand;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
 // import frc.robot.Generated.TunerConstants;
 import frc.robot.Subsystems.Arm.Arm;
 import frc.robot.Subsystems.Arm.ArmIO;
 import frc.robot.Subsystems.Arm.ArmIOSparkMax;
-import frc.robot.Subsystems.FourBar.FourBar;
-import frc.robot.Subsystems.FourBar.FourBarIO;
-import frc.robot.Subsystems.FourBar.FourBarIOSparkMax;
-import frc.robot.Subsystems.Intake.Intake;
-import frc.robot.Subsystems.Intake.IntakeIO;
-import frc.robot.Subsystems.Intake.IntakeIOSparkMax;
-import frc.robot.Subsystems.Shooter.Shooter;
-import frc.robot.Subsystems.Shooter.ShooterIO;
-import frc.robot.Subsystems.Shooter.ShooterIOSparkMax;
 
 public class RobotContainer {
     private double MaxSpeed = 6; // 6 meters per second desired top speed
@@ -65,7 +53,8 @@ public class RobotContainer {
         //                                 -frc.robot.Util.JoystickMap.JoystickPowerCalculate(joystick.getLeftY())
         //                                         * MaxSpeed) // Drive forward with
         //                         // negative Y (forward)
-        //                         .withVelocityY(-frc.robot.Util.JoystickMap.JoystickPowerCalculate(joystick.getLeftX())
+        //
+        // .withVelocityY(-frc.robot.Util.JoystickMap.JoystickPowerCalculate(joystick.getLeftX())
         //                                 * MaxSpeed) // Drive left with negative X (left)
         //                         .withRotationalRate(-joystick.getRightX()
         //                                 * MaxAngularRate) // Drive counterclockwise with negative X (left)
@@ -74,7 +63,8 @@ public class RobotContainer {
         // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // joystick.b()
         //         .whileTrue(drivetrain.applyRequest(
-        //                 () -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+        //                 () -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(),
+        // -joystick.getLeftX()))));
 
         // // reset the field-centric heading on left bumper press
         // joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
@@ -119,6 +109,10 @@ public class RobotContainer {
     }
 
     // public Command getAutonomousCommand() {
+<<<<<<< HEAD
     //     return autoChooser.getSelected();
+=======
+    //     // return autoChooser.getSelected();
+>>>>>>> 7763d509c0cc04cb3dd6b764599f8dc14ed0fe73
     // }
 }
