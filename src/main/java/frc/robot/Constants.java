@@ -41,10 +41,10 @@ public final class Constants {
     public static final int shooterMotor1ID = 0;
     public static final int anglemotorID = 0;
 
-    public static final int shoulderLeftID = 0;
-    public static final int shoulderRightID = 0;
-    public static final int elbowLeftID = 0;
-    public static final int elbowRightID = 0;
+    public static final int shoulderLeftID = 10;
+    // public static final int shoulderRightID = 0;
+    public static final int elbowLeftID = 11;
+    // public static final int elbowRightID = 0;
     public static final int wristID = 0;
     public static final int gripperID = 0;
 
