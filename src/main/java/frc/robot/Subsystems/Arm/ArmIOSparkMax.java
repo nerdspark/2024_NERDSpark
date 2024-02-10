@@ -45,23 +45,23 @@ public class ArmIOSparkMax implements ArmIO {
         // wrist = new CANSparkMax(Constants.wristID, MotorType.kBrushless);
         // gripper = new CANSparkMax(Constants.gripperID, MotorType.kBrushless);
 
-        shoulderLeft.setInverted(false);
+        shoulderLeft.setInverted(true);
         // shoulderRight.setInverted(true);
         // elbowRight.setInverted(false);
-        elbowLeft.setInverted(true);
-
-        shoulderLeftEncoder.setPositionConversionFactor(ArmConstants.shoulderRadPerRot);
-        // shoulderRightEncoder.setPositionConversionFactor(ArmConstants.shoulderRadPerRot);
-        elbowLeftEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
-        // elbowRightEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
-        // wristEncoder.setPositionConversionFactor(ArmConstants.wristRadPerRot);
-
+        elbowLeft.setInverted(false);
         shoulderLeftEncoder = shoulderLeft.getEncoder();
         // shoulderRightEncoder = shoulderRight.getEncoder();
         elbowLeftEncoder = elbowLeft.getEncoder();
         // elbowRightEncoder = elbowRight.getEncoder();
         // wristEncoder = wrist.getEncoder();
         // gripperEncoder = gripper.getEncoder();
+        shoulderLeftEncoder.setPositionConversionFactor(ArmConstants.shoulderRadPerRot);
+        // shoulderRightEncoder.setPositionConversionFactor(ArmConstants.shoulderRadPerRot);
+        elbowLeftEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
+        // elbowRightEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
+        // wristEncoder.setPositionConversionFactor(ArmConstants.wristRadPerRot);
+
+
 
         shoulderLeftEncoder.setPosition(ArmConstants.shoulderOffset);
         // shoulderRightEncoder.setPosition(ArmConstants.shoulderOffset);
@@ -107,30 +107,39 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setArmPosition(Translation2d position, boolean inBend) {
-        this.inBend = inBend;
-        double distance = position.getNorm();
+        // this.inBend = inBend;
+        // double distance = position.getNorm();
 
-        double BaseAngleArmDiff = Math.acos(((distance * distance)
-                        + (ArmConstants.baseStageLength * ArmConstants.baseStageLength)
-                        - (ArmConstants.secondStageLength * ArmConstants.secondStageLength))
-                / (2 * distance * ArmConstants.baseStageLength));
-        double SecondAngleArmDiff = Math.acos(((distance * distance)
-                        - (ArmConstants.baseStageLength * ArmConstants.baseStageLength)
-                        + (ArmConstants.secondStageLength * ArmConstants.secondStageLength))
-                / (2 * distance * ArmConstants.secondStageLength));
+        // double BaseAngleArmDiff = Math.acos(((distance * distance)
+        //                 + (ArmConstants.baseStageLength * ArmConstants.baseStageLength)
+        //                 - (ArmConstants.secondStageLength * ArmConstants.secondStageLength))
+        //         / (2 * distance * ArmConstants.baseStageLength));
+        // double SecondAngleArmDiff = Math.acos(((distance * distance)
+        //                 - (ArmConstants.baseStageLength * ArmConstants.baseStageLength)
+        //                 + (ArmConstants.secondStageLength * ArmConstants.secondStageLength))
+        //         / (2 * distance * ArmConstants.secondStageLength));
 
-        double shoulderPosition = position.getAngle().getRadians() + (BaseAngleArmDiff * (inBend ? 1 : -1));
-        setShoulderPosition(shoulderPosition);
-        setElbowPosition(position.getAngle().getRadians() + (SecondAngleArmDiff * (inBend ? -1 : 1)));
+        // double shoulderPosition = position.getAngle().getRadians() + (BaseAngleArmDiff * (inBend ? 1 : -1));
+        // setShoulderPosition(shoulderPosition);
+        // setElbowPosition(position.getAngle().getRadians() + (SecondAngleArmDiff * (inBend ? -1 : 1)));
 
+
+        setShoulderPosition(position.getX());
+        setElbowPosition(position.getY());
         // System.out.println("shoulder" + (angle - BaseAngleArmDiff));
         // System.out.println("elbow" + (angle + SecondAngleArmDiff));
     }
 
     public void resetEncoders() {
+        shoulderLeft.setSmartCurrentLimit(5);
+        elbowLeft.setSmartCurrentLimit(5);
+        shoulderLeftController.setP(0.3, 0);
+        elbowLeftController.setP(0.3, 0);
         shoulderLeftEncoder.setPosition(ArmConstants.shoulderOffset);
         // shoulderRightEncoder.setPosition(ArmConstants.shoulderOffset);
         elbowLeftEncoder.setPosition(ArmConstants.elbowOffset);
+        elbowLeft.setClosedLoopRampRate(.1);
+        shoulderLeft.setClosedLoopRampRate(.1);
         // elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
         // wristEncoder.setPosition(0);
         // gripperEncoder.setPosition(0);
@@ -161,7 +170,7 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setElbowPosition(double position) {
-        position -= ((ArmConstants.virtual4BarGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
+        // position -= ((ArmConstants.virtual4BarGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
         elbowLeftController.setReference(position, ControlType.kPosition);
         // elbowRightController.setReference(position, ControlType.kPosition);
     }

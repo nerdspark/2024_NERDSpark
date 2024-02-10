@@ -102,17 +102,14 @@ public class RobotContainer {
         // shooter.setDefaultCommand(new ShooterCommand(
         //         shooter, () -> joystick.getRightTriggerAxis(), () -> joystick.getRightTriggerAxis()));
         // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> joystick.getLeftX()));
-        joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
-        joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
-        joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
+        // joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
+        // joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
+        // joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
+        arm.setDefaultCommand(new ArmCommand(arm, () -> new Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()), Math.atan2(joystick.getRightX(),joystick.getRightY()))));
         joystick.y().onTrue(new ArmResetCommand(arm));
     }
 
     // public Command getAutonomousCommand() {
-<<<<<<< HEAD
     //     return autoChooser.getSelected();
-=======
-    //     // return autoChooser.getSelected();
->>>>>>> 7763d509c0cc04cb3dd6b764599f8dc14ed0fe73
     // }
 }
