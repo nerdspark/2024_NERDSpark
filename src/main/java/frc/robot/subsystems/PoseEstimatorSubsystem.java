@@ -79,8 +79,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
      *
      * @param alliance alliance
      */
-
-     
     public void setAlliance(Alliance alliance) {
         boolean allianceChanged = false;
         switch (alliance) {
@@ -215,7 +213,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
                 pose2d = flipAlliance(pose2d);
             }
             driveTrain.addVisionMeasurement(pose2d, cameraPose.timestampSeconds, confidenceCalculator(cameraPose));
-            confidenceCalculator(cameraPose);
+            // confidenceCalculator(cameraPose);
         }
     }
 }

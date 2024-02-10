@@ -11,8 +11,54 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.util.Alert;
 
 public final class Constants {
+
+    public static final int loopPeriodMs = 20;
+    private static RobotType robotType = RobotType.COMPBOT;
+    public static final boolean tuningMode = true;
+    public static final boolean characterizationMode = false;
+
+    public static RobotType getRobot() {
+        if (RobotBase.isReal() && robotType == RobotType.SIMBOT) {
+            new Alert("Invalid Robot Selected, using COMPBOT as default", Alert.AlertType.ERROR).set(true);
+            robotType = RobotType.COMPBOT;
+        }
+        return robotType;
+    }
+
+    public static Mode getMode() {
+        return switch (getRobot()) {
+            case COMPBOT -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
+            case SIMBOT -> Mode.SIM;
+        };
+    }
+
+    public enum Mode {
+        /** Running on a real robot. */
+        REAL,
+
+        /** Running a physics simulator. */
+        SIM,
+
+        /** Replaying from a log file. */
+        REPLAY
+    }
+
+    public enum RobotType {
+        SIMBOT,
+        COMPBOT
+    }
+
+    /** Checks whether the robot the correct robot is selected when deploying. */
+    public static void main(String... args) {
+        if (robotType == RobotType.SIMBOT) {
+            System.err.println("Cannot deploy, invalid robot selected: " + robotType.toString());
+            System.exit(1);
+        }
+    }
 
     public static class VisionConstants {
 
@@ -34,7 +80,7 @@ public final class Constants {
          */
         public static final Transform3d ROBOT_TO_BACK_CAMERA = new Transform3d(
                 new Translation3d(-Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(6.5)),
-                new Rotation3d(0, Math.toRadians(25), Math.toRadians(180)));
+                new Rotation3d(0, Math.toRadians(39), Math.toRadians(180)));
 
         /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
         public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
@@ -106,38 +152,4 @@ public final class Constants {
         public static final double kIThetaController = 0d;
         public static final double kDThetaController = 0d;
     }
-
-    public static double xOffset = 50;
-    public static double yOffset = 30;
-    public static final Pose2d[] targetPoses = new Pose2d[] {
-        new Pose2d(Units.inchesToMeters(610.77 - xOffset), Units.inchesToMeters(42.19 - yOffset), new Rotation2d(0)),
-        new Pose2d(Units.inchesToMeters(610.77 - xOffset), Units.inchesToMeters(42.19), new Rotation2d(0)),
-        new Pose2d(Units.inchesToMeters(610.77 - xOffset), Units.inchesToMeters(42.19 + yOffset), new Rotation2d(0)),
-        new Pose2d(Units.inchesToMeters(610.77 - xOffset), Units.inchesToMeters((108.19 - yOffset)), new Rotation2d(0)),
-        new Pose2d(Units.inchesToMeters(610.77 - xOffset), Units.inchesToMeters((108.19)), new Rotation2d(0)),
-        new Pose2d(Units.inchesToMeters(610.77 - xOffset), Units.inchesToMeters((108.19 + yOffset)), new Rotation2d(0)),
-        new Pose2d(Units.inchesToMeters(610.77 - xOffset), Units.inchesToMeters(174.19 - yOffset), new Rotation2d(0)),
-        new Pose2d(Units.inchesToMeters(610.77 - xOffset), Units.inchesToMeters(174.19), new Rotation2d(0)),
-        new Pose2d(Units.inchesToMeters(610.77 - xOffset), Units.inchesToMeters(174.19 + yOffset), new Rotation2d(0))
-    };
-
-    public static final Pose2d[] targetPosesBlue = new Pose2d[] {
-        new Pose2d(
-                Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters(42.19 - yOffset), new Rotation2d(Math.PI)),
-        new Pose2d(Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters(42.19), new Rotation2d(Math.PI)),
-        new Pose2d(
-                Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters(42.19 + yOffset), new Rotation2d(Math.PI)),
-        new Pose2d(
-                Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters(108.19 - yOffset), new Rotation2d(Math.PI)),
-        new Pose2d(Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters((108.19)), new Rotation2d(Math.PI)),
-        new Pose2d(
-                Units.inchesToMeters(40.45 + xOffset),
-                Units.inchesToMeters((108.19 + yOffset)),
-                new Rotation2d(Math.PI)),
-        new Pose2d(
-                Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters(174.19 - yOffset), new Rotation2d(Math.PI)),
-        new Pose2d(Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters(174.19), new Rotation2d(Math.PI)),
-        new Pose2d(
-                Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters(174.19 + yOffset), new Rotation2d(Math.PI))
-    };
 }

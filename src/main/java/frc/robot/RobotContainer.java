@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.PoseEstimatorSubsystem;
+import frc.robot.subsystems.vision.AprilTagVision;
+import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 
 public class RobotContainer {
     private double MaxSpeed = 6; // 6 meters per second desired top speed
@@ -30,7 +31,7 @@ public class RobotContainer {
     // private final NoteVisionSubsystem noteVisionSubsystem = new
     // NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
-    private final PoseEstimatorSubsystem poseEstimator = new PoseEstimatorSubsystem(drivetrain);
+    // private final PoseEstimatorSubsystem poseEstimator = new PoseEstimatorSubsystem(drivetrain);
 
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             //             .withDeadband(MaxSpeed * 0.1)
@@ -41,15 +42,16 @@ public class RobotContainer {
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final Telemetry logger = new Telemetry(MaxSpeed);
     private final SendableChooser<Command> autoChooser;
+    private AprilTagVision aprilTagVision;
 
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(
                         () -> drive.withVelocityX(
-                                        -frc.robot.Util.JoystickMap.JoystickPowerCalculate(joystick.getRightY())
+                                        -frc.robot.util.JoystickMap.JoystickPowerCalculate(joystick.getRightY())
                                                 * MaxSpeed) // Drive forward with
                                 // negative Y (forward)
-                                .withVelocityY(-frc.robot.Util.JoystickMap.JoystickPowerCalculate(joystick.getRightX())
+                                .withVelocityY(-frc.robot.util.JoystickMap.JoystickPowerCalculate(joystick.getRightX())
                                         * MaxSpeed) // Drive left with negative X (left)
                                 .withRotationalRate(-joystick.getLeftX()
                                         * MaxAngularRate) // Drive counterclockwise with negative X (left)
@@ -73,8 +75,11 @@ public class RobotContainer {
         configureBindings();
         configureDashboard();
 
+        aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
+
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
+        aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
     }
 
     public Command getAutonomousCommand() {
@@ -88,6 +93,6 @@ public class RobotContainer {
         final var visionTab = Shuffleboard.getTab("Vision");
 
         // Pose estimation
-        poseEstimator.addDashboardWidgets(visionTab);
+        drivetrain.addDashboardWidgets(visionTab);
     }
 }
