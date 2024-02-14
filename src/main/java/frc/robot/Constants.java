@@ -14,8 +14,8 @@ public final class Constants {
         public static final double baseStageLength = 1; // inches
         public static final double secondStageLength = 1; // inches
 
-        public static final double shoulderRadPerRot = 2 * Math.PI/64;
-        public static final double elbowRadPerRot = 2 * Math.PI/64;
+        public static final double shoulderRadPerRot = 2 * Math.PI/15 * 14/32;
+        public static final double elbowRadPerRot = 2 * Math.PI/4 * 18/42;
         public static final double wristRadPerRot = 2 * Math.PI;
 
         public static final double shoulderOffset = 0; // radians, fwd = 0
@@ -41,9 +41,9 @@ public final class Constants {
     public static final int shooterMotor1ID = 0;
     public static final int anglemotorID = 0;
 
-    public static final int shoulderLeftID = 10;
+    public static final int shoulderLeftID = 9;
     public static final int shoulderRightID = 0;
-    public static final int elbowLeftID = 11;
+    public static final int elbowLeftID = 8;
     public static final int elbowRightID = 0;
     public static final int wristID = 0;
     public static final int gripperID = 0;

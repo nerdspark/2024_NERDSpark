@@ -62,4 +62,8 @@ public interface ArmIO {
     }
 
     default void setGripper(double power) {}
+    
+    default Translation2d getArmPosition() {
+        return new Translation2d();
+    }
 }

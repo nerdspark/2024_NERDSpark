@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 
@@ -48,7 +49,7 @@ public class ArmIOSparkMax implements ArmIO {
         shoulderLeft.setInverted(true);
         // shoulderRight.setInverted(true);
         // elbowRight.setInverted(false);
-        elbowLeft.setInverted(false);
+        elbowLeft.setInverted(true);
         shoulderLeftEncoder = shoulderLeft.getEncoder();
         // shoulderRightEncoder = shoulderRight.getEncoder();
         elbowLeftEncoder = elbowLeft.getEncoder();
@@ -77,6 +78,7 @@ public class ArmIOSparkMax implements ArmIO {
         // wristController = wrist.getPIDController();
 
         inBend = false;
+        resetEncoders();
     }
 
     // @Override
@@ -124,8 +126,8 @@ public class ArmIOSparkMax implements ArmIO {
         // setElbowPosition(position.getAngle().getRadians() + (SecondAngleArmDiff * (inBend ? -1 : 1)));
 
 
-        setShoulderPosition(position.getX());
-        setElbowPosition(position.getY());
+    //    setShoulderPosition(position.getX());
+      //  setElbowPosition(position.getY());
         // System.out.println("shoulder" + (angle - BaseAngleArmDiff));
         // System.out.println("elbow" + (angle + SecondAngleArmDiff));
     }
@@ -143,6 +145,8 @@ public class ArmIOSparkMax implements ArmIO {
         // elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
         // wristEncoder.setPosition(0);
         // gripperEncoder.setPosition(0);
+        elbowLeftController.setOutputRange(-.05, .05);
+        shoulderLeftController.setOutputRange(-.05, .05);
     }
 
     public Translation2d getArmPosition() {
@@ -152,6 +156,8 @@ public class ArmIOSparkMax implements ArmIO {
         Translation2d jointToEndPos = new Translation2d(
                 Math.cos(getElbowPosition()) * ArmConstants.secondStageLength,
                 Math.sin(getElbowPosition()) * ArmConstants.secondStageLength);
+        SmartDashboard.putNumber("arm x position", jointPos.plus(jointToEndPos).getX());
+        SmartDashboard.putNumber("arm y position", jointPos.plus(jointToEndPos).getY());
         return jointPos.plus(jointToEndPos);
     }
 
@@ -166,6 +172,7 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public double getShoulderPosition() {
+        SmartDashboard.putNumber("shoulder position", shoulderLeftEncoder.getPosition());
         return shoulderLeftEncoder.getPosition();
     }
 
@@ -181,8 +188,13 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public double getElbowPosition() {
-        return elbowLeftEncoder.getPosition()
-                + ((ArmConstants.virtual4BarGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
+        double elbowPose = elbowLeftEncoder.getPosition();
+        elbowPose += shoulderLeftEncoder.getPosition()*24.0/42.0;
+        SmartDashboard.putNumber("elbow position", elbowPose);
+        SmartDashboard.putNumber("raw elbow position", elbowLeftEncoder.getPosition());
+        SmartDashboard.putNumber("elbow adjustment factor", shoulderLeftEncoder.getPosition()*24.0/42.0);
+        return elbowLeftEncoder.getPosition();
+      //          + ((ArmConstants.virtual4BarGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
     }
 
     // public void setWristPosition(double position) {

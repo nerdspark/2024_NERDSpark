@@ -58,4 +58,8 @@ public class Arm extends SubsystemBase {
     public void setGripper(double power) {
         io.setGripper(power);
     }
+    
+    public Translation2d getArmPosition() {
+        return io.getArmPosition();
+    }
 }
