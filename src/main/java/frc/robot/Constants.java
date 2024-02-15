@@ -134,4 +134,14 @@ public final class Constants {
         new Pose2d(
                 Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters(174.19 + yOffset), new Rotation2d(Math.PI))
     };
+
+    public static class speakerConstants {
+        public static final double speakerYboth = Units.inchesToMeters(218.42);
+        public static final double speakerBlueX = Units.inchesToMeters(0);
+        public static final double speakerRedX = Units.inchesToMeters(652.73);
+        public static final double speakerHeight = Units.inchesToMeters(80.515); // (82.90 + 78.13) / 2
+
+        public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerYboth, new Rotation2d(0));
+        public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerYboth, new Rotation2d(Math.PI));
+    }
 }
