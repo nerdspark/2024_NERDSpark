@@ -77,7 +77,7 @@ public class RobotContainer {
 
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
-        if(Constants.VisionConstants.USE_VISION == true){
+        if (Constants.VisionConstants.USE_VISION == true) {
             aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
             aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
         }
