@@ -30,6 +30,7 @@ public interface AprilTagVisionIO {
                 table.put("captureTimestamp/" + Integer.toString(posePosition), poseEstimate.timestampSeconds());
                 table.put("tagIDs/" + Integer.toString(posePosition), poseEstimate.tagIDs());
                 table.put("averageTagDistance/" + Integer.toString(posePosition), poseEstimate.averageTagDistance());
+                table.put("poseAmbiguity/" + Double.toString(posePosition), poseEstimate.poseAmbiguity());
             }
             table.put("valid", !poseEstimates.isEmpty());
         }
@@ -43,7 +44,10 @@ public interface AprilTagVisionIO {
                 double timestamp = table.get("captureTimestamp/" + Integer.toString(i), 0.0);
                 double averageTagDistance = table.get("averageTagDistance/" + Integer.toString(i), 0.0);
                 int[] tagIDs = table.get("tagIDs/" + Integer.toString(i), new int[] {});
-                poseEstimates.add(new PoseEstimate(poseEstimation, timestamp, averageTagDistance, tagIDs));
+                double poseAmbiguiy = table.get("poseAmbiguity/" + Integer.toString(i), 0);
+
+                poseEstimates.add(
+                        new PoseEstimate(poseEstimation, timestamp, averageTagDistance, tagIDs, poseAmbiguiy));
             }
             table.get("valid", false);
         }

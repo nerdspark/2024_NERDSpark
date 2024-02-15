@@ -166,7 +166,7 @@ public class AprilTagVisionIOPhotonVisionSIM implements AprilTagVisionIO {
                         .getDistance(poseEstimation.getTranslation().toTranslation2d());
             }
             averageTagDistance /= tagIDs.length;
-            poseEstimates.add(new PoseEstimate(poseEstimation, timestamp, averageTagDistance, tagIDs));
+            poseEstimates.add(new PoseEstimate(poseEstimation, timestamp, averageTagDistance, tagIDs, 0));
             inputs.poseEstimates = poseEstimates;
         }
     }

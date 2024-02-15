@@ -41,6 +41,11 @@ public final class DriveConstants {
             switch (Constants.getRobot()) {
                 default -> new Matrix<>(VecBuilder.fill(0.003, 0.003, 0.0002));
             };
+    // Need to change below Constants.
+    // If using TunerX estimator,which uses default values for standard deviations for odometry are 0.1 for x,y and
+    // theta.
+    // Default for Vision estimator are 0.9, 0.9, 0.9
+
     public static final double xyStdDevCoefficient =
             switch (Constants.getRobot()) {
                 case COMPBOT -> 0.01;
@@ -49,7 +54,7 @@ public final class DriveConstants {
             };
     public static final double thetaStdDevCoefficient =
             switch (Constants.getRobot()) {
-                case COMPBOT -> 0.01;
+                case COMPBOT -> 1.0;
                 case SIMBOT -> 1.0;
                 default -> 1.0;
             };

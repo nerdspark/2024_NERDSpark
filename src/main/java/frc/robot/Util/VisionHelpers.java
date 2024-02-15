@@ -27,6 +27,7 @@ public class VisionHelpers {
      * @param timestampSeconds The timestamp in seconds when the pose estimate was recorded.
      * @param averageTagDistance The average distance to the detected tags.
      * @param tagIDs The IDs of the detected tags.
+     * @param poseAmbiguity Pose Ambiguity.
      */
     public record PoseEstimate(
             /** The pose (position and orientation) estimate. */
@@ -36,7 +37,9 @@ public class VisionHelpers {
             /** The average distance to the detected tags. */
             double averageTagDistance,
             /** The IDs of the detected tags. */
-            int[] tagIDs) {
+            int[] tagIDs,
+            /** Ambiguity of Vision pose */
+            double poseAmbiguity) {
 
         /**
          * Checks if this pose estimate is equal to another object.
@@ -56,7 +59,8 @@ public class VisionHelpers {
             return Arrays.equals(tagIDs, other.tagIDs)
                     && Objects.equals(pose, other.pose)
                     && Double.compare(timestampSeconds, other.timestampSeconds) == 0
-                    && Double.compare(averageTagDistance, other.averageTagDistance) == 0;
+                    && Double.compare(averageTagDistance, other.averageTagDistance) == 0
+                    && Double.compare(poseAmbiguity, other.poseAmbiguity) == 0;
         }
 
         /**
@@ -70,7 +74,8 @@ public class VisionHelpers {
                     Arrays.hashCode(getPose3dToArray(pose)),
                     timestampSeconds,
                     averageTagDistance,
-                    Arrays.hashCode(tagIDs));
+                    Arrays.hashCode(tagIDs),
+                    poseAmbiguity);
         }
 
         /**
@@ -89,6 +94,8 @@ public class VisionHelpers {
                     + Double.toString(averageTagDistance)
                     + ", tagIDs="
                     + Arrays.toString(tagIDs)
+                    + ", poseAmbiguity="
+                    + Double.toString(poseAmbiguity)
                     + '}';
         }
     }

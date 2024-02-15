@@ -75,11 +75,12 @@ public class RobotContainer {
         configureBindings();
         configureDashboard();
 
-        aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
-
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
-        aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
+        if(Constants.VisionConstants.USE_VISION == true){
+            aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
+            aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
+        }
     }
 
     public Command getAutonomousCommand() {
