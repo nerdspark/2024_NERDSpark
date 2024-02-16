@@ -82,6 +82,7 @@ public class RobotContainer {
                 // shooter = new Shooter(new ShooterIOSparkMax());
                 // fourBar = new FourBar(new FourBarIOSparkMax());
                 arm = new Arm(new ArmIOSparkMax());
+                arm.getArmPosition();
                 break;
 
             default:
@@ -102,10 +103,10 @@ public class RobotContainer {
         // shooter.setDefaultCommand(new ShooterCommand(
         //         shooter, () -> joystick.getRightTriggerAxis(), () -> joystick.getRightTriggerAxis()));
         // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> joystick.getLeftX()));
-        // joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
-        // joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
-        // joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
-        arm.setDefaultCommand(new ArmCommand(arm, () -> new Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()), Math.atan2(joystick.getRightX(),joystick.getRightY()))));
+        joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
+        joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
+        joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> new Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()), Math.atan2(joystick.getRightX(),joystick.getRightY()))));
         joystick.y().onTrue(new ArmResetCommand(arm));
     }
 

@@ -11,15 +11,15 @@ import frc.robot.config.RobotIdentity;
 /** Add your docs here. */
 public final class Constants {
     public final class ArmConstants {
-        public static final double baseStageLength = 1; // inches
-        public static final double secondStageLength = 1; // inches
+        public static final double baseStageLength = 19; // inches
+        public static final double secondStageLength = 17; // inches
 
         public static final double shoulderRadPerRot = 2 * Math.PI/15 * 14/32;
         public static final double elbowRadPerRot = 2 * Math.PI/4 * 18/42;
         public static final double wristRadPerRot = 2 * Math.PI;
 
-        public static final double shoulderOffset = 0; // radians, fwd = 0
-        public static final double elbowOffset = 0;
+        public static final double shoulderOffset = -0.17778; // radians, fwd = 0
+        public static final double elbowOffset = 2.71796;
 
         public static final Translation2d armBasePosition = new Translation2d();
         public static final double armForwardLimit = Units.inchesToMeters(12 + 5);
@@ -29,9 +29,9 @@ public final class Constants {
         public static final double virtual4BarGearRatio = 1.5;
 
         public static final class ArmSetPoints {
-            public static final Translation2d home = new Translation2d(2,0);//A
-            public static final Translation2d pickup = new Translation2d(1,1);//B
-            public static final Translation2d amp = new Translation2d(1,-1);//X
+            public static final Translation2d home = new Translation2d(0,36);//A
+            public static final Translation2d pickup = new Translation2d(10,18);//B
+            public static final Translation2d amp = new Translation2d(-10,18);//X
         }
     }
 
