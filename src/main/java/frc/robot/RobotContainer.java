@@ -67,9 +67,11 @@ public class RobotContainer {
     }
 
     public RobotContainer() {
+
+        // NamedCommands.registerCommand("IntakeCommand", intake.Intake());
+
         configureBindings();
         configureDashboard();
-
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
     }

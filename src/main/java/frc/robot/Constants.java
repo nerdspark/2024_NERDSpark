@@ -16,10 +16,10 @@ public final class Constants {
 
     public static class VisionConstants {
 
-        public static boolean USE_VISION = true;
+        public static boolean USE_VISION = false;
 
-        public static final String LEFT_CAMERA_NAME = "Arducam_OV9281_USB_1";
-        public static final String RIGHT_CAMERA_NAME = "Arducam_OV9281_USB_2";
+        public static final String LEFT_CAMERA_NAME = "BlueCamera";
+        public static final String RIGHT_CAMERA_NAME = "BlackCamera";
 
         /**
          * Physical location of the left camera on the robot, relative to the center of the robot.
@@ -134,4 +134,14 @@ public final class Constants {
         new Pose2d(
                 Units.inchesToMeters(40.45 + xOffset), Units.inchesToMeters(174.19 + yOffset), new Rotation2d(Math.PI))
     };
+
+    public static class speakerConstants {
+        public static final double speakerYboth = Units.inchesToMeters(218.42);
+        public static final double speakerBlueX = Units.inchesToMeters(0);
+        public static final double speakerRedX = Units.inchesToMeters(652.73);
+        public static final double speakerHeight = Units.inchesToMeters(80.515); // (82.90 + 78.13) / 2
+
+        public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerYboth, new Rotation2d(0));
+        public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerYboth, new Rotation2d(Math.PI));
+    }
 }
