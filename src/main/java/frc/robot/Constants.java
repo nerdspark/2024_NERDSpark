@@ -28,6 +28,13 @@ public final class Constants {
 
         public static final double virtual4BarGearRatio = 1.5;
 
+        public static final double maxPowerShoulder = 0.3;
+        public static final double maxPowerElbow = 0.3;
+        public static final int currentLimitShoulder = 20;
+        public static final int currentLimitElbow = 15;
+        public static final double rampRateShoulder = 0.1;
+        public static final double rampRateElbow = .1;
+
         public static final class ArmSetPoints {
             public static final Translation2d home = new Translation2d(0,36);//A
             public static final Translation2d pickup = new Translation2d(10,18);//B

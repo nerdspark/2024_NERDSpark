@@ -136,21 +136,20 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void resetEncoders() {
-        shoulderLeft.setSmartCurrentLimit(20);
-        elbowLeft.setSmartCurrentLimit(15);
+        shoulderLeft.setSmartCurrentLimit(ArmConstants.currentLimitShoulder);
+        elbowLeft.setSmartCurrentLimit(ArmConstants.currentLimitElbow);
         shoulderLeftController.setP(0.6, 0);
         elbowLeftController.setP(0.6, 0);
         shoulderLeftEncoder.setPosition(ArmConstants.shoulderOffset);
         // shoulderRightEncoder.setPosition(ArmConstants.shoulderOffset);
         elbowLeftEncoder.setPosition(ArmConstants.elbowOffset);
-        elbowLeft.setClosedLoopRampRate(.1);
-        shoulderLeft.setClosedLoopRampRate(.1);
+        elbowLeft.setClosedLoopRampRate(ArmConstants.rampRateElbow);
+        shoulderLeft.setClosedLoopRampRate(ArmConstants.rampRateShoulder);
         // elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
         // wristEncoder.setPosition(0);
         // gripperEncoder.setPosition(0);
-        double maxPower = .3;
-        elbowLeftController.setOutputRange(-maxPower, maxPower);
-        shoulderLeftController.setOutputRange(-maxPower, maxPower);
+        elbowLeftController.setOutputRange(-ArmConstants.maxPowerElbow, ArmConstants.maxPowerElbow);
+        shoulderLeftController.setOutputRange(-ArmConstants.maxPowerShoulder, ArmConstants.maxPowerShoulder);
     }
 
     public Translation2d getArmPosition() {
