@@ -1,6 +1,11 @@
 package frc.robot.subsystems;
 
+
+import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
+import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kRedAllianceWallRightSide;
+
 import com.ctre.phoenix6.SignalLogger;
+
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -11,14 +16,20 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.speakerConstants;
@@ -26,7 +37,13 @@ import frc.robot.Util.AllianceFlipUtil;
 import frc.robot.Util.AutoAimMath;
 import frc.robot.Util.FieldConstants;
 import frc.robot.generated.TunerConstants;
+
+import frc.robot.util.VisionHelpers;
+import frc.robot.util.VisionHelpers.TimestampedVisionUpdate;
+import java.util.List;
+
 import java.util.Optional;
+
 import java.util.function.Supplier;
 
 /**
@@ -37,10 +54,15 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
+
+    private final Field2d field2d = new Field2d();
+    private OriginPosition originPosition = kBlueAllianceWallRightSide;
+
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
     // private Translation2d targetPoseSpeaker = AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
     private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
     private boolean targetFollow = true;
+
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
 
@@ -128,5 +150,38 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             updateSimState(deltaTime, RobotController.getBatteryVoltage());
         });
         m_simNotifier.startPeriodic(kSimLoopPeriod);
+    }
+
+    /**
+     * Adds vision data to the pose esimation.
+     *
+     * @param visionData The vision data to add.
+     */
+    public void addVisionData(List<TimestampedVisionUpdate> visionData) {
+        visionData.forEach(visionUpdate ->
+                addVisionMeasurement(visionUpdate.pose(), visionUpdate.timestamp(), visionUpdate.stdDevs()));
+    }
+
+    public void addDashboardWidgets(ShuffleboardTab tab) {
+        tab.add("Field", field2d).withPosition(0, 0).withSize(6, 4);
+        tab.addString("Pose", this::getFomattedPose).withPosition(6, 2).withSize(2, 1);
+    }
+
+    private String getFomattedPose() {
+        var pose = this.getState().Pose;
+        return String.format(
+                "(%.3f, %.3f) %.2f degrees",
+                pose.getX(), pose.getY(), pose.getRotation().getDegrees());
+    }
+
+    @Override
+    public void periodic() {
+        // Set the pose on the dashboard
+        var dashboardPose = this.getState().Pose;
+        if (originPosition == kRedAllianceWallRightSide) {
+            // Flip the pose when red, since the dashboard field photo cannot be rotated
+            dashboardPose = VisionHelpers.flipAlliance(dashboardPose);
+        }
+        field2d.setRobotPose(dashboardPose);
     }
 }
