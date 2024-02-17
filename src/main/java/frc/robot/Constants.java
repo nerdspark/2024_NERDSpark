@@ -62,10 +62,15 @@ public final class Constants {
 
     public static class VisionConstants {
 
-        public static boolean USE_VISION = false;
+        public static boolean USE_VISION = true;
+
+        public static boolean USE_FRONT_CAMERA = true;
+        public static boolean USE_BACK_LEFT_CAMERA = true;
+        public static boolean USE_BACK_RIGHT_CAMERA = false;
 
         public static final String FRONT_CAMERA_NAME = "BlueCamera"; // LEFT
-        public static final String BACK_CAMERA_NAME = "BlackCamera"; // RIGHT
+        public static final String BACK_LEFT_CAMERA_NAME = "BlackCamera"; // RIGHT
+        public static final String BACK_RIGHT_CAMERA_NAME = "TEMP_NAME_CHANGE_THIS";
         public static final String NOTE_CAMERA_NAME = "NoteCamera";
 
         /**
@@ -73,12 +78,18 @@ public final class Constants {
          */
         public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
                 new Translation3d(Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(6.5)),
-                new Rotation3d(0, Math.toRadians(30), Math.toRadians(0)));
+                new Rotation3d(0, Math.toRadians(45), Math.toRadians(0)));
 
         /**
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
-        public static final Transform3d ROBOT_TO_BACK_CAMERA = new Transform3d(
+        public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
+                new Translation3d(-Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(6.5)),
+                new Rotation3d(0, Math.toRadians(40), Math.toRadians(180)));
+
+        // Physical location of the back right camera on the robot, relative to the center of the robot. CHANGE THIS
+
+        public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
                 new Translation3d(-Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(6.5)),
                 new Rotation3d(0, Math.toRadians(39), Math.toRadians(180)));
 
