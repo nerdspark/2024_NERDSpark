@@ -138,8 +138,12 @@ public class ArmIOSparkMax implements ArmIO {
     public void resetEncoders() {
         shoulderLeft.setSmartCurrentLimit(ArmConstants.currentLimitShoulder);
         elbowLeft.setSmartCurrentLimit(ArmConstants.currentLimitElbow);
-        shoulderLeftController.setP(0.6, 0);
-        elbowLeftController.setP(0.6, 0);
+        shoulderLeftController.setP(ArmConstants.shoulderP,0);
+        shoulderLeftController.setI(ArmConstants.shoulderI,0);
+        shoulderLeftController.setD(ArmConstants.shoulderD,0);
+        elbowLeftController.setI(ArmConstants.elbowP,0);
+        elbowLeftController.setP(ArmConstants.elbowI,0);
+        elbowLeftController.setD(ArmConstants.elbowD,0);
         shoulderLeftEncoder.setPosition(ArmConstants.shoulderOffset);
         // shoulderRightEncoder.setPosition(ArmConstants.shoulderOffset);
         elbowLeftEncoder.setPosition(ArmConstants.elbowOffset);
