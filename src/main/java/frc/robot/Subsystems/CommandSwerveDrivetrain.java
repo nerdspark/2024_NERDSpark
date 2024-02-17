@@ -1,11 +1,9 @@
 package frc.robot.subsystems;
 
-
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kRedAllianceWallRightSide;
 
 import com.ctre.phoenix6.SignalLogger;
-
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -16,13 +14,9 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
-
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -32,17 +26,13 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.Constants.speakerConstants;
 import frc.robot.generated.TunerConstants;
-import frc.robot.util.AllianceFlipUtil;
 import frc.robot.util.AutoAimMath;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers;
 import frc.robot.util.VisionHelpers.TimestampedVisionUpdate;
 import java.util.List;
-
 import java.util.Optional;
-
 import java.util.function.Supplier;
 
 /**
@@ -58,10 +48,10 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
-    // private Translation2d targetPoseSpeaker = AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
+    // private Translation2d targetPoseSpeaker =
+    // AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
     private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
     private boolean targetFollow = true;
-
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
 
