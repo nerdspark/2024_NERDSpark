@@ -62,7 +62,8 @@ public final class Constants {
 
     public static class VisionConstants {
 
-        public static boolean USE_VISION = true;
+        public static boolean USE_VISION = false;
+
 
         public static final String FRONT_CAMERA_NAME = "BlueCamera"; // LEFT
         public static final String BACK_CAMERA_NAME = "BlackCamera"; // RIGHT
@@ -152,4 +153,5 @@ public final class Constants {
         public static final double kIThetaController = 0d;
         public static final double kDThetaController = 0d;
     }
+
 }
