@@ -12,9 +12,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "combo1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "combo1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shootNote1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooteNote2"
+                }
+              }
+            ]
           }
         },
         {
