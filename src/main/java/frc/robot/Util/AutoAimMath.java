@@ -1,10 +1,9 @@
-package frc.robot.Util;
+package frc.robot.util;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.Constants.speakerConstants;
-
 import java.util.function.Supplier;
 
 public class AutoAimMath {
@@ -32,10 +31,9 @@ public class AutoAimMath {
     public static double getAutoAimCalcFourBar(Supplier<Pose2d> poseSupplier, Pose2d targetPose) {
 
         double fourBarAngle = Math.atan2(
-            speakerConstants.speakerHeight,
-            poseSupplier.get().getTranslation().getDistance(targetPose.getTranslation())); // Shooter Angle
+                speakerConstants.speakerHeight,
+                poseSupplier.get().getTranslation().getDistance(targetPose.getTranslation())); // Shooter Angle
 
         return fourBarAngle;
     }
-
 }

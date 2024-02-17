@@ -64,7 +64,6 @@ public final class Constants {
 
         public static boolean USE_VISION = false;
 
-
         public static final String FRONT_CAMERA_NAME = "BlueCamera"; // LEFT
         public static final String BACK_CAMERA_NAME = "BlackCamera"; // RIGHT
         public static final String NOTE_CAMERA_NAME = "NoteCamera";
@@ -154,4 +153,13 @@ public final class Constants {
         public static final double kDThetaController = 0d;
     }
 
+    public static class speakerConstants {
+        public static final double speakerYboth = Units.inchesToMeters(218.42);
+        public static final double speakerBlueX = Units.inchesToMeters(0);
+        public static final double speakerRedX = Units.inchesToMeters(652.73);
+        public static final double speakerHeight = Units.inchesToMeters(80.515); // (82.90 + 78.13) / 2
+
+        public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerYboth, new Rotation2d(0));
+        public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerYboth, new Rotation2d(Math.PI));
+    }
 }
