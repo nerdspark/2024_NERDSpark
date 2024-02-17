@@ -4,7 +4,7 @@ import java.net.NetworkInterface;
 import java.util.Enumeration;
 
 public class MacAddress {
-    public static final String ROBOT_ONE_MAC = "00-80-2F-35-B9-60";
+    public static final String SHADOW_BEETLE_MAC = "00-80-2F-37-42-0D";
     public static final String SECONDARY_ROBOT_ONE_MAC = "10-50-FD-C6-35-0D";
     public static final String ROBOT_TWO_MAC = "92-9B-20-68-07-62";
 

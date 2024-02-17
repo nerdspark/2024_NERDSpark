@@ -15,7 +15,7 @@ public enum RobotIdentity {
         if (Robot.isReal()) {
             String mac = getMACAddress();
             if (!mac.equals("")) {
-                if (mac.equals(MacAddress.ROBOT_ONE_MAC) || mac.equals(SECONDARY_ROBOT_ONE_MAC)) {
+                if (mac.equals(MacAddress.SHADOW_BEETLE_MAC) || mac.equals(SECONDARY_ROBOT_ONE_MAC)) {
                     return COMPETITION_ROBOT_2024;
                 } else if (mac.equals(MacAddress.ROBOT_TWO_MAC)) {
                     return PRACTICE_ROBOT_2024;
