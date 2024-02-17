@@ -17,7 +17,7 @@ public enum RobotIdentity {
             if (!mac.equals("")) {
                 if (mac.equals(MacAddress.SHADOW_BEETLE_MAC) || mac.equals(SECONDARY_ROBOT_ONE_MAC)) {
                     return COMPETITION_ROBOT_2024;
-                } else if (mac.equals(MacAddress.ROBOT_TWO_MAC)) {
+                } else if (mac.equals(MacAddress.SWERVEBOT_2_MAC)) {
                     return PRACTICE_ROBOT_2024;
                 }
             }
