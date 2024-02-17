@@ -122,8 +122,8 @@ public class Robot extends LoggedRobot {
             autonomousCommand.schedule();
         }
 
-        SignalLogger.setPath("/media/sda1/");
-        SignalLogger.start();
+        // SignalLogger.setPath("/media/sda1/");
+        // SignalLogger.start();
     }
 
     /** This function is called periodically during autonomous. */
@@ -134,7 +134,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void autonomousExit() {
 
-        SignalLogger.stop();
+        // SignalLogger.stop();
     }
 
     @Override
