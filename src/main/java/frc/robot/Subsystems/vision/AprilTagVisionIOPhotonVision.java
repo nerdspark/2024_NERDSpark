@@ -36,8 +36,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
         if (Constants.VisionConstants.USE_VISION == true) {
             if (Constants.VisionConstants.USE_FRONT_CAMERA) {
                 frontEstimator = new PhotonVisionRunnable(
-                        Constants.VisionConstants.FRONT_CAMERA_NAME, 
-                        Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
+                        Constants.VisionConstants.FRONT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
             }
             if (Constants.VisionConstants.USE_BACK_LEFT_CAMERA) {
                 backLeftEstimator = new PhotonVisionRunnable(
