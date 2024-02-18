@@ -19,11 +19,14 @@ public class FourBarIOSparkMax implements FourBarIO {
     private RelativeEncoder FourBarEncoder2;
 
     private final SparkPIDController FourBarPIDController1;
-    private final SparkPIDController FourBarPIDController2;
 
     public FourBarIOSparkMax() {
+        
         FourBarMotor1 = new CANSparkMax(10, CANSparkMax.MotorType.kBrushless);
         FourBarMotor2 = new CANSparkMax(11, CANSparkMax.MotorType.kBrushless);
+
+        FourBarMotor1.setInverted(false);
+        FourBarMotor2.setInverted(true);
 
         FourBarEncoder1 = FourBarMotor1.getEncoder();
         FourBarEncoder2 = FourBarMotor2.getEncoder();
@@ -35,8 +38,8 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarEncoder2.setPosition(0);
 
         FourBarMotor2.follow(FourBarMotor1);
+
         FourBarPIDController1 = FourBarMotor1.getPIDController();
-        FourBarPIDController2 = FourBarMotor2.getPIDController();
     }
 
     @Override
@@ -54,7 +57,7 @@ public class FourBarIOSparkMax implements FourBarIO {
 
     public void setFourBarAngle(double angle) {
         FourBarPIDController1.setReference(angle, CANSparkMax.ControlType.kPosition);
-        FourBarPIDController2.setReference(angle, CANSparkMax.ControlType.kPosition);
+
     }
 
     public double getFourBarAngle() {

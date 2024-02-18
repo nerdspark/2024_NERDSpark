@@ -5,6 +5,7 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Subsystems.Intake.Intake;
 import java.util.function.Supplier;
 
@@ -16,14 +17,25 @@ public class IntakeCommand extends Command {
 
     private Supplier<Double> power;
 
+    public enum IntakeMode {
+        FORCEINTAKE,
+        FULLINTAKE,
+        SOFTINTAKE
+    }
+
+    private IntakeMode mode;
+    private boolean isIndexing = false;
+    private double referencePosition = 0;
+
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public IntakeCommand(Intake Intake, Supplier<Double> power) {
+    public IntakeCommand(Intake Intake, Supplier<Double> power, IntakeMode mode) {
         this.Intake = Intake;
         this.power = power;
+        this.mode = mode;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Intake);
     }
@@ -35,7 +47,49 @@ public class IntakeCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Intake.setIntakePower(power.get());
+
+        switch (mode) {
+            case FORCEINTAKE:
+                 Intake.setIntakePower(power.get());
+
+                break;
+            
+            case FULLINTAKE: 
+
+                if(!Intake.getBeamBreak()) { 
+                    
+                    Intake.setIntakePower(power.get()); 
+                    isIndexing = false;
+
+                } else if(!isIndexing) { 
+
+                    referencePosition = Intake.getIntakePosition();
+                    isIndexing = true;
+
+                }
+
+                if(isIndexing) {
+
+                    if(Math.abs(Intake.getIntakePosition()-referencePosition) > Constants.indexDistance)  {
+                        Intake.setIntakePower(0.1);
+                    } else {
+                        Intake.setIntakePower(0);
+                    }
+                } 
+                
+                break;
+        
+            case SOFTINTAKE:
+                if(!Intake.getBeamBreak()) { Intake.setIntakePower(power.get()); }
+                else { Intake.setIntakePower(0);}
+
+                break;
+
+            default:
+                break;
+        }
+
+        
     }
 
     // Called once the command ends or is interrupted.

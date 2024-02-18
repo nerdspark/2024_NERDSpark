@@ -28,4 +28,12 @@ public interface IntakeIO {
     default double getIntakePower() {
         return 0;
     }
+
+    default boolean getBeamBreak() {
+        return false;
+    }
+
+    default double getIntakePosition() {
+        return 0;
+    }
 }
