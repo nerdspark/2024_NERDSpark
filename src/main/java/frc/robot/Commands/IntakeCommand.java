@@ -50,46 +50,45 @@ public class IntakeCommand extends Command {
 
         switch (mode) {
             case FORCEINTAKE:
-                 Intake.setIntakePower(power.get());
+                Intake.setIntakePower(power.get());
 
                 break;
-            
-            case FULLINTAKE: 
 
-                if(!Intake.getBeamBreak()) { 
-                    
-                    Intake.setIntakePower(power.get()); 
+            case FULLINTAKE:
+                if (!Intake.getBeamBreak()) {
+
+                    Intake.setIntakePower(power.get());
                     isIndexing = false;
 
-                } else if(!isIndexing) { 
+                } else if (!isIndexing) {
 
                     referencePosition = Intake.getIntakePosition();
                     isIndexing = true;
-
                 }
 
-                if(isIndexing) {
+                if (isIndexing) {
 
-                    if(Math.abs(Intake.getIntakePosition()-referencePosition) > Constants.indexDistance)  {
+                    if (Math.abs(Intake.getIntakePosition() - referencePosition) > Constants.indexDistance) {
                         Intake.setIntakePower(0.1);
                     } else {
                         Intake.setIntakePower(0);
                     }
-                } 
-                
+                }
+
                 break;
-        
+
             case SOFTINTAKE:
-                if(!Intake.getBeamBreak()) { Intake.setIntakePower(power.get()); }
-                else { Intake.setIntakePower(0);}
+                if (!Intake.getBeamBreak()) {
+                    Intake.setIntakePower(power.get());
+                } else {
+                    Intake.setIntakePower(0);
+                }
 
                 break;
 
             default:
                 break;
         }
-
-        
     }
 
     // Called once the command ends or is interrupted.

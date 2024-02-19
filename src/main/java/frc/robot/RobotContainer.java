@@ -19,6 +19,7 @@ import frc.robot.Commands.ArmCommand;
 import frc.robot.Commands.ArmResetCommand;
 import frc.robot.Commands.FourBarCommand;
 import frc.robot.Commands.IntakeCommand;
+import frc.robot.Commands.IntakeCommand.IntakeMode;
 import frc.robot.Commands.ShooterCommand;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.Subsystems.Arm.Arm;
@@ -109,7 +110,7 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
 
-        intake.setDefaultCommand(new IntakeCommand(intake, () -> joystick.getLeftTriggerAxis()));
+        intake.setDefaultCommand(new IntakeCommand(intake, () -> joystick.getLeftTriggerAxis(), IntakeMode.SOFTINTAKE));
         shooter.setDefaultCommand(new ShooterCommand(
                 shooter, () -> joystick.getRightTriggerAxis(), () -> joystick.getRightTriggerAxis()));
         fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> joystick.getLeftX()));

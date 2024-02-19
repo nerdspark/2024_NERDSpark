@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.util.Units;
-import frc.robot.Subsystems.FourBar.FourBarIO.FourBarIOInputs;
 
 public class FourBarIOSparkMax implements FourBarIO {
     /** Creates a new FourBarIOSparkMax. */
@@ -21,7 +20,7 @@ public class FourBarIOSparkMax implements FourBarIO {
     private final SparkPIDController FourBarPIDController1;
 
     public FourBarIOSparkMax() {
-        
+
         FourBarMotor1 = new CANSparkMax(10, CANSparkMax.MotorType.kBrushless);
         FourBarMotor2 = new CANSparkMax(11, CANSparkMax.MotorType.kBrushless);
 
@@ -57,7 +56,6 @@ public class FourBarIOSparkMax implements FourBarIO {
 
     public void setFourBarAngle(double angle) {
         FourBarPIDController1.setReference(angle, CANSparkMax.ControlType.kPosition);
-
     }
 
     public double getFourBarAngle() {

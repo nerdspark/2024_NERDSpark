@@ -13,10 +13,9 @@
 
 package frc.robot.Subsystems.Intake;
 
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkBase.IdleMode;
-
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -26,28 +25,21 @@ import edu.wpi.first.wpilibj.DigitalInput;
  */
 public class IntakeIOSparkMax implements IntakeIO {
     private CANSparkMax intakeMotor;
-    
+
     private RelativeEncoder intakeEncoder;
-   
+
     private DigitalInput beamBreak;
 
     public IntakeIOSparkMax() {
         intakeMotor = new CANSparkMax(10, CANSparkMax.MotorType.kBrushless);
-       
 
         intakeEncoder = intakeMotor.getEncoder();
-   
 
         intakeMotor.setSmartCurrentLimit(8);
 
-        
         intakeMotor.setIdleMode(IdleMode.kBrake);
 
-
         intakeEncoder.setPosition(0);
-        
-
-
 
         beamBreak = new DigitalInput(0);
     }
@@ -57,7 +49,7 @@ public class IntakeIOSparkMax implements IntakeIO {
         inputs.intakePosition1 = Units.rotationsToRadians(intakeEncoder.getPosition());
         inputs.intakeVelocity1 = Units.rotationsPerMinuteToRadiansPerSecond(intakeEncoder.getVelocity());
         inputs.intakeAppliedVolts1 = intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage();
-        inputs.intakeCurrentAmps1 = new double[] {intakeMotor.getOutputCurrent()}; 
+        inputs.intakeCurrentAmps1 = new double[] {intakeMotor.getOutputCurrent()};
     }
 
     public void setIntakePower(double intakePower) {
