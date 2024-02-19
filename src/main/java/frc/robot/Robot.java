@@ -85,12 +85,14 @@ public class Robot extends LoggedRobot {
         // See http://bit.ly/3YIzFZ6 for more information on timestamps in AdvantageKit.
         // Logger.disableDeterministicTimestamps()
 
+
         // Start AdvantageKit logger
         Logger.start();
 
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our autonomous chooser on the dashboard.
         robotContainer = new RobotContainer();
+
     }
 
     /** This function is called periodically during all modes. */
@@ -122,20 +124,23 @@ public class Robot extends LoggedRobot {
             autonomousCommand.schedule();
         }
 
-        SignalLogger.setPath("/media/sda1/");
-        SignalLogger.start();
+        // SignalLogger.setPath("/media/sda1/");
+        // SignalLogger.start();
     }
 
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {}
 
+
     /** This function is called once when teleop is enabled. */
+
     @Override
     public void autonomousExit() {
 
-        SignalLogger.stop();
+        // SignalLogger.stop();
     }
+
 
     @Override
     public void teleopInit() {

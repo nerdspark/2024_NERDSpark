@@ -22,7 +22,8 @@ import java.util.ArrayList;
 public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
 
     private static PhotonVisionRunnable frontEstimator;
-    private static PhotonVisionRunnable backEstimator;
+    private static PhotonVisionRunnable backLeftEstimator;
+    private static PhotonVisionRunnable backRightEstimator;
     private static Notifier allNotifier;
 
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
@@ -33,14 +34,32 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
      */
     public AprilTagVisionIOPhotonVision() {
         if (Constants.VisionConstants.USE_VISION == true) {
-            backEstimator = new PhotonVisionRunnable(
-                    Constants.VisionConstants.BACK_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_BACK_CAMERA);
-            frontEstimator = new PhotonVisionRunnable(
-                    Constants.VisionConstants.FRONT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
+            if (Constants.VisionConstants.USE_FRONT_CAMERA) {
+                frontEstimator = new PhotonVisionRunnable(
+                        Constants.VisionConstants.FRONT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
+            }
+            if (Constants.VisionConstants.USE_BACK_LEFT_CAMERA) {
+                backLeftEstimator = new PhotonVisionRunnable(
+                        Constants.VisionConstants.BACK_LEFT_CAMERA_NAME,
+                        Constants.VisionConstants.ROBOT_TO_BACK_LEFT_CAMERA);
+            }
+            if (Constants.VisionConstants.USE_BACK_RIGHT_CAMERA) {
+                backRightEstimator = new PhotonVisionRunnable(
+                        Constants.VisionConstants.BACK_RIGHT_CAMERA_NAME,
+                        Constants.VisionConstants.ROBOT_TO_BACK_RIGHT_CAMERA);
+            }
 
             allNotifier = new Notifier(() -> {
-                frontEstimator.run();
-                backEstimator.run();
+                if (Constants.VisionConstants.USE_FRONT_CAMERA) {
+                    frontEstimator.run();
+                }
+                if (Constants.VisionConstants.USE_BACK_LEFT_CAMERA) {
+                    backLeftEstimator.run();
+                }
+
+                if (Constants.VisionConstants.USE_BACK_RIGHT_CAMERA) {
+                    backRightEstimator.run();
+                }
             });
 
             allNotifier.setName("runAll");
@@ -57,8 +76,15 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
     public void updateInputs(AprilTagVisionIOInputs inputs) {
 
         if (Constants.VisionConstants.USE_VISION == true) {
-            updatePoseEstimates(frontEstimator, inputs);
-            updatePoseEstimates(backEstimator, inputs);
+            if (Constants.VisionConstants.USE_FRONT_CAMERA) {
+                updatePoseEstimates(frontEstimator, inputs);
+            }
+            if (Constants.VisionConstants.USE_BACK_LEFT_CAMERA) {
+                updatePoseEstimates(backLeftEstimator, inputs);
+            }
+            if (Constants.VisionConstants.USE_BACK_RIGHT_CAMERA) {
+                updatePoseEstimates(backRightEstimator, inputs);
+            }
         }
     }
 
