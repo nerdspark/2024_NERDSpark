@@ -48,6 +48,8 @@ public final class Constants {
     public static final int wristID = 0;
     public static final int gripperID = 0;
 
+    public static final double indexDistance = 1000;
+
     public static final Mode currentMode = Mode.REAL;
     public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
 

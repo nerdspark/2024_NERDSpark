@@ -50,4 +50,12 @@ public class Intake extends SubsystemBase {
     public void setIntakePower(double power) {
         io.setIntakePower(power);
     }
+
+    public boolean getBeamBreak() {
+        return io.getBeamBreak();
+    }
+
+    public double getIntakePosition(){ 
+        return io.getIntakePosition();
+    }
 }

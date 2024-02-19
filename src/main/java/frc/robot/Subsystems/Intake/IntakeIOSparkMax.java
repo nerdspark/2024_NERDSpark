@@ -15,52 +15,64 @@ package frc.robot.Subsystems.Intake;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * This drive implementation is for Spark Maxes driving brushed motors (e.g. CIMS) with no encoders.
  * For the Spark Flex in docked mode, replace all instances of "CANSparkMax" with "CANSparkFlex".
  */
 public class IntakeIOSparkMax implements IntakeIO {
-    private CANSparkMax intakeMotor1;
-    private CANSparkMax intakeMotor2;
-    private RelativeEncoder intakeEncoder1;
-    private RelativeEncoder intakeEncoder2;
+    private CANSparkMax intakeMotor;
+    
+    private RelativeEncoder intakeEncoder;
+   
+    private DigitalInput beamBreak;
 
     public IntakeIOSparkMax() {
-        intakeMotor1 = new CANSparkMax(10, CANSparkMax.MotorType.kBrushless);
-        intakeMotor2 = new CANSparkMax(11, CANSparkMax.MotorType.kBrushless);
+        intakeMotor = new CANSparkMax(10, CANSparkMax.MotorType.kBrushless);
+       
 
-        intakeEncoder1 = intakeMotor1.getEncoder();
-        intakeEncoder2 = intakeMotor2.getEncoder();
+        intakeEncoder = intakeMotor.getEncoder();
+   
 
-        intakeMotor1.setSmartCurrentLimit(8);
-        intakeMotor2.setSmartCurrentLimit(8);
+        intakeMotor.setSmartCurrentLimit(8);
 
-        intakeEncoder1.setPosition(0);
-        intakeEncoder2.setPosition(0);
+        
+        intakeMotor.setIdleMode(IdleMode.kBrake);
 
-        intakeMotor2.follow(intakeMotor1);
+
+        intakeEncoder.setPosition(0);
+        
+
+
+
+        beamBreak = new DigitalInput(0);
     }
 
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
-        inputs.intakePosition1 = Units.rotationsToRadians(intakeEncoder1.getPosition());
-        inputs.intakeVelocity1 = Units.rotationsPerMinuteToRadiansPerSecond(intakeEncoder1.getVelocity());
-        inputs.intakeAppliedVolts1 = intakeMotor1.getAppliedOutput() * intakeMotor1.getBusVoltage();
-        inputs.intakeCurrentAmps1 = new double[] {intakeMotor1.getOutputCurrent()};
-
-        inputs.intakePosition2 = Units.rotationsToRadians(intakeEncoder2.getPosition());
-        inputs.intakeVelocity2 = Units.rotationsPerMinuteToRadiansPerSecond(intakeEncoder2.getVelocity());
-        inputs.intakeAppliedVolts2 = intakeMotor2.getAppliedOutput() * intakeMotor2.getBusVoltage();
-        inputs.intakeCurrentAmps2 = new double[] {intakeMotor2.getOutputCurrent()};
+        inputs.intakePosition1 = Units.rotationsToRadians(intakeEncoder.getPosition());
+        inputs.intakeVelocity1 = Units.rotationsPerMinuteToRadiansPerSecond(intakeEncoder.getVelocity());
+        inputs.intakeAppliedVolts1 = intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage();
+        inputs.intakeCurrentAmps1 = new double[] {intakeMotor.getOutputCurrent()}; 
     }
 
     public void setIntakePower(double intakePower) {
-        intakeMotor1.set(intakePower);
+        intakeMotor.set(intakePower);
     }
 
     public double getIntakePower() {
-        return intakeMotor1.get();
+        return intakeMotor.get();
+    }
+
+    public boolean getBeamBreak() {
+        return beamBreak.get();
+    }
+
+    public double getIntakePosition() {
+        return intakeEncoder.getPosition();
     }
 }

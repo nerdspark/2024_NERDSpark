@@ -6,6 +6,11 @@ package frc.robot.Subsystems.Shooter;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Shooter.ShooterIO.ShooterIoInputs;
@@ -22,11 +27,19 @@ public class ShooterIOSparkMax implements ShooterIO {
 
     private final RelativeEncoder shooterEncoder2;
 
+    private final SparkPIDController shooterController1;
+    private final SparkPIDController shooterController2;
+
+
     public ShooterIOSparkMax() {
         shooterMotor1 = new CANSparkMax(Constants.shooterMotor1ID, CANSparkMax.MotorType.kBrushless);
         shooterMotor2 = new CANSparkMax(Constants.shooterMotor2ID, CANSparkMax.MotorType.kBrushless);
         shooterEncoder1 = shooterMotor1.getEncoder();
         shooterEncoder2 = shooterMotor2.getEncoder();
+
+        shooterController1 = shooterMotor1.getPIDController();
+        shooterController2 = shooterMotor2.getPIDController();
+
     }
 
     @Override
@@ -43,7 +56,7 @@ public class ShooterIOSparkMax implements ShooterIO {
     }
 
     public void setSpeed(double speed1, double speed2) {
-        shooterMotor1.set(speed1);
-        shooterMotor2.set(speed2);
+        shooterController1.setReference(speed1, ControlType.kVelocity);
+        shooterController2.setReference(speed2, ControlType.kVelocity);
     }
 }
