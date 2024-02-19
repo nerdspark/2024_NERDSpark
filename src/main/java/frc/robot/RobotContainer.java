@@ -21,7 +21,6 @@ import frc.robot.Commands.FourBarCommand;
 import frc.robot.Commands.IntakeCommand;
 import frc.robot.Commands.ShooterCommand;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
-import frc.robot.Generated.TunerConstants;
 import frc.robot.Subsystems.Arm.Arm;
 import frc.robot.Subsystems.Arm.ArmIO;
 import frc.robot.Subsystems.Arm.ArmIOSparkMax;
@@ -34,6 +33,7 @@ import frc.robot.Subsystems.Intake.IntakeIOSparkMax;
 import frc.robot.Subsystems.Shooter.Shooter;
 import frc.robot.Subsystems.Shooter.ShooterIO;
 import frc.robot.Subsystems.Shooter.ShooterIOSparkMax;
+import frc.robot.generated.TunerConstants;
 
 public class RobotContainer {
     private double MaxSpeed = 6; // 6 meters per second desired top speed
@@ -92,6 +92,7 @@ public class RobotContainer {
                 shooter = new Shooter(new ShooterIOSparkMax());
                 fourBar = new FourBar(new FourBarIOSparkMax());
                 arm = new Arm(new ArmIOSparkMax());
+                arm.getArmPosition();
                 break;
 
             default:
@@ -115,6 +116,9 @@ public class RobotContainer {
         joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
         joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
         joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> new
+        // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
+        // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
         joystick.y().onTrue(new ArmResetCommand(arm));
     }
 

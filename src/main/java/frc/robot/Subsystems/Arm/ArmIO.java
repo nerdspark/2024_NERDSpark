@@ -11,25 +11,35 @@ import org.littletonrobotics.junction.AutoLog;
 public interface ArmIO {
     @AutoLog
     class ArmIOInputs {
-        public static double shoulderPosition = 0.0;
-        public double shoulderVelocity = 0.0;
-        public double shoulderAppliedVolts = 0.0;
-        public double[] shoulderCurrentAmps = new double[] {};
+        public static double shoulderLeftPosition = 0.0;
+        public double shoulderLeftVelocity = 0.0;
+        public double shoulderLeftAppliedVolts = 0.0;
+        public double[] shoulderLeftCurrentAmps = new double[] {};
 
-        public double elbowPosition = 0.0;
-        public double elbowVelocity = 0.0;
-        public double elbowAppliedVolts = 0.0;
-        public double[] elbowCurrentAmps = new double[] {};
+        public double elbowLeftPosition = 0.0;
+        public double elbowLeftVelocity = 0.0;
+        public double elbowLeftAppliedVolts = 0.0;
+        public double[] elbowLeftCurrentAmps = new double[] {};
+
+        public static double shoulderRightPosition = 0.0;
+        public double shoulderRightVelocity = 0.0;
+        public double shoulderRightAppliedVolts = 0.0;
+        public double[] shoulderRightCurrentAmps = new double[] {};
+
+        public double elbowRightPosition = 0.0;
+        public double elbowRightVelocity = 0.0;
+        public double elbowRightAppliedVolts = 0.0;
+        public double[] elbowRightCurrentAmps = new double[] {};
 
         public double wristPosition = 0.0;
         public double wristVelocity = 0.0;
         public double wristAppliedVolts = 0.0;
         public double[] wristCurrentAmps = new double[] {};
 
-        public double gripperPosition = 0.0;
-        public double gripperVelocity = 0.0;
-        public double gripperAppliedVolts = 0.0;
-        public double[] gripperCurrentAmps = new double[] {};
+        // public double gripperPosition = 0.0;
+        // public double gripperVelocity = 0.0;
+        // public double gripperAppliedVolts = 0.0;
+        // public double[] gripperCurrentAmps = new double[] {};
     }
 
     default void setArmPosition(Translation2d position, boolean inBend) {}
@@ -62,4 +72,8 @@ public interface ArmIO {
     }
 
     default void setGripper(double power) {}
+
+    default Translation2d getArmPosition() {
+        return new Translation2d();
+    }
 }

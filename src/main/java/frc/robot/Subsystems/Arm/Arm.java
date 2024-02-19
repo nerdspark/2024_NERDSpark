@@ -6,6 +6,7 @@ package frc.robot.Subsystems.Arm;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
     /** Creates a new Arm. */
@@ -20,6 +21,7 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         io.updateInputs(inputs);
+        Logger.processInputs("Arm", inputs);
         // This method will be called once per scheduler run
     }
 
@@ -57,5 +59,9 @@ public class Arm extends SubsystemBase {
 
     public void setGripper(double power) {
         io.setGripper(power);
+    }
+
+    public Translation2d getArmPosition() {
+        return io.getArmPosition();
     }
 }
