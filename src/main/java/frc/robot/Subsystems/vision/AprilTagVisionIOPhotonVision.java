@@ -33,9 +33,9 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
      */
     public AprilTagVisionIOPhotonVision() {
         if (Constants.VisionConstants.USE_VISION == true) {
-            frontEstimator = new PhotonVisionRunnable(
-                    Constants.VisionConstants.BACK_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_BACK_CAMERA);
             backEstimator = new PhotonVisionRunnable(
+                    Constants.VisionConstants.BACK_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_BACK_CAMERA);
+            frontEstimator = new PhotonVisionRunnable(
                     Constants.VisionConstants.FRONT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
 
             allNotifier = new Notifier(() -> {
@@ -84,6 +84,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             int[] tagIDsFrontCamera = new int[cameraPose.targetsUsed.size()];
             double averageTagDistance = 0.0;
             double poseAmbiguity = 0.0;
+
             for (int i = 0; i < cameraPose.targetsUsed.size(); i++) {
                 tagIDsFrontCamera[i] =
                         (int) cameraPose.targetsUsed.get(i).getFiducialId(); // Retrieves and stores the tag ID
@@ -94,9 +95,11 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                         .getTranslation()
                         .getNorm(); // Calculates the sum of the tag distances
 
-                poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
+                poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();               
+
             }
             averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
+
             poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
             poseEstimates.add(new PoseEstimate(
