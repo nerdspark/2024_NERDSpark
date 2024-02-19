@@ -9,6 +9,10 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+
+import edu.wpi.first.math.controller.ArmFeedforward;
+//import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,6 +41,10 @@ public class ArmIOSparkMax implements ArmIO {
     private SparkPIDController wristController;
 
     private boolean inBend;
+    // private PIDController shoulderController; // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-feedforward.html#introduction-to-dc-motor-feedforward
+    // private PIDController elbowController;
+    private ArmFeedforward shoulderFeedforward;
+    private ArmFeedforward elbowFeedforward; // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/feedforward.html#armfeedforward
 
     /** Creates a new ArmIOSparkMax. */
     public ArmIOSparkMax() {
@@ -80,6 +88,10 @@ public class ArmIOSparkMax implements ArmIO {
 
         inBend = false;
         resetEncoders();
+        // shoulderFeedforward.calculate(0.0,0.0,0.0);
+        // elbowFeedforward.calculate(0.0,0.0,0.0);
+        shoulderFeedforward = new ArmFeedforward(ArmConstants.shoulderS, ArmConstants.shoulderG, ArmConstants.shoulderV, ArmConstants.shoulderA);
+        elbowFeedforward = new ArmFeedforward(ArmConstants.elbowS, ArmConstants.elbowG, ArmConstants.elbowV, ArmConstants.elbowA);
     }
 
     @Override
