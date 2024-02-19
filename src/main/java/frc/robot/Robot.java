@@ -102,9 +102,9 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void teleopInit() {
-        // if (m_autonomousCommand != null) {
-        //     m_autonomousCommand.cancel();
-        // }
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
+        }
     }
 
     @Override

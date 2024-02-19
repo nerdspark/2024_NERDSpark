@@ -76,7 +76,12 @@ public class ArmIOSparkMax implements ArmIO {
         elbowRightEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
         wristEncoder.setPositionConversionFactor(ArmConstants.wristRadPerRot);
 
-
+        shoulderLeftEncoder = shoulderLeft.getEncoder();
+        shoulderRightEncoder = shoulderRight.getEncoder();
+        elbowLeftEncoder = elbowLeft.getEncoder();
+        elbowRightEncoder = elbowRight.getEncoder();
+        wristEncoder = wrist.getEncoder();
+        gripperEncoder = gripper.getEncoder();
 
         shoulderLeftEncoder.setPosition(ArmConstants.shoulderOffset);
         shoulderRightEncoder.setPosition(ArmConstants.shoulderOffset);
@@ -126,10 +131,10 @@ public class ArmIOSparkMax implements ArmIO {
         inputs.wristAppliedVolts = wrist.getAppliedOutput() * wrist.getBusVoltage();
         inputs.wristCurrentAmps = new double[] {wrist.getOutputCurrent()};
 
-        // inputs.gripperPosition = Units.rotationsToRadians(gripperEncoder.getPosition());
-        // inputs.gripperVelocity = Units.rotationsPerMinuteToRadiansPerSecond(gripperEncoder.getVelocity());
-        // inputs.gripperAppliedVolts = gripper.getAppliedOutput() * gripper.getBusVoltage();
-        // inputs.gripperCurrentAmps = new double[] {gripper.getOutputCurrent()};
+        inputs.gripperPosition = Units.rotationsToRadians(gripperEncoder.getPosition());
+        inputs.gripperVelocity = Units.rotationsPerMinuteToRadiansPerSecond(gripperEncoder.getVelocity());
+        inputs.gripperAppliedVolts = gripper.getAppliedOutput() * gripper.getBusVoltage();
+        inputs.gripperCurrentAmps = new double[] {gripper.getOutputCurrent()};
     }
 
     public void setArmVelocity(Translation2d velocity) {
