@@ -35,18 +35,18 @@ public final class Constants {
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
 
-        public static final double shoulderP = 0.6; 
+        public static final double shoulderP = 0.3; 
         public static final double shoulderI = 0.0;
         public static final double shoulderD = 0.0;
-        public static final double elbowP = 0.6;
+        public static final double elbowP = 0.2;
         public static final double elbowI = 0.0;
         public static final double elbowD = 0.0;
         public static final double shoulderS = 0.0; // feedforward
-        public static final double shoulderG = 0.0;
+        public static final double shoulderG = 0.012;
         public static final double shoulderV = 0.0;
         public static final double shoulderA = 0.0;
         public static final double elbowS = 0.0;
-        public static final double elbowG = 0.0;
+        public static final double elbowG = .01;
         public static final double elbowV = 0.0;
         public static final double elbowA = 0.0;
 
@@ -54,7 +54,7 @@ public final class Constants {
         public static final class ArmSetPoints {
             public static final Translation2d home = new Translation2d(0,36);//A
             public static final Translation2d pickup = new Translation2d(10,18);//B
-            public static final Translation2d amp = new Translation2d(-10,18);//X
+            public static final Translation2d amp = new Translation2d(36,0);//X
         }
     }
 
