@@ -15,9 +15,11 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Subsystems.Arm.ArmIO.ArmIOInputs;
 
 public class ArmIOSparkMax implements ArmIO {
     private CANSparkMax shoulderLeft;
@@ -269,7 +271,7 @@ public class ArmIOSparkMax implements ArmIO {
         return wristEncoder.getPosition();
     }
 
-    // public void setGripper(double power) {
-    //     gripper.set(power);
-    // }
+    public void setGripper(double power) {
+        gripper.set(power);
+    }
 }
