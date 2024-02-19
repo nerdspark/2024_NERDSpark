@@ -59,17 +59,20 @@ public final class Constants {
     }
 
     public static final int intakeMotorId = 0;
-    public static final int deployMotorId = 0;
-    public static final int shooterMotor2ID = 0;
-    public static final int shooterMotor1ID = 0;
-    public static final int anglemotorID = 0;
+    // public static final int deployMotorId = 0;
+    public static final int shooterMotor2ID = 7;
+    public static final int shooterMotor1ID = 6;
+    // public static final int anglemotorID = 0;
 
-    public static final int shoulderLeftID = 9;
-    public static final int shoulderRightID = 0;
-    public static final int elbowLeftID = 8;
-    public static final int elbowRightID = 0;
+    public static final int fourBarLeftID = 2;
+    public static final int fourBarRightID = 3;
+
+    public static final int shoulderLeftID = 11;
+    public static final int shoulderRightID = 9;
+    public static final int elbowLeftID = 10;
+    public static final int elbowRightID = 8;
     public static final int wristID = 0;
-    public static final int gripperID = 0;
+    // public static final int gripperID = 0;
 
     public static final Mode currentMode = Mode.REAL;
     public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
