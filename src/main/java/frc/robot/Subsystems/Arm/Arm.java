@@ -4,10 +4,9 @@
 
 package frc.robot.Subsystems.Arm;
 
-import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
     /** Creates a new Arm. */
@@ -61,7 +60,7 @@ public class Arm extends SubsystemBase {
     public void setGripper(double power) {
         io.setGripper(power);
     }
-    
+
     public Translation2d getArmPosition() {
         return io.getArmPosition();
     }

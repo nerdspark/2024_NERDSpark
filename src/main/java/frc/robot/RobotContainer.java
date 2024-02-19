@@ -14,16 +14,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.ctre.phoenix6.Utils;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.ArmCommand;
 import frc.robot.Commands.ArmResetCommand;
@@ -31,8 +21,6 @@ import frc.robot.Commands.FourBarCommand;
 import frc.robot.Commands.IntakeCommand;
 import frc.robot.Commands.ShooterCommand;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
-import frc.robot.Generated.TunerConstants;
-import frc.robot.Generated.TunerConstants;
 import frc.robot.Subsystems.Arm.Arm;
 import frc.robot.Subsystems.Arm.ArmIO;
 import frc.robot.Subsystems.Arm.ArmIOSparkMax;
@@ -45,6 +33,7 @@ import frc.robot.Subsystems.Intake.IntakeIOSparkMax;
 import frc.robot.Subsystems.Shooter.Shooter;
 import frc.robot.Subsystems.Shooter.ShooterIO;
 import frc.robot.Subsystems.Shooter.ShooterIOSparkMax;
+import frc.robot.generated.TunerConstants;
 
 public class RobotContainer {
     private double MaxSpeed = 6; // 6 meters per second desired top speed
@@ -127,7 +116,9 @@ public class RobotContainer {
         joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
         joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
         joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
-        // arm.setDefaultCommand(new ArmCommand(arm, () -> new Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()), Math.atan2(joystick.getRightX(),joystick.getRightY()))));
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> new
+        // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
+        // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
         joystick.y().onTrue(new ArmResetCommand(arm));
     }
 

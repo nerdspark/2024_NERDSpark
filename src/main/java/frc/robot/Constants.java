@@ -14,8 +14,8 @@ public final class Constants {
         public static final double baseStageLength = 19; // inches
         public static final double secondStageLength = 17; // inches
 
-        public static final double shoulderRadPerRot = 2 * Math.PI/15 * 14/32;
-        public static final double elbowRadPerRot = 2 * Math.PI/4 * 18/42;
+        public static final double shoulderRadPerRot = 2 * Math.PI / 15 * 14 / 32;
+        public static final double elbowRadPerRot = 2 * Math.PI / 4 * 18 / 42;
         public static final double wristRadPerRot = 2 * Math.PI;
 
         public static final double shoulderOffset = -0.17778; // radians, fwd = 0
@@ -35,7 +35,7 @@ public final class Constants {
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
 
-        public static final double shoulderP = 0.3; 
+        public static final double shoulderP = 0.3;
         public static final double shoulderI = 0.0;
         public static final double shoulderD = 0.0;
         public static final double elbowP = 0.2;
@@ -50,11 +50,10 @@ public final class Constants {
         public static final double elbowV = 0.0;
         public static final double elbowA = 0.0;
 
-
         public static final class ArmSetPoints {
-            public static final Translation2d home = new Translation2d(0,36);//A
-            public static final Translation2d pickup = new Translation2d(10,18);//B
-            public static final Translation2d amp = new Translation2d(36,0);//X
+            public static final Translation2d home = new Translation2d(0, 36); // A
+            public static final Translation2d pickup = new Translation2d(10, 18); // B
+            public static final Translation2d amp = new Translation2d(36, 0); // X
         }
     }
 
