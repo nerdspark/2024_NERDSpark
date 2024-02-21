@@ -75,6 +75,8 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
     @Override
     public void updateInputs(AprilTagVisionIOInputs inputs) {
 
+        inputs.poseEstimates = new ArrayList<>();
+
         if (Constants.VisionConstants.USE_VISION == true) {
             if (Constants.VisionConstants.USE_FRONT_CAMERA) {
                 updatePoseEstimates(frontEstimator, inputs);
@@ -98,7 +100,8 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
 
         var cameraPose = estomator.grabLatestEstimatedPose();
 
-        ArrayList<PoseEstimate> poseEstimates = new ArrayList<>(); // Creates an empty ArrayList to store pose estimates
+        // ArrayList<PoseEstimate> poseEstimates = new ArrayList<>(); // Creates an empty ArrayList to store pose
+        // estimates
 
         if (cameraPose != null) {
             // New pose from vision
@@ -121,21 +124,20 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                         .getTranslation()
                         .getNorm(); // Calculates the sum of the tag distances
 
-                poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();               
-
+                poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
             }
             averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
 
             poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
-            poseEstimates.add(new PoseEstimate(
+            inputs.poseEstimates.add(new PoseEstimate(
                     cameraPose.estimatedPose,
                     cameraPose.timestampSeconds,
                     averageTagDistance,
                     tagIDsFrontCamera,
                     poseAmbiguity)); //
 
-            inputs.poseEstimates = poseEstimates;
+            // inputs.poseEstimates = poseEstimates;
         }
     }
 }

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.util.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
 
 public class PoseEstimatorSubsystem extends SubsystemBase {
@@ -169,9 +170,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
      */
     private Pose2d flipAlliance(Pose2d poseToFlip) {
         return poseToFlip.relativeTo(new Pose2d(
-                new Translation2d(
-                        Constants.VisionConstants.FIELD_LENGTH_METERS, Constants.VisionConstants.FIELD_WIDTH_METERS),
-                new Rotation2d(Math.PI)));
+                new Translation2d(FieldConstants.fieldLength, FieldConstants.fieldWidth), new Rotation2d(Math.PI)));
     }
 
     // public void resetPoseRating() {

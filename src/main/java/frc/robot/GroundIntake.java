@@ -1,10 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-
 // public class GroundIntake extends SequentialCommandGroup {
 //         public GroundIntake(
 //             FourBar FourBar,
@@ -20,7 +15,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 //                                 ArmConstants.groundPickupPosition.armCmdPos(),
 //                                 ArmConstants.groundPickupPosition.smartMotionMaxVel(),
 //                                 ArmConstants.groundPickupPosition.smartMotionMaxAccel()),
-//                         new MoveElevatorCommand(elevatorSubsystem, ArmConstants.groundPickupPosition.elevatorCmdPos()),
+//                         new MoveElevatorCommand(elevatorSubsystem,
+// ArmConstants.groundPickupPosition.elevatorCmdPos()),
 //                         new WaitCommand(0.3)
 //                                 .andThen(new MoveWristCommand(
 //                                         wristSubsystem, ArmConstants.groundPickupPosition.wristCmdPos()))),
