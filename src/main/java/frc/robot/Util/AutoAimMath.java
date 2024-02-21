@@ -10,7 +10,6 @@ public class AutoAimMath {
     Supplier<Pose2d> poseSupplier;
     Pose2d targetPose;
 
-
     public static Rotation2d getAutoAimCalcRobot(Supplier<Pose2d> poseSupplier, Translation2d targetPose) {
 
         double robotAimAngle = Math.atan2(
