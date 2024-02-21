@@ -12,9 +12,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "angleOverRideTest"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "angleOverRideTest"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "marker1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "marker2"
+                }
+              }
+            ]
           }
         }
       ]
