@@ -84,7 +84,6 @@ public final class Constants {
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
-          
                 new Translation3d(Units.inchesToMeters(-15), Units.inchesToMeters(-0.25), Units.inchesToMeters(6)),
                 new Rotation3d(0, -Math.toRadians(35), Math.toRadians(180)));
 
