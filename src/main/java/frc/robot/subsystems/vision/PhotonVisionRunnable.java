@@ -1,13 +1,12 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.vision;
 
 import static frc.robot.Constants.VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD;
-import static frc.robot.Constants.VisionConstants.FIELD_LENGTH_METERS;
-import static frc.robot.Constants.VisionConstants.FIELD_WIDTH_METERS;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.RobotState;
+import frc.robot.util.FieldConstants;
 import java.util.concurrent.atomic.AtomicReference;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
@@ -51,9 +50,9 @@ public class PhotonVisionRunnable implements Runnable {
                     var estimatedPose = estimatedRobotPose.estimatedPose;
                     // Make sure the measurement is on the field
                     if (estimatedPose.getX() > 0.0
-                            && estimatedPose.getX() <= FIELD_LENGTH_METERS
+                            && estimatedPose.getX() <= FieldConstants.fieldLength
                             && estimatedPose.getY() > 0.0
-                            && estimatedPose.getY() <= FIELD_WIDTH_METERS) {
+                            && estimatedPose.getY() <= FieldConstants.fieldWidth) {
                         atomicEstimatedRobotPose.set(estimatedRobotPose);
                     }
                 });

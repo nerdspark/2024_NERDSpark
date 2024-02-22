@@ -146,6 +146,9 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
+
+        SignalLogger.setPath("/media/sda1/");
+        SignalLogger.start();
     }
 
     /** This function is called periodically during operator control. */

@@ -13,6 +13,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.util.Alert;
+import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
@@ -77,15 +78,15 @@ public final class Constants {
          * Physical location of the left camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(6.5)),
-                new Rotation3d(0, Math.toRadians(45), Math.toRadians(0)));
+                new Translation3d(Units.inchesToMeters(15), Units.inchesToMeters(0), Units.inchesToMeters(6.25)),
+                new Rotation3d(0, Math.toRadians(-40), Math.toRadians(0)));
 
         /**
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(6.5)),
-                new Rotation3d(0, Math.toRadians(40), Math.toRadians(180)));
+                new Translation3d(Units.inchesToMeters(-15), Units.inchesToMeters(-0.25), Units.inchesToMeters(6)),
+                new Rotation3d(0, -Math.toRadians(35), Math.toRadians(180)));
 
         // Physical location of the back right camera on the robot, relative to the center of the robot. CHANGE THIS
 
@@ -134,13 +135,9 @@ public final class Constants {
                         .1, // y
                         .1);
 
-        public static final double FIELD_LENGTH_METERS = 16.54175;
-
-        public static final double FIELD_WIDTH_METERS = 8.0137;
-
         // Pose on the opposite side of the field. Use with `relativeTo` to flip a pose to the opposite alliance
-        public static final Pose2d FLIPPING_POSE =
-                new Pose2d(new Translation2d(FIELD_LENGTH_METERS, FIELD_WIDTH_METERS), new Rotation2d(Math.PI));
+        public static final Pose2d FLIPPING_POSE = new Pose2d(
+                new Translation2d(FieldConstants.fieldLength, FieldConstants.fieldWidth), new Rotation2d(Math.PI));
 
         // Vision Drive Constants
 

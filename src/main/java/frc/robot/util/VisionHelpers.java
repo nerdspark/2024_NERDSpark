@@ -10,7 +10,6 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
-import frc.robot.Constants;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -179,8 +178,6 @@ public class VisionHelpers {
      */
     public static Pose2d flipAlliance(Pose2d poseToFlip) {
         return poseToFlip.relativeTo(new Pose2d(
-                new Translation2d(
-                        Constants.VisionConstants.FIELD_LENGTH_METERS, Constants.VisionConstants.FIELD_WIDTH_METERS),
-                new Rotation2d(Math.PI)));
+                new Translation2d(FieldConstants.fieldLength, FieldConstants.fieldWidth), new Rotation2d(Math.PI)));
     }
 }

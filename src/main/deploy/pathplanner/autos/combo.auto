@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2,
-      "y": 5.55
+      "x": 1.26,
+      "y": 5.57
     },
     "rotation": 180.0
   },
@@ -18,22 +18,34 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "angleOverRideTest"
+                  "pathName": "combo1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "marker1"
+                  "name": "shootNote1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "marker2"
+                  "name": "shooteNote2"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "combo2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "combo3"
           }
         }
       ]

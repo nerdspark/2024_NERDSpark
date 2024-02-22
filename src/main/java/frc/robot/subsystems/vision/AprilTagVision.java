@@ -176,6 +176,7 @@ public class AprilTagVision extends SubsystemBase {
      * @return The standard deviation of the x and y coordinates
      */
     private double calculateXYStdDevWithAmbiguity(PoseEstimate poseEstimates, int tagPosesSize) {
+
         double poseAmbiguityFactor = tagPosesSize != 1
                 ? 1
                 : Math.max(
