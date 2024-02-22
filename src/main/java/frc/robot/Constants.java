@@ -12,11 +12,85 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 import frc.robot.util.FieldConstants;
+// import frc.robot.config.RobotIdentity;
 
 public final class Constants {
+    public final class ArmConstants {
+        public static final double baseStageLength = 19; // inches
+        public static final double secondStageLength = 17; // inches
 
+        public static final double shoulderRadPerRot = 2 * Math.PI / 15 * 14 / 32;
+        public static final double elbowRadPerRot = 2 * Math.PI / 4 * 18 / 42;
+        public static final double wristRadPerRot = 2 * Math.PI;
+
+        public static final double shoulderOffset = -0.17778; // radians, fwd = 0
+        public static final double elbowOffset = 2.71796;
+
+        public static final Translation2d armBasePosition = new Translation2d();
+        public static final double armForwardLimit = Units.inchesToMeters(12 + 5);
+        public static final double armBackwardLimit = Units.inchesToMeters(12 + 28 - 5);
+        public static final double armTopLimit = Units.inchesToMeters(48 - 8 - 4);
+
+        public static final double virtual4BarGearRatio = 1.5;
+
+        public static final double maxPowerShoulder = 0.3;
+        public static final double maxPowerElbow = 0.3;
+        public static final int currentLimitShoulder = 20;
+        public static final int currentLimitElbow = 15;
+        public static final double rampRateShoulder = 0.1;
+        public static final double rampRateElbow = .1;
+
+        public static final double shoulderP = 0.3;
+        public static final double shoulderI = 0.0;
+        public static final double shoulderD = 0.0;
+        public static final double elbowP = 0.2;
+        public static final double elbowI = 0.0;
+        public static final double elbowD = 0.0;
+        public static final double shoulderS = 0.0; // feedforward
+        public static final double shoulderG = 0.012;
+        public static final double shoulderV = 0.0;
+        public static final double shoulderA = 0.0;
+        public static final double elbowS = 0.0;
+        public static final double elbowG = .01;
+        public static final double elbowV = 0.0;
+        public static final double elbowA = 0.0;
+
+        public static final class ArmSetPoints {
+            public static final Translation2d home = new Translation2d(0, 36); // A
+            public static final Translation2d pickup = new Translation2d(10, 18); // B
+            public static final Translation2d amp = new Translation2d(36, 0); // X
+        }
+    }
+
+    public static final int intakeMotorId = 0;
+    // public static final int deployMotorId = 0;
+    public static final int shooterMotor2ID = 7;
+    public static final int shooterMotor1ID = 6;
+    // public static final int anglemotorID = 0;
+
+    public static final int fourBarLeftID = 2;
+    public static final int fourBarRightID = 3;
+
+    public static final int shoulderLeftID = 11;
+    public static final int shoulderRightID = 9;
+    public static final int elbowLeftID = 10;
+    public static final int elbowRightID = 8;
+    public static final int wristID = 0;
+    // public static final int gripperID = 0;
+
+    public static final double indexDistance = 1000;
+
+    public static final Mode currentMode = Mode.REAL;
+    public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
+
+    public static final double gyroP = 0.015;
+    public static final double gyroI = 0.0;
+    public static final double gyroD = 0.0;
+
+    public static final int pigeonID = 25;
     public static final int loopPeriodMs = 20;
     private static RobotType robotType = RobotType.COMPBOT;
     public static final boolean tuningMode = true;

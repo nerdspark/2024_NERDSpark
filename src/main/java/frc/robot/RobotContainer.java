@@ -5,9 +5,12 @@
 package frc.robot;
 
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -24,37 +27,39 @@ public class RobotContainer {
     private double MaxSpeed = 6; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
+    private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
+    private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
+    private SlewRateLimiter zLimiter = new SlewRateLimiter(100);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
 
-    // private final NoteVisionSubsystem noteVisionSubsystem = new
-    // NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
-
-    // private final PoseEstimatorSubsystem poseEstimator = new PoseEstimatorSubsystem(drivetrain);
-
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            //             .withDeadband(MaxSpeed * 0.1)
-            //             .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * 0.1)
+            .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
     // driving in open loop
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final Telemetry logger = new Telemetry(MaxSpeed);
     private final SendableChooser<Command> autoChooser;
+    private PIDController gyroPid = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD);
+    private double targetAngle = 0;
+    private final Pigeon2 gyro = new Pigeon2(Constants.pigeonID, "canivore1");
     private AprilTagVision aprilTagVision;
 
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(
-                        () -> drive.withVelocityX(
+                        () -> drive.withVelocityX(xLimiter.calculate(
                                         -frc.robot.util.JoystickMap.JoystickPowerCalculate(joystick.getRightY())
-                                                * MaxSpeed) // Drive forward with
+                                                * MaxSpeed)) // Drive forward with
                                 // negative Y (forward)
-                                .withVelocityY(-frc.robot.util.JoystickMap.JoystickPowerCalculate(joystick.getRightX())
-                                        * MaxSpeed) // Drive left with negative X (left)
-                                .withRotationalRate(-joystick.getLeftX()
-                                        * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                                .withVelocityY(yLimiter.calculate(
+                                        -frc.robot.util.JoystickMap.JoystickPowerCalculate(joystick.getRightX())
+                                                * MaxSpeed)) // Drive left with negative X (left)
+                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn()
+                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
                         ));
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -72,10 +77,27 @@ public class RobotContainer {
     }
 
     public RobotContainer() {
+        switch (Constants.currentMode) {
+            case REAL:
+                // intake = new Intake(new IntakeIOSparkMax()); // Spark Max
+                // shooter = new Shooter(new ShooterIOSparkMax());
+                // fourBar = new FourBar(new FourBarIOSparkMax());
+                // arm = new Arm(new ArmIOSparkMax());
+                // arm.getArmPosition();
+                break;
 
+            default:
+                // Replayed robot, disable IO implementations
+                // intake = new Intake(new IntakeIO() {});
+                // shooter = new Shooter(new ShooterIO() {});
+                // fourBar = new FourBar(new FourBarIO() {});
+                // arm = new Arm(new ArmIO() {});
+
+                break;
+        }
+        configureBindings();
         // NamedCommands.registerCommand("IntakeCommand", intake.Intake());
 
-        configureBindings();
         configureDashboard();
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
@@ -83,6 +105,18 @@ public class RobotContainer {
             aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
             aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
         }
+        // intake.setDefaultCommand(new IntakeCommand(intake, () -> joystick.getLeftTriggerAxis(),
+        // IntakeMode.SOFTINTAKE));
+        // shooter.setDefaultCommand(new ShooterCommand(
+        //         shooter, () -> joystick.getRightTriggerAxis(), () -> joystick.getRightTriggerAxis()));
+        // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> joystick.getLeftX()));
+        // joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
+        // joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
+        // joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> new
+        // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
+        // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
+        // joystick.y().onTrue(new ArmResetCommand(arm));
     }
 
     public Command getAutonomousCommand() {
@@ -97,5 +131,15 @@ public class RobotContainer {
 
         // Pose estimation
         drivetrain.addDashboardWidgets(visionTab);
+    }
+
+    public double calculateAutoTurn() {
+        targetAngle = (180 / Math.PI) * (Math.atan2(joystick.getLeftX(), joystick.getLeftY()));
+        double currentAngle = -gyro.getAngle();
+        double error = (targetAngle - currentAngle) % (360);
+        error = error > 180 ? error - 360 : error;
+        error = error < -180 ? error + 360 : error;
+        targetAngle = currentAngle + error;
+        return gyroPid.calculate(currentAngle, targetAngle);
     }
 }
