@@ -164,11 +164,6 @@ public class ArmIOSparkMax implements ArmIO {
         setElbowPosition(elbowPosition);
         SmartDashboard.putNumber("shoulderPosition error", shoulderPosition - getShoulderPosition());
         SmartDashboard.putNumber("elbowPosition error", elbowPosition - getElbowPosition());
-
-        //    setShoulderPosition(position.getX());
-        //  setElbowPosition(position.getY());
-        // System.out.println("shoulder" + (angle - BaseAngleArmDiff));
-        // System.out.println("elbow" + (angle + SecondAngleArmDiff));
     }
 
     public void resetEncoders() {

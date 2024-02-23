@@ -17,7 +17,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
  * This drive implementation is for Spark Maxes driving brushed motors (e.g. CIMS) with no encoders.
@@ -28,7 +28,7 @@ public class IntakeIOSparkMax implements IntakeIO {
 
     private RelativeEncoder intakeEncoder;
 
-    private DigitalInput beamBreak;
+    private AnalogInput beamBreak;
 
     public IntakeIOSparkMax() {
         intakeMotor = new CANSparkMax(10, CANSparkMax.MotorType.kBrushless);
@@ -41,7 +41,7 @@ public class IntakeIOSparkMax implements IntakeIO {
 
         intakeEncoder.setPosition(0);
 
-        beamBreak = new DigitalInput(0);
+        beamBreak = new AnalogInput(0);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class IntakeIOSparkMax implements IntakeIO {
     }
 
     public boolean getBeamBreak() {
-        return beamBreak.get();
+        return beamBreak.getVoltage() < 4;
     }
 
     public double getIntakePosition() {

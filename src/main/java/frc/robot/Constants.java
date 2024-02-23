@@ -65,7 +65,7 @@ public final class Constants {
         }
     }
 
-    public static final int intakeMotorId = 0;
+    public static final int intakeMotorId = 4;
     // public static final int deployMotorId = 0;
     public static final int shooterMotor2ID = 7;
     public static final int shooterMotor1ID = 6;
