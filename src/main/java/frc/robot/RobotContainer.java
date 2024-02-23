@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
@@ -14,23 +16,43 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.FourBarCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.fourBar.FourBar;
+import frc.robot.subsystems.fourBar.FourBarIO;
+import frc.robot.subsystems.fourBar.FourBarIOSparkMax;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOSparkMax;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterIO;
+import frc.robot.subsystems.shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 
 public class RobotContainer {
-    private double MaxSpeed = 6; // 6 meters per second desired top speed
+    private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
+    private Intake intake;
+    private FourBar fourBar;
+    private Shooter shooter;
+   
     private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
-    private SlewRateLimiter zLimiter = new SlewRateLimiter(15);
+    private SlewRateLimiter zLimiter = new SlewRateLimiter(10);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
@@ -59,7 +81,7 @@ public class RobotContainer {
                                 .withVelocityY(yLimiter.calculate(
                                         -frc.robot.util.JoystickMap.JoystickPowerCalculate(joystick.getRightX())
                                                 * MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn()
+                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
                                         * MaxAngularRate)) // Drive counterclockwise with negative X (left)
                         ));
 
@@ -81,8 +103,8 @@ public class RobotContainer {
         switch (Constants.currentMode) {
             case REAL:
                 // intake = new Intake(new IntakeIOSparkMax()); // Spark Max
-                // shooter = new Shooter(new ShooterIOSparkMax());
                 // fourBar = new FourBar(new FourBarIOSparkMax());
+                // shooter = new Shooter(new ShooterIOSparkMax());
                 // arm = new Arm(new ArmIOSparkMax());
                 // arm.getArmPosition();
                 break;
@@ -106,6 +128,17 @@ public class RobotContainer {
             aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
             aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
         }
+
+        // joystick.a().whileTrue(new ParallelCommandGroup(new IntakeCommand(intake, () -> 0.5, IntakeMode.SOFTINTAKE).andThen(new FourBarCommand(fourBar, () -> Constants.fourBarHome)), new FourBarCommand(fourBar, () -> Constants.fourBarOut)));
+        // joystick.a().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        // joystick.b().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
+        // joystick.x().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        // joystick.y().whileTrue(new ParallelCommandGroup(new ShooterCommand(shooter, () -> 1.0, () -> 1.0),new FourBarCommand(fourBar,() -> 0.0), new InstantCommand(() -> calculateAutoTurn(() -> ShooterMap.getAngle(drivetrain.getDaqThread().getClass())))));
+        // joystick.rightBumper().whileTrue(new InstantCommand (() -> drive.withRotationalRate(calculateAutoTurn(() -> aprilTagVision.getCurrentCommand().getSubsystem()))));
+        double targ = 70;
+        // joystick.a().whileTrue(new IntakeCommand(intake, () -> 0.8, IntakeMode.SOFTINTAKE).deadlineWith(drivetrain.applyRequest(() -> drive.withVelocityX(-0.1 *MaxSpeed* Math.cos(targ)).withVelocityY(0.1 *MaxSpeed* Math.sin(targ)).withRotationalRate(calculateAutoTurn(() -> targ)))));
+        joystick.a().whileTrue((drivetrain.applyRequest(() -> drive.withVelocityX(0.1 *MaxSpeed* Math.cos(Units.degreesToRadians(-targ))).withVelocityY(0.1 *MaxSpeed* Math.sin(Units.degreesToRadians(-targ))).withRotationalRate(calculateAutoTurn(() -> targ)))));
+        
         // intake.setDefaultCommand(new IntakeCommand(intake, () -> joystick.getLeftTriggerAxis(),
         // IntakeMode.SOFTINTAKE));
         // shooter.setDefaultCommand(new ShooterCommand(
@@ -134,14 +167,17 @@ public class RobotContainer {
         drivetrain.addDashboardWidgets(visionTab);
     }
 
-    public double calculateAutoTurn() {
-    double currentAngle = -gyro.getAngle();
+    public double calculateAutoTurn(Supplier<Double> target) {
+        double currentAngle = -gyro.getAngle();
 
-        if (joystickNonCommand.getPOV() != -1) {
-
-            targetAngle = joystickNonCommand.getPOV();
-        } else if (Math.abs(joystick.getLeftX()) >= 0.1 || Math.abs(joystick.getLeftY()) >= 0.1) {
-            targetAngle = (180.0 / Math.PI) * (Math.atan2(joystick.getLeftX(), joystick.getLeftY()));
+        if (target.get() != 0) {
+            targetAngle = -target.get();
+        } else {
+            if (joystickNonCommand.getPOV() != -1) {
+                targetAngle = -joystickNonCommand.getPOV();
+            } else if (Math.abs(joystick.getLeftX()) >= 0.1 || Math.abs(joystick.getLeftY()) >= 0.1) {
+                targetAngle = (180.0 / Math.PI) * (Math.atan2(-joystick.getLeftX(), -joystick.getLeftY()));
+            }
         }
 
         double error = (targetAngle - currentAngle) % (360.0);
