@@ -54,4 +54,6 @@ public class ShooterIOSparkMax implements ShooterIO {
         shooterController1.setReference(speed1, ControlType.kVelocity);
         shooterController2.setReference(speed2, ControlType.kVelocity);
     }
+
+   
 }

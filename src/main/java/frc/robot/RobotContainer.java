@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.NoteVisionSubsystem;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 
@@ -49,6 +50,8 @@ public class RobotContainer {
     private final Pigeon2 gyro = new Pigeon2(Constants.pigeonID, "canivore1");
     private AprilTagVision aprilTagVision;
 
+    private NoteVisionSubsystem noteVisionSubsystem = new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(
@@ -75,6 +78,10 @@ public class RobotContainer {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         drivetrain.registerTelemetry(logger::telemeterize);
+
+        if(noteVisionSubsystem.hasTargets()){
+            double noteYaw = noteVisionSubsystem.getYawVal();
+         }
     }
 
     public RobotContainer() {
