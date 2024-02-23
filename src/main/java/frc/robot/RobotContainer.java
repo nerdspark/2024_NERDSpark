@@ -14,6 +14,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,11 +30,11 @@ public class RobotContainer {
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
-    private SlewRateLimiter zLimiter = new SlewRateLimiter(100);
+    private SlewRateLimiter zLimiter = new SlewRateLimiter(15);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
-
+    private final XboxController joystickNonCommand = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1)
             .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -134,11 +135,19 @@ public class RobotContainer {
     }
 
     public double calculateAutoTurn() {
-        targetAngle = (180 / Math.PI) * (Math.atan2(joystick.getLeftX(), joystick.getLeftY()));
-        double currentAngle = -gyro.getAngle();
-        double error = (targetAngle - currentAngle) % (360);
-        error = error > 180 ? error - 360 : error;
-        error = error < -180 ? error + 360 : error;
+    double currentAngle = -gyro.getAngle();
+
+        if (joystickNonCommand.getPOV() != -1) {
+
+            targetAngle = joystickNonCommand.getPOV();
+        } else if (Math.abs(joystick.getLeftX()) >= 0.1 || Math.abs(joystick.getLeftY()) >= 0.1) {
+            targetAngle = (180.0 / Math.PI) * (Math.atan2(joystick.getLeftX(), joystick.getLeftY()));
+        }
+
+        double error = (targetAngle - currentAngle) % (360.0);
+
+        error = error > 180.0 ? error - 360.0 : error;
+        error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
         return gyroPid.calculate(currentAngle, targetAngle);
     }
