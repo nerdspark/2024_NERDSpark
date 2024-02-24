@@ -19,14 +19,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.ArmConstants.ArmSetPoints;
-import frc.robot.commands.FourBarCommand;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.ShooterCommand;
-import frc.robot.commands.IntakeCommand.IntakeMode;
+import frc.robot.commands.DriveCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.NoteVisionSubsystem;
@@ -35,8 +29,6 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
-import frc.robot.util.JoystickMap;
-import java.util.function.Supplier;
 import java.util.function.Supplier;
 
 public class RobotContainer {
@@ -73,17 +65,7 @@ public class RobotContainer {
 
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(
-                        () -> drive.withVelocityX(
-                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-                                                * MaxSpeed)) // Drive forward with
-                                // negative Y (forward)
-                                .withVelocityY(
-                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-                                                * MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
-                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
-                        ));
+            new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),() -> driver.getRightY(),() -> driverRaw.getPOV()));
 
         driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         driver.b()
@@ -192,7 +174,7 @@ public class RobotContainer {
         // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
         // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
         // joystick.start().onTrue(new ArmResetCommand(arm));
-        
+
     }
 
     public Command getAutonomousCommand() {
@@ -222,7 +204,6 @@ public class RobotContainer {
             }
         }
 
-
         double error = (targetAngle - currentAngle) % (360.0);
 
         error = error > 180.0 ? error - 360.0 : error;
@@ -230,6 +211,7 @@ public class RobotContainer {
         targetAngle = currentAngle + error;
         return gyroPid.calculate(currentAngle, targetAngle);
     }
+
     public void resetGyro() {
         gyro.reset();
         targetAngle = 0.0;
