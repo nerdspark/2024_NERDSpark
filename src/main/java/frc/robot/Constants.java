@@ -43,8 +43,6 @@ public final class Constants {
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
 
-        
-
         public static final double shoulderP = 0.3;
         public static final double shoulderI = 0.0;
         public static final double shoulderD = 0.0;
@@ -66,6 +64,7 @@ public final class Constants {
             public static final Translation2d amp = new Translation2d(36, 0); // X
         }
     }
+
     public static final double fourBarOut = 0.0;
     public static final double fourBarHome = 0.0;
     public static final int intakeMotorId = 4;
