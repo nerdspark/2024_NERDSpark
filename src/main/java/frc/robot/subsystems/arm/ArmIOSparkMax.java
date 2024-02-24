@@ -13,7 +13,6 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
@@ -32,7 +31,7 @@ public class ArmIOSparkMax implements ArmIO {
     private RelativeEncoder elbowLeftEncoder;
     private RelativeEncoder elbowRightEncoder;
     private RelativeEncoder wristEncoder;
-    private Encoder wristEncoderAbsolute;
+    // private Encoder wristEncoderAbsolute;
     // private RelativeEncoder gripperEncoder;
 
     private PIDController shoulderLeftController;
@@ -59,8 +58,8 @@ public class ArmIOSparkMax implements ArmIO {
         elbowLeft = new CANSparkMax(Constants.elbowLeftID, MotorType.kBrushless);
         elbowRight = new CANSparkMax(Constants.elbowRightID, MotorType.kBrushless);
         wrist = new CANSparkMax(Constants.wristID, MotorType.kBrushless);
-        wristEncoderAbsolute = new Encoder(Constants.wristChannel1, Constants.wristChannel2);
-        wristEncoderAbsolute.setDistancePerPulse(Constants.wristPulseDist);
+        // wristEncoderAbsolute = new Encoder(Constants.wristChannel1, Constants.wristChannel2);
+        // wristEncoderAbsolute.setDistancePerPulse(Constants.wristPulseDist);
 
         // gripper = new CANSparkMax(Constants.gripperID, MotorType.kBrushless);
 
@@ -180,7 +179,7 @@ public class ArmIOSparkMax implements ArmIO {
         elbowLeft.setClosedLoopRampRate(ArmConstants.rampRateElbow);
         shoulderLeft.setClosedLoopRampRate(ArmConstants.rampRateShoulder);
         elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
-        wristEncoder.setPosition(wristEncoderAbsolute.get() + Constants.wristOffset);
+        wristEncoder.setPosition(0); // wristEncoderAbsolute.get() + Constants.wristOffset);
         // gripperEncoder.setPosition(0);
         // elbowLeftController.setOutputRange(-ArmConstants.maxPowerElbow, ArmConstants.maxPowerElbow);
         // shoulderLeftController.setOutputRange(-ArmConstants.maxPowerShoulder, ArmConstants.maxPowerShoulder);

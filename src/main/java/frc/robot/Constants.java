@@ -24,8 +24,8 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
     public final class ArmConstants {
-        public static final double baseStageLength = 19; // inches
-        public static final double secondStageLength = 17; // inches
+        public static final double baseStageLength = 18.75; // inches
+        public static final double secondStageLength = 16.975; // inches
 
         public static final double shoulderRadPerRot = 2 * Math.PI / 15 * 14 / 32;
         public static final double elbowRadPerRot = 2 * Math.PI / 4 * 18 / 42;
@@ -76,8 +76,8 @@ public final class Constants {
         }
     }
 
-    public static final double fourBarOut = 0.0;
-    public static final double fourBarHome = 0.0;
+    public static final double fourBarOut = 20.0;
+    public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;
     // public static final int deployMotorId = 0;
     public static final int shooterMotor2ID = 7;
@@ -91,7 +91,7 @@ public final class Constants {
     public static final int shoulderRightID = 9;
     public static final int elbowLeftID = 10;
     public static final int elbowRightID = 8;
-    public static final int wristID = 0;
+    public static final int wristID = 5;
     // public static final int gripperID = 0;
 
     public static final int wristChannel1 = 0;
@@ -269,14 +269,34 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
+        public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
+
+        static {
+            // Key: Distance
+            // Value: Shooter Position
+            fourBarMap.put(26.0, 8.0);
+            fourBarMap.put(21.0 + (7.0 / 12.0), 8.0);
+            fourBarMap.put(20.0, 8.0);
+            fourBarMap.put(18.0, 8.0);
+            fourBarMap.put(16.0 + (2.0 / 12.0), 3.0);
+            fourBarMap.put(14.0 + (1.0 / 12.0), 2.0);
+            fourBarMap.put(11.0 + (9.0 / 12.0), 1.0);
+            fourBarMap.put(9.0 + (5.0 / 12.0), 1.0);
+        }
+
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(null, null);
-            shooterMap.put(null, null);
-            shooterMap.put(null, null);
+            shooterMap.put(26.0, 4900.0);
+            shooterMap.put(21.0 + (7.0 / 12.0), 4900.0);
+            shooterMap.put(20.0, 5000.0);
+            shooterMap.put(18.0, 5400.0);
+            shooterMap.put(16 + (2.0 / 12.0), 5400.0);
+            shooterMap.put(14.0 + (1.0 / 12.0), 5400.0);
+            shooterMap.put(11.0 + (9.0 / 12.0), 5400.0);
+            shooterMap.put(9.0 + (5.0 / 12.0), 5400.0);
         }
     }
 }
