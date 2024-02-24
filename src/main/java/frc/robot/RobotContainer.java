@@ -29,6 +29,8 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
+import frc.robot.util.JoystickMap;
+
 import java.util.function.Supplier;
 
 public class RobotContainer {
@@ -64,8 +66,21 @@ public class RobotContainer {
             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     private void configureBindings() {
+        // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+        //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
+        // -> driver.getRightY(),() -> driverRaw.getPOV()));
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-            new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),() -> driver.getRightY(),() -> driverRaw.getPOV()));
+                drivetrain.applyRequest(
+                        () -> drive.withVelocityX(
+                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
+                                                * MaxSpeed)) // Drive forward with
+                                // negative Y (forward)
+                                .withVelocityY(
+                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
+                                                * MaxSpeed)) // Drive left with negative X (left)
+                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
+                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                        ));
 
         driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         driver.b()
