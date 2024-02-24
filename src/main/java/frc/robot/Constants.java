@@ -88,9 +88,9 @@ public final class Constants {
     public static final Mode currentMode = Mode.REAL;
     public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
 
-    public static final double gyroP = 0.015;
-    public static final double gyroI = 0.0;
-    public static final double gyroD = 0.0;
+    public static final double gyroP = 0.0125;
+    public static final double gyroI = 0.001;
+    public static final double gyroD = 0;
 
     public static final int pigeonID = 25;
     public static final int loopPeriodMs = 20;
