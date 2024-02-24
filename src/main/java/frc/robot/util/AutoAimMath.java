@@ -14,7 +14,7 @@ public class AutoAimMath {
 
         double robotAimAngle = Math.atan2(
                 targetPose.getY() - poseSupplier.get().getY(),
-                AllianceFlipUtil.apply(targetPose.getX()) - poseSupplier.get().getX()); // Robot Angle
+                AllianceFlipUtil.apply(targetPose.getX()) - poseSupplier.get().getX()) - 180; // Robot Angle
 
         return new Rotation2d(robotAimAngle);
     }

@@ -16,16 +16,32 @@
     },
     {
       "anchor": {
-        "x": 4.666045253471909,
-        "y": 6.457658858974039
+        "x": 4.696339831588324,
+        "y": 5.950035719763017
       },
       "prevControl": {
-        "x": 5.2160527484777335,
-        "y": 7.123503100020183
+        "x": 5.00796199694416,
+        "y": 6.660923784481021
       },
       "nextControl": {
-        "x": 4.241711115590244,
-        "y": 5.943955964825669
+        "x": 4.335293855416284,
+        "y": 5.126399586620549
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.728588254329534,
+        "y": 4.245852002973283
+      },
+      "prevControl": {
+        "x": 5.154381605206801,
+        "y": 4.5329553275346495
+      },
+      "nextControl": {
+        "x": 6.2739270437022485,
+        "y": 3.9731826082869253
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +52,8 @@
         "y": 4.070564534960625
       },
       "prevControl": {
-        "x": 7.130887998430801,
-        "y": 3.622607672261608
+        "x": 7.306175466443459,
+        "y": 4.051088149625884
       },
       "nextControl": null,
       "isLocked": false,
@@ -54,8 +70,8 @@
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.6,
-      "maxWaypointRelativePos": 1.2,
+      "minWaypointRelativePos": 0.75,
+      "maxWaypointRelativePos": 1.0999999999999999,
       "constraints": {
         "maxVelocity": 1.0,
         "maxAcceleration": 1.0,
@@ -67,7 +83,7 @@
   "eventMarkers": [
     {
       "name": "fourBarToShooter",
-      "waypointRelativePos": 0.15,
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "parallel",
         "data": {
@@ -77,7 +93,7 @@
     },
     {
       "name": "forceIntake",
-      "waypointRelativePos": 0.6,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "parallel",
         "data": {
@@ -87,7 +103,7 @@
     },
     {
       "name": "backToSafety2",
-      "waypointRelativePos": 1.2,
+      "waypointRelativePos": 1.4,
       "command": {
         "type": "parallel",
         "data": {
@@ -97,7 +113,7 @@
     },
     {
       "name": "activeIntaking2",
-      "waypointRelativePos": 1.8,
+      "waypointRelativePos": 2.6,
       "command": {
         "type": "parallel",
         "data": {
@@ -114,7 +130,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -45.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
