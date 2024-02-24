@@ -71,6 +71,8 @@ public class RobotContainer {
     private NoteVisionSubsystem noteVisionSubsystem =
             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
+    private NoteVisionSubsystem noteVisionSubsystem = new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(
@@ -97,7 +99,14 @@ public class RobotContainer {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         drivetrain.registerTelemetry(logger::telemeterize);
+
+
+        if(noteVisionSubsystem.hasTargets()){
+            double noteYaw = noteVisionSubsystem.getYawVal();
+         }
+
         // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+
     }
 
     public RobotContainer() {
