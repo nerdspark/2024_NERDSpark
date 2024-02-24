@@ -9,6 +9,8 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -21,7 +23,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
+import frc.robot.actions.activeIntaking;
+import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.FourBarCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
@@ -107,6 +114,16 @@ public class RobotContainer {
     }
 
     public RobotContainer() {
+
+
+        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 1.0, () -> 1.0));
+
+        NamedCommands.registerCommand("fourBartoIntake", new FourBarCommand(fourBar, () -> 1.0));
+        NamedCommands.registerCommand("fourBarToShooter", new FourBarCommand(fourBar, () -> 1.0));
+        NamedCommands.registerCommand("forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
+
+        NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
+        NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
         // NamedCommands.registerCommand("shootNote1", new firstRing(shooter, fourBar, intake));
         // NamedCommands.registerCommand("shootNote2", new secondRing(fourBar, intake));
