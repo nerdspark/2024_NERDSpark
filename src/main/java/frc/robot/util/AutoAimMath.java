@@ -32,7 +32,7 @@ public class AutoAimMath {
 
         double fourBarAngle = Math.atan2(
                 speakerConstants.speakerHeight,
-                poseSupplier.get().getTranslation().getDistance(targetPose.getTranslation())); // Shooter Angle
+                poseSupplier.get().getTranslation().getDistance(AllianceFlipUtil.apply(targetPose.getTranslation()))); // Shooter Angle
 
         return fourBarAngle;
     }
