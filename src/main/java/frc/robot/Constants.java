@@ -60,8 +60,14 @@ public final class Constants {
 
         public static final class ArmSetPoints {
             public static final Translation2d home = new Translation2d(0, 36); // A
+            public static final double homeWrist = 0.0;
             public static final Translation2d pickup = new Translation2d(10, 18); // B
+            public static final double pickupWrist = 0.0;
             public static final Translation2d amp = new Translation2d(36, 0); // X
+            public static final double ampWrist = 0.0;
+            public static final Translation2d dropoff = new Translation2d(0, 18); //Y
+            public static final double dropoffWrist = 0.0;
+            public static final double dropoffMultiplier = 0.0;
         }
     }
 
