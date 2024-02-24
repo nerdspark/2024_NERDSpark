@@ -28,4 +28,8 @@ public interface ShooterIO {
     default double getShooterPower() {
         return 0;
     }
+
+    default double[] getSpeed() {
+        return new double[2];
+    }
 }

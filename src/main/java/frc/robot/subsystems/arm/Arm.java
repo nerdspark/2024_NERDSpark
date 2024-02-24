@@ -25,8 +25,8 @@ public class Arm extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
-    public void setShoulderPosition(double position) {
-        io.setShoulderPosition(position);
+    public void setArmVelocity(Translation2d velocity) {
+        io.setArmVelocity(velocity);
     }
 
     public void setArmPosition(Translation2d position, boolean inBend) {
@@ -37,16 +37,48 @@ public class Arm extends SubsystemBase {
         io.resetEncoders();
     }
 
-    public double getShoulderPosition() {
-        return io.getShoulderPosition();
+    public Translation2d getArmPosition() {
+        return io.getArmPosition();
+    }
+
+    public void setShoulderPosition(double position) {
+        io.setShoulderPosition(position);
+    }
+
+    public double getShoulderLeftPosition() {
+        return io.getShoulderLeftPosition();
+    }
+
+    public double getShoulderRightPosition() {
+        return io.getShoulderRightPosition();
     }
 
     public void setElbowPosition(double position) {
         io.setElbowPosition(position);
     }
 
-    public double getElbowPosition() {
-        return io.getElbowPosition();
+    public double getElbowLeftVelocity() {
+        return io.getElbowLeftVelocity();
+    }
+
+    public double getShoulderLeftVelocity() {
+        return io.getShoulderLeftVelocity();
+    }
+
+    public double getElbowRightVelocity() {
+        return io.getElbowRightVelocity();
+    }
+
+    public double getShoulderRightVelocity() {
+        return io.getShoulderRightVelocity();
+    }
+
+    public double getElbowLeftPosition() {
+        return io.getElbowLeftPosition();
+    }
+
+    public double getElbowRightPosition() {
+        return io.getElbowRightPosition();
     }
 
     public void setWristPosition(double position) {
@@ -55,13 +87,5 @@ public class Arm extends SubsystemBase {
 
     public double getWristPosition() {
         return io.getWristPosition();
-    }
-
-    public void setGripper(double power) {
-        io.setGripper(power);
-    }
-
-    public Translation2d getArmPosition() {
-        return io.getArmPosition();
     }
 }

@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.util.Units;
+import frc.robot.Constants;
 
 public class FourBarIOSparkMax implements FourBarIO {
     /** Creates a new FourBarIOSparkMax. */
@@ -21,22 +22,22 @@ public class FourBarIOSparkMax implements FourBarIO {
 
     public FourBarIOSparkMax() {
 
-        FourBarMotor1 = new CANSparkMax(10, CANSparkMax.MotorType.kBrushless);
-        FourBarMotor2 = new CANSparkMax(11, CANSparkMax.MotorType.kBrushless);
+        FourBarMotor1 = new CANSparkMax(Constants.fourBarLeftID, CANSparkMax.MotorType.kBrushless);
+        FourBarMotor2 = new CANSparkMax(Constants.fourBarRightID, CANSparkMax.MotorType.kBrushless);
 
-        FourBarMotor1.setInverted(false);
-        FourBarMotor2.setInverted(true);
+        FourBarMotor1.setInverted(true);
+        FourBarMotor2.setInverted(false);
 
         FourBarEncoder1 = FourBarMotor1.getEncoder();
         FourBarEncoder2 = FourBarMotor2.getEncoder();
 
-        FourBarMotor1.setSmartCurrentLimit(8);
-        FourBarMotor2.setSmartCurrentLimit(8);
+        FourBarMotor1.setSmartCurrentLimit(60);
+        FourBarMotor2.setSmartCurrentLimit(60);
 
         FourBarEncoder1.setPosition(0);
         FourBarEncoder2.setPosition(0);
 
-        FourBarMotor2.follow(FourBarMotor1);
+        FourBarMotor2.follow(FourBarMotor1, true);
 
         FourBarPIDController1 = FourBarMotor1.getPIDController();
     }

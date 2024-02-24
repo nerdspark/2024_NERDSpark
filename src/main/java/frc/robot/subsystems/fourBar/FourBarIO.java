@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems.fourBar;
 
-import frc.robot.subsystems.fourBar.FourBarIO.FourBarIOInputs;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface FourBarIO {

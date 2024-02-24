@@ -12,10 +12,14 @@ import java.util.function.Supplier;
 public class ArmCommand extends Command {
     private Arm arm;
     private Supplier<Translation2d> position;
+    private Supplier<Double> wrist;
+    private Supplier<Boolean> inBend;
     /** Creates a new ArmCommand. */
-    public ArmCommand(Arm arm, Supplier<Translation2d> position) {
+    public ArmCommand(Arm arm, Supplier<Translation2d> position, Supplier<Double> wrist, Supplier<Boolean> inBend) {
         this.arm = arm;
         this.position = position;
+        this.wrist = wrist;
+        this.inBend = inBend;
         addRequirements(arm);
     }
 
@@ -27,7 +31,8 @@ public class ArmCommand extends Command {
     @Override
     public void execute() {
         arm.getArmPosition();
-        arm.setArmPosition(position.get(), false);
+        arm.setArmPosition(position.get(), inBend.get());
+        arm.setWristPosition(wrist.get());
     }
 
     // Called once the command ends or is interrupted.
