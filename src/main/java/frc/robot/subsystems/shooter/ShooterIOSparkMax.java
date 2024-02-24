@@ -30,6 +30,8 @@ public class ShooterIOSparkMax implements ShooterIO {
     public ShooterIOSparkMax() {
         shooterMotor1 = new CANSparkMax(Constants.shooterMotor1ID, CANSparkMax.MotorType.kBrushless);
         shooterMotor2 = new CANSparkMax(Constants.shooterMotor2ID, CANSparkMax.MotorType.kBrushless);
+        shooterMotor1.setInverted(false);
+        shooterMotor2.setInverted(true);
         shooterEncoder1 = shooterMotor1.getEncoder();
         shooterEncoder2 = shooterMotor2.getEncoder();
 

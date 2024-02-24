@@ -98,6 +98,15 @@ public class IntakeCommand extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        switch (mode) {
+            case SOFTINTAKE:
+                return Intake.getBeamBreak();
+
+            case FULLINTAKE:
+                return Intake.getBeamBreak();
+
+            default:
+                return false;
+        }
     }
 }

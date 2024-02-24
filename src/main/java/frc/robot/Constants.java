@@ -65,11 +65,19 @@ public final class Constants {
 
         public static final class ArmSetPoints {
             public static final Translation2d home = new Translation2d(0, 36); // A
+            public static final double homeWrist = 0.0;
             public static final Translation2d pickup = new Translation2d(10, 18); // B
+            public static final double pickupWrist = 0.0;
             public static final Translation2d amp = new Translation2d(36, 0); // X
+            public static final double ampWrist = 0.0;
+            public static final Translation2d dropoff = new Translation2d(0, 18); //Y
+            public static final double dropoffWrist = 0.0;
+            public static final double dropoffMultiplier = 0.0;
         }
     }
 
+    public static final double fourBarOut = 0.0;
+    public static final double fourBarHome = 0.0;
     public static final int intakeMotorId = 4;
     // public static final int deployMotorId = 0;
     public static final int shooterMotor2ID = 7;
@@ -86,14 +94,19 @@ public final class Constants {
     public static final int wristID = 0;
     // public static final int gripperID = 0;
 
+    public static final int wristChannel1 = 0;
+    public static final int wristChannel2 = 1;
+    public static final double wristPulseDist = 8192.0 * 2.0 * Math.PI;
+    public static final double wristOffset = 0.0;
+
     public static final double indexDistance = 1000;
 
     public static final Mode currentMode = Mode.REAL;
     public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
 
-    public static final double gyroP = 0.015;
-    public static final double gyroI = 0.0;
-    public static final double gyroD = 0.0;
+    public static final double gyroP = 0.0125;
+    public static final double gyroI = 0.001;
+    public static final double gyroD = 0;
 
     public static final int pigeonID = 25;
     public static final int loopPeriodMs = 20;
