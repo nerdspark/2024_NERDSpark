@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
@@ -255,5 +256,16 @@ public final class Constants {
    
         public static double SHOOTER_SPEED = 10;
 
+        public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
+        static {
+            //Key: Distance
+            //Value: Shooter Position 
+            shooterMap.put(null, null);
+            shooterMap.put(null, null);
+            shooterMap.put(null, null);
+        }
+
     }
+
+    
 }
