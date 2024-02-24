@@ -61,7 +61,7 @@ public class ArmIOSparkMax implements ArmIO {
         wrist = new CANSparkMax(Constants.wristID, MotorType.kBrushless);
         wristEncoderAbsolute = new Encoder(Constants.wristChannel1, Constants.wristChannel2);
         wristEncoderAbsolute.setDistancePerPulse(Constants.wristPulseDist);
-        
+
         // gripper = new CANSparkMax(Constants.gripperID, MotorType.kBrushless);
 
         shoulderLeft.setInverted(true);
@@ -277,8 +277,6 @@ public class ArmIOSparkMax implements ArmIO {
     public double getWristPosition() {
         return wristEncoder.getPosition();
     }
-
-    
 
     //     public void setGripper(double power) {
     //         gripper.set(power);

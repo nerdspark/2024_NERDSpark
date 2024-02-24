@@ -27,7 +27,7 @@ public class FourBar extends SubsystemBase {
         io.setFourBarAngle(angle);
     }
 
-     public double getFourBarAngle() {
+    public double getFourBarAngle() {
         return io.getFourBarAngle();
     }
 }

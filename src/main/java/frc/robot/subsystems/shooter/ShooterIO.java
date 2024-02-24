@@ -29,7 +29,7 @@ public interface ShooterIO {
         return 0;
     }
 
-    default double[] getSpeed(){
+    default double[] getSpeed() {
         return new double[2];
     }
 }

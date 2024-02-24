@@ -266,19 +266,17 @@ public final class Constants {
     public static class ShooterConstants {
         public static double FOURBAR_ANGLE_THRESHOLD = 5; // Not sure what is this
         public static Measure<Distance> MAXIMUM_READYSHOOT_DISTANCE = Meters.of(Units.feetToMeters(15));
-   
+
         public static double SHOOTER_SPEED = 10;
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
+
         static {
-            //Key: Distance
-            //Value: Shooter Position 
+            // Key: Distance
+            // Value: Shooter Position
             shooterMap.put(null, null);
             shooterMap.put(null, null);
             shooterMap.put(null, null);
         }
-
     }
-
-    
 }

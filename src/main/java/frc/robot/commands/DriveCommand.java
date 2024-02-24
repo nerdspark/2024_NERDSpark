@@ -8,9 +8,7 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.util.JoystickMap;
@@ -27,10 +25,16 @@ public class DriveCommand extends Command {
     private final Pigeon2 gyro = new Pigeon2(Constants.pigeonID, "canivore1");
     private PIDController gyroPid = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric();
-    private Supplier<Double> LeftX,LeftY,RightX,RightY;
+    private Supplier<Double> LeftX, LeftY, RightX, RightY;
     private Supplier<Integer> Dpad;
     /** Creates a new DriveCommand. */
-    public DriveCommand(CommandSwerveDrivetrain drivetrain, Supplier<Double> LeftX, Supplier<Double> RightX, Supplier<Double> LeftY, Supplier<Double> RightY, Supplier<Integer> Dpad) {
+    public DriveCommand(
+            CommandSwerveDrivetrain drivetrain,
+            Supplier<Double> LeftX,
+            Supplier<Double> RightX,
+            Supplier<Double> LeftY,
+            Supplier<Double> RightY,
+            Supplier<Integer> Dpad) {
         this.drivetrain = drivetrain;
         this.LeftX = LeftX;
         this.LeftY = LeftY;
@@ -50,8 +54,8 @@ public class DriveCommand extends Command {
     @Override
     public void execute() {
         drivetrain.applyRequest(
-                () -> drive.withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(RightY.get())
-                                * MaxSpeed)) // Drive forward with
+                () -> drive.withVelocityX(xLimiter.calculate(
+                                -JoystickMap.JoystickPowerCalculate(RightY.get()) * MaxSpeed)) // Drive forward with
                         // negative Y (forward)
                         .withVelocityY(yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(RightX.get())
                                 * MaxSpeed)) // Drive left with negative X (left)
