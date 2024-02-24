@@ -166,8 +166,8 @@ public class ArmIOSparkMax implements ArmIO {
         double elbowPosition = position.getAngle().getRadians() + (SecondAngleArmDiff * (inBend ? -1 : 1));
         setShoulderPosition(shoulderPosition);
         setElbowPosition(elbowPosition);
-        SmartDashboard.putNumber("shoulderPosition error", shoulderPosition - getShoulderPosition());
-        SmartDashboard.putNumber("elbowPosition error", elbowPosition - getElbowPosition());
+        SmartDashboard.putNumber("shoulderPosition error", shoulderPosition - getShoulderLeftPosition());
+        SmartDashboard.putNumber("elbowPosition error", elbowPosition - getElbowLeftPosition());
     }
 
     public void resetEncoders() {
@@ -187,11 +187,11 @@ public class ArmIOSparkMax implements ArmIO {
 
     public Translation2d getArmPosition() {
         Translation2d jointPos = new Translation2d(
-                Math.cos(getShoulderPosition()) * ArmConstants.baseStageLength,
-                Math.sin(getShoulderPosition()) * ArmConstants.baseStageLength);
+                Math.cos(getShoulderLeftPosition()) * ArmConstants.baseStageLength,
+                Math.sin(getShoulderLeftPosition()) * ArmConstants.baseStageLength);
         Translation2d jointToEndPos = new Translation2d(
-                Math.cos(getElbowPosition()) * ArmConstants.secondStageLength,
-                Math.sin(getElbowPosition()) * ArmConstants.secondStageLength);
+                Math.cos(getElbowLeftPosition()) * ArmConstants.secondStageLength,
+                Math.sin(getElbowLeftPosition()) * ArmConstants.secondStageLength);
         SmartDashboard.putNumber("arm x position", jointPos.plus(jointToEndPos).getX());
         SmartDashboard.putNumber("arm y position", jointPos.plus(jointToEndPos).getY());
         return jointPos.plus(jointToEndPos);
@@ -270,11 +270,12 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setWristPosition(double position) {
+        position -= getShoulderLeftPosition() + getElbowLeftPosition();
         wristController.setReference(position, ControlType.kPosition);
     }
 
     public double getWristPosition() {
-        return wristEncoder.getPosition();
+        return wristEncoder.getPosition() + getShoulderLeftPosition() + getElbowLeftPosition();
     }
 
     //     public void setGripper(double power) {

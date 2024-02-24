@@ -29,7 +29,7 @@ public final class Constants {
 
         public static final double shoulderRadPerRot = 2 * Math.PI / 15 * 14 / 32;
         public static final double elbowRadPerRot = 2 * Math.PI / 4 * 18 / 42;
-        public static final double wristRadPerRot = 2 * Math.PI;
+        public static final double wristRadPerRot = 2 * Math.PI * 50;
 
         public static final double shoulderOffset = -0.17778; // radians, fwd = 0
         public static final double elbowOffset = 2.71796;
@@ -64,15 +64,18 @@ public final class Constants {
         public static final double elbowA = 0.0;
 
         public static final class ArmSetPoints {
-            public static final Translation2d home = new Translation2d(0, 36); // A
+            public static final Translation2d home = new Translation2d(
+                            baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
+                    .plus(new Translation2d(
+                            secondStageLength * Math.cos(elbowOffset), secondStageLength * Math.sin(elbowOffset))); // A
             public static final double homeWrist = 0.0;
-            public static final Translation2d pickup = new Translation2d(10, 18); // B
+            public static final Translation2d pickup = home; // B
             public static final double pickupWrist = 0.0;
-            public static final Translation2d amp = new Translation2d(36, 0); // X
+            public static final Translation2d amp = new Translation2d(0, 10); // X
             public static final double ampWrist = 0.0;
             public static final Translation2d dropoff = new Translation2d(0, 18); // Y
             public static final double dropoffWrist = 0.0;
-            public static final double dropoffMultiplier = 0.0;
+            public static final double dropoffMultiplier = 10.0;
         }
     }
 
