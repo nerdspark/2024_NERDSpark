@@ -15,7 +15,7 @@ public class startUp extends SequentialCommandGroup {
 
         addCommands(
                 new ParallelCommandGroup(
-                        new ShooterCommand(shooter, () -> 1.0, () -> 2.0), 
+                        new ShooterCommand(shooter, () -> 1.0, () -> 2.0),
                         new FourBarCommand(fourBar, () -> 1.0)),
                 new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
     }

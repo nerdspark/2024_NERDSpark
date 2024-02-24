@@ -10,7 +10,6 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -45,9 +44,7 @@ import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
-import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
-
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
 
@@ -67,7 +64,6 @@ public class RobotContainer {
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
-
 
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -123,19 +119,23 @@ public class RobotContainer {
 
         drivetrain.setRobotIntake(intake);
 
-        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter,
-            () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
-            () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
+        NamedCommands.registerCommand(
+                "shootSpeed",
+                new ShooterCommand(
+                        shooter,
+                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
+                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
 
         NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
-        NamedCommands.registerCommand("fourBarToShooter", new FourBarCommand(fourBar,
-            () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose)));
-        NamedCommands.registerCommand("forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
+        NamedCommands.registerCommand(
+                "fourBarToShooter",
+                new FourBarCommand(fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose)));
+        NamedCommands.registerCommand(
+                "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
-        
         // NamedCommands.registerCommand("shootNote1", new firstRing(shooter, fourBar, intake));
         // NamedCommands.registerCommand("shootNote2", new secondRing(fourBar, intake));
         // NamedCommands.registerCommand("shootNote3", new thirdRing(fourBar, intake));
