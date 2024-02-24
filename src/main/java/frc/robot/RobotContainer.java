@@ -38,6 +38,7 @@ import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
+import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
 
 public class RobotContainer {
@@ -77,18 +78,18 @@ public class RobotContainer {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
-        // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        //         drivetrain.applyRequest(
-        //                 () -> drive.withVelocityX(
-        //                                 xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-        //                                         * MaxSpeed)) // Drive forward with
-        //                         // negative Y (forward)
-        //                         .withVelocityY(
-        //                                 yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-        //                                         * MaxSpeed)) // Drive left with negative X (left)
-        //                         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
-        //                                 * MaxAngularRate)) // Drive counterclockwise with negative X (left)
-        //                 ));
+        drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+                drivetrain.applyRequest(
+                        () -> drive.withVelocityX(
+                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
+                                                * MaxSpeed)) // Drive forward with
+                                // negative Y (forward)
+                                .withVelocityY(
+                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
+                                                * MaxSpeed)) // Drive left with negative X (left)
+                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
+                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                        ));
 
         driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         driver.b()
@@ -127,7 +128,7 @@ public class RobotContainer {
                 shooter = new Shooter(new ShooterIO() {});
                 fourBar = new FourBar(new FourBarIO() {});
                 arm = new Arm(new ArmIO() {});
-                break;
+                // break;
         }
         configureBindings();
 
