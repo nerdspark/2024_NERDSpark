@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
@@ -179,14 +181,16 @@ public class RobotContainer {
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
         // arm commands
-        // joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home));
-        // joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup));
-        // joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp));
-        // joystick.y().onTrue(new ArmCommand(arm, () -> ArmSetPoints.dropoff));
+        // joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, false));
+        // joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, false));
+        // joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, false));
+        // joystick.y().onTrue(new ArmCommand(arm, () -> ArmSetPoints.dropoff.plus(new Translation2d(
+        //     driver.getLeftY() * ArmSetPoints.dropoffMultiplier, 0)), () -> ArmSetPoints.dropoffWrist, false));
         // arm.setDefaultCommand(new ArmCommand(arm, () -> new
         // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
         // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
         // joystick.start().onTrue(new ArmResetCommand(arm));
+        
     }
 
     public Command getAutonomousCommand() {
