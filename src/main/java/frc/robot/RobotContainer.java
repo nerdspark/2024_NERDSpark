@@ -9,6 +9,8 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,6 +21,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.actions.firstRing;
+import frc.robot.actions.secondRing;
+import frc.robot.actions.thirdRing;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -93,6 +98,11 @@ public class RobotContainer {
     }
 
     public RobotContainer() {
+
+        NamedCommands.registerCommand("shootNote1", new firstRing(shooter, fourBar, intake));
+        NamedCommands.registerCommand("shootNote2", new secondRing(fourBar, intake));
+        NamedCommands.registerCommand("shootNote3", new thirdRing(fourBar, intake));
+
         switch (Constants.currentMode) {
             case REAL:
                 // intake = new Intake(new IntakeIOSparkMax()); // Spark Max
@@ -112,7 +122,7 @@ public class RobotContainer {
                 break;
         }
         configureBindings();
-        // NamedCommands.registerCommand("IntakeCommand", intake.Intake());
+        
 
         configureDashboard();
         autoChooser = AutoBuilder.buildAutoChooser();
