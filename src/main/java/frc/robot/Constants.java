@@ -31,8 +31,8 @@ public final class Constants {
         public static final double elbowRadPerRot = 2 * Math.PI / 4 * 18 / 42;
         public static final double wristRadPerRot = 2 * Math.PI * 50;
 
-        public static final double shoulderOffset = -0.17778; // radians, fwd = 0
-        public static final double elbowOffset = 2.71796;
+        public static final double shoulderOffset = -0.184; // radians, fwd = 0
+        public static final double elbowOffset = 4.048; // negative of measurement
 
         public static final Translation2d armBasePosition = new Translation2d();
         public static final double armForwardLimit = Units.inchesToMeters(12 + 5);

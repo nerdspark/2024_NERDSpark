@@ -19,30 +19,12 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.ArmConstants.ArmSetPoints;
-import frc.robot.commands.ArmCommand;
-import frc.robot.commands.FourBarCommand;
-import frc.robot.commands.ShooterCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.NoteVisionSubsystem;
-import frc.robot.subsystems.arm.Arm;
-import frc.robot.subsystems.arm.ArmIO;
-import frc.robot.subsystems.arm.ArmIOSparkMax;
-import frc.robot.subsystems.fourBar.FourBar;
-import frc.robot.subsystems.fourBar.FourBarIO;
-import frc.robot.subsystems.fourBar.FourBarIOSparkMax;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.IntakeIO;
-import frc.robot.subsystems.intake.IntakeIOSparkMax;
-import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.ShooterIO;
-import frc.robot.subsystems.shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
-import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
 
@@ -50,10 +32,10 @@ public class RobotContainer {
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
-    private Intake intake;
-    private FourBar fourBar;
-    private Shooter shooter;
-    private Arm arm;
+    // private Intake intake;
+    // private FourBar fourBar;
+    // private Shooter shooter;
+    // private Arm arm;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
@@ -83,18 +65,18 @@ public class RobotContainer {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
-        // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        //         drivetrain.applyRequest(
-        //                 () -> drive.withVelocityX(
-        //                                 xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-        //                                         * MaxSpeed)) // Drive forward with
-        //                         // negative Y (forward)
-        //                         .withVelocityY(
-        //                                 yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-        //                                         * MaxSpeed)) // Drive left with negative X (left)
-        //                         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
-        //                                 * MaxAngularRate)) // Drive counterclockwise with negative X (left)
-        //                 ));
+        drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+                drivetrain.applyRequest(
+                        () -> drive.withVelocityX(
+                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
+                                                * MaxSpeed)) // Drive forward with
+                                // negative Y (forward)
+                                .withVelocityY(
+                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
+                                                * MaxSpeed)) // Drive left with negative X (left)
+                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
+                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                        ));
 
         driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         driver.b()
@@ -108,7 +90,8 @@ public class RobotContainer {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         drivetrain.registerTelemetry(logger::telemeterize);
-        arm.setDefaultCommand(new InstantCommand(() -> arm.getArmPosition()));
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () ->
+        // false));
         // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
     }
 
@@ -120,20 +103,19 @@ public class RobotContainer {
 
         switch (Constants.currentMode) {
             case REAL:
-                intake = new Intake(new IntakeIOSparkMax()); // Spark Max
-                fourBar = new FourBar(new FourBarIOSparkMax());
-                shooter = new Shooter(new ShooterIOSparkMax());
-                arm = new Arm(new ArmIOSparkMax());
+                // intake = new Intake(new IntakeIOSparkMax()); // Spark Max
+                // fourBar = new FourBar(new FourBarIOSparkMax());
+                // shooter = new Shooter(new ShooterIOSparkMax());
+                // arm = new Arm(new ArmIOSparkMax());
                 // arm.getArmPosition();
                 break;
 
             default:
                 // Replayed robot, disable IO implementations
-                intake = new Intake(new IntakeIO() {});
-                shooter = new Shooter(new ShooterIO() {});
-                fourBar = new FourBar(new FourBarIO() {});
-                arm = new Arm(new ArmIO() {});
-
+                // intake = new Intake(new IntakeIO() {});
+                // shooter = new Shooter(new ShooterIO() {});
+                // fourBar = new FourBar(new FourBarIO() {});
+                // arm = new Arm(new ArmIO() {});
                 break;
         }
         configureBindings();
@@ -167,25 +149,25 @@ public class RobotContainer {
         // driver.x().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
-        driver.b()
-                .whileTrue(new ShooterCommand(
-                        shooter,
-                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
-                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
-        driver.b().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
+        // driver.b()
+        //         .whileTrue(new ShooterCommand(
+        //                 shooter,
+        //                 () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
+        //                 () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
+        // driver.b().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
         // // aim command
-        driver.rightBumper()
-                .whileTrue(new ParallelCommandGroup(
-                        new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
-                                        () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
-                                                .getDegrees()))
-                                .withVelocityX(xLimiter.calculate(
-                                        -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                .withVelocityY(yLimiter.calculate(
-                                        -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))),
-                        new FourBarCommand(
-                                fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
+        // driver.rightBumper()
+        //         .whileTrue(new ParallelCommandGroup(
+        //                 new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
+        //                                 () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
+        //                                         .getDegrees()))
+        //                         .withVelocityX(xLimiter.calculate(
+        //                                 -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+        //                         .withVelocityY(yLimiter.calculate(
+        //                                 -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))),
+        //                 new FourBarCommand(
+        //                         fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
 
         // // vision-assisted intake command
         // if (noteVisionSubsystem.hasTargets()) {
@@ -211,7 +193,7 @@ public class RobotContainer {
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
         // // arm commands
-        driver.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
+        // driver.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
         // joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, false));
         // joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, false));
         // joystick.y().onTrue(new ArmCommand(arm, () -> ArmSetPoints.dropoff.plus(new Translation2d(
