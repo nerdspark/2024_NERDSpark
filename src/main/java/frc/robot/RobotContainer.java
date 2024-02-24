@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
@@ -87,7 +89,7 @@ public class RobotContainer {
         driver.b()
                 .whileTrue(drivetrain.applyRequest(
                         () -> point.withModuleDirection(new Rotation2d(-driver.getRightY(), -driver.getRightX()))));
-
+        driver.x().onTrue(new InstantCommand(() -> resetGyro()));
         // reset the field-centric heading on left bumper press
         driver.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
@@ -95,7 +97,7 @@ public class RobotContainer {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         drivetrain.registerTelemetry(logger::telemeterize);
-        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
     }
 
     public RobotContainer() {
@@ -218,11 +220,16 @@ public class RobotContainer {
             }
         }
 
+
         double error = (targetAngle - currentAngle) % (360.0);
 
         error = error > 180.0 ? error - 360.0 : error;
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
         return gyroPid.calculate(currentAngle, targetAngle);
+    }
+    public void resetGyro() {
+        gyro.reset();
+        targetAngle = 0.0;
     }
 }
