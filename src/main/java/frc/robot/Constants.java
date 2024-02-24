@@ -1,5 +1,7 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Meters;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -8,9 +10,12 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
@@ -88,6 +93,11 @@ public final class Constants {
     public static final int elbowRightID = 8;
     public static final int wristID = 0;
     // public static final int gripperID = 0;
+
+    public static final int wristChannel1 = 0;
+    public static final int wristChannel2 = 1;
+    public static final double wristPulseDist = 8192.0 * 2.0 * Math.PI;
+    public static final double wristOffset = 0.0;
 
     public static final double indexDistance = 1000;
 
@@ -252,4 +262,23 @@ public final class Constants {
         public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerYboth, new Rotation2d(0));
         public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerYboth, new Rotation2d(Math.PI));
     }
+
+    public static class ShooterConstants {
+        public static double FOURBAR_ANGLE_THRESHOLD = 5; // Not sure what is this
+        public static Measure<Distance> MAXIMUM_READYSHOOT_DISTANCE = Meters.of(Units.feetToMeters(15));
+   
+        public static double SHOOTER_SPEED = 10;
+
+        public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
+        static {
+            //Key: Distance
+            //Value: Shooter Position 
+            shooterMap.put(null, null);
+            shooterMap.put(null, null);
+            shooterMap.put(null, null);
+        }
+
+    }
+
+    
 }

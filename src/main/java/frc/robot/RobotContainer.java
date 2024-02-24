@@ -9,6 +9,8 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -20,6 +22,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.actions.firstRing;
+import frc.robot.actions.secondRing;
+import frc.robot.actions.thirdRing;
 import frc.robot.commands.DriveCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -63,6 +68,8 @@ public class RobotContainer {
     private NoteVisionSubsystem noteVisionSubsystem =
             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
+    private NoteVisionSubsystem noteVisionSubsystem = new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
             new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),() -> driver.getRightY(),() -> driverRaw.getPOV()));
@@ -79,10 +86,22 @@ public class RobotContainer {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         drivetrain.registerTelemetry(logger::telemeterize);
+
+
+        if(noteVisionSubsystem.hasTargets()){
+            double noteYaw = noteVisionSubsystem.getYawVal();
+         }
+
         // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+
     }
 
     public RobotContainer() {
+
+        NamedCommands.registerCommand("shootNote1", new firstRing(shooter, fourBar, intake));
+        NamedCommands.registerCommand("shootNote2", new secondRing(fourBar, intake));
+        NamedCommands.registerCommand("shootNote3", new thirdRing(fourBar, intake));
+
         switch (Constants.currentMode) {
             case REAL:
                 // intake = new Intake(new IntakeIOSparkMax()); // Spark Max
@@ -102,7 +121,7 @@ public class RobotContainer {
                 break;
         }
         configureBindings();
-        // NamedCommands.registerCommand("IntakeCommand", intake.Intake());
+        
 
         configureDashboard();
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -112,7 +131,7 @@ public class RobotContainer {
             aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
         }
 
-        // intake button
+        // // intake button
         // driver.leftTrigger().whileTrue(
         //     new SequentialCommandGroup(
         //         new IntakeCommand(
@@ -122,28 +141,26 @@ public class RobotContainer {
         //             new
         // FourBarCommand(fourBar, () -> Constants.fourBarHome)));
 
-        // fourbar retract, unnecessary
+        // // fourbar retract, unnecessary
         // joystick.a().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
-        // shoot command
+        // // shoot command
         // driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
 
-        // spit command
+        // // spit command
         // driver.x().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
 
-        // spin shooter command
+        // // spin shooter command
         // copilot.y().toggleOnFalse(new ShooterCommand(shooter, () -> 1.0, () -> 1.0));
 
-        // aim command
+        // // aim command
         // driver.rightBumper().whileTrue(new ParallelCommandGroup(
         //     drive.withRotationalRate(calculateAutoTurn(() -> aimingMap.angle(drivetrain.getState().Pose)))
-        //         .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) *
-        // MaxSpeed))
-        //         .withVelocityY(yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) *
-        // MaxSpeed)),
+        //         .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+        //         .withVelocityY(yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)),
         //     new FourBarCommand(fourBar, () -> aimingMap.fourBar(drivetrain.getState().Pose))));
 
-        // vision-assisted intake command
+        // // vision-assisted intake command
         // if (noteVisionSubsystem.hasTargets()) {
         //     driver.rightTrigger().whileTrue(
         //         new IntakeCommand(intake, () -> driverRaw.getRightTriggerAxis(), IntakeMode.SOFTINTAKE)
@@ -155,7 +172,7 @@ public class RobotContainer {
         //             .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() ->
         // noteVisionSubsystem.getYawVal()))))));
         // }
-        // vision-assisted following command
+        // // vision-assisted following command
         // driver.rightTrigger().whileTrue((
         //     drivetrain.applyRequest(() -> drive
         //         .withVelocityX(xLimiter.calculate(0.1 *MaxSpeed*
@@ -164,7 +181,7 @@ public class RobotContainer {
         // Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
-        // arm commands
+        // // arm commands
         // joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, false));
         // joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, false));
         // joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, false));
