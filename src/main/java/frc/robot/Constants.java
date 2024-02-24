@@ -89,6 +89,11 @@ public final class Constants {
     public static final int wristID = 0;
     // public static final int gripperID = 0;
 
+    public static final int wristChannel1 = 0;
+    public static final int wristChannel2 = 1;
+    public static final double wristPulseDist = 8192.0 * 2.0 * Math.PI;
+    public static final double wristOffset = 0.0;
+
     public static final double indexDistance = 1000;
 
     public static final Mode currentMode = Mode.REAL;

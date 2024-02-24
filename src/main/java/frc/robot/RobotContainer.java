@@ -128,7 +128,7 @@ public class RobotContainer {
             aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
         }
 
-        // intake button
+        // // intake button
         // driver.leftTrigger().whileTrue(
         //     new SequentialCommandGroup(
         //         new IntakeCommand(
@@ -138,28 +138,26 @@ public class RobotContainer {
         //             new
         // FourBarCommand(fourBar, () -> Constants.fourBarHome)));
 
-        // fourbar retract, unnecessary
+        // // fourbar retract, unnecessary
         // joystick.a().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
-        // shoot command
+        // // shoot command
         // driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
 
-        // spit command
+        // // spit command
         // driver.x().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
 
-        // spin shooter command
+        // // spin shooter command
         // copilot.y().toggleOnFalse(new ShooterCommand(shooter, () -> 1.0, () -> 1.0));
 
-        // aim command
+        // // aim command
         // driver.rightBumper().whileTrue(new ParallelCommandGroup(
         //     drive.withRotationalRate(calculateAutoTurn(() -> aimingMap.angle(drivetrain.getState().Pose)))
-        //         .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) *
-        // MaxSpeed))
-        //         .withVelocityY(yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) *
-        // MaxSpeed)),
+        //         .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+        //         .withVelocityY(yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)),
         //     new FourBarCommand(fourBar, () -> aimingMap.fourBar(drivetrain.getState().Pose))));
 
-        // vision-assisted intake command
+        // // vision-assisted intake command
         // if (noteVisionSubsystem.hasTargets()) {
         //     driver.rightTrigger().whileTrue(
         //         new IntakeCommand(intake, () -> driverRaw.getRightTriggerAxis(), IntakeMode.SOFTINTAKE)
@@ -171,7 +169,7 @@ public class RobotContainer {
         //             .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() ->
         // noteVisionSubsystem.getYawVal()))))));
         // }
-        // vision-assisted following command
+        // // vision-assisted following command
         // driver.rightTrigger().whileTrue((
         //     drivetrain.applyRequest(() -> drive
         //         .withVelocityX(xLimiter.calculate(0.1 *MaxSpeed*
@@ -180,7 +178,7 @@ public class RobotContainer {
         // Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
-        // arm commands
+        // // arm commands
         // joystick.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, false));
         // joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, false));
         // joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, false));
