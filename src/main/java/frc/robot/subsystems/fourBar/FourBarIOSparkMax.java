@@ -31,8 +31,8 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarEncoder1 = FourBarMotor1.getEncoder();
         FourBarEncoder2 = FourBarMotor2.getEncoder();
 
-        FourBarMotor1.setSmartCurrentLimit(60);
-        FourBarMotor2.setSmartCurrentLimit(60);
+        FourBarMotor1.setSmartCurrentLimit(40);
+        FourBarMotor2.setSmartCurrentLimit(40);
 
         FourBarEncoder1.setPosition(0);
         FourBarEncoder2.setPosition(0);
@@ -40,7 +40,10 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarMotor2.follow(FourBarMotor1, true);
 
         FourBarPIDController1 = FourBarMotor1.getPIDController();
-    }
+        FourBarPIDController1.setP(0.08);
+        FourBarPIDController1.setI(0.0);
+        FourBarPIDController1.setD(0.0);
+   }
 
     @Override
     public void updateInputs(FourBarIOInputs inputs) {
