@@ -50,7 +50,7 @@ public class AutoAim {
                     .minus(poseSupplier.get().getTranslation())
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(180 + 10)));
+                    .plus(new Rotation2d(Units.degreesToRadians(180 + 5.3)));
         } else {
             return () -> Constants.speakerConstants
                     .speakerLocRed
@@ -58,7 +58,7 @@ public class AutoAim {
                     .minus(poseSupplier.get().getTranslation())
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(-10)));
+                    .plus(new Rotation2d(Units.degreesToRadians(5.3)));
         }
 
         // // ALTERNATE LOGIC

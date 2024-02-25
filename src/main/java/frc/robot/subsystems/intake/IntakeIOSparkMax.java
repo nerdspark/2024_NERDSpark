@@ -38,7 +38,7 @@ public class IntakeIOSparkMax implements IntakeIO {
 
         intakeEncoder = intakeMotor.getEncoder();
 
-        intakeMotor.setSmartCurrentLimit(8);
+        intakeMotor.setSmartCurrentLimit(30);
 
         intakeMotor.setIdleMode(IdleMode.kBrake);
 
