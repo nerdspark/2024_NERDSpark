@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.util.AutoAimMath;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers;
@@ -52,14 +53,17 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     // AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
     private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
     private boolean targetFollow = false;
+    private Intake intake;
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
 
     public CommandSwerveDrivetrain(
             SwerveDrivetrainConstants driveTrainConstants,
             double OdometryUpdateFrequency,
+            Intake intake,
             SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
+        this.intake = intake;
         configurePathPlanner();
         if (Utils.isSimulation()) {
             startSimThread();
@@ -78,7 +82,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public Optional<Rotation2d> getRotationTargetOverride() {
         // Some condition that should decide if we want to override rotation
-        if (targetFollow) {
+        if (intake.getBeamBreak()) {
             // Return an optional containing the rotation override (this should be a field relative rotation)
             return Optional.of(AutoAimMath.getAutoAimCalcRobot(() -> this.getState().Pose, targetPoseSpeaker));
         } else {
@@ -172,5 +176,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             dashboardPose = VisionHelpers.flipAlliance(dashboardPose);
         }
         field2d.setRobotPose(dashboardPose);
+    }
+
+    public void setRobotIntake(Intake intake) {
+        this.intake = intake;
     }
 }

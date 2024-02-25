@@ -13,8 +13,10 @@ public class AutoAimMath {
     public static Rotation2d getAutoAimCalcRobot(Supplier<Pose2d> poseSupplier, Translation2d targetPose) {
 
         double robotAimAngle = Math.atan2(
-                targetPose.getY() - poseSupplier.get().getY(),
-                AllianceFlipUtil.apply(targetPose.getX()) - poseSupplier.get().getX()); // Robot Angle
+                        targetPose.getY() - poseSupplier.get().getY(),
+                        AllianceFlipUtil.apply(targetPose.getX())
+                                - poseSupplier.get().getX())
+                - 180; // Robot Angle
 
         return new Rotation2d(robotAimAngle);
     }

@@ -9,6 +9,7 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,9 +20,17 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
+import frc.robot.actions.activeIntaking;
+import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.FourBarCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
@@ -38,6 +47,8 @@ import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
+import frc.robot.util.AutoAim;
+import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
 
 public class RobotContainer {
@@ -47,7 +58,7 @@ public class RobotContainer {
     private Intake intake;
     private FourBar fourBar;
     private Shooter shooter;
-    private Arm arm;
+    // private Arm arm;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
@@ -56,6 +67,7 @@ public class RobotContainer {
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1)
@@ -77,18 +89,18 @@ public class RobotContainer {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
-        // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        //         drivetrain.applyRequest(
-        //                 () -> drive.withVelocityX(
-        //                                 xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-        //                                         * MaxSpeed)) // Drive forward with
-        //                         // negative Y (forward)
-        //                         .withVelocityY(
-        //                                 yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-        //                                         * MaxSpeed)) // Drive left with negative X (left)
-        //                         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
-        //                                 * MaxAngularRate)) // Drive counterclockwise with negative X (left)
-        //                 ));
+        drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+                drivetrain.applyRequest(
+                        () -> drive.withVelocityX(
+                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
+                                                * MaxSpeed)) // Drive forward with
+                                // negative Y (forward)
+                                .withVelocityY(
+                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
+                                                * MaxSpeed)) // Drive left with negative X (left)
+                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
+                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                        ));
 
         driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         driver.b()
@@ -102,11 +114,30 @@ public class RobotContainer {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         drivetrain.registerTelemetry(logger::telemeterize);
-        arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
-        // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
+        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
     }
 
     public RobotContainer() {
+
+        drivetrain.setRobotIntake(intake);
+
+        NamedCommands.registerCommand(
+                "shootSpeed",
+                new ShooterCommand(
+                        shooter,
+                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
+                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
+
+        NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
+        NamedCommands.registerCommand(
+                "fourBarToShooter",
+                new FourBarCommand(fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose)));
+        NamedCommands.registerCommand(
+                "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
+
+        NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
+        NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
         // NamedCommands.registerCommand("shootNote1", new firstRing(shooter, fourBar, intake));
         // NamedCommands.registerCommand("shootNote2", new secondRing(fourBar, intake));
@@ -117,7 +148,7 @@ public class RobotContainer {
                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
                 fourBar = new FourBar(new FourBarIOSparkMax());
                 shooter = new Shooter(new ShooterIOSparkMax());
-                arm = new Arm(new ArmIOSparkMax());
+                // arm = new Arm(new ArmIOSparkMax());
                 // arm.getArmPosition();
                 break;
 
@@ -126,8 +157,8 @@ public class RobotContainer {
                 intake = new Intake(new IntakeIO() {});
                 shooter = new Shooter(new ShooterIO() {});
                 fourBar = new FourBar(new FourBarIO() {});
-                arm = new Arm(new ArmIO() {});
-                break;
+                // arm = new Arm(new ArmIO() {});
+                // break;
         }
         configureBindings();
 
@@ -140,45 +171,45 @@ public class RobotContainer {
         }
 
         // // intake button
-        // driver.leftTrigger()
-        //         .whileTrue(new SequentialCommandGroup(
-        //                 new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis()-0.5)*2),
-        // IntakeMode.SOFTINTAKE)
-        //                         .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
-        //                 new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
-        // driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        driver.leftTrigger()
+                .whileTrue(new SequentialCommandGroup(
+                        new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis()-0.5)*2),
+        IntakeMode.SOFTINTAKE)
+                                .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
+                        new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
+        driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // fourbar autoretract, unnecessary
         // joystick.a().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
         // // shoot command
-        // driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
-        // driver.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
+        driver.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spit command
-        // driver.x().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
-        // driver.x().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        driver.x().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        driver.x().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
-        // driver.b()
-        //         .whileTrue(new ShooterCommand(
-        //                 shooter,
-        //                 () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
-        //                 () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
-        // driver.b().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
+        driver.b()
+                .whileTrue(new ShooterCommand(
+                        shooter,
+                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
+                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
+        driver.b().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
         // // aim command
-        // driver.rightBumper()
-        //         .whileTrue(new ParallelCommandGroup(
-        //                 new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
-        //                                 () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
-        //                                         .getDegrees()))
-        //                         .withVelocityX(xLimiter.calculate(
-        //                                 -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-        //                         .withVelocityY(yLimiter.calculate(
-        //                                 -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))),
-        //                 new FourBarCommand(
-        //                         fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
+        driver.rightBumper()
+                .whileTrue(new ParallelCommandGroup(
+                        new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
+                                        () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
+                                                .getDegrees()))
+                                .withVelocityX(xLimiter.calculate(
+                                        -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                                .withVelocityY(yLimiter.calculate(
+                                        -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))),
+                        new FourBarCommand(
+                                fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
 
         // // vision-assisted intake command
         // if (noteVisionSubsystem.hasTargets()) {
