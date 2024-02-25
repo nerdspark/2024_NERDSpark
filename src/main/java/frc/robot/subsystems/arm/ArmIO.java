@@ -45,7 +45,7 @@ public interface ArmIO {
 
     default void setArmVelocity(Translation2d velocity) {}
 
-    default void setArmPosition(Translation2d position, boolean inBend) {}
+    default void setArmPosition(Translation2d position, boolean inBend, double wrist) {}
 
     default void resetEncoders() {}
 

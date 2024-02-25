@@ -31,8 +31,8 @@ public class ArmCommand extends Command {
     @Override
     public void execute() {
         arm.getArmPosition();
-        arm.setArmPosition(position.get(), inBend.get());
-        arm.setWristPosition(wrist.get());
+        arm.setArmPosition(position.get(), inBend.get(), wrist.get());
+        // arm.setWristPosition(wrist.get());
     }
 
     // Called once the command ends or is interrupted.

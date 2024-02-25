@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
@@ -91,18 +92,18 @@ public class RobotContainer {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
-        drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(
-                        () -> drive.withVelocityX(
-                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-                                                * MaxSpeed)) // Drive forward with
-                                // negative Y (forward)
-                                .withVelocityY(
-                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-                                                * MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
-                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
-                        ));
+        // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+        //         drivetrain.applyRequest(
+        //                 () -> drive.withVelocityX(
+        //                                 xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
+        //                                         * MaxSpeed)) // Drive forward with
+        //                         // negative Y (forward)
+        //                         .withVelocityY(
+        //                                 yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
+        //                                         * MaxSpeed)) // Drive left with negative X (left)
+        //                         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
+        //                                 * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+        //                 ));
 
         // driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // driver.b()
@@ -117,7 +118,7 @@ public class RobotContainer {
         }
         drivetrain.registerTelemetry(logger::telemeterize);
         // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
-        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
     }
 
     public RobotContainer() {
@@ -192,25 +193,41 @@ public class RobotContainer {
         driver.x().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
-        copilot.b()
+        copilot.leftBumper()
                 .whileTrue(new ShooterCommand(
                         shooter,
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
-        copilot.b().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
+        copilot.leftBumper().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
-        // // aim command
-        copilot.rightBumper()
-                .whileTrue(new ParallelCommandGroup(
-                        new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
-                                        () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
-                                                .get().getDegrees()))
-                                .withVelocityX(xLimiter.calculate(
-                                        -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                .withVelocityY(yLimiter.calculate(
-                                        -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))),
-                        new FourBarCommand(
-                                fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
+        //transfer spin up
+        copilot.leftTrigger()
+                .whileTrue(new ShooterCommand(
+                        shooter,
+                        () -> 1300 * copilot.getLeftTriggerAxis(),
+                        () -> 1300 * copilot.getLeftTriggerAxis()));
+        copilot.leftTrigger().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
+
+        //transfer shoot
+        copilot.rightTrigger()
+                .whileTrue(new IntakeCommand(
+                        intake,
+                        () -> copilot.getRightTriggerAxis(), IntakeMode.FORCEINTAKE));
+        copilot.rightTrigger().onFalse(new IntakeCommand(
+                        intake,
+                        () -> 0.0, IntakeMode.FORCEINTAKE));
+        // // // aim command
+        // copilot.rightBumper()
+        //         .whileTrue(new ParallelCommandGroup(
+        //                 new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
+        //                                 () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
+        //                                         .get().getDegrees()))
+        //                         .withVelocityX(xLimiter.calculate(
+        //                                 -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+        //                         .withVelocityY(yLimiter.calculate(
+        //                                 -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))),
+        //                 new FourBarCommand(
+        //                         fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
 
         // // // vision-assisted intake command
         if (noteVisionSubsystem.hasTargets()) {
@@ -236,20 +253,22 @@ public class RobotContainer {
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
         // // arm commands
-        // driver.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
-        // driver.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
-        // driver.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
-        // driver.y()
-        //         .onTrue(new ArmCommand(
-        //                 arm,
-        //                 () -> ArmSetPoints.dropoff.plus(
-        //                         new Translation2d(driver.getLeftY() * ArmSetPoints.dropoffMultiplier, 0)),
-        //                 () -> ArmSetPoints.dropoffWrist,
-        //                 () -> false));
+        copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
+        copilot.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
+        copilot.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
+        copilot.y()
+                .onTrue(new ArmCommand(
+                        arm,
+                        () -> ArmSetPoints.dropoff.plus(
+                                new Translation2d(copilot.getLeftY() * ArmSetPoints.dropoffMultiplier, 0)),
+                        () -> ArmSetPoints.dropoffWrist,
+                        () -> false));
+
+        
         // arm.setDefaultCommand(new ArmCommand(arm, () -> new
         // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
         // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
-        // joystick.start().onTrue(new ArmResetCommand(arm));
+        copilot.start().onTrue(new ArmResetCommand(arm));
 
     }
 

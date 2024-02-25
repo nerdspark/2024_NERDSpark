@@ -29,8 +29,8 @@ public class Arm extends SubsystemBase {
         io.setArmVelocity(velocity);
     }
 
-    public void setArmPosition(Translation2d position, boolean inBend) {
-        io.setArmPosition(position, inBend);
+    public void setArmPosition(Translation2d position, boolean inBend, double wrist) {
+        io.setArmPosition(position, inBend, wrist);
     }
 
     public void resetEncoders() {

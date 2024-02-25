@@ -30,7 +30,7 @@ public final class Constants {
         public static final double virtual4BarGearRatio = 36.0 / 42.0;
         public static final double shoulderRadPerRot = 2 * Math.PI / 15 * 14 / 32;
         public static final double elbowRadPerRot = 2 * Math.PI / 12 * virtual4BarGearRatio;
-        public static final double wristRadPerRot = 2 * Math.PI * 50;
+        public static final double wristRadPerRot = 2 * Math.PI / 13.5;
 
         public static final double shoulderOffset = -0.144; // radians, fwd = 0
         public static final double elbowOffset = 2.611; // negative of measurement
@@ -50,15 +50,15 @@ public final class Constants {
         public static final double shoulderP = 0.3;
         public static final double shoulderI = 0.0;
         public static final double shoulderD = 0.0;
-        public static final double elbowP = 0.2;
-        public static final double elbowI = 0.0;
+        public static final double elbowP = 0.3;
+        public static final double elbowI = 0.05;
         public static final double elbowD = 0.0;
         public static final double shoulderS = 0.0; // feedforward
         public static final double shoulderG = 0.012;
         public static final double shoulderV = 0.0;
         public static final double shoulderA = 0.0;
         public static final double elbowS = 0.0;
-        public static final double elbowG = .05;
+        public static final double elbowG = .027;
         public static final double elbowV = 0.0;
         public static final double elbowA = 0.0;
 
@@ -68,13 +68,16 @@ public final class Constants {
                     .plus(new Translation2d(
                             secondStageLength * Math.cos(elbowOffset), secondStageLength * Math.sin(elbowOffset))); // A
             public static final double homeWrist = 0.0;
-            public static final Translation2d pickup = new Translation2d(3.5, 2.1); // B
-            public static final double pickupWrist = 0.0;
-            public static final Translation2d amp = new Translation2d(0, 18); // X
-            public static final double ampWrist = 0.0;
-            public static final Translation2d dropoff = new Translation2d(0, 30); // Y
-            public static final double dropoffWrist = 0.0;
-            public static final double dropoffMultiplier = 10.0;
+            public static final Translation2d pickup = new Translation2d(
+                            baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
+                    .plus(new Translation2d(
+                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(11.5)), secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(11.5)))); // B
+            public static final double pickupWrist = 3.6;
+            public static final Translation2d amp = new Translation2d(-1, 19); // X
+            public static final double ampWrist = pickupWrist;
+            public static final Translation2d dropoff = new Translation2d(0, 25); // Y
+            public static final double dropoffWrist = -1.9;
+            public static final double dropoffMultiplier = 12.0;
         }
     }
 
