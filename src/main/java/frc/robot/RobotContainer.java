@@ -62,8 +62,8 @@ public class RobotContainer {
     private Shooter shooter;
     private Arm arm;
 
-    private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
-    private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
+    private SlewRateLimiter xLimiter = new SlewRateLimiter(7);
+    private SlewRateLimiter yLimiter = new SlewRateLimiter(7);
     private SlewRateLimiter zLimiter = new SlewRateLimiter(10);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
@@ -126,22 +126,22 @@ public class RobotContainer {
 
         drivetrain.setRobotIntake(intake);
 
-        NamedCommands.registerCommand(
-                "shootSpeed",
-                new ShooterCommand(
-                        shooter,
-                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
-                        () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
+        // NamedCommands.registerCommand(
+        //         "shootSpeed",
+        //         new ShooterCommand(
+        //                 shooter,
+        //                 () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
+        //                 () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
 
-        NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
-        NamedCommands.registerCommand(
-                "fourBarToShooter",
-                new FourBarCommand(fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose)));
-        NamedCommands.registerCommand(
-                "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
+        // NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
+        // NamedCommands.registerCommand(
+        //         "fourBarToShooter",
+        //         new FourBarCommand(fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose)));
+        // NamedCommands.registerCommand(
+        //         "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
-        NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
-        NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
+        // NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
+        // NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
         // NamedCommands.registerCommand("shootNote1", new firstRing(shooter, fourBar, intake));
         // NamedCommands.registerCommand("shootNote2", new secondRing(fourBar, intake));
@@ -184,7 +184,7 @@ public class RobotContainer {
                         new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
         driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
-        // // shoot command
+        // // // shoot command
         driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
         driver.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
@@ -204,8 +204,8 @@ public class RobotContainer {
         driver.rightBumper()
                 .whileTrue(new ParallelCommandGroup(
                         new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
-                                        () -> (AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
-                                                .getDegrees())))
+                                        () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
+                                                .get().getDegrees()))
                                 .withVelocityX(xLimiter.calculate(
                                         -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                                 .withVelocityY(yLimiter.calculate(
@@ -213,7 +213,7 @@ public class RobotContainer {
                         new FourBarCommand(
                                 fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
 
-        // // vision-assisted intake command
+        // // // vision-assisted intake command
         if (noteVisionSubsystem.hasTargets()) {
             driver.rightTrigger()
                     .whileTrue(new IntakeCommand(intake, () -> driverRaw.getRightTriggerAxis(), IntakeMode.SOFTINTAKE)

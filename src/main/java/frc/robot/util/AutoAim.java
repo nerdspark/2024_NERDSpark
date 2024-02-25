@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import java.util.function.Supplier;
 
@@ -23,33 +24,45 @@ public class AutoAim {
             speakerPose = Constants.speakerConstants.speakerLocRed;
         }
         double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation());
+        SmartDashboard.putNumber("Calculated 4Bar", Constants.ShooterConstants.fourBarMap.get(Units.metersToFeet(distanceToSpeaker)));
         return Constants.ShooterConstants.fourBarMap.get(Units.metersToFeet(distanceToSpeaker));
     }
 
     public static double calculateShooterRPM(Supplier<Pose2d> poseSupplier) {
         Pose2d speakerPose;
-        if (DriverStation.getAlliance().equals(Alliance.Blue)) {
+        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
             speakerPose = Constants.speakerConstants.speakerLocBlue;
         } else {
             speakerPose = Constants.speakerConstants.speakerLocRed;
         }
         double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation());
+        SmartDashboard.putNumber("Calculated RPM", Constants.ShooterConstants.shooterMap.get(Units.metersToFeet(distanceToSpeaker)));
         return Constants.ShooterConstants.shooterMap.get(Units.metersToFeet(distanceToSpeaker));
     }
 
-    public static Rotation2d calculateAngleToSpeaker(Supplier<Pose2d> poseSupplier) {
-        Pose2d speakerPose;
-        if (DriverStation.getAlliance().equals(Alliance.Blue)) {
-            speakerPose = Constants.speakerConstants.speakerLocBlue;
-        } else {
-            speakerPose = Constants.speakerConstants.speakerLocRed;
-        }
-
-        // ALTERNATE LOGIC
-        return speakerPose
+    public static Supplier<Rotation2d> calculateAngleToSpeaker(Supplier<Pose2d> poseSupplier) {
+        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+            return () -> Constants.speakerConstants.speakerLocBlue
                 .getTranslation()
                 .minus(poseSupplier.get().getTranslation())
-                .getAngle();
+                .getAngle()
+                .times(-1.0)
+                .plus(new Rotation2d(Units.degreesToRadians(180 + 10)));
+        } else {
+            return () -> Constants.speakerConstants.speakerLocRed
+                .getTranslation()
+                .minus(poseSupplier.get().getTranslation())
+                .getAngle()
+                .times(-1.0)
+                .plus(new Rotation2d(Units.degreesToRadians(-10)));
+        }
+
+
+        // // ALTERNATE LOGIC
+        // return speakerPose
+        //         .getTranslation()
+        //         .minus(poseSupplier.get().getTranslation())
+        //         .getAngle();
 
         // double robotAimAngle = Math.atan2(
         //         speakerPose.getY() - poseSupplier.get().getY(),

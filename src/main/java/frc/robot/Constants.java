@@ -261,13 +261,14 @@ public final class Constants {
     }
 
     public static class speakerConstants {
-        public static final double speakerYboth = Units.inchesToMeters(218.42);
+        public static final double speakerBlueY = Units.inchesToMeters(218.42 + 8);
+        public static final double speakerRedY = Units.inchesToMeters(218.42 - 8);
         public static final double speakerBlueX = Units.inchesToMeters(0);
-        public static final double speakerRedX = Units.inchesToMeters(652.73);
+        public static final double speakerRedX = Units.inchesToMeters(652.73 + 5);
         public static final double speakerHeight = Units.inchesToMeters(80.515); // (82.90 + 78.13) / 2
 
-        public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerYboth, new Rotation2d(0));
-        public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerYboth, new Rotation2d(Math.PI));
+        public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerBlueY, new Rotation2d(0));
+        public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerRedY, new Rotation2d(Math.PI));
     }
 
     public static class ShooterConstants {
@@ -288,7 +289,9 @@ public final class Constants {
             fourBarMap.put(16.0 + (2.0 / 12.0), 3.0);
             fourBarMap.put(14.0 + (1.0 / 12.0), 2.0);
             fourBarMap.put(11.0 + (9.0 / 12.0), 1.0);
-            fourBarMap.put(9.0 + (5.0 / 12.0), 1.0);
+            fourBarMap.put(6.0 + (5.0 / 12.0), 1.0);
+            fourBarMap.put(6.0 + (4.9/12.0), 20.0);
+            fourBarMap.put(3.0, 20.0);
         }
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
@@ -304,6 +307,8 @@ public final class Constants {
             shooterMap.put(14.0 + (1.0 / 12.0), 5400.0);
             shooterMap.put(11.0 + (9.0 / 12.0), 5400.0);
             shooterMap.put(9.0 + (5.0 / 12.0), 5400.0);
+            shooterMap.put(3.0, 5400.0);
+
         }
     }
 }
