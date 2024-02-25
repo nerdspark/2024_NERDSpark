@@ -14,7 +14,6 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -203,7 +202,8 @@ public class RobotContainer {
         // transfer spin up
         // copilot.leftTrigger()
         //         .whileTrue(new ShooterCommand(
-        //                 shooter, () -> 1300 * copilot.getLeftTriggerAxis(), () -> 1300 * copilot.getLeftTriggerAxis()));
+        //                 shooter, () -> 1300 * copilot.getLeftTriggerAxis(), () -> 1300 *
+        // copilot.getLeftTriggerAxis()));
         // copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // transfer shoot
@@ -227,7 +227,8 @@ public class RobotContainer {
         // // // vision-assisted intake command
         // if (noteVisionSubsystem.hasTargets()) {
         //     driver.rightTrigger()
-        //             .whileTrue(new IntakeCommand(intake, () -> driverRaw.getRightTriggerAxis(), IntakeMode.SOFTINTAKE)
+        //             .whileTrue(new IntakeCommand(intake, () -> driverRaw.getRightTriggerAxis(),
+        // IntakeMode.SOFTINTAKE)
         //                     .deadlineWith(drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
         //                                     * MaxSpeed
         //                                     * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
@@ -293,7 +294,7 @@ public class RobotContainer {
                 targetAngle = -driverRaw.getPOV();
             } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
                 targetAngle = currentAngle;
-                return driver.getLeftX() * Math.abs(driver.getLeftX());
+                return driver.getLeftX() / 2;
                 // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
             }
         }
