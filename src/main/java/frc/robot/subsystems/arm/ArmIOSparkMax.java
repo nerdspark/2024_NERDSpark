@@ -249,7 +249,7 @@ public class ArmIOSparkMax implements ArmIO {
 
     public double getElbowLeftPosition() {
         double elbowPose = elbowLeftEncoder.getPosition();
-        elbowPose += shoulderLeftEncoder.getPosition() * 24.0 / 42.0;
+        elbowPose += shoulderLeftEncoder.getPosition() * (1 - ArmConstants.virtual4BarGearRatio);
         SmartDashboard.putNumber("elbow l position", elbowPose);
         SmartDashboard.putNumber("raw elbow l position", elbowLeftEncoder.getPosition());
         // SmartDashboard.putNumber("elbow adjustment factor", shoulderLeftEncoder.getPosition()*24.0/42.0);
@@ -260,7 +260,7 @@ public class ArmIOSparkMax implements ArmIO {
 
     public double getElbowRightPosition() {
         double elbowPose = elbowRightEncoder.getPosition();
-        elbowPose += shoulderRightEncoder.getPosition() * 24.0 / 42.0;
+        elbowPose += shoulderRightEncoder.getPosition() * (1 - ArmConstants.virtual4BarGearRatio);
         SmartDashboard.putNumber("elbow r position", elbowPose);
         SmartDashboard.putNumber("raw elbow r position", elbowRightEncoder.getPosition());
         // SmartDashboard.putNumber("elbow adjustment factor", shoulderLeftEncoder.getPosition()*24.0/42.0);

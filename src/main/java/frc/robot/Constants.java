@@ -27,8 +27,9 @@ public final class Constants {
         public static final double baseStageLength = 18.75; // inches
         public static final double secondStageLength = 16.975; // inches
 
+        public static final double virtual4BarGearRatio = 36.0 / 42.0;
         public static final double shoulderRadPerRot = 2 * Math.PI / 15 * 14 / 32;
-        public static final double elbowRadPerRot = 2 * Math.PI / 12 * 36 / 42;
+        public static final double elbowRadPerRot = 2 * Math.PI / 12 * virtual4BarGearRatio;
         public static final double wristRadPerRot = 2 * Math.PI * 50;
 
         public static final double shoulderOffset = -0.144; // radians, fwd = 0
@@ -39,12 +40,10 @@ public final class Constants {
         public static final double armBackwardLimit = Units.inchesToMeters(12 + 28 - 5);
         public static final double armTopLimit = Units.inchesToMeters(48 - 8 - 4);
 
-        public static final double virtual4BarGearRatio = 1.5;
-
         public static final double maxPowerShoulder = 0.3;
         public static final double maxPowerElbow = 0.3;
-        public static final int currentLimitShoulder = 20;
-        public static final int currentLimitElbow = 15;
+        public static final int currentLimitShoulder = 40;
+        public static final int currentLimitElbow = 25;
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
 
@@ -59,7 +58,7 @@ public final class Constants {
         public static final double shoulderV = 0.0;
         public static final double shoulderA = 0.0;
         public static final double elbowS = 0.0;
-        public static final double elbowG = .01;
+        public static final double elbowG = .05;
         public static final double elbowV = 0.0;
         public static final double elbowA = 0.0;
 
@@ -69,11 +68,11 @@ public final class Constants {
                     .plus(new Translation2d(
                             secondStageLength * Math.cos(elbowOffset), secondStageLength * Math.sin(elbowOffset))); // A
             public static final double homeWrist = 0.0;
-            public static final Translation2d pickup = home; // B
+            public static final Translation2d pickup = new Translation2d(3.5, 2.1); // B
             public static final double pickupWrist = 0.0;
-            public static final Translation2d amp = new Translation2d(0, 10); // X
+            public static final Translation2d amp = new Translation2d(0, 18); // X
             public static final double ampWrist = 0.0;
-            public static final Translation2d dropoff = new Translation2d(0, 18); // Y
+            public static final Translation2d dropoff = new Translation2d(0, 30); // Y
             public static final double dropoffWrist = 0.0;
             public static final double dropoffMultiplier = 10.0;
         }
@@ -290,7 +289,7 @@ public final class Constants {
             fourBarMap.put(14.0 + (1.0 / 12.0), 2.0);
             fourBarMap.put(11.0 + (9.0 / 12.0), 1.0);
             fourBarMap.put(6.0 + (5.0 / 12.0), 1.0);
-            fourBarMap.put(6.0 + (4.9/12.0), 20.0);
+            fourBarMap.put(6.0 + (4.9 / 12.0), 20.0);
             fourBarMap.put(3.0, 20.0);
         }
 
@@ -308,7 +307,6 @@ public final class Constants {
             shooterMap.put(11.0 + (9.0 / 12.0), 5400.0);
             shooterMap.put(9.0 + (5.0 / 12.0), 5400.0);
             shooterMap.put(3.0, 5400.0);
-
         }
     }
 }
