@@ -192,15 +192,15 @@ public class RobotContainer {
         driver.x().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
-        driver.b()
+        copilot.b()
                 .whileTrue(new ShooterCommand(
                         shooter,
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
-        driver.b().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
+        copilot.b().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
         // // aim command
-        driver.rightBumper()
+        copilot.rightBumper()
                 .whileTrue(new ParallelCommandGroup(
                         new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
                                         () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
