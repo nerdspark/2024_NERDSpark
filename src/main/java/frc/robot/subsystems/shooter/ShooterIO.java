@@ -32,4 +32,6 @@ public interface ShooterIO {
     default double[] getSpeed() {
         return new double[2];
     }
+    default void stop() {
+    }
 }

@@ -79,7 +79,6 @@ public class ArmIOSparkMax implements ArmIO {
         elbowRightEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
         wristEncoder.setPositionConversionFactor(ArmConstants.wristRadPerRot);
 
-
         // shoulderLeftEncoder.setPosition(ArmConstants.shoulderOffset);
         // shoulderRightEncoder.setPosition(ArmConstants.shoulderOffset);
         // elbowLeftEncoder.setPosition(ArmConstants.elbowOffset);
@@ -180,7 +179,8 @@ public class ArmIOSparkMax implements ArmIO {
         elbowLeft.setClosedLoopRampRate(ArmConstants.rampRateElbow);
         shoulderLeft.setClosedLoopRampRate(ArmConstants.rampRateShoulder);
         elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
-        wristEncoder.setPosition(getShoulderLeftPosition() + getElbowLeftPosition()); // wristEncoderAbsolute.get() + Constants.wristOffset);
+        wristEncoder.setPosition(getShoulderLeftPosition()
+                + getElbowLeftPosition()); // wristEncoderAbsolute.get() + Constants.wristOffset);
         // gripperEncoder.setPosition(0);
         // elbowLeftController.setOutputRange(-ArmConstants.maxPowerElbow, ArmConstants.maxPowerElbow);
         // shoulderLeftController.setOutputRange(-ArmConstants.maxPowerShoulder, ArmConstants.maxPowerShoulder);

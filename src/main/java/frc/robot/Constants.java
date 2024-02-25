@@ -71,7 +71,8 @@ public final class Constants {
             public static final Translation2d pickup = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
                     .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(11.5)), secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(11.5)))); // B
+                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(11.5)),
+                            secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(11.5)))); // B
             public static final double pickupWrist = 3.6;
             public static final Translation2d amp = new Translation2d(-1, 19); // X
             public static final double ampWrist = pickupWrist;
@@ -267,7 +268,7 @@ public final class Constants {
         public static final double speakerBlueY = Units.inchesToMeters(218.42);
         public static final double speakerRedY = Units.inchesToMeters(218.42);
         public static final double speakerBlueX = Units.inchesToMeters(0);
-        public static final double speakerRedX = Units.inchesToMeters(652.73 );
+        public static final double speakerRedX = Units.inchesToMeters(652.73);
         public static final double speakerHeight = Units.inchesToMeters(80.515); // (82.90 + 78.13) / 2
 
         public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerBlueY, new Rotation2d(0));

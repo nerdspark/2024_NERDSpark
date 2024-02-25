@@ -29,8 +29,8 @@ import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.NoteVisionSubsystem;
@@ -50,7 +50,6 @@ import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
-
 import java.util.function.Supplier;
 
 public class RobotContainer {
@@ -92,18 +91,18 @@ public class RobotContainer {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
-        // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        //         drivetrain.applyRequest(
-        //                 () -> drive.withVelocityX(
-        //                                 xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-        //                                         * MaxSpeed)) // Drive forward with
-        //                         // negative Y (forward)
-        //                         .withVelocityY(
-        //                                 yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-        //                                         * MaxSpeed)) // Drive left with negative X (left)
-        //                         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
-        //                                 * MaxAngularRate)) // Drive counterclockwise with negative X (left)
-        //                 ));
+        drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+                drivetrain.applyRequest(
+                        () -> drive.withVelocityX(
+                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
+                                                * MaxSpeed)) // Drive forward with
+                                // negative Y (forward)
+                                .withVelocityY(
+                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
+                                                * MaxSpeed)) // Drive left with negative X (left)
+                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
+                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                        ));
 
         // driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // driver.b()
@@ -117,8 +116,9 @@ public class RobotContainer {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         drivetrain.registerTelemetry(logger::telemeterize);
-        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
-        // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () ->
+        // false));
+        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
     }
 
     public RobotContainer() {
@@ -189,8 +189,8 @@ public class RobotContainer {
         driver.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spit command
-        driver.x().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
-        driver.x().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        driver.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
         copilot.leftBumper()
@@ -198,51 +198,45 @@ public class RobotContainer {
                         shooter,
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose),
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose)));
-        copilot.leftBumper().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
+        copilot.leftBumper().onFalse(new InstantCommand(() -> shooter.stop()));
 
-        //transfer spin up
-        copilot.leftTrigger()
-                .whileTrue(new ShooterCommand(
-                        shooter,
-                        () -> 1300 * copilot.getLeftTriggerAxis(),
-                        () -> 1300 * copilot.getLeftTriggerAxis()));
-        copilot.leftTrigger().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
+        // transfer spin up
+        // copilot.leftTrigger()
+        //         .whileTrue(new ShooterCommand(
+        //                 shooter, () -> 1300 * copilot.getLeftTriggerAxis(), () -> 1300 * copilot.getLeftTriggerAxis()));
+        // copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
-        //transfer shoot
+        // transfer shoot
         copilot.rightTrigger()
-                .whileTrue(new IntakeCommand(
-                        intake,
-                        () -> copilot.getRightTriggerAxis(), IntakeMode.FORCEINTAKE));
-        copilot.rightTrigger().onFalse(new IntakeCommand(
-                        intake,
-                        () -> 0.0, IntakeMode.FORCEINTAKE));
+                .whileTrue(new IntakeCommand(intake, () -> copilot.getRightTriggerAxis(), IntakeMode.FORCEINTAKE));
+        copilot.rightTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
         // // // aim command
-        // copilot.rightBumper()
-        //         .whileTrue(new ParallelCommandGroup(
-        //                 new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
-        //                                 () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
-        //                                         .get().getDegrees()))
-        //                         .withVelocityX(xLimiter.calculate(
-        //                                 -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-        //                         .withVelocityY(yLimiter.calculate(
-        //                                 -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))),
-        //                 new FourBarCommand(
-        //                         fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
+        copilot.rightBumper()
+                .whileTrue(new ParallelCommandGroup(
+                        new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
+                                        () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
+                                                .get()
+                                                .getDegrees()))
+                                .withVelocityX(xLimiter.calculate(
+                                        -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                                .withVelocityY(yLimiter.calculate(
+                                        -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))),
+                        new FourBarCommand(
+                                fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
 
         // // // vision-assisted intake command
-        if (noteVisionSubsystem.hasTargets()) {
-            driver.rightTrigger()
-                    .whileTrue(new IntakeCommand(intake, () -> driverRaw.getRightTriggerAxis(),
-        IntakeMode.SOFTINTAKE)
-                            .deadlineWith(drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
-                                            * MaxSpeed
-                                            * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
-                                    .withVelocityY(yLimiter.calculate(-0.1
-                                            * MaxSpeed
-                                            * Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
-                                    .withRotationalRate(zLimiter.calculate(
-                                            calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
-        }
+        // if (noteVisionSubsystem.hasTargets()) {
+        //     driver.rightTrigger()
+        //             .whileTrue(new IntakeCommand(intake, () -> driverRaw.getRightTriggerAxis(), IntakeMode.SOFTINTAKE)
+        //                     .deadlineWith(drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
+        //                                     * MaxSpeed
+        //                                     * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+        //                             .withVelocityY(yLimiter.calculate(-0.1
+        //                                     * MaxSpeed
+        //                                     * Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+        //                             .withRotationalRate(zLimiter.calculate(
+        //                                     calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
+        // }
         // // vision-assisted following command
         // driver.rightTrigger().whileTrue((
         //     drivetrain.applyRequest(() -> drive
@@ -253,7 +247,9 @@ public class RobotContainer {
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
         // // arm commands
-        copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
+        copilot.a()
+                .onTrue(new ArmCommand(
+                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
         copilot.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
         copilot.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
         copilot.y()
@@ -264,12 +260,13 @@ public class RobotContainer {
                         () -> ArmSetPoints.dropoffWrist,
                         () -> false));
 
-        
+        copilot.back().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        copilot.back().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+
         // arm.setDefaultCommand(new ArmCommand(arm, () -> new
         // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
         // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
         copilot.start().onTrue(new ArmResetCommand(arm));
-
     }
 
     public Command getAutonomousCommand() {
@@ -295,7 +292,9 @@ public class RobotContainer {
             if (driverRaw.getPOV() != -1) {
                 targetAngle = -driverRaw.getPOV();
             } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
-                targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
+                targetAngle = currentAngle;
+                return driver.getLeftX() * Math.abs(driver.getLeftX());
+                // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
             }
         }
 

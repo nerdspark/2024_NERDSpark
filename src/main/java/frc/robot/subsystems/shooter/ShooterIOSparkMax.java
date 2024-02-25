@@ -5,6 +5,7 @@
 package frc.robot.subsystems.shooter;
 
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -34,9 +35,26 @@ public class ShooterIOSparkMax implements ShooterIO {
         shooterMotor2.setInverted(true);
         shooterEncoder1 = shooterMotor1.getEncoder();
         shooterEncoder2 = shooterMotor2.getEncoder();
+        shooterMotor1.setSmartCurrentLimit(60);
+        shooterMotor2.setSmartCurrentLimit(60);
+        shooterMotor1.setIdleMode(IdleMode.kCoast);
+        shooterMotor2.setIdleMode(IdleMode.kCoast);
+        shooterMotor1.setClosedLoopRampRate(0.1);
+        shooterMotor2.setClosedLoopRampRate(0.1);
 
         shooterController1 = shooterMotor1.getPIDController();
         shooterController2 = shooterMotor2.getPIDController();
+
+        shooterController1.setP(0.00038);
+        shooterController1.setI(2E-7);
+        shooterController1.setD(0.0125);
+        shooterController1.setIZone(1000);
+        shooterController1.setFF(0.000163);
+        shooterController2.setP(0.00038);
+        shooterController2.setI(2E-7);
+        shooterController2.setD(0.0125);
+        shooterController2.setIZone(1000);
+        shooterController2.setFF(0.000163);
     }
 
     @Override
@@ -55,5 +73,9 @@ public class ShooterIOSparkMax implements ShooterIO {
     public void setSpeed(double speed1, double speed2) {
         shooterController1.setReference(speed1, ControlType.kVelocity);
         shooterController2.setReference(speed2, ControlType.kVelocity);
+    }
+    public void stop() {
+        shooterMotor1.set(0);
+        shooterMotor2.set(0);
     }
 }
