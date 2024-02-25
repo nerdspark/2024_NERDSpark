@@ -46,12 +46,15 @@ public class AutoAim {
         }
 
         // ALTERNATE LOGIC
-        // return speakerPose.getTranslation().minus(poseSupplier.get().getTranslation()).getAngle();
+        return speakerPose
+                .getTranslation()
+                .minus(poseSupplier.get().getTranslation())
+                .getAngle();
 
-        double robotAimAngle = Math.atan2(
-                speakerPose.getY() - poseSupplier.get().getY(),
-                speakerPose.getX() - poseSupplier.get().getX()); // Robot Angle
+        // double robotAimAngle = Math.atan2(
+        //         speakerPose.getY() - poseSupplier.get().getY(),
+        //         speakerPose.getX() - poseSupplier.get().getX()); // Robot Angle
 
-        return new Rotation2d(robotAimAngle);
+        // return new Rotation2d(robotAimAngle);
     }
 }

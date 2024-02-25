@@ -43,7 +43,7 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarPIDController1.setP(0.08);
         FourBarPIDController1.setI(0.0);
         FourBarPIDController1.setD(0.0);
-   }
+    }
 
     @Override
     public void updateInputs(FourBarIOInputs inputs) {

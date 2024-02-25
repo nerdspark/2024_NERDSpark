@@ -14,6 +14,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,10 +27,11 @@ import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.NoteVisionSubsystem;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIO;
 import frc.robot.subsystems.arm.ArmIOSparkMax;
@@ -55,7 +57,7 @@ public class RobotContainer {
     private Intake intake;
     private FourBar fourBar;
     private Shooter shooter;
-    // private Arm arm;
+    private Arm arm;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
@@ -77,9 +79,10 @@ public class RobotContainer {
     private PIDController gyroPid = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD);
     private double targetAngle = 0;
     private final Pigeon2 gyro = new Pigeon2(Constants.pigeonID, "canivore1");
+    private double gyroOffset = 0;
     private AprilTagVision aprilTagVision;
-    // private NoteVisionSubsystem noteVisionSubsystem =
-    //         new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+    private NoteVisionSubsystem noteVisionSubsystem =
+            new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     private void configureBindings() {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -98,19 +101,20 @@ public class RobotContainer {
                                         * MaxAngularRate)) // Drive counterclockwise with negative X (left)
                         ));
 
-        driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        driver.b()
-                .whileTrue(drivetrain.applyRequest(
-                        () -> point.withModuleDirection(new Rotation2d(-driver.getRightY(), -driver.getRightX()))));
-        driver.x().onTrue(new InstantCommand(() -> resetGyro()));
+        // driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        // driver.b()
+        //         .whileTrue(drivetrain.applyRequest(
+        //                 () -> point.withModuleDirection(new Rotation2d(-driver.getRightY(), -driver.getRightX()))));
+        driver.start().onTrue(new InstantCommand(() -> resetGyro()));
         // reset the field-centric heading on left bumper press
-        driver.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+        // driver.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
         if (Utils.isSimulation()) {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         drivetrain.registerTelemetry(logger::telemeterize);
-        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () ->
+        // false));
         fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
     }
 
@@ -125,8 +129,7 @@ public class RobotContainer {
                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
                 fourBar = new FourBar(new FourBarIOSparkMax());
                 shooter = new Shooter(new ShooterIOSparkMax());
-                // arm = new Arm(new ArmIOSparkMax());
-                // arm.getArmPosition();
+                arm = new Arm(new ArmIOSparkMax());
                 break;
 
             default:
@@ -134,7 +137,7 @@ public class RobotContainer {
                 intake = new Intake(new IntakeIO() {});
                 shooter = new Shooter(new ShooterIO() {});
                 fourBar = new FourBar(new FourBarIO() {});
-                // arm = new Arm(new ArmIO() {});
+                arm = new Arm(new ArmIO() {});
                 // break;
         }
         configureBindings();
@@ -150,14 +153,13 @@ public class RobotContainer {
         // // intake button
         driver.leftTrigger()
                 .whileTrue(new SequentialCommandGroup(
-                        new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis()-0.5)*2),
-        IntakeMode.SOFTINTAKE)
+                        new IntakeCommand(
+                                        intake,
+                                        () -> ((driverRaw.getLeftTriggerAxis() - 0.5) * 2),
+                                        IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
                         new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
         driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
-
-        // // fourbar autoretract, unnecessary
-        // joystick.a().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
         // // shoot command
         driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
@@ -179,8 +181,8 @@ public class RobotContainer {
         driver.rightBumper()
                 .whileTrue(new ParallelCommandGroup(
                         new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
-                                        () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
-                                                .getDegrees()))
+                                        () -> (AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
+                                                .getDegrees())))
                                 .withVelocityX(xLimiter.calculate(
                                         -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                                 .withVelocityY(yLimiter.calculate(
@@ -189,19 +191,18 @@ public class RobotContainer {
                                 fourBar, () -> AutoAim.calculateFourBarPosition(() -> drivetrain.getState().Pose))));
 
         // // vision-assisted intake command
-        // if (noteVisionSubsystem.hasTargets()) {
-        //     driver.rightTrigger()
-        //             .whileTrue(new IntakeCommand(intake, () -> driverRaw.getRightTriggerAxis(),
-        // IntakeMode.SOFTINTAKE)
-        //                     .deadlineWith(drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
-        //                                     * MaxSpeed
-        //                                     * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
-        //                             .withVelocityY(yLimiter.calculate(-0.1
-        //                                     * MaxSpeed
-        //                                     * Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
-        //                             .withRotationalRate(zLimiter.calculate(
-        //                                     calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
-        // }
+        if (noteVisionSubsystem.hasTargets()) {
+            driver.rightTrigger()
+                    .whileTrue(new IntakeCommand(intake, () -> driverRaw.getRightTriggerAxis(), IntakeMode.SOFTINTAKE)
+                            .deadlineWith(drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
+                                            * MaxSpeed
+                                            * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+                                    .withVelocityY(yLimiter.calculate(-0.1
+                                            * MaxSpeed
+                                            * Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+                                    .withRotationalRate(zLimiter.calculate(
+                                            calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
+        }
         // // vision-assisted following command
         // driver.rightTrigger().whileTrue((
         //     drivetrain.applyRequest(() -> drive
@@ -212,11 +213,16 @@ public class RobotContainer {
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
         // // arm commands
-        // driver.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
-        // joystick.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, false));
-        // joystick.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, false));
-        // joystick.y().onTrue(new ArmCommand(arm, () -> ArmSetPoints.dropoff.plus(new Translation2d(
-        //     driver.getLeftY() * ArmSetPoints.dropoffMultiplier, 0)), () -> ArmSetPoints.dropoffWrist, false));
+        driver.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () -> false));
+        driver.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
+        driver.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
+        driver.y()
+                .onTrue(new ArmCommand(
+                        arm,
+                        () -> ArmSetPoints.dropoff.plus(
+                                new Translation2d(driver.getLeftY() * ArmSetPoints.dropoffMultiplier, 0)),
+                        () -> ArmSetPoints.dropoffWrist,
+                        () -> false));
         // arm.setDefaultCommand(new ArmCommand(arm, () -> new
         // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
         // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
@@ -239,7 +245,7 @@ public class RobotContainer {
     }
 
     public double calculateAutoTurn(Supplier<Double> target) {
-        double currentAngle = -gyro.getAngle();
+        double currentAngle = -(gyro.getAngle() - gyroOffset);
 
         if (target.get() != 0) {
             targetAngle = -target.get();
@@ -260,7 +266,8 @@ public class RobotContainer {
     }
 
     public void resetGyro() {
-        gyro.reset();
-        targetAngle = 0.0;
+        gyroOffset = gyro.getAngle();
+        targetAngle = 0;
+        drivetrain.seedFieldRelative();
     }
 }
