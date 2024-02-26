@@ -254,12 +254,14 @@ public class RobotContainer {
         copilot.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
         copilot.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
         copilot.y()
-                .onTrue(new ArmCommand(
+                .whileTrue(new ArmCommand(
                         arm,
                         () -> ArmSetPoints.dropoff.plus(
                                 new Translation2d(copilot.getLeftY() * ArmSetPoints.dropoffMultiplier, 0)),
                         () -> ArmSetPoints.dropoffWrist,
                         () -> false));
+        copilot.y().onFalse(new ArmCommand(
+                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
 
         copilot.back().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
         copilot.back().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
