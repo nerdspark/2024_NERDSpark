@@ -99,8 +99,9 @@ public class RobotContainer {
                                 .withVelocityY(
                                         yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
                                                 * MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> 0.0)
-                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                                .withRotationalRate(zLimiter.calculate(
+                                        calculateAutoTurn(() -> 0.0).get()
+                                                * MaxAngularRate)) // Drive counterclockwise with negative X (left)
                         ));
 
         // driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -123,6 +124,8 @@ public class RobotContainer {
     public RobotContainer() {
 
         drivetrain.setRobotIntake(intake);
+
+        // drivetrain.getModule(0).getDriveMotor().setInverted(false);
 
         // NamedCommands.registerCommand(
         //         "shootSpeed",
@@ -214,9 +217,12 @@ public class RobotContainer {
         copilot.rightBumper()
                 .whileTrue(new ParallelCommandGroup(
                         new InstantCommand(() -> drive.withRotationalRate(calculateAutoTurn(
-                                        () -> AutoAim.calculateAngleToSpeaker(() -> drivetrain.getState().Pose)
-                                                .get()
-                                                .getDegrees()))
+                                                () -> AutoAim.calculateAngleToSpeaker(() -> 
+                                                        drivetrain.getState().Pose//, () -> drivetrain.getState().speeds.vxMetersPerSecond, () -> drivetrain.getState().speeds.vyMetersPerSecond
+                                                        )
+                                                        .get()
+                                                        .getDegrees())
+                                        .get())
                                 .withVelocityX(xLimiter.calculate(
                                         -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                                 .withVelocityY(yLimiter.calculate(
@@ -260,7 +266,8 @@ public class RobotContainer {
                                 new Translation2d(copilot.getLeftY() * ArmSetPoints.dropoffMultiplier, 0)),
                         () -> ArmSetPoints.dropoffWrist,
                         () -> false));
-        copilot.y().onFalse(new ArmCommand(
+        copilot.y()
+                .onFalse(new ArmCommand(
                         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
 
         copilot.back().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
@@ -286,7 +293,7 @@ public class RobotContainer {
         drivetrain.addDashboardWidgets(visionTab);
     }
 
-    public double calculateAutoTurn(Supplier<Double> target) {
+    public Supplier<Double> calculateAutoTurn(Supplier<Double> target) {
         double currentAngle = -(gyro.getAngle() - gyroOffset);
 
         if (target.get() != 0) {
@@ -296,7 +303,7 @@ public class RobotContainer {
                 targetAngle = -driverRaw.getPOV();
             } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
                 targetAngle = currentAngle;
-                return driver.getLeftX() / 2;
+                return () -> driver.getLeftX() / 2;
                 // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
             }
         }
@@ -307,7 +314,7 @@ public class RobotContainer {
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
         SmartDashboard.putNumber("angle error deg", error);
-        return gyroPid.calculate(currentAngle, targetAngle);
+        return () -> gyroPid.calculate(currentAngle, targetAngle);
     }
 
     public void resetGyro() {
