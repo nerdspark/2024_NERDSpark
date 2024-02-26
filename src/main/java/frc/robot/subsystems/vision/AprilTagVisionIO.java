@@ -13,6 +13,7 @@ import frc.robot.util.VisionHelpers.PoseEstimate;
 import java.util.ArrayList;
 import org.littletonrobotics.junction.LogTable;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 public interface AprilTagVisionIO {
     class AprilTagVisionIOInputs implements LoggableInputs {
@@ -30,7 +31,10 @@ public interface AprilTagVisionIO {
                 table.put("captureTimestamp/" + Integer.toString(posePosition), poseEstimate.timestampSeconds());
                 table.put("tagIDs/" + Integer.toString(posePosition), poseEstimate.tagIDs());
                 table.put("averageTagDistance/" + Integer.toString(posePosition), poseEstimate.averageTagDistance());
-                table.put("poseAmbiguity/" + Double.toString(posePosition), poseEstimate.poseAmbiguity());
+                table.put("poseAmbiguity/" + Integer.toString(posePosition), poseEstimate.poseAmbiguity());
+                table.put(
+                        "poseStrategyUsed/" + Integer.toString(posePosition),
+                        poseEstimate.poseStrategyUsed().toString());
             }
             table.put("valid", !poseEstimates.isEmpty());
         }
@@ -45,9 +49,11 @@ public interface AprilTagVisionIO {
                 double averageTagDistance = table.get("averageTagDistance/" + Integer.toString(i), 0.0);
                 int[] tagIDs = table.get("tagIDs/" + Integer.toString(i), new int[] {});
                 double poseAmbiguiy = table.get("poseAmbiguity/" + Integer.toString(i), 0);
+                PoseStrategy poseStrategyUsed =
+                        table.get("poseStrategyUsed/" + Integer.toString(i), PoseStrategy.valueOf("Not Sure"));
 
-                poseEstimates.add(
-                        new PoseEstimate(poseEstimation, timestamp, averageTagDistance, tagIDs, poseAmbiguiy));
+                poseEstimates.add(new PoseEstimate(
+                        poseEstimation, timestamp, averageTagDistance, tagIDs, poseAmbiguiy, poseStrategyUsed));
             }
             table.get("valid", false);
         }
