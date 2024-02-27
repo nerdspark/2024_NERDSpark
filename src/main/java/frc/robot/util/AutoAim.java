@@ -80,7 +80,7 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * Constants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(180 + 5.3)));
+                    .plus(new Rotation2d(Units.degreesToRadians(180 + 4.5)));
         } else {
             angle = Constants.speakerConstants
                     .speakerLocRed
@@ -91,7 +91,7 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * Constants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(5.3)));
+                    .plus(new Rotation2d(Units.degreesToRadians(4.5)));
         }
         SmartDashboard.putNumber("target Angle", angle.getDegrees());
         return angle;

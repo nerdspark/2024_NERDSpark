@@ -15,6 +15,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -163,6 +164,10 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         return String.format(
                 "(%.3f, %.3f) %.2f degrees",
                 pose.getX(), pose.getY(), pose.getRotation().getDegrees());
+    }
+
+    public Pose2d getCurrentPose() {
+        return this.getState().Pose;
     }
 
     @Override

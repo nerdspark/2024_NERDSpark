@@ -51,6 +51,7 @@ import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
+import java.util.function.Supplier;
 
 public class RobotContainer {
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
@@ -100,8 +101,8 @@ public class RobotContainer {
                                 .withVelocityY(
                                         yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
                                                 * MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(0.0)
-                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                                .withRotationalRate(
+                                        calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
                         ));
 
         // driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -181,6 +182,7 @@ public class RobotContainer {
         if (Constants.VisionConstants.USE_VISION == true) {
             aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
             aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
+            aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
         }
 
         // intake button
@@ -199,8 +201,8 @@ public class RobotContainer {
         driver.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spit command
-        // driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
-        // driver.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        driver.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
         copilot.leftTrigger()
@@ -220,7 +222,7 @@ public class RobotContainer {
 
         // transfer spin up
         copilot.leftBumper().whileTrue(new ShooterCommand(shooter, () -> 1300.0, () -> 1300.0));
-        copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
+        copilot.leftBumper().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // transfer shoot
         copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
@@ -228,17 +230,17 @@ public class RobotContainer {
         // // // aim command
         copilot.rightTrigger()
                 .whileTrue(drivetrain
-                        .applyRequest(() -> drive.withRotationalRate(
-                                        zLimiter.calculate(calculateAutoTurn(AutoAim.calculateAngleToSpeaker(
+                        .applyRequest(
+                                () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
                                                         () -> drivetrain.getState().Pose,
                                                         () -> new Translation2d(
                                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                                 drivetrain.getState().speeds.vyMetersPerSecond))
-                                                .getDegrees())))
-                                .withVelocityX(xLimiter.calculate(
-                                        -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                .withVelocityY(yLimiter.calculate(
-                                        -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))
+                                                .getDegrees()))
+                                        .withVelocityX(xLimiter.calculate(
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                                        .withVelocityY(yLimiter.calculate(
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))
                         .alongWith(new FourBarCommand(
                                 fourBar,
                                 () -> AutoAim.calculateFourBarPosition(
@@ -310,19 +312,17 @@ public class RobotContainer {
         drivetrain.addDashboardWidgets(visionTab);
     }
 
-    public double calculateAutoTurn(double target) {
+    public double calculateAutoTurn(Supplier<Double> target) {
         double currentAngle = -(gyro.getAngle() - gyroOffset);
 
-        if (target != 0) {
-            targetAngle = -target;
-        } else {
-            if (driverRaw.getPOV() != -1) {
-                targetAngle = -driverRaw.getPOV();
-            } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
-                targetAngle = currentAngle;
-                return driver.getLeftX() / 2;
-                // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
-            }
+        if (target.get() != 0) {
+            targetAngle = -target.get();
+        } else if (driverRaw.getPOV() != -1) {
+            targetAngle = -driverRaw.getPOV();
+        } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
+            targetAngle = currentAngle - 10 * driver.getLeftX();
+            return -driver.getLeftX();
+            // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }
 
         double error = (targetAngle - currentAngle) % (360.0);
@@ -331,7 +331,7 @@ public class RobotContainer {
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
         SmartDashboard.putNumber("angle error deg", error);
-        return gyroPid.calculate(currentAngle, targetAngle);
+        return zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate;
     }
 
     public void resetGyro() {
