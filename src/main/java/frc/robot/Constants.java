@@ -82,7 +82,7 @@ public final class Constants {
         }
     }
 
-    public static final double shootMoveMultiplier = -0.18; // theoretically speed of shot in m/s
+    public static final double shootMoveMultiplier = 0; // -0.1; // theoretically speed of shot in m/s
     public static final double fourBarOut = 20.0;
     public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;
@@ -268,8 +268,8 @@ public final class Constants {
     public static class speakerConstants {
         public static final double speakerBlueY = Units.inchesToMeters(218.42);
         public static final double speakerRedY = Units.inchesToMeters(218.42);
-        public static final double speakerBlueX = Units.inchesToMeters(0);
-        public static final double speakerRedX = Units.inchesToMeters(652.73);
+        public static final double speakerBlueX = Units.inchesToMeters(6);
+        public static final double speakerRedX = Units.inchesToMeters(652.73 - 6);
         public static final double speakerHeight = Units.inchesToMeters(80.515); // (82.90 + 78.13) / 2
 
         public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerBlueY, new Rotation2d(0));
@@ -287,16 +287,17 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            fourBarMap.put(26.0, 8.0);
-            fourBarMap.put(21.0 + (7.0 / 12.0), 8.0);
-            fourBarMap.put(20.0, 8.0);
-            fourBarMap.put(18.0, 6.0);
-            fourBarMap.put(16.0 + (2.0 / 12.0), 2.7);
-            fourBarMap.put(14.0 + (1.0 / 12.0), 1.9);
-            fourBarMap.put(11.0 + (9.0 / 12.0), 1.3);
-            fourBarMap.put(9.0, 0.6);
-            fourBarMap.put(8.9, 18.0);
-            fourBarMap.put(5.9, 20.0);
+            fourBarMap.put(49.5, 8.0);
+            fourBarMap.put(25.5, 8.0);
+            fourBarMap.put(19.5, 7.7);
+            fourBarMap.put(17.5, 5.2);
+            fourBarMap.put(15.5 + (2.0 / 12.0), 2.6);
+            fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
+            fourBarMap.put(13.0, 1.65);
+            fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
+            fourBarMap.put(8.5, 0.8);
+            fourBarMap.put(8.4, 18.0);
+            fourBarMap.put(5.4, 20.0);
             fourBarMap.put(3.0, 20.0);
         }
 
@@ -305,15 +306,14 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(26.0, 5400.0);
-            shooterMap.put(21.0 + (7.0 / 12.0), 5400.0);
-            shooterMap.put(20.0, 5400.0);
-            shooterMap.put(18.0, 5400.0);
-            shooterMap.put(16 + (2.0 / 12.0), 5300.0);
-            shooterMap.put(14.0 + (1.0 / 12.0), 5000.0);
-            shooterMap.put(11.0 + (9.0 / 12.0), 4800.0);
-            shooterMap.put(9.0 + (5.0 / 12.0), 4700.0);
-            shooterMap.put(3.0, 4500.0);
+            shooterMap.put(25.5, 5400.0);
+            shooterMap.put(19.5, 5400.0);
+            shooterMap.put(17.5, 5400.0);
+            shooterMap.put(15.5 + (2.0 / 12.0), 5300.0);
+            shooterMap.put(13.5 + (1.0 / 12.0), 5000.0);
+            shooterMap.put(10.5 + (9.0 / 12.0), 4800.0);
+            shooterMap.put(8.5 + (5.0 / 12.0), 4700.0);
+            shooterMap.put(2.5, 4500.0);
         }
     }
 }
