@@ -10,7 +10,7 @@ import frc.robot.subsystems.intake.Intake;
 public class backToSafety extends ParallelCommandGroup {
 
     public backToSafety(Intake intake, FourBar fourBar) {
-        new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FULLINTAKE);
+        new IntakeCommand(intake, () -> 0.0, IntakeCommand.IntakeMode.FORCEINTAKE);
         new FourBarCommand(fourBar, () -> Constants.fourBarHome);
     }
 }
