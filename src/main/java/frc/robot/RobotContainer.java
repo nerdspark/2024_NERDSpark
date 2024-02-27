@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.commands.ArmCommand;
@@ -48,6 +47,7 @@ import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
+import java.util.function.Supplier;
 
 public class RobotContainer {
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
@@ -97,8 +97,8 @@ public class RobotContainer {
                                 .withVelocityY(
                                         yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
                                                 * MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(zLimiter.calculate(calculateAutoTurn(0.0)
-                                        * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                                .withRotationalRate(
+                                        calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
                         ));
 
         // driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -173,15 +173,15 @@ public class RobotContainer {
         }
 
         // intake button
-        driver.leftTrigger()
-                .whileTrue(new SequentialCommandGroup(
-                        new IntakeCommand(
-                                        intake,
-                                        () -> ((driverRaw.getLeftTriggerAxis() - 0.5) * 2),
-                                        IntakeMode.SOFTINTAKE)
-                                .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
-                        new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
-        driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        // driver.leftTrigger()
+        //         .whileTrue(new SequentialCommandGroup(
+        //                 new IntakeCommand(
+        //                                 intake,
+        //                                 () -> ((driverRaw.getLeftTriggerAxis() - 0.5) * 2),
+        //                                 IntakeMode.SOFTINTAKE)
+        //                         .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
+        //                 new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
+        // driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // // shoot command
         driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
@@ -192,7 +192,7 @@ public class RobotContainer {
         // driver.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
-        copilot.leftTrigger()
+        driver.leftTrigger()
                 .whileTrue(new ShooterCommand(
                         shooter,
                         () -> AutoAim.calculateShooterRPM(
@@ -205,7 +205,7 @@ public class RobotContainer {
                                 () -> new Translation2d(
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
-        copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
+        driver.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // transfer spin up
         copilot.leftBumper().whileTrue(new ShooterCommand(shooter, () -> 1300.0, () -> 1300.0));
@@ -215,19 +215,19 @@ public class RobotContainer {
         copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
         copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
         // // // aim command
-        copilot.rightTrigger()
+        driver.rightTrigger()
                 .whileTrue(drivetrain
-                        .applyRequest(() -> drive.withRotationalRate(
-                                        zLimiter.calculate(calculateAutoTurn(AutoAim.calculateAngleToSpeaker(
+                        .applyRequest(
+                                () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
                                                         () -> drivetrain.getState().Pose,
                                                         () -> new Translation2d(
                                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                                 drivetrain.getState().speeds.vyMetersPerSecond))
-                                                .getDegrees())))
-                                .withVelocityX(xLimiter.calculate(
-                                        -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                .withVelocityY(yLimiter.calculate(
-                                        -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))
+                                                .getDegrees()))
+                                        .withVelocityX(xLimiter.calculate(
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                                        .withVelocityY(yLimiter.calculate(
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))
                         .alongWith(new FourBarCommand(
                                 fourBar,
                                 () -> AutoAim.calculateFourBarPosition(
@@ -299,19 +299,17 @@ public class RobotContainer {
         drivetrain.addDashboardWidgets(visionTab);
     }
 
-    public double calculateAutoTurn(double target) {
+    public double calculateAutoTurn(Supplier<Double> target) {
         double currentAngle = -(gyro.getAngle() - gyroOffset);
 
-        if (target != 0) {
-            targetAngle = -target;
-        } else {
-            if (driverRaw.getPOV() != -1) {
-                targetAngle = -driverRaw.getPOV();
-            } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
-                targetAngle = currentAngle;
-                return driver.getLeftX() / 2;
-                // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
-            }
+        if (target.get() != 0) {
+            targetAngle = -target.get();
+        } else if (driverRaw.getPOV() != -1) {
+            targetAngle = -driverRaw.getPOV();
+        } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
+            targetAngle = currentAngle - 10 * driver.getLeftX();
+            return -driver.getLeftX() / 2;
+            // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }
 
         double error = (targetAngle - currentAngle) % (360.0);
@@ -320,7 +318,7 @@ public class RobotContainer {
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
         SmartDashboard.putNumber("angle error deg", error);
-        return gyroPid.calculate(currentAngle, targetAngle);
+        return zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate;
     }
 
     public void resetGyro() {
