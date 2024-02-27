@@ -7,15 +7,11 @@
 
 package frc.robot.subsystems.vision;
 
-import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
-import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kRedAllianceWallRightSide;
-
-import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.Constants;
-import frc.robot.util.VisionHelpers;
 import frc.robot.util.VisionHelpers.PoseEstimate;
 import java.util.ArrayList;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 /** This class represents the implementation of AprilTagVisionIO using Limelight camera. */
 public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
@@ -25,7 +21,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
     private static PhotonVisionRunnable backRightEstimator;
     private static Notifier allNotifier;
 
-    private OriginPosition originPosition = kBlueAllianceWallRightSide;
+    // private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
     /**
      * Constructs a new AprilTagVisionIOLimelight instance.
@@ -98,16 +94,17 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
     public void updatePoseEstimates(PhotonVisionRunnable estomator, AprilTagVisionIOInputs inputs) {
 
         var cameraPose = estomator.grabLatestEstimatedPose();
+        var poseStrategyUsed = cameraPose.strategy;
 
         ArrayList<PoseEstimate> poseEstimates = new ArrayList<>(); // Creates an empty ArrayList to store pose
         // estimates
 
         if (cameraPose != null) {
             // New pose from vision
-            var cameraPose2d = cameraPose.estimatedPose.toPose2d();
-            if (originPosition == kRedAllianceWallRightSide) {
-                cameraPose2d = VisionHelpers.flipAlliance(cameraPose2d);
-            }
+            // var cameraPose2d = cameraPose.estimatedPose.toPose2d();
+            // if (originPosition == kRedAllianceWallRightSide) {
+            //     cameraPose2d = VisionHelpers.flipAlliance(cameraPose2d);
+            // }
 
             int[] tagIDsFrontCamera = new int[cameraPose.targetsUsed.size()];
             double averageTagDistance = 0.0;
@@ -123,18 +120,22 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                         .getTranslation()
                         .getNorm(); // Calculates the sum of the tag distances
 
-                poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
+                if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+                    poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
             }
+
             averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
 
-            poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
+            if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+                poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
             poseEstimates.add(new PoseEstimate(
                     cameraPose.estimatedPose,
                     cameraPose.timestampSeconds,
                     averageTagDistance,
                     tagIDsFrontCamera,
-                    poseAmbiguity)); //
+                    poseAmbiguity,
+                    poseStrategyUsed)); //
 
             inputs.poseEstimates = poseEstimates;
         }
