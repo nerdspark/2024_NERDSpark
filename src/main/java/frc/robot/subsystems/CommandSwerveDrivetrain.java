@@ -60,10 +60,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     public CommandSwerveDrivetrain(
             SwerveDrivetrainConstants driveTrainConstants,
             double OdometryUpdateFrequency,
-            Intake intake,
             SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
-        this.intake = intake;
         configurePathPlanner();
         if (Utils.isSimulation()) {
             startSimThread();
