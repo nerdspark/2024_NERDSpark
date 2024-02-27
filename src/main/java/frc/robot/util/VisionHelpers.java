@@ -12,7 +12,6 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import java.util.Arrays;
 import java.util.Objects;
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 /**
  * The VisionHelpers class provides utility methods and record classes for vision-related
@@ -39,9 +38,7 @@ public class VisionHelpers {
             /** The IDs of the detected tags. */
             int[] tagIDs,
             /** Ambiguity of Vision pose */
-            double poseAmbiguity,
-            /** StrategyUsed to Compute the Pose */
-            PoseStrategy poseStrategyUsed) {
+            double poseAmbiguity) {
 
         /**
          * Checks if this pose estimate is equal to another object.
@@ -62,8 +59,7 @@ public class VisionHelpers {
                     && Objects.equals(pose, other.pose)
                     && Double.compare(timestampSeconds, other.timestampSeconds) == 0
                     && Double.compare(averageTagDistance, other.averageTagDistance) == 0
-                    && Double.compare(poseAmbiguity, other.poseAmbiguity) == 0
-                    && poseStrategyUsed == other.poseStrategyUsed;
+                    && Double.compare(poseAmbiguity, other.poseAmbiguity) == 0;
         }
 
         /**
@@ -78,8 +74,7 @@ public class VisionHelpers {
                     timestampSeconds,
                     averageTagDistance,
                     Arrays.hashCode(tagIDs),
-                    poseAmbiguity,
-                    poseStrategyUsed);
+                    poseAmbiguity);
         }
 
         /**
@@ -100,8 +95,6 @@ public class VisionHelpers {
                     + Arrays.toString(tagIDs)
                     + ", poseAmbiguity="
                     + Double.toString(poseAmbiguity)
-                    + ", poseStrategy ="
-                    + poseStrategyUsed.toString()
                     + '}';
         }
     }

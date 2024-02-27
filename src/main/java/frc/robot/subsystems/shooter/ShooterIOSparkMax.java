@@ -74,7 +74,6 @@ public class ShooterIOSparkMax implements ShooterIO {
         shooterController1.setReference(speed1, ControlType.kVelocity);
         shooterController2.setReference(speed2, ControlType.kVelocity);
     }
-
     public void stop() {
         shooterMotor1.set(0);
         shooterMotor2.set(0);
