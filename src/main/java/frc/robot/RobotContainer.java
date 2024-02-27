@@ -171,7 +171,6 @@ public class RobotContainer {
         if (Constants.VisionConstants.USE_VISION == true) {
             aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
             aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
-            aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
         }
 
         // intake button
