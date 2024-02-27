@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.commands.ArmCommand;
@@ -174,26 +175,26 @@ public class RobotContainer {
         }
 
         // intake button
-        // driver.leftTrigger()
-        //         .whileTrue(new SequentialCommandGroup(
-        //                 new IntakeCommand(
-        //                                 intake,
-        //                                 () -> ((driverRaw.getLeftTriggerAxis() - 0.5) * 2),
-        //                                 IntakeMode.SOFTINTAKE)
-        //                         .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
-        //                 new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
-        // driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        driver.leftTrigger()
+                .whileTrue(new SequentialCommandGroup(
+                        new IntakeCommand(
+                                        intake,
+                                        () -> ((driverRaw.getLeftTriggerAxis() - 0.5) * 2),
+                                        IntakeMode.SOFTINTAKE)
+                                .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
+                        new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
+        driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // // shoot command
         driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
         driver.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spit command
-        // driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
-        // driver.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        driver.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
-        driver.leftTrigger()
+        copilot.leftTrigger()
                 .whileTrue(new ShooterCommand(
                         shooter,
                         () -> AutoAim.calculateShooterRPM(
@@ -206,17 +207,17 @@ public class RobotContainer {
                                 () -> new Translation2d(
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
-        driver.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
+        copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // transfer spin up
         copilot.leftBumper().whileTrue(new ShooterCommand(shooter, () -> 1300.0, () -> 1300.0));
-        copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
+        copilot.leftBumper().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // transfer shoot
         copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
         copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
         // // // aim command
-        driver.rightTrigger()
+        copilot.rightTrigger()
                 .whileTrue(drivetrain
                         .applyRequest(
                                 () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(

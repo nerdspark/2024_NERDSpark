@@ -82,7 +82,7 @@ public final class Constants {
         }
     }
 
-    public static final double shootMoveMultiplier = -0.25; // theoretically speed of shot in m/s
+    public static final double shootMoveMultiplier = -0.18; // theoretically speed of shot in m/s
     public static final double fourBarOut = 20.0;
     public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;
