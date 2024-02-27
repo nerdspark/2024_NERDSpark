@@ -47,18 +47,18 @@ public final class Constants {
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
 
-        public static final double shoulderP = 0.3;
+        public static final double shoulderP = 1.3;
         public static final double shoulderI = 0.0;
         public static final double shoulderD = 0.0;
-        public static final double elbowP = 0.3;
-        public static final double elbowI = 0.05;
+        public static final double elbowP = 0.7;
+        public static final double elbowI = 0.1;
         public static final double elbowD = 0.0;
         public static final double shoulderS = 0.0; // feedforward
-        public static final double shoulderG = 0.012;
+        public static final double shoulderG = 0.005;
         public static final double shoulderV = 0.0;
         public static final double shoulderA = 0.0;
         public static final double elbowS = 0.0;
-        public static final double elbowG = .027;
+        public static final double elbowG = .015;
         public static final double elbowV = 0.0;
         public static final double elbowA = 0.0;
 
@@ -71,8 +71,8 @@ public final class Constants {
             public static final Translation2d pickup = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
                     .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(11.5)),
-                            secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(11.5)))); // B
+                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(11.6)),
+                            secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(11.6)))); // B
             public static final double pickupWrist = 3.6;
             public static final Translation2d amp = new Translation2d(-1, 19); // X
             public static final double ampWrist = pickupWrist;
