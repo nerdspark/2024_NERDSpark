@@ -28,8 +28,8 @@ public final class Constants {
         public static final double secondStageLength = 16.975; // inches
 
         public static final double virtual4BarGearRatio = 36.0 / 42.0;
-        public static final double shoulderRadPerRot = 2 * Math.PI / 15 * 14 / 32;
-        public static final double elbowRadPerRot = 2 * Math.PI / 12 * virtual4BarGearRatio;
+        public static final double shoulderRadPerRot = 2 * Math.PI / 75 * 14 / 32;
+        public static final double elbowRadPerRot = 2 * Math.PI / 60 * virtual4BarGearRatio;
         public static final double wristRadPerRot = 2 * Math.PI / 13.5;
 
         public static final double shoulderOffset = -0.144; // radians, fwd = 0
@@ -82,6 +82,7 @@ public final class Constants {
         }
     }
 
+    public static final double shootMoveMultiplier = -0.1; // theoretically speed of shot in m/s
     public static final double fourBarOut = 20.0;
     public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;
@@ -110,9 +111,9 @@ public final class Constants {
     public static final Mode currentMode = Mode.REAL;
     public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
 
-    public static final double gyroP = 0.018;
-    public static final double gyroI = 0.11;
-    public static final double gyroD = 0.0013;
+    public static final double gyroP = 0.035;
+    public static final double gyroI = 0.03;
+    public static final double gyroD = 0.002;
     public static final double IZone = 10;
 
     public static final int pigeonID = 25;
