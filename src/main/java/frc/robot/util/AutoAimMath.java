@@ -15,7 +15,7 @@ public class AutoAimMath {
                 targetPose.getY() - poseSupplier.get().getY(),
                 AllianceFlipUtil.apply(targetPose.getX()) - poseSupplier.get().getX()); // Robot Angle
 
-        return new Rotation2d(robotAimAngle + 180);
+        return new Rotation2d(robotAimAngle + Math.toRadians(180));
     }
 
     // This FourBar code is not used and marked for deletion...

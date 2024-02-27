@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 
 public class FourBarCommand extends Command {
 
+    // public final Timer timer = new Timer();
     private final FourBar FourBar;
 
     private Supplier<Double> angle;
@@ -24,11 +25,16 @@ public class FourBarCommand extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+
+        // timer.reset();
+        // timer.start();
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+
         FourBar.setFourBarAngle(angle.get());
     }
 
@@ -40,5 +46,6 @@ public class FourBarCommand extends Command {
     @Override
     public boolean isFinished() {
         return false;
+        // return timer.hasElapsed(1);
     }
 }

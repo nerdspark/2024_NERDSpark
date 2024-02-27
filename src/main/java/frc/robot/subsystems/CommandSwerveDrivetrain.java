@@ -81,7 +81,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public Optional<Rotation2d> getRotationTargetOverride() {
         // Some condition that should decide if we want to override rotation
-        if (intake.getBeamBreak()) {
+        if (targetFollow) {
             // Return an optional containing the rotation override (this should be a field relative rotation)
             return Optional.of(AutoAimMath.getAutoAimCalcRobot(() -> this.getState().Pose, targetPoseSpeaker));
         } else {
@@ -181,7 +181,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         field2d.setRobotPose(dashboardPose);
     }
 
-    public void setRobotIntake(Intake intake) {
-        this.intake = intake;
-    }
+    // public void setRobotIntake(Intake intake) {
+    //     this.intake = intake;
+    // }
 }

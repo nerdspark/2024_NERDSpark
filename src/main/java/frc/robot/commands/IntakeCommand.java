@@ -12,6 +12,8 @@ import java.util.function.Supplier;
 /** An example command that uses an example subsystem. */
 public class IntakeCommand extends Command {
 
+    // public final Timer timer = new Timer();
+
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake Intake;
 
@@ -42,7 +44,11 @@ public class IntakeCommand extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+
+        // timer.reset();
+        // timer.start();
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
@@ -99,6 +105,8 @@ public class IntakeCommand extends Command {
     @Override
     public boolean isFinished() {
         switch (mode) {
+                // case FORCEINTAKE:
+                //     return timer.hasElapsed(1);
             case SOFTINTAKE:
                 return Intake.getBeamBreak();
 

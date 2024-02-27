@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2,
-      "y": 5.55
+      "x": 1.26,
+      "y": 5.57
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -16,21 +16,15 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "shootSpeed"
+                }
+              },
+              {
                 "type": "path",
                 "data": {
-                  "pathName": "angleOverRideTest"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "marker1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "marker2"
+                  "pathName": "combo1"
                 }
               }
             ]
