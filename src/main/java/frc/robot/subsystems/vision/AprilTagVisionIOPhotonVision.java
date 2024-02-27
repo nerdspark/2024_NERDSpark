@@ -94,12 +94,14 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
     public void updatePoseEstimates(PhotonVisionRunnable estomator, AprilTagVisionIOInputs inputs) {
 
         var cameraPose = estomator.grabLatestEstimatedPose();
-        var poseStrategyUsed = cameraPose.strategy;
 
         ArrayList<PoseEstimate> poseEstimates = new ArrayList<>(); // Creates an empty ArrayList to store pose
         // estimates
 
         if (cameraPose != null) {
+
+            var poseStrategyUsed = cameraPose.strategy;
+
             // New pose from vision
             // var cameraPose2d = cameraPose.estimatedPose.toPose2d();
             // if (originPosition == kRedAllianceWallRightSide) {
