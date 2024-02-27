@@ -4,6 +4,7 @@ import static frc.robot.Constants.VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.RobotState;
 import frc.robot.util.FieldConstants;
@@ -25,7 +26,6 @@ public class PhotonVisionRunnable implements Runnable {
 
     public PhotonVisionRunnable(String photonCameraName, Transform3d robotToCamera) {
         this.photonCamera = new PhotonCamera(photonCameraName);
-
         PhotonPoseEstimator photonPoseEstimator = null;
         var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
         // PV estimates will always be blue, they'll get flipped by robot thread
@@ -43,7 +43,25 @@ public class PhotonVisionRunnable implements Runnable {
         // Get AprilTag data
         if (photonPoseEstimator != null && photonCamera != null && !RobotState.isAutonomous()) {
             var photonResults = photonCamera.getLatestResult();
-            if (photonResults.hasTargets()
+
+            photonPoseEstimator.update(photonResults);
+            if (photonResults.getMultiTagResult().estimatedPose.isPresent) {
+                Transform3d fieldToCamera = photonResults.getMultiTagResult().estimatedPose.best;
+                Transform3d fieldToRobot = fieldToCamera; // .plus(robotToCamera); No need. Photonvision is doing this.
+                Pose3d estimatedMultitagPose3d = new Pose3d(fieldToRobot.getTranslation(), fieldToRobot.getRotation());
+
+                if (estimatedMultitagPose3d.getX() > 0.0
+                        && estimatedMultitagPose3d.getX() <= FieldConstants.fieldLength
+                        && estimatedMultitagPose3d.getY() > 0.0
+                        && estimatedMultitagPose3d.getY() <= FieldConstants.fieldWidth) {
+                    EstimatedRobotPose estimatedRobotPose = new EstimatedRobotPose(
+                            estimatedMultitagPose3d,
+                            photonResults.getTimestampSeconds(),
+                            photonResults.getTargets(),
+                            PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR);
+                    atomicEstimatedRobotPose.set(estimatedRobotPose);
+                }
+            } else if (photonResults.hasTargets()
                     && (photonResults.targets.size() > 1
                             || photonResults.targets.get(0).getPoseAmbiguity() < APRILTAG_AMBIGUITY_THRESHOLD)) {
                 photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
