@@ -24,8 +24,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
-import frc.robot.actions.activeIntaking;
-import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
@@ -119,7 +117,7 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
         // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () ->
         // false));
-        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
     }
 
     public RobotContainer() {
@@ -143,9 +141,9 @@ public class RobotContainer {
 
         drivetrain.setRobotIntake(intake);
         drivetrain.getModule(0).getDriveMotor().setInverted(false);
-        drivetrain.getModule(1).getDriveMotor().setInverted(true);//FR
-        drivetrain.getModule(2).getDriveMotor().setInverted(true);//b
-        drivetrain.getModule(3).getDriveMotor().setInverted(true);//b
+        drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
+        drivetrain.getModule(2).getDriveMotor().setInverted(true); // b
+        drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
 
         NamedCommands.registerCommand(
                 "shootSpeed",

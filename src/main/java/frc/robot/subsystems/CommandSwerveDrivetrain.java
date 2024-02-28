@@ -181,7 +181,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         field2d.setRobotPose(dashboardPose);
     }
 
-    // public void setRobotIntake(Intake intake) {
-    //     this.intake = intake;
-    // }
+    public void setRobotIntake(Intake intake) {
+        this.intake = intake;
+    }
 }
