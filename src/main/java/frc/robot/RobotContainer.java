@@ -253,7 +253,7 @@ public class RobotContainer {
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))));
-        copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarOut));
+        copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
         // // // vision-assisted intake command
         // if (noteVisionSubsystem.hasTargets()) {
         //     driver.rightTrigger()
