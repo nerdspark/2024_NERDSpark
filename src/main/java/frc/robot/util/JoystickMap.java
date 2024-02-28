@@ -34,6 +34,6 @@ public class JoystickMap {
             power = -power;
         }
 
-        return power / 3;
+        return power;
     }
 }
