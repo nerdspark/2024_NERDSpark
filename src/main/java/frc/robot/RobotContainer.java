@@ -197,7 +197,7 @@ public class RobotContainer {
                                         IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
                         new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
-        driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        driver.leftTrigger().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE).alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
 
         // // // shoot command
         driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
@@ -251,7 +251,7 @@ public class RobotContainer {
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))));
-
+        copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
         // // // vision-assisted intake command
         // if (noteVisionSubsystem.hasTargets()) {
         //     driver.rightTrigger()
