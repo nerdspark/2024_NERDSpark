@@ -141,6 +141,11 @@ public class RobotContainer {
                 // break;
         }
 
+        drivetrain.setRobotIntake(intake);
+        drivetrain.getModule(0).getDriveMotor().setInverted(false);
+        drivetrain.getModule(1).getDriveMotor().setInverted(true);//FR
+        drivetrain.getModule(2).getDriveMotor().setInverted(true);//b
+        drivetrain.getModule(3).getDriveMotor().setInverted(true);//b
 
         NamedCommands.registerCommand(
                 "shootSpeed",
