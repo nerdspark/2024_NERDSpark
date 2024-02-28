@@ -99,9 +99,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
         // estimates
 
         if (cameraPose != null) {
-
             var poseStrategyUsed = cameraPose.strategy;
-
             // New pose from vision
             // var cameraPose2d = cameraPose.estimatedPose.toPose2d();
             // if (originPosition == kRedAllianceWallRightSide) {
