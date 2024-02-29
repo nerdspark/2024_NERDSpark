@@ -28,8 +28,8 @@ public final class Constants {
         public static final double secondStageLength = 16.975; // inches
 
         public static final double virtual4BarGearRatio = 36.0 / 42.0;
-        public static final double shoulderRadPerRot = 2 * Math.PI / 75 * 14 / 32;
-        public static final double elbowRadPerRot = 2 * Math.PI / 60 * virtual4BarGearRatio;
+        public static final double shoulderRadPerRot = 2 * Math.PI / 125 * 14 / 32;
+        public static final double elbowRadPerRot = 2 * Math.PI / 64 * virtual4BarGearRatio;
         public static final double wristRadPerRot = 2 * Math.PI / 13.5;
 
         public static final double shoulderOffset = -0.144; // radians, fwd = 0

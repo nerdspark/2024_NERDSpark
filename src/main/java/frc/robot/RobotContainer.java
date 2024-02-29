@@ -15,7 +15,9 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -352,8 +354,9 @@ public class RobotContainer {
 
     public void resetGyro() {
         gyroPid.setIZone(Constants.IZone);
-        gyroOffset = gyro.getAngle();
+        // gyroOffset = gyro.getAngle();
         targetAngle = 0;
-        drivetrain.seedFieldRelative();
+        drivetrain.seedFieldRelative((DriverStation.getAlliance().get() == Alliance.Red) ? (new Pose2d(13, 5, new Rotation2d(Math.PI))) : new Pose2d());
+
     }
 }

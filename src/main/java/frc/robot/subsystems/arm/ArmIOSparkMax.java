@@ -271,12 +271,12 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setWristPosition(double position) {
-        position += (getShoulderLeftPosition() + getElbowLeftPosition());
+        position += getElbowLeftPosition();
         wristController.setReference(position, ControlType.kPosition);
     }
 
     public double getWristPosition() {
-        return wristEncoder.getPosition() + getShoulderLeftPosition() + getElbowLeftPosition();
+        return wristEncoder.getPosition() - getElbowLeftPosition();
     }
 
     //     public void setGripper(double power) {
