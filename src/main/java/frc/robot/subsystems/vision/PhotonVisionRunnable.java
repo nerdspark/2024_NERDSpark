@@ -1,6 +1,7 @@
 package frc.robot.subsystems.vision;
 
 import static frc.robot.Constants.VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD;
+import static frc.robot.Constants.VisionConstants.NOISY_DISTANCE_METERS;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -61,19 +62,28 @@ public class PhotonVisionRunnable implements Runnable {
                             PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR);
                     atomicEstimatedRobotPose.set(estimatedRobotPose);
                 }
-            } else if (photonResults.hasTargets()
-                    && (photonResults.targets.size() > 1
-                            || photonResults.targets.get(0).getPoseAmbiguity() < APRILTAG_AMBIGUITY_THRESHOLD)) {
-                photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
-                    var estimatedPose = estimatedRobotPose.estimatedPose;
-                    // Make sure the measurement is on the field
-                    if (estimatedPose.getX() > 0.0
-                            && estimatedPose.getX() <= FieldConstants.fieldLength
-                            && estimatedPose.getY() > 0.0
-                            && estimatedPose.getY() <= FieldConstants.fieldWidth) {
-                        atomicEstimatedRobotPose.set(estimatedRobotPose);
+            } else if (photonResults.hasTargets() && photonResults.targets.size() == 1) {
+
+                if (photonResults.getBestTarget().getPoseAmbiguity() < APRILTAG_AMBIGUITY_THRESHOLD) {
+
+                    if (photonResults
+                                    .getBestTarget()
+                                    .getBestCameraToTarget()
+                                    .getTranslation()
+                                    .getNorm()
+                            <= NOISY_DISTANCE_METERS) {
+                        photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
+                            var estimatedPose = estimatedRobotPose.estimatedPose;
+                            // Make sure the measurement is on the field
+                            if (estimatedPose.getX() > 0.0
+                                    && estimatedPose.getX() <= FieldConstants.fieldLength
+                                    && estimatedPose.getY() > 0.0
+                                    && estimatedPose.getY() <= FieldConstants.fieldWidth) {
+                                atomicEstimatedRobotPose.set(estimatedRobotPose);
+                            }
+                        });
                     }
-                });
+                }
             }
         }
     }

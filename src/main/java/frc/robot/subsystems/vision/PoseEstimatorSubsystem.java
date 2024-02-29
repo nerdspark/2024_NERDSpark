@@ -2,14 +2,19 @@ package frc.robot.subsystems.vision;
 
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kRedAllianceWallRightSide;
+import static frc.robot.subsystems.drive.DriveConstants.thetaStdDevCoefficient;
+import static frc.robot.subsystems.drive.DriveConstants.xyStdDevCoefficient;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -19,6 +24,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.util.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 public class PoseEstimatorSubsystem extends SubsystemBase {
 
@@ -37,23 +43,12 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     // on the final pose estimate.
 
     private final Field2d field2d = new Field2d();
-    private static PhotonVisionRunnable rightEstimator;
-    private static PhotonVisionRunnable leftEstimator;
+    private static PhotonVisionRunnable frontEstimator;
+    private static PhotonVisionRunnable backLeftEstimator;
+    private static PhotonVisionRunnable backRightEstimator;
     private static Notifier allNotifier;
 
     static {
-        if (Constants.VisionConstants.USE_VISION == true) {
-            rightEstimator = new PhotonVisionRunnable(
-                    Constants.VisionConstants.BACK_LEFT_CAMERA_NAME,
-                    Constants.VisionConstants.ROBOT_TO_BACK_LEFT_CAMERA);
-            leftEstimator = new PhotonVisionRunnable(
-                    Constants.VisionConstants.FRONT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
-
-            allNotifier = new Notifier(() -> {
-                rightEstimator.run();
-                leftEstimator.run();
-            });
-        }
     }
     // private final Notifier backNotifier = new Notifier(backEstimator);
 
@@ -66,7 +61,34 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
         this.driveTrain = driveTrain;
         if (Constants.VisionConstants.USE_VISION == true) {
-            // Start PhotonVision threads
+            if (Constants.VisionConstants.USE_FRONT_CAMERA) {
+                frontEstimator = new PhotonVisionRunnable(
+                        Constants.VisionConstants.FRONT_CAMERA_NAME, Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
+            }
+            if (Constants.VisionConstants.USE_BACK_LEFT_CAMERA) {
+                backLeftEstimator = new PhotonVisionRunnable(
+                        Constants.VisionConstants.BACK_LEFT_CAMERA_NAME,
+                        Constants.VisionConstants.ROBOT_TO_BACK_LEFT_CAMERA);
+            }
+            if (Constants.VisionConstants.USE_BACK_RIGHT_CAMERA) {
+                backRightEstimator = new PhotonVisionRunnable(
+                        Constants.VisionConstants.BACK_RIGHT_CAMERA_NAME,
+                        Constants.VisionConstants.ROBOT_TO_BACK_RIGHT_CAMERA);
+            }
+
+            allNotifier = new Notifier(() -> {
+                if (Constants.VisionConstants.USE_FRONT_CAMERA) {
+                    frontEstimator.run();
+                }
+                if (Constants.VisionConstants.USE_BACK_LEFT_CAMERA) {
+                    backLeftEstimator.run();
+                }
+
+                if (Constants.VisionConstants.USE_BACK_RIGHT_CAMERA) {
+                    backRightEstimator.run();
+                }
+            });
+
             allNotifier.setName("runAll");
             allNotifier.startPeriodic(0.02);
         }
@@ -111,9 +133,16 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     public void periodic() {
         // Update pose estimator with drivetrain sensors
 
-        if (Constants.VisionConstants.USE_VISION) {
-            estimatorChecker(rightEstimator);
-            estimatorChecker(leftEstimator);
+        if (Constants.VisionConstants.USE_VISION == true) {
+            if (Constants.VisionConstants.USE_FRONT_CAMERA) {
+                updatePoseEstimates(frontEstimator);
+            }
+            if (Constants.VisionConstants.USE_BACK_LEFT_CAMERA) {
+                updatePoseEstimates(backLeftEstimator);
+            }
+            if (Constants.VisionConstants.USE_BACK_RIGHT_CAMERA) {
+                updatePoseEstimates(backRightEstimator);
+            }
         } else {
             if (allNotifier != null) allNotifier.close();
         }
@@ -124,7 +153,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
         var dashboardPose = getCurrentPose();
         if (originPosition == kRedAllianceWallRightSide) {
             // Flip the pose when red, since the dashboard field photo cannot be rotated
-            dashboardPose = flipAlliance(dashboardPose);
+            // dashboardPose = flipAlliance(dashboardPose);
+            dashboardPose = dashboardPose.rotateBy(new Rotation2d(Units.degreesToRadians(180)));
         }
         field2d.setRobotPose(dashboardPose);
     }
@@ -215,6 +245,73 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
             }
             driveTrain.addVisionMeasurement(pose2d, cameraPose.timestampSeconds, confidenceCalculator(cameraPose));
             // confidenceCalculator(cameraPose);
+        }
+    }
+
+    /**
+     * Calculate the standard deviation of the x and y coordinates.
+     *
+     * @param poseEstimates The pose estimate
+     * @param tagPosesSize The number of detected tag poses
+     * @return The standard deviation of the x and y coordinates
+     */
+    private double calculateXYStdDev(Double avgTagDistance, int tagPosesSize) {
+        return xyStdDevCoefficient * Math.pow(avgTagDistance, 2.0) / tagPosesSize;
+    }
+    /**
+     * Calculate the standard deviation of the theta coordinate.
+     *
+     * @param poseEstimates The pose estimate
+     * @param tagPosesSize The number of detected tag poses
+     * @return The standard deviation of the theta coordinate
+     */
+    private double calculateThetaStdDev(Double avgTagDistance, int tagPosesSize) {
+        return thetaStdDevCoefficient * Math.pow(avgTagDistance, 2.0) / tagPosesSize;
+    }
+
+    /**
+     * Updates the inputs for AprilTag vision.
+     *
+     * @param estimator PhotonVisionRunnable estimator.
+     * @param inputs The AprilTagVisionIOInputs object containing the inputs.
+     */
+    public void updatePoseEstimates(PhotonVisionRunnable estomator) {
+
+        var cameraPose = estomator.grabLatestEstimatedPose();
+
+        if (cameraPose != null) {
+            var poseStrategyUsed = cameraPose.strategy;
+
+            int[] tagIDsFrontCamera = new int[cameraPose.targetsUsed.size()];
+            double averageTagDistance = 0.0;
+            double poseAmbiguity = 0.0;
+
+            for (int i = 0; i < cameraPose.targetsUsed.size(); i++) {
+                tagIDsFrontCamera[i] =
+                        (int) cameraPose.targetsUsed.get(i).getFiducialId(); // Retrieves and stores the tag ID
+                averageTagDistance += cameraPose
+                        .targetsUsed
+                        .get(i)
+                        .getBestCameraToTarget()
+                        .getTranslation()
+                        .getNorm(); // Calculates the sum of the tag distances
+
+                if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+                    poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
+            }
+
+            averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
+
+            if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+                poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
+
+            double timestamp = cameraPose.timestampSeconds;
+            Pose3d robotPose = cameraPose.estimatedPose;
+
+            double xyStdDev = calculateXYStdDev(averageTagDistance, cameraPose.targetsUsed.size());
+            double thetaStdDev = calculateThetaStdDev(averageTagDistance, cameraPose.targetsUsed.size());
+            driveTrain.addVisionMeasurement(
+                    robotPose.toPose2d(), timestamp, VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev));
         }
     }
 }

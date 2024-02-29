@@ -111,11 +111,10 @@ public class AprilTagVision extends SubsystemBase {
                         timestamp, robotPose.toPose2d(), VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev)));
 
                 // double xyStdDevCustom = calculateXYStdDevWithAmbiguity(poseEstimates, tagPoses.size());
-
-                visionUpdates.add(new TimestampedVisionUpdate(
-                        timestamp,
-                        robotPose.toPose2d(),
-                        Constants.VisionConstants.VISION_MEASUREMENT_STANDARD_DEVIATIONS.times(xyStdDev)));
+                // visionUpdates.add(new TimestampedVisionUpdate(
+                //         timestamp,
+                //         robotPose.toPose2d(),
+                //         Constants.VisionConstants.VISION_MEASUREMENT_STANDARD_DEVIATIONS.times(xyStdDev)));
 
                 var robotPoseBeforeVisionUpdate = poseSupplier.get();
 
