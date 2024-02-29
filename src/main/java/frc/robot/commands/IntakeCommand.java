@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.intake.Intake;
@@ -12,7 +13,7 @@ import java.util.function.Supplier;
 /** An example command that uses an example subsystem. */
 public class IntakeCommand extends Command {
 
-    // public final Timer timer = new Timer();
+    public final Timer timer = new Timer();
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake Intake;
@@ -21,6 +22,7 @@ public class IntakeCommand extends Command {
 
     public enum IntakeMode {
         FORCEINTAKE,
+        FORCEINTAKESHOOT,
         FULLINTAKE,
         SOFTINTAKE
     }
@@ -46,8 +48,8 @@ public class IntakeCommand extends Command {
     @Override
     public void initialize() {
 
-        // timer.reset();
-        // timer.start();
+        timer.reset();
+        timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -56,6 +58,11 @@ public class IntakeCommand extends Command {
 
         switch (mode) {
             case FORCEINTAKE:
+                Intake.setIntakePower(power.get());
+
+                break;
+
+            case FORCEINTAKESHOOT:
                 Intake.setIntakePower(power.get());
 
                 break;
@@ -105,8 +112,12 @@ public class IntakeCommand extends Command {
     @Override
     public boolean isFinished() {
         switch (mode) {
-                // case FORCEINTAKE:
-                //     return timer.hasElapsed(1);
+            case FORCEINTAKE:
+                return timer.hasElapsed(0.5);
+
+            case FORCEINTAKESHOOT:
+                return timer.hasElapsed(2);
+                
             case SOFTINTAKE:
                 return Intake.getBeamBreak();
 

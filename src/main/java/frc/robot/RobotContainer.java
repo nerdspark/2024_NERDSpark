@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
+import frc.robot.actions.activeIntaking;
+import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
@@ -160,22 +162,31 @@ public class RobotContainer {
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
 
-        // NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
+        NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
 
-        // NamedCommands.registerCommand(
-        //         "fourBarToShooter",
-        //         new FourBarCommand(
-        //                 fourBar,
-        //                 () -> AutoAim.calculateFourBarPosition(
-        //                         () -> drivetrain.getState().Pose,
-        //                         () -> new Translation2d(
-        //                                 drivetrain.getState().speeds.vxMetersPerSecond,
-        //                                 drivetrain.getState().speeds.vyMetersPerSecond))));
-        // NamedCommands.registerCommand(
-        //         "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
+        NamedCommands.registerCommand(
+                "fourBarToShooter",
+                new FourBarCommand(
+                        fourBar,
+                        () -> AutoAim.calculateFourBarPosition(
+                                () -> drivetrain.getState().Pose,
+                                () -> new Translation2d(
+                                        drivetrain.getState().speeds.vxMetersPerSecond,
+                                        drivetrain.getState().speeds.vyMetersPerSecond))));
+        NamedCommands.registerCommand(
+                "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
-        // NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
-        // NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
+        NamedCommands.registerCommand(
+                "forcedIntakeShoot", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKESHOOT));
+
+        NamedCommands.registerCommand(
+                "forcedIntakeZero", new IntakeCommand(intake, () -> 0.0, IntakeCommand.IntakeMode.FORCEINTAKE));
+
+        NamedCommands.registerCommand(
+                "onlySoftIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.SOFTINTAKE));
+
+        NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
+        NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
         configureBindings();
 
