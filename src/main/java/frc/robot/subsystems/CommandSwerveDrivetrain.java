@@ -21,6 +21,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -174,6 +175,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     public void periodic() {
         // Set the pose on the dashboard
         var dashboardPose = this.getState().Pose;
+        if (DriverStation.getAlliance().get().equals(Alliance.Red)) {
+            originPosition = kRedAllianceWallRightSide;
+        } else {
+            originPosition = kBlueAllianceWallRightSide;
+        }
         if (originPosition == kRedAllianceWallRightSide) {
             // Flip the pose when red, since the dashboard field photo cannot be rotated
             dashboardPose = VisionHelpers.flipAlliance(dashboardPose);
