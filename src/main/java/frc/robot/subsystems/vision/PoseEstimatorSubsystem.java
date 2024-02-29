@@ -30,18 +30,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     private final CommandSwerveDrivetrain driveTrain;
 
-    // Kalman Filter Configuration. These can be "tuned-to-taste" based on how much
-    // you trust your various sensors. Smaller numbers will cause the filter to
-    // "trust" the estimate from that particular component more than the others.
-    // This in turn means the particualr component will have a stronger influence
-    // on the final pose estimate.
-
-    // Kalman Filter Configuration. These can be "tuned-to-taste" based on how much
-    // you trust your various sensors. Smaller numbers will cause the filter to
-    // "trust" the estimate from that particular component more than the others.
-    // This in turn means the particualr component will have a stronger influence
-    // on the final pose estimate.
-
     private final Field2d field2d = new Field2d();
     private static PhotonVisionRunnable frontEstimator;
     private static PhotonVisionRunnable backLeftEstimator;
@@ -53,9 +41,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     // private final Notifier backNotifier = new Notifier(backEstimator);
 
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
-
-    // private final ArrayList<Double> xValues = new ArrayList<Double>();
-    // private final ArrayList<Double> yValues = new ArrayList<Double>();
 
     public PoseEstimatorSubsystem(CommandSwerveDrivetrain driveTrain) {
 
