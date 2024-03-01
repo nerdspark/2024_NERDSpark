@@ -16,8 +16,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -339,7 +339,7 @@ public class RobotContainer {
             targetAngle = -driverRaw.getPOV();
         } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
             targetAngle = currentAngle - 10 * driver.getLeftX();
-            return -driver.getLeftX() * 5;
+            return -driver.getLeftX() * Math.abs(driver.getLeftX()) * 3;
             // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }
 
@@ -356,7 +356,9 @@ public class RobotContainer {
         gyroPid.setIZone(Constants.IZone);
         // gyroOffset = gyro.getAngle();
         targetAngle = 0;
-        drivetrain.seedFieldRelative((DriverStation.getAlliance().get() == Alliance.Red) ? (new Pose2d(13, 5, new Rotation2d(Math.PI))) : new Pose2d());
-
+        drivetrain.seedFieldRelative(
+                (DriverStation.getAlliance().get() == Alliance.Red)
+                        ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
+                        : new Pose2d());
     }
 }
