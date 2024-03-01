@@ -67,9 +67,9 @@ public class RobotContainer {
     private Shooter shooter;
     private Arm arm;
 
-    private SlewRateLimiter xLimiter = new SlewRateLimiter(5.5);
-    private SlewRateLimiter yLimiter = new SlewRateLimiter(5.5);
-    private SlewRateLimiter zLimiter = new SlewRateLimiter(7);
+    private SlewRateLimiter xLimiter = new SlewRateLimiter(7);
+    private SlewRateLimiter yLimiter = new SlewRateLimiter(7);
+    private SlewRateLimiter zLimiter = new SlewRateLimiter(6.5);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
