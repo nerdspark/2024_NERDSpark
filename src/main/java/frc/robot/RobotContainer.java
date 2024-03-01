@@ -15,6 +15,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.XboxController;
@@ -94,18 +95,18 @@ public class RobotContainer {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
-        drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(
-                        () -> drive.withVelocityX(
-                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-                                                * MaxSpeed)) // Drive forward with
-                                // negative Y (forward)
-                                .withVelocityY(
-                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-                                                * MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(
-                                        calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
-                        ));
+        // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+        //         drivetrain.applyRequest(
+        //                 () -> drive.withVelocityX(
+        //                                 xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
+        //                                         * MaxSpeed)) // Drive forward with
+        //                         // negative Y (forward)
+        //                         .withVelocityY(
+        //                                 yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
+        //                                         * MaxSpeed)) // Drive left with negative X (left)
+        //                         .withRotationalRate(
+        //                                 calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
+        //                 ));
 
         // driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // driver.b()
@@ -277,6 +278,7 @@ public class RobotContainer {
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))));
         copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+
         // // // vision-assisted intake command
         // if (noteVisionSubsystem.hasTargets()) {
         //     driver.rightTrigger()
@@ -291,6 +293,7 @@ public class RobotContainer {
         //                             .withRotationalRate(zLimiter.calculate(
         //                                     calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
         // }
+        
         // // vision-assisted following command
         // driver.rightTrigger().whileTrue((
         //     drivetrain.applyRequest(() -> drive
