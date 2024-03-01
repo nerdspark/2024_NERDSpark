@@ -251,7 +251,7 @@ public class RobotContainer {
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // transfer spin up
-        copilot.leftBumper().whileTrue(new ShooterCommand(shooter, () -> 1300.0, () -> 1300.0));
+        copilot.leftBumper().whileTrue(new ShooterCommand(shooter, () -> 1100.0, () -> 1100.0));
         copilot.leftBumper().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // transfer shoot
@@ -336,7 +336,7 @@ public class RobotContainer {
         // arm.setDefaultCommand(new ArmCommand(arm, () -> new
         // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
         // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
-        copilot.start().onTrue(new ArmResetCommand(arm));
+        copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()));
     }
 
     public Command getAutonomousCommand() {
