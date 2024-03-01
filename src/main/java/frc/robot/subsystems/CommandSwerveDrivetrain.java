@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
-import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kRedAllianceWallRightSide;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
@@ -32,7 +31,6 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.util.AutoAimMath;
 import frc.robot.util.FieldConstants;
-import frc.robot.util.VisionHelpers;
 import frc.robot.util.VisionHelpers.TimestampedVisionUpdate;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +54,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean hasAppliedOperatorPerspective = false;
+
 
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
     // private Translation2d targetPoseSpeaker =
@@ -196,15 +195,15 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
         // Set the pose on the dashboard
         var dashboardPose = this.getState().Pose;
-        if (DriverStation.getAlliance().get().equals(Alliance.Red)) {
-            originPosition = kRedAllianceWallRightSide;
-        } else {
-            originPosition = kBlueAllianceWallRightSide;
-        }
-        if (originPosition == kRedAllianceWallRightSide) {
-            // Flip the pose when red, since the dashboard field photo cannot be rotated
-            dashboardPose = VisionHelpers.flipAlliance(dashboardPose);
-        }
+        // if (DriverStation.getAlliance().get().equals(Alliance.Red)) {
+        //     originPosition = kRedAllianceWallRightSide;
+        // } else {
+        //     originPosition = kBlueAllianceWallRightSide;
+        // }
+        // if (originPosition == kRedAllianceWallRightSide) {
+        //     // Flip the pose when red, since the dashboard field photo cannot be rotated
+        //     dashboardPose = VisionHelpers.flipAlliance(dashboardPose);
+        // }
         field2d.setRobotPose(dashboardPose);
     }
 

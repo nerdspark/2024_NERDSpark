@@ -117,7 +117,7 @@ public class IntakeCommand extends Command {
 
             case FORCEINTAKESHOOT:
                 return timer.hasElapsed(2);
-                
+
             case SOFTINTAKE:
                 return Intake.getBeamBreak();
 

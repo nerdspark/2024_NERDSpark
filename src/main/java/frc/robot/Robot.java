@@ -139,7 +139,7 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void teleopInit() {
-        robotContainer.resetGyro();
+        // robotContainer.resetGyro();
 
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to

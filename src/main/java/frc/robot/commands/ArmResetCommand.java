@@ -17,13 +17,13 @@ public class ArmResetCommand extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {
-        arm.resetEncoders();
-    }
+    public void initialize() {}
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {}
+    public void execute() {
+        arm.resetEncoders();
+    }
 
     // Called once the command ends or is interrupted.
     @Override

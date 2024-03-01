@@ -109,22 +109,35 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             int[] tagIDsFrontCamera = new int[cameraPose.targetsUsed.size()];
             double averageTagDistance = 0.0;
             double poseAmbiguity = 0.0;
+            double smallestDistance = Double.POSITIVE_INFINITY;
+
 
             for (int i = 0; i < cameraPose.targetsUsed.size(); i++) {
                 tagIDsFrontCamera[i] =
                         (int) cameraPose.targetsUsed.get(i).getFiducialId(); // Retrieves and stores the tag ID
-                averageTagDistance += cameraPose
+                // averageTagDistance += cameraPose
+                //         .targetsUsed
+                //         .get(i)
+                //         .getBestCameraToTarget()
+                //         .getTranslation()
+                //         .getNorm(); // Calculates the sum of the tag distances
+
+                 var distance = cameraPose
                         .targetsUsed
                         .get(i)
                         .getBestCameraToTarget()
                         .getTranslation()
-                        .getNorm(); // Calculates the sum of the tag distances
+                        .getNorm(); // Calculates the distance to the tag
+
+                    if (distance < smallestDistance) smallestDistance = distance;
+               
+                
 
                 if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
                     poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
             }
 
-            averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
+            // averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
 
             if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
                 poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
@@ -132,7 +145,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             poseEstimates.add(new PoseEstimate(
                     cameraPose.estimatedPose,
                     cameraPose.timestampSeconds,
-                    averageTagDistance,
+                    smallestDistance,
                     tagIDsFrontCamera,
                     poseAmbiguity,
                     poseStrategyUsed)); //
