@@ -142,8 +142,9 @@ public final class Constants {
         }
     }
 
-    public static final double shootMoveMultiplier = 0; // -0.1; // theoretically speed of shot in m/s
+    public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
     public static final double fourBarOut = 20.0;
+
     public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;
     // public static final int deployMotorId = 0;
@@ -171,9 +172,9 @@ public final class Constants {
     public static final Mode currentMode = Mode.REAL;
     public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
 
-    public static final double gyroP = 0.018;
-    public static final double gyroI = 0.11;
-    public static final double gyroD = 0.0013;
+    public static final double gyroP = 0.015;
+    public static final double gyroI = 0.08;
+    public static final double gyroD = 0.0005;
     public static final double IZone = 10;
 
     public static final int pigeonID = 25;
@@ -328,8 +329,9 @@ public final class Constants {
     public static class speakerConstants {
         public static final double speakerBlueY = Units.inchesToMeters(218.42);
         public static final double speakerRedY = Units.inchesToMeters(218.42);
-        public static final double speakerBlueX = Units.inchesToMeters(6);
-        public static final double speakerRedX = Units.inchesToMeters(652.73 - 6);
+        public static final double speakerBlueX = Units.inchesToMeters(4);
+
+        public static final double speakerRedX = Units.inchesToMeters(652.73 - 4);
         public static final double speakerHeight = Units.inchesToMeters(80.515); // (82.90 + 78.13) / 2
 
         public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerBlueY, new Rotation2d(0));
@@ -341,6 +343,8 @@ public final class Constants {
         public static Measure<Distance> MAXIMUM_READYSHOOT_DISTANCE = Meters.of(Units.feetToMeters(15));
 
         public static double SHOOTER_SPEED = 10;
+
+        public static final double CONSTANT_DISTANCE_ADD = 0.1; // ft
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 
@@ -355,8 +359,8 @@ public final class Constants {
             fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
             fourBarMap.put(13.0, 1.65);
             fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
-            fourBarMap.put(8.5, 0.8);
-            fourBarMap.put(8.4, 18.0);
+            fourBarMap.put(6.5, 0.8);
+            fourBarMap.put(6.4, 18.0);
             fourBarMap.put(5.4, 20.0);
             fourBarMap.put(3.0, 20.0);
         }
