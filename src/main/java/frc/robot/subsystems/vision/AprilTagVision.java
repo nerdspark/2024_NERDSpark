@@ -124,7 +124,7 @@ public class AprilTagVision extends SubsystemBase {
                 //         robotPose.toPose2d(),
                 //         Constants.VisionConstants.VISION_MEASUREMENT_STANDARD_DEVIATIONS.times(xyStdDev)));
 
-                var robotPoseBeforeVisionUpdate = poseSupplier.get();
+                // var robotPoseBeforeVisionUpdate = poseSupplier.get();
 
                 logData(
                         instanceIndex,
@@ -133,7 +133,7 @@ public class AprilTagVision extends SubsystemBase {
                         tagPoses,
                         poseAmbiguity,
                         xyStdDev,
-                        robotPoseBeforeVisionUpdate,
+                        new Pose2d(),// robotPoseBeforeVisionUpdate,
                         thetaStdDev);
             }
         }
