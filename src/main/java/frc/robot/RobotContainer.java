@@ -162,7 +162,13 @@ public class RobotContainer {
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
 
+
+         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));                                
+
+
+
         NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
+        NamedCommands.registerCommand("fourBarToHome", new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
         NamedCommands.registerCommand(
                 "fourBarToShooter",
@@ -173,6 +179,10 @@ public class RobotContainer {
                                 () -> new Translation2d(
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
+
+
+
+
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
