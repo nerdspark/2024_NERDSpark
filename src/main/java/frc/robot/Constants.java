@@ -141,6 +141,35 @@ public final class Constants {
             public static final double dropoffWrist = -0.48;
             public static final double dropoffMultiplier = 6.4;
         }
+        public static final class ClimbSetPoints {
+            public static final double readyShoulder = Units.degreesToRadians(100);
+            public static final double downElbow = Units.degreesToRadians(-90);
+            public static final double pinchShoulder = Units.degreesToRadians(5);
+            public static final double forwardShoulder = Units.degreesToRadians(85);
+            public static final Translation2d ready = new Translation2d(
+                            baseStageLength * Math.cos(shoulderOffset + readyShoulder), baseStageLength * Math.sin(shoulderOffset + readyShoulder))
+                    .plus(new Translation2d(
+                            secondStageLength * Math.cos(elbowOffset + readyShoulder), secondStageLength * Math.sin(elbowOffset + readyShoulder))); // A
+            public static final double readyWrist = 0.0;
+            public static final Translation2d down = new Translation2d(
+                            baseStageLength * Math.cos(shoulderOffset + forwardShoulder), baseStageLength * Math.sin(shoulderOffset + forwardShoulder))
+                    .plus(new Translation2d(
+                            secondStageLength * Math.cos(elbowOffset + downElbow),
+                            secondStageLength * Math.sin(elbowOffset  + downElbow))); // B
+            public static final double downWrist = Math.PI;
+            public static final Translation2d pinch = new Translation2d(
+                            baseStageLength * Math.cos(shoulderOffset + pinchShoulder), baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
+                    .plus(new Translation2d(
+                            secondStageLength * Math.cos(elbowOffset + pinchShoulder),
+                            secondStageLength * Math.sin(elbowOffset + pinchShoulder))); // X
+            public static final double pinchWrist = 0.0;
+            public static final Translation2d forward = new Translation2d(
+                            baseStageLength * Math.cos(shoulderOffset + forwardShoulder), baseStageLength * Math.sin(shoulderOffset + forwardShoulder))
+                    .plus(new Translation2d(
+                            secondStageLength * Math.cos(elbowOffset + forwardShoulder),
+                            secondStageLength * Math.sin(elbowOffset + forwardShoulder))); // X
+            public static final double forwardWrist = Math.PI;
+        }
     }
 
     public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s

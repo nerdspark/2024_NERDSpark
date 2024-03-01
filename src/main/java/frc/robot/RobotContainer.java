@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
+import frc.robot.Constants.ArmConstants.ClimbSetPoints;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
@@ -333,9 +334,14 @@ public class RobotContainer {
         copilot.back().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
         copilot.back().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
-        // arm.setDefaultCommand(new ArmCommand(arm, () -> new
-        // Translation2d(Math.atan2(joystick.getLeftX(),joystick.getLeftX()),
-        // Math.atan2(joystick.getRightX(),joystick.getRightY()))));
+        copilot.povLeft()
+                .onTrue(new ArmCommand(
+                        arm, () -> ClimbSetPoints.ready, () -> ClimbSetPoints.readyWrist + copilot.getRightX(), () -> false));
+        copilot.povLeft().onTrue(new FourBarCommand(fourBar, () -> Constants.fourBarOut));
+        copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true));
+        copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
+        copilot.povUp().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
+
         copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()));
     }
 
