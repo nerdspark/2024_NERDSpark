@@ -34,19 +34,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "combo0.1"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "combo0.2"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "combo0.3"
+                        "pathName": "Copy of combo0.1"
                       }
                     },
                     {
@@ -59,31 +47,6 @@
                       "type": "path",
                       "data": {
                         "pathName": "combo0.5"
-                      }
-                    },
-                    {
-                      "type": "parallel",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "fourBarToHome"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "forcedIntakeZero"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shootOff"
-                            }
-                          }
-                        ]
                       }
                     }
                   ]
