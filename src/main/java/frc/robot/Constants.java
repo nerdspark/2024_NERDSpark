@@ -137,10 +137,10 @@ public final class Constants {
 
         public static final class ClimbSetPoints {
             public static final double readyShoulder = Units.degreesToRadians(100);
-            public static final double downElbow = Units.degreesToRadians(-250);
+            public static final double downElbow = Units.degreesToRadians(-270);
             public static final double pinchShoulder = Units.degreesToRadians(-2.5);
             public static final double pinchElbow = Units.degreesToRadians(-50);
-            public static final double forwardShoulder = readyShoulder - Units.degreesToRadians(15);
+            public static final double forwardShoulder = readyShoulder - Units.degreesToRadians(15.0);
             public static final Translation2d ready = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + readyShoulder),
                             baseStageLength * Math.sin(shoulderOffset + readyShoulder))
@@ -176,7 +176,7 @@ public final class Constants {
         }
     }
 
-    public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
+    public static final double shootMoveMultiplier = 0.11; // theoretically speed of shot in m/s
     public static final double fourBarOut = 20.0;
 
     public static final double fourBarHome = 0.75;

@@ -313,7 +313,11 @@ public class ArmIOSparkMax implements ArmIO {
         SmartDashboard.putNumber(
                 "wristabsoluteencoder", ArmConstants.wristOffset + (-wristEncoderAbsolute.getPosition() / 2 * Math.PI));
         SmartDashboard.putNumber("wristRawEncoder", wristEncoder.getPosition());
+        if (Math.abs(position - wristEncoder.getPosition()) > Math.toRadians(5)) {
         wristController.setReference(position, ControlType.kPosition);
+        } else {
+            wrist.set(0);
+        }
     }
 
     public double getWristPosition() {

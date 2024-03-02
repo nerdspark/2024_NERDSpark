@@ -275,7 +275,8 @@ public class RobotContainer {
         copilot.leftBumper().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome).alongWith(new InstantCommand(() -> shooter.stop())));
 
 
-
+copilot.leftStick().whileTrue(new FourBarCommand(fourBar, () -> 3.0));
+copilot.leftStick().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
         // // // aim command
         copilot.rightTrigger()
