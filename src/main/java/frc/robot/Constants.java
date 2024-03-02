@@ -398,7 +398,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = 0.1; // ft
+        public static final double CONSTANT_DISTANCE_ADD = -1.0; // ft
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 
