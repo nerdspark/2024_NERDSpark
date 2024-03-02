@@ -265,18 +265,15 @@ public class RobotContainer {
         // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // point blank aim
-         copilot.leftBumper()
-                .whileTrue(new FourBarCommand(
-                                fourBar, () -> Constants.fourBarOut)
-                        .alongWith(new ShooterCommand(
-                        shooter,
-                        () -> 4500.0, 
-                        () -> 4500.0)));
-        copilot.leftBumper().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome).alongWith(new InstantCommand(() -> shooter.stop())));
+        copilot.leftBumper()
+                .whileTrue(new FourBarCommand(fourBar, () -> Constants.fourBarOut)
+                        .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4500.0)));
+        copilot.leftBumper()
+                .onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome)
+                        .alongWith(new InstantCommand(() -> shooter.stop())));
 
-
-copilot.leftStick().whileTrue(new FourBarCommand(fourBar, () -> 3.0));
-copilot.leftStick().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        copilot.leftStick().whileTrue(new FourBarCommand(fourBar, () -> 3.0));
+        copilot.leftStick().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
         // // // aim command
         copilot.rightTrigger()

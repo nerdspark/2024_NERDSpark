@@ -66,9 +66,10 @@ public class FourBarIOSparkMax implements FourBarIO {
     }
 
     public void setFourBarAngle(double angle) {
-        
+
         FourBarPIDController1.setReference(angle, CANSparkMax.ControlType.kPosition);
-        SmartDashboard.putNumber("fourbar Error", angle - ((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition())/2));
+        SmartDashboard.putNumber(
+                "fourbar Error", angle - ((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()) / 2));
     }
 
     public double getFourBarAngle() {

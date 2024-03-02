@@ -171,12 +171,12 @@ public final class Constants {
             public static final double forwardWrist = Math.PI;
             public static final Translation2d trap =
                     new Translation2d(0, baseStageLength + secondStageLength); // right stick
-            public static final double trapwrist = Math.PI/2;
+            public static final double trapwrist = Math.PI / 2;
             public static final double trapMultiplier = 3.0;
         }
     }
 
-    public static final double shootMoveMultiplier = 0.11; // theoretically speed of shot in m/s
+    public static final double shootMoveMultiplier = 0.05; // theoretically speed of shot in m/s
     public static final double fourBarOut = 20.0;
 
     public static final double fourBarHome = 0.75;
@@ -268,7 +268,7 @@ public final class Constants {
 
         public static boolean USE_VISION = true;
         public static boolean USE_FRONT_CAMERA = true;
-        public static boolean USE_ADV_KIT_VISION = false;
+        public static boolean USE_ADV_KIT_VISION = true;
         public static boolean MULTI_TAG_RESULT_ENABLED = true;
 
         public static VisionDeviationDistanceStrategy VISION_DEV_DIST_STRATEGY =
@@ -398,7 +398,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = -0.5; // ft
+        public static final double CONSTANT_DISTANCE_ADD = -0.0; // ft
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 

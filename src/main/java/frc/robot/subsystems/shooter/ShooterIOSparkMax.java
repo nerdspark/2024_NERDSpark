@@ -68,6 +68,9 @@ public class ShooterIOSparkMax implements ShooterIO {
         inputs.shooterVelocity2 = Units.rotationsPerMinuteToRadiansPerSecond(shooterEncoder2.getVelocity());
         inputs.shooterAppliedVolts2 = shooterMotor2.getAppliedOutput() * shooterMotor2.getBusVoltage();
         inputs.shooterCurrentAmps2 = new double[] {shooterMotor2.getOutputCurrent()};
+
+        inputs.shooterI1 = shooterController1.getIAccum();
+        inputs.shooterI2 = shooterController2.getIAccum();
     }
 
     public void setSpeed(double speed1, double speed2) {
