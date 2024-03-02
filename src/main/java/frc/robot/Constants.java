@@ -279,6 +279,8 @@ public final class Constants {
 
         public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerBlueY, new Rotation2d(0));
         public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerRedY, new Rotation2d(Math.PI));
+
+        public static final double autonAimDistanceThreshold = 7.0d;
     }
 
     public static class ShooterConstants {

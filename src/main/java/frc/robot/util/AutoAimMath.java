@@ -21,6 +21,14 @@ public class AutoAimMath {
     }
 
 
+    public static double xDistanceToSpeaker(Supplier<Pose2d> poseSupplier, Translation2d targetPose) {
+
+        double distanceXtoSpeaker = Math.abs(AllianceFlipUtil.apply(targetPose.getX()) - poseSupplier.get().getX());
+
+        return distanceXtoSpeaker;
+    }
+
+
     // This FourBar code is not used and marked for deletion...
 
     // public static double getAutoAimCalcFourBar(Supplier<Pose2d> poseSupplier, Pose2d targetPose) {

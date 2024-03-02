@@ -196,7 +196,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 2.35,
+      "waypointRelativePos": 2.65,
       "command": {
         "type": "sequential",
         "data": {
