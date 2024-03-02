@@ -89,7 +89,7 @@ public final class Constants {
             private final double elbowI = 0.01;
             private final double elbowD = 0.0;
             private final double shoulderS = 3.0;
-            private final double shoulderG = -0.05;
+            private final double shoulderG = -0.5;
             private final double shoulderV = 0.0;
             private final double shoulderA = 0.0;
             private final double elbowS = 1.0;
@@ -139,6 +139,7 @@ public final class Constants {
             public static final double readyShoulder = Units.degreesToRadians(100);
             public static final double downElbow = Units.degreesToRadians(-250);
             public static final double pinchShoulder = Units.degreesToRadians(-2.5);
+            public static final double pinchElbow = Units.degreesToRadians(-50);
             public static final double forwardShoulder = readyShoulder - Units.degreesToRadians(15);
             public static final Translation2d ready = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + readyShoulder),
@@ -158,9 +159,9 @@ public final class Constants {
                             baseStageLength * Math.cos(shoulderOffset + pinchShoulder),
                             baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
                     .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset + pinchShoulder),
-                            secondStageLength * Math.sin(elbowOffset + pinchShoulder))); // X
-            public static final double pinchWrist = 0.0;
+                            secondStageLength * Math.cos(elbowOffset + pinchElbow),
+                            secondStageLength * Math.sin(elbowOffset + pinchElbow))); // X
+            public static final double pinchWrist = Math.PI;
             public static final Translation2d forward = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + forwardShoulder),
                             baseStageLength * Math.sin(shoulderOffset + forwardShoulder))
@@ -169,8 +170,8 @@ public final class Constants {
                             secondStageLength * Math.sin(elbowOffset + forwardShoulder))); // X
             public static final double forwardWrist = Math.PI;
             public static final Translation2d trap =
-                    new Translation2d(-5, baseStageLength + secondStageLength - 0.1); // right stick
-            public static final double trapwrist = Math.PI;
+                    new Translation2d(0, baseStageLength + secondStageLength); // right stick
+            public static final double trapwrist = Math.PI/2;
             public static final double trapMultiplier = 3.0;
         }
     }
