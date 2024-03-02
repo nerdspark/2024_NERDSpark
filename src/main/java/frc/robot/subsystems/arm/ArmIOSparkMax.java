@@ -308,7 +308,7 @@ public class ArmIOSparkMax implements ArmIO {
 
     public void setWristPosition(double position) {
         // position -= getElbowLeftPosition();
-        System.out.println("wrist raw" + wristEncoderAbsolute.getPosition());
+        // System.out.println("wrist raw" + wristEncoderAbsolute.getPosition());
         SmartDashboard.putNumber("AbsoluteEncoder", -wristEncoderAbsolute.getPosition());
         SmartDashboard.putNumber(
                 "wristabsoluteencoder", ArmConstants.wristOffset + (-wristEncoderAbsolute.getPosition() / 2 * Math.PI));
