@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 import java.util.function.Supplier;
 
 public class AutoAim {
@@ -19,22 +20,25 @@ public class AutoAim {
 
     public static double calculateFourBarPosition(Supplier<Pose2d> poseSupplier, Supplier<Translation2d> speeds) {
         Pose2d speakerPose;
-        if (DriverStation.getAlliance().equals(Alliance.Blue)) {
+        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
             speakerPose = Constants.speakerConstants.speakerLocBlue;
         } else {
             speakerPose = Constants.speakerConstants.speakerLocRed;
         }
         double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation());
-        // double distanceToSpeaker2 = poseSupplier
-        //         .getTranslation()
-        //         .plus(speeds.times(distanceToSpeaker * Constants.shootMoveMultiplier))
-        //         .getDistance(speakerPose.getTranslation());
-        // double distanceToSpeaker3 = poseSupplier
-        //         .getTranslation()
-        //         .plus(speeds.times(distanceToSpeaker2 * Constants.shootMoveMultiplier))
-        //         .getDistance(speakerPose.getTranslation());
+        double distanceToSpeaker2 = poseSupplier
+                .get()
+                .getTranslation()
+                .plus(speeds.get().times(distanceToSpeaker * Constants.shootMoveMultiplier))
+                .getDistance(speakerPose.getTranslation());
+        double distanceToSpeaker3 = poseSupplier
+                .get()
+                .getTranslation()
+                .plus(speeds.get().times(distanceToSpeaker2 * Constants.shootMoveMultiplier))
+                .getDistance(speakerPose.getTranslation());
 
-        double angle = Constants.ShooterConstants.fourBarMap.get(Units.metersToFeet(distanceToSpeaker));
+        double angle = Constants.ShooterConstants.fourBarMap.get(
+                Units.metersToFeet(distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD));
         SmartDashboard.putNumber("Calculated 4Bar", angle);
         return angle;
     }
@@ -47,16 +51,19 @@ public class AutoAim {
             speakerPose = Constants.speakerConstants.speakerLocRed;
         }
         double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation());
-        // double distanceToSpeaker2 = poseSupplier
-        //         .getTranslation()
-        //         .plus(speeds.times(distanceToSpeaker * Constants.shootMoveMultiplier))
-        //         .getDistance(speakerPose.getTranslation());
-        // double distanceToSpeaker3 = poseSupplier
-        //         .getTranslation()
-        //         .plus(speeds.times(distanceToSpeaker2 * Constants.shootMoveMultiplier))
-        //         .getDistance(speakerPose.getTranslation());
+        double distanceToSpeaker2 = poseSupplier
+                .get()
+                .getTranslation()
+                .plus(speeds.get().times(distanceToSpeaker * Constants.shootMoveMultiplier))
+                .getDistance(speakerPose.getTranslation());
+        double distanceToSpeaker3 = poseSupplier
+                .get()
+                .getTranslation()
+                .plus(speeds.get().times(distanceToSpeaker2 * Constants.shootMoveMultiplier))
+                .getDistance(speakerPose.getTranslation());
 
-        double RPM = Constants.ShooterConstants.shooterMap.get(Units.metersToFeet(distanceToSpeaker));
+        double RPM = Constants.ShooterConstants.shooterMap.get(
+                Units.metersToFeet(distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD));
         SmartDashboard.putNumber("Calculated RPM", RPM);
         return RPM;
     }
@@ -69,7 +76,8 @@ public class AutoAim {
         } else {
             speakerPose = Constants.speakerConstants.speakerLocRed;
         }
-        double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation());
+        double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation())
+                + ShooterConstants.CONSTANT_DISTANCE_ADD;
         if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
             angle = Constants.speakerConstants
                     .speakerLocBlue
@@ -80,7 +88,7 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * Constants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(180 + 4.5)));
+                    .plus(new Rotation2d(Units.degreesToRadians(180 + 9)));
         } else {
             angle = Constants.speakerConstants
                     .speakerLocRed
@@ -91,7 +99,7 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * Constants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(4.5)));
+                    .plus(new Rotation2d(Units.degreesToRadians(9)));
         }
         SmartDashboard.putNumber("target Angle", angle.getDegrees());
         return angle;

@@ -43,13 +43,16 @@ public class PhotonVisionRunnable implements Runnable {
     @Override
     public void run() {
         // Get AprilTag data
-        if (photonPoseEstimator != null && photonCamera != null && !RobotState.isAutonomous()) {
+        if (photonPoseEstimator != null && photonCamera != null /* && !RobotState.isAutonomous()*/) {
             var photonResults = photonCamera.getLatestResult();
 
             photonPoseEstimator.update(photonResults);
-            if (photonResults.getMultiTagResult().estimatedPose.isPresent) {
+            if (Constants.VisionConstants.MULTI_TAG_RESULT_ENABLED
+                    && photonResults.getMultiTagResult().estimatedPose.isPresent) {
                 Transform3d fieldToCamera = photonResults.getMultiTagResult().estimatedPose.best;
-                Transform3d fieldToRobot = fieldToCamera;//.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA); //No need. Photonvision is doing this.
+                Transform3d fieldToRobot =
+                        fieldToCamera; // .plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA); //No need.
+                // Photonvision is doing this.
                 Pose3d estimatedMultitagPose3d = new Pose3d(fieldToRobot.getTranslation(), fieldToRobot.getRotation());
 
                 if (estimatedMultitagPose3d.getX() > 0.0
@@ -63,7 +66,7 @@ public class PhotonVisionRunnable implements Runnable {
                             PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR);
                     atomicEstimatedRobotPose.set(estimatedRobotPose);
                 }
-            } else if (photonResults.hasTargets() && photonResults.targets.size() == 1) {
+            } else if (photonResults.hasTargets() && photonResults.targets.size() >= 1) {
 
                 if (photonResults.getBestTarget().getPoseAmbiguity() < APRILTAG_AMBIGUITY_THRESHOLD) {
 

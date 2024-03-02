@@ -11,13 +11,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ArmConstants.ArmGains;
+import frc.robot.Constants.ArmConstants.ArmGainsClimb;
 import frc.robot.subsystems.arm.ArmIO.ArmIOInputs;
 
 public class ArmIOSparkMax implements ArmIO {
@@ -36,22 +36,24 @@ public class ArmIOSparkMax implements ArmIO {
     private AbsoluteEncoder wristEncoderAbsolute;
     // private RelativeEncoder gripperEncoder;
 
-    private PIDController shoulderLeftController;
-    private PIDController shoulderRightController;
-    private PIDController elbowLeftController;
-    private PIDController elbowRightController;
+    // private PIDController shoulderLeftController;
+    // private PIDController shoulderRightController;
+    // private PIDController elbowLeftController;
+    // private PIDController elbowRightController;
 
     private SparkPIDController wristController;
-
+    private double a;
     private boolean inBend;
     // private PIDController shoulderController; //
     // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-feedforward.html#introduction-to-dc-motor-feedforward
     // private PIDController elbowController;
-    private ArmFeedforward shoulderLeftFeedforward;
-    private ArmFeedforward shoulderRightFeedforward;
-    private ArmFeedforward elbowLeftFeedforward;
-    private ArmFeedforward
-            elbowRightFeedforward; // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/feedforward.html#armfeedforward
+    // private ArmFeedforward shoulderLeftFeedforward;
+    // private ArmFeedforward shoulderRightFeedforward;
+    // private ArmFeedforward elbowLeftFeedforward;
+    // private ArmFeedforward
+    //         elbowRightFeedforward; //
+    // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/feedforward.html#armfeedforward
+    private ArmGains armGains = new ArmGains();
 
     /** Creates a new ArmIOSparkMax. */
     public ArmIOSparkMax() {
@@ -68,6 +70,7 @@ public class ArmIOSparkMax implements ArmIO {
         shoulderRight.setInverted(false);
         elbowRight.setInverted(false);
         elbowLeft.setInverted(true);
+        wrist.setInverted(false);
         shoulderLeftEncoder = shoulderLeft.getEncoder();
         shoulderRightEncoder = shoulderRight.getEncoder();
         elbowLeftEncoder = elbowLeft.getEncoder();
@@ -79,6 +82,19 @@ public class ArmIOSparkMax implements ArmIO {
         elbowLeftEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
         elbowRightEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
         wristEncoder.setPositionConversionFactor(ArmConstants.wristRadPerRot);
+        wristEncoderAbsolute.setPositionConversionFactor(2.0 * Math.PI);
+
+        wristController = wrist.getPIDController();
+        wristController.setP(ArmConstants.wristP);
+        wristController.setI(ArmConstants.wristI);
+        wristController.setD(ArmConstants.wristD);
+        wristController.setOutputRange(-ArmConstants.wristMaxPower, ArmConstants.wristMaxPower);
+        // wrist.setSoftLimit(null, 0)
+
+        inBend = false;
+        setGains(false);
+        resetEncoders();
+        // setArmGains(climbGains);
 
         // shoulderLeftEncoder.setPosition(ArmConstants.shoulderOffset);
         // shoulderRightEncoder.setPosition(ArmConstants.shoulderOffset);
@@ -86,30 +102,6 @@ public class ArmIOSparkMax implements ArmIO {
         // elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
         // gripperEncoder.setPosition(0);
 
-        shoulderLeftController =
-                new PIDController(ArmConstants.shoulderP, ArmConstants.shoulderI, ArmConstants.shoulderD);
-        shoulderRightController =
-                new PIDController(ArmConstants.shoulderP, ArmConstants.shoulderI, ArmConstants.shoulderD);
-        elbowLeftController = new PIDController(ArmConstants.elbowP, ArmConstants.elbowI, ArmConstants.elbowD);
-        elbowRightController = new PIDController(ArmConstants.elbowP, ArmConstants.elbowI, ArmConstants.elbowD);
-        wristController = wrist.getPIDController();
-        wristController.setP(ArmConstants.wristP);
-        wristController.setI(ArmConstants.wristI);
-        wristController.setD(ArmConstants.wristD);
-        wristController.setOutputRange(-ArmConstants.wristMaxPower, ArmConstants.wristMaxPower);
-        elbowLeftController.setIZone(0.15);
-        elbowRightController.setIZone(0.15);
-
-        inBend = false;
-        resetEncoders();
-        shoulderLeftFeedforward = new ArmFeedforward(
-                ArmConstants.shoulderS, ArmConstants.shoulderG, ArmConstants.shoulderV, ArmConstants.shoulderA);
-        shoulderRightFeedforward = new ArmFeedforward(
-                ArmConstants.shoulderS, ArmConstants.shoulderG, ArmConstants.shoulderV, ArmConstants.shoulderA);
-        elbowLeftFeedforward =
-                new ArmFeedforward(ArmConstants.elbowS, ArmConstants.elbowG, ArmConstants.elbowV, ArmConstants.elbowA);
-        elbowRightFeedforward =
-                new ArmFeedforward(ArmConstants.elbowS, ArmConstants.elbowG, ArmConstants.elbowV, ArmConstants.elbowA);
     }
 
     @Override
@@ -145,10 +137,34 @@ public class ArmIOSparkMax implements ArmIO {
         // inputs.gripperCurrentAmps = new double[] {gripper.getOutputCurrent()};
     }
 
+    public void setGains(boolean climbing) {
+        armGains = climbing ? new ArmGainsClimb() : new ArmGains();
+        armGains.elbowLeftController.setIZone(0.1);
+        armGains.elbowRightController.setIZone(0.1);
+    }
+
     // public void setArmVelocity(Translation2d velocity) {
     //     setArmPosition(getArmPosition().plus(velocity), inBend);
     // }
 
+    // private void resetArmGains(ArmGains gains) {
+    //     shoulderLeftController.setPID(gains.shoulderP, gains.shoulderI, gains.shoulderD);
+    //     shoulderRightController.setPID(gains.shoulderP, gains.shoulderI, gains.shoulderD);
+    //     elbowLeftController.setPID(gains.elbowP, gains.elbowI, gains.elbowD);
+    //     elbowRightController.setPID(gains.elbowP, gains.elbowI, gains.elbowD);
+
+    //     shoulderLeftFeedforward = new ArmFeedforward(
+    //             gains.shoulderS, gains.shoulderG, gains.shoulderV, gains.shoulderA);
+    //     shoulderRightFeedforward = new ArmFeedforward(
+    //             gains.shoulderS, gains.shoulderG, gains.shoulderV, gains.shoulderA);
+    //     elbowLeftFeedforward =
+    //             new ArmFeedforward(gains.elbowS, gains.elbowG, gains.elbowV, gains.elbowA);
+    //     elbowRightFeedforward =
+    //             new ArmFeedforward(gains.elbowS, gains.elbowG, gains.elbowV, gains.elbowA);
+
+    //     elbowLeftController.setIZone(0.15);
+    //     elbowRightController.setIZone(0.15);
+    // }
     public void setArmPosition(Translation2d position, boolean inBend, double wrist) {
         this.inBend = inBend;
         double distance = position.getNorm();
@@ -168,7 +184,8 @@ public class ArmIOSparkMax implements ArmIO {
         setElbowPosition(elbowPosition);
         setWristPosition(wrist);
         SmartDashboard.putNumber("shoulderPosition error", shoulderPosition - getShoulderLeftPosition());
-        SmartDashboard.putNumber("elbowPosition error", elbowPosition - getElbowLeftPosition());
+        SmartDashboard.putNumber("elbow R Position error", elbowPosition - getElbowRightPosition());
+        SmartDashboard.putNumber("elbow L Position error", elbowPosition - getElbowLeftPosition());
     }
 
     public void resetEncoders() {
@@ -180,8 +197,11 @@ public class ArmIOSparkMax implements ArmIO {
         elbowLeft.setClosedLoopRampRate(ArmConstants.rampRateElbow);
         shoulderLeft.setClosedLoopRampRate(ArmConstants.rampRateShoulder);
         elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
-        wristEncoder.setPosition(
-                ArmConstants.wristOffset + (wristEncoderAbsolute.getPosition() * 2 * Math.PI) - getElbowLeftPosition());
+        wristEncoder.setPosition(0);
+        // (-(wristEncoderAbsolute.getPosition() > 0.5 ? wristEncoderAbsolute.getPosition() - 1 :
+        // wristEncoderAbsolute.getPosition()) * 2 * Math.PI));
+        a++;
+        SmartDashboard.putNumber("a", a);
 
         // gripperEncoder.setPosition(0);
         // elbowLeftController.setOutputRange(-ArmConstants.maxPowerElbow, ArmConstants.maxPowerElbow);
@@ -201,10 +221,10 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setShoulderPosition(double position) {
-        shoulderLeft.set(shoulderLeftController.calculate(getShoulderLeftPosition(), position)
-                + shoulderLeftFeedforward.calculate(getShoulderLeftPosition(), getShoulderLeftVelocity()));
-        shoulderRight.set(shoulderRightController.calculate(getShoulderRightPosition(), position)
-                + shoulderRightFeedforward.calculate(getShoulderRightPosition(), getShoulderRightVelocity()));
+        shoulderLeft.set(armGains.shoulderLeftController.calculate(getShoulderLeftPosition(), position)
+                + armGains.shoulderLeftFeedforward.calculate(getShoulderLeftPosition(), getShoulderLeftVelocity()));
+        shoulderRight.set(armGains.shoulderRightController.calculate(getShoulderRightPosition(), position)
+                + armGains.shoulderRightFeedforward.calculate(getShoulderRightPosition(), getShoulderRightVelocity()));
     }
 
     // public void setShoulderVelocity(double velocity) {
@@ -224,10 +244,10 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setElbowPosition(double position) {
-        // elbowLeft.set(elbowLeftController.calculate(getElbowLeftPosition(), position)
-        //         + elbowLeftFeedforward.calculate(getElbowLeftPosition(), getElbowLeftVelocity()));
-        // elbowRight.set(elbowRightController.calculate(getElbowRightPosition(), position)
-        //         + elbowRightFeedforward.calculate(getElbowRightPosition(), getElbowRightVelocity()));
+        elbowLeft.set(armGains.elbowLeftController.calculate(getElbowLeftPosition(), position)
+                + armGains.elbowLeftFeedforward.calculate(getElbowLeftPosition(), getElbowLeftVelocity()));
+        elbowRight.set(armGains.elbowRightController.calculate(getElbowRightPosition(), position)
+                + armGains.elbowRightFeedforward.calculate(getElbowRightPosition(), getElbowRightVelocity()));
     }
 
     // public void setElbowVelocity(double velocity) {
@@ -273,19 +293,21 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setWristPosition(double position) {
-        position -= getElbowLeftPosition();
-        SmartDashboard.putNumber("AbsoluteEncoder", wristEncoderAbsolute.getPosition());
+        // position -= getElbowLeftPosition();
+        System.out.println("wrist raw" + wristEncoderAbsolute.getPosition());
+        SmartDashboard.putNumber("AbsoluteEncoder", -wristEncoderAbsolute.getPosition());
         SmartDashboard.putNumber(
-                "wristabsoluteencoder",
-                ArmConstants.wristOffset + (wristEncoderAbsolute.getPosition() * 2 * Math.PI) + getElbowLeftPosition());
-        SmartDashboard.putNumber(
-                "wristRawEncoder",
-                wristEncoder.getPosition());
+                "wristabsoluteencoder", ArmConstants.wristOffset + (-wristEncoderAbsolute.getPosition() * 2 * Math.PI));
+        SmartDashboard.putNumber("wristRawEncoder", wristEncoder.getPosition());
         wristController.setReference(position, ControlType.kPosition);
     }
 
     public double getWristPosition() {
-        return wristEncoder.getPosition() + getElbowLeftPosition();
+        SmartDashboard.putNumber("AbsoluteEncoder", -wristEncoderAbsolute.getPosition());
+        SmartDashboard.putNumber(
+                "wristabsoluteencoder", ArmConstants.wristOffset + (-wristEncoderAbsolute.getPosition() * 2 * Math.PI));
+        SmartDashboard.putNumber("wristRawEncoder", wristEncoder.getPosition());
+        return wristEncoder.getPosition();
     }
 
     //     public void setGripper(double power) {
