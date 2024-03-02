@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.92,
-        "y": 4.1
+        "x": 12.031,
+        "y": 4.95
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.169840769100281,
-        "y": 4.164804773642762
+        "x": 11.396725498496206,
+        "y": 4.596387128922236
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.507323960973273,
-        "y": 4.951478771661093
+        "x": 9.651,
+        "y": 3.5933930942594987
       },
       "prevControl": {
-        "x": 5.545374327742875,
-        "y": 4.370990079717566
+        "x": 10.751398396628392,
+        "y": 4.22640582207387
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToBCR4"
+                "name": "fourBarToHome"
               }
             }
           ]
@@ -50,7 +50,7 @@
     },
     {
       "name": "forcedIntakeShooter",
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "sequential",
         "data": {
@@ -58,7 +58,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntakeShoot"
+                "name": "forcedIntakeZero"
               }
             }
           ]
@@ -74,13 +74,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -20.0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -175.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

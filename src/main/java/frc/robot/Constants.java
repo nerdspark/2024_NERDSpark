@@ -171,7 +171,17 @@ public final class Constants {
     }
 
     public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
+    
     public static final double fourBarOut = 20.0;
+    
+    public static final double redCenterRing2 = 2.9;
+    public static final double redCenterRing3 = 2.6;
+    public static final double redCenterRing4 = 2.6;
+
+    public static final double blueCenterRing2 = 2.9;
+    public static final double blueCenterRing3 = 2.6;
+    public static final double blueCenterRing4 = 2.6;
+
 
     public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;
