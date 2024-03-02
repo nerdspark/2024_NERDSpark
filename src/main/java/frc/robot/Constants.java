@@ -263,7 +263,7 @@ public final class Constants {
         public static boolean MULTI_TAG_RESULT_ENABLED = true;
 
         public static VisionDeviationDistanceStrategy VISION_DEV_DIST_STRATEGY =
-                VisionDeviationDistanceStrategy.SMALEST_DISTANCE;
+                VisionDeviationDistanceStrategy.AVERAGE_DISTANCE;
 
         /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
         public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
@@ -380,7 +380,7 @@ public final class Constants {
         public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerBlueY, new Rotation2d(0));
         public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerRedY, new Rotation2d(Math.PI));
 
-        public static final double autonAimDistanceThreshold = 7.0d;
+        public static final double autonAimDistanceThreshold = 2.0d;
     }
 
     public static class ShooterConstants {
@@ -398,8 +398,8 @@ public final class Constants {
             // Value: Shooter Position
             fourBarMap.put(49.5, 8.0);
             fourBarMap.put(25.5, 8.0);
-            fourBarMap.put(19.5, 7.7);
-            fourBarMap.put(17.5, 5.2);
+            fourBarMap.put(19.5, 6.2);  //6.7
+            fourBarMap.put(17.5, 3.2);  //4.2
             fourBarMap.put(15.5 + (2.0 / 12.0), 2.6);
             fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
             fourBarMap.put(13.0, 1.65);

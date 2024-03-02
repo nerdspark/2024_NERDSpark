@@ -190,7 +190,7 @@ public class RobotContainer {
                 "forcedIntakeZero", new IntakeCommand(intake, () -> 0.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
         NamedCommands.registerCommand(
-                "onlySoftIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.SOFTINTAKE));
+                "onlySoftIntake", new IntakeCommand(intake, () -> 0.6, IntakeCommand.IntakeMode.SOFTINTAKE));
 
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));

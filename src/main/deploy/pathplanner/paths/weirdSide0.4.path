@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 7.82,
-        "y": 2.43
+        "y": 2.58
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.497905475051757,
-        "y": 1.5775872121139263
+        "y": 1.7275872121139262
       },
       "isLocked": false,
       "linkedName": null
@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 7.82,
-        "y": 4.1
+        "y": 4.25
       },
       "prevControl": {
         "x": 5.769306795362309,
-        "y": 4.1
+        "y": 4.25
       },
       "nextControl": null,
       "isLocked": false,
@@ -112,7 +112,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.75,
+      "waypointRelativePos": 1.65,
       "command": {
         "type": "sequential",
         "data": {

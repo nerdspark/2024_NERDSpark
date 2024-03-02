@@ -59,7 +59,16 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
     // private Translation2d targetPoseSpeaker =
     // AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
-    private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+    private static Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+
+    static {
+        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+        } else {
+            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
+        }
+    }
+
     private boolean targetFollow = false;
     private Intake intake;
 
@@ -88,7 +97,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public Optional<Rotation2d> getRotationTargetOverride() {
         // Some condition that should decide if we want to override rotation
-        if (intake.getBeamBreak() && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker) < speakerConstants.autonAimDistanceThreshold) {
+        if (intake.getBeamBreak() && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker) > speakerConstants.autonAimDistanceThreshold) {
+        // if (intake.getBeamBreak()) {
             // Return an optional containing the rotation override (this should be a field relative rotation)
             return Optional.of(AutoAimMath.getAutoAimCalcRobot(() -> this.getState().Pose, targetPoseSpeaker));
         } else {
@@ -112,7 +122,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 (speeds) -> this.setControl(autoRequest.withSpeeds(speeds)),
                 new HolonomicPathFollowerConfig(
                         new PIDConstants(10, 0, 0),
-                        new PIDConstants(10, 0, 0.5),
+                        new PIDConstants(5, 0, 0),
                         TunerConstants.kSpeedAt12VoltsMps,
                         driveBaseRadius,
                         new ReplanningConfig()),

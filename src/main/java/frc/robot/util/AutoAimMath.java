@@ -18,14 +18,13 @@ public class AutoAimMath {
         return new Rotation2d(robotAimAngle + Math.toRadians(180));
     }
 
-
     public static double xDistanceToSpeaker(Supplier<Pose2d> poseSupplier, Translation2d targetPose) {
 
-        double distanceXtoSpeaker = Math.abs(AllianceFlipUtil.apply(targetPose.getX()) - poseSupplier.get().getX());
+        double distanceXtoSpeaker = Math.abs(
+                AllianceFlipUtil.apply(targetPose.getX()) - poseSupplier.get().getX());
 
         return distanceXtoSpeaker;
     }
-
 
     // This FourBar code is not used and marked for deletion...
 

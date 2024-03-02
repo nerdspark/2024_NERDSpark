@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "fourBarToShooter",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "sequential",
         "data": {
