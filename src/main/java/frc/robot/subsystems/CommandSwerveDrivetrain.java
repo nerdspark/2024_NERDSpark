@@ -59,7 +59,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
     // private Translation2d targetPoseSpeaker =
     // AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
-    private  Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+    private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
 
     // static {
     //     if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
@@ -97,8 +97,10 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public Optional<Rotation2d> getRotationTargetOverride() {
         // Some condition that should decide if we want to override rotation
-        if (intake.getBeamBreak() && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker) > speakerConstants.autonAimDistanceThreshold) {
-        // if (intake.getBeamBreak()) {
+        if (intake.getBeamBreak()
+                && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker)
+                        > speakerConstants.autonAimDistanceThreshold) {
+            // if (intake.getBeamBreak()) {
             // Return an optional containing the rotation override (this should be a field relative rotation)
             return Optional.of(AutoAimMath.getAutoAimCalcRobot(() -> this.getState().Pose, targetPoseSpeaker));
         } else {
@@ -195,7 +197,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         } else {
             targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
         }
-    
+
         /* Periodically try to apply the operator perspective */
         /* If we haven't applied the operator perspective before, then we should apply it regardless of DS state */
         /* This allows us to correct the perspective in case the robot code restarts mid-match */

@@ -43,6 +43,8 @@ public interface ArmIO {
 
     default void updateInputs(ArmIOInputs inputs) {}
 
+    default void setGains(boolean climbing) {}
+
     default void setArmVelocity(Translation2d velocity) {}
 
     default void setArmPosition(Translation2d position, boolean inBend, double wrist) {}

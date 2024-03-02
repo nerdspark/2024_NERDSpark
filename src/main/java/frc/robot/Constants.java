@@ -46,8 +46,8 @@ public final class Constants {
 
         public static final double maxPowerShoulder = 0.3;
         public static final double maxPowerElbow = 0.3;
-        public static final int currentLimitShoulder = 40;
-        public static final int currentLimitElbow = 25;
+        public static final int currentLimitShoulder = 60;
+        public static final int currentLimitElbow = 60;
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
 
@@ -63,8 +63,8 @@ public final class Constants {
             private final double shoulderV = 0.0;
             private final double shoulderA = 0.0;
             private final double elbowS = 0.0;
-            private final double elbowGLeft = .1;
-            private final double elbowGRight = .1;
+            private final double elbowGLeft = .03;
+            private final double elbowGRight = .03;
             private final double elbowV = 0.0;
             private final double elbowA = 0.0;
 
@@ -83,17 +83,17 @@ public final class Constants {
 
         public static class ArmGainsClimb extends ArmGains {
             private final double shoulderP = 1.3;
-            private final double shoulderI = 0.0;
+            private final double shoulderI = 0.001;
             private final double shoulderD = 0.0;
-            private final double elbowP = 0.45;
+            private final double elbowP = 0.3;
             private final double elbowI = 0.01;
             private final double elbowD = 0.0;
-            private final double shoulderS = 0.0;
-            private final double shoulderG = 0.005;
+            private final double shoulderS = 3.0;
+            private final double shoulderG = -0.05;
             private final double shoulderV = 0.0;
             private final double shoulderA = 0.0;
-            private final double elbowS = 0.0;
-            private final double elbowG = .0002;
+            private final double elbowS = 1.0;
+            private final double elbowG = 0.0;
             private final double elbowV = 0.0;
             private final double elbowA = 0.0;
 
@@ -124,21 +124,22 @@ public final class Constants {
             public static final Translation2d pickup = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
                     .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(0)),
-                            secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(0)))); // B
-            public static final double pickupWrist = 1.85;
+                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(2.5)),
+                            secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(2.5)))); // B
+            public static final double pickupWrist = 1.95;
             public static final Translation2d amp = new Translation2d(-1, 16); // X
             public static final double ampWrist = pickupWrist;
             public static final Translation2d dropoff = new Translation2d(0, 25.5); // Y
-            public static final double dropoffWrist = -0.48;
+            public static final double dropoffWrist = -0.3;
             public static final double dropoffMultiplier = 6.4;
+            public static final double dropoffMultiplierY = 2;
         }
 
         public static final class ClimbSetPoints {
             public static final double readyShoulder = Units.degreesToRadians(100);
-            public static final double downElbow = Units.degreesToRadians(-90);
-            public static final double pinchShoulder = Units.degreesToRadians(5);
-            public static final double forwardShoulder = Units.degreesToRadians(85);
+            public static final double downElbow = Units.degreesToRadians(-250);
+            public static final double pinchShoulder = Units.degreesToRadians(-2.5);
+            public static final double forwardShoulder = readyShoulder - Units.degreesToRadians(15);
             public static final Translation2d ready = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + readyShoulder),
                             baseStageLength * Math.sin(shoulderOffset + readyShoulder))
@@ -167,6 +168,10 @@ public final class Constants {
                             secondStageLength * Math.cos(elbowOffset + forwardShoulder),
                             secondStageLength * Math.sin(elbowOffset + forwardShoulder))); // X
             public static final double forwardWrist = Math.PI;
+            public static final Translation2d trap =
+                    new Translation2d(-5, baseStageLength + secondStageLength - 0.1); // right stick
+            public static final double trapwrist = Math.PI;
+            public static final double trapMultiplier = 3.0;
         }
     }
 
@@ -220,6 +225,9 @@ public final class Constants {
     private static RobotType robotType = RobotType.COMPBOT;
     public static final boolean tuningMode = true;
     public static final boolean characterizationMode = false;
+
+    public static final double stillShotSpeed = 0.3;
+    public static final double autoTurnCeiling = 6.0;
 
     public static RobotType getRobot() {
         if (RobotBase.isReal() && robotType == RobotType.SIMBOT) {
@@ -408,8 +416,8 @@ public final class Constants {
             // Value: Shooter Position
             fourBarMap.put(49.5, 8.0);
             fourBarMap.put(25.5, 8.0);
-            fourBarMap.put(19.5, 6.2);  //6.7
-            fourBarMap.put(17.5, 3.2);  //4.2
+            fourBarMap.put(19.5, 6.2); // 6.7
+            fourBarMap.put(17.5, 3.2); // 4.2
             fourBarMap.put(15.5 + (2.0 / 12.0), 2.6);
             fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
             fourBarMap.put(13.0, 1.65);

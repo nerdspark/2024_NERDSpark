@@ -17,6 +17,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -30,6 +31,7 @@ import frc.robot.Constants.ArmConstants.ClimbSetPoints;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
@@ -64,9 +66,9 @@ public class RobotContainer {
     private Shooter shooter;
     private Arm arm;
 
-    private SlewRateLimiter xLimiter = new SlewRateLimiter(7.0);
-    private SlewRateLimiter yLimiter = new SlewRateLimiter(7.0);
-    private SlewRateLimiter zLimiter = new SlewRateLimiter(6.5);
+    private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
+    private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
+    private SlewRateLimiter zLimiter = new SlewRateLimiter(7);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
@@ -225,17 +227,19 @@ public class RobotContainer {
                 .whileTrue(new SequentialCommandGroup(
                         new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis() - 0.4)), IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
-                        new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
+                        new FourBarCommand(fourBar, () -> Constants.fourBarHome)
+                                .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))));
         driver.leftTrigger()
                 .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
-                        .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
+                        .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome))
+                        .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0))));
 
         // // // shoot command
         driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 10.0, IntakeMode.FORCEINTAKE));
         driver.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spit command
-        driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
         driver.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
@@ -254,13 +258,22 @@ public class RobotContainer {
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
-        // transfer spin up
-        copilot.leftBumper().whileTrue(new ShooterCommand(shooter, () -> 1100.0, () -> 1100.0));
-        copilot.leftBumper().onFalse(new InstantCommand(() -> shooter.stop()));
-
-        // transfer shoot
+        // cop9lot shoot
         copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
         copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+
+        // stop shoot
+        copilot.leftBumper()
+                .whileTrue(new IntakeCommand(
+                        intake,
+                        () -> ((Math.sqrt(Math.pow(drivetrain.getState().speeds.vxMetersPerSecond, 2)
+                                                + Math.pow(drivetrain.getState().speeds.vyMetersPerSecond, 2))
+                                        < Constants.stillShotSpeed)
+                                ? 1.0
+                                : 0.0),
+                        IntakeMode.FORCEINTAKE));
+        copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+
         // // // aim command
         copilot.rightTrigger()
                 .whileTrue(drivetrain
@@ -318,42 +331,70 @@ public class RobotContainer {
         // Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
+        // transfer spin up
+        copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1600.0, () -> 1600.0));
+        copilot.b().onFalse(new InstantCommand(() -> shooter.stop()));
+
         // // arm commands
         copilot.a()
                 .onTrue(new ArmCommand(
-                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
-        copilot.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
-        copilot.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
+                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
+        copilot.b()
+                .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
+        copilot.b()
+                .onFalse(new ArmCommand(
+                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
         copilot.y()
                 .whileTrue(new ArmCommand(
                         arm,
-                        () -> ArmSetPoints.dropoff.plus(
-                                new Translation2d(copilot.getLeftY() * ArmSetPoints.dropoffMultiplier, 0)),
+                        () -> ArmSetPoints.dropoff.plus(new Translation2d(
+                                (DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1)
+                                        * copilot.getLeftX()
+                                        * ArmSetPoints.dropoffMultiplier,
+                                -copilot.getLeftY() * ArmSetPoints.dropoffMultiplierY)),
                         () -> ArmSetPoints.dropoffWrist,
                         () -> false));
         copilot.y()
                 .onFalse(new ArmCommand(
-                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
+                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
 
-        copilot.back().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        copilot.back().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
         copilot.back().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
-        copilot.povLeft()
-                .onTrue(new ArmCommand(
-                        arm,
-                        () -> ClimbSetPoints.ready,
-                        () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
-                        () -> false));
-        copilot.povLeft().onTrue(new FourBarCommand(fourBar, () -> Constants.fourBarOut));
-        copilot.povDown()
-                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true));
-        copilot.povRight()
-                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
         copilot.povUp()
                 .onTrue(new ArmCommand(
+                                arm,
+                                () -> ClimbSetPoints.ready,
+                                () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
+                                () -> false)
+                        .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
+                        .alongWith(new InstantCommand(() -> arm.setGains(false))));
+        copilot.povRight()
+                .onTrue(new ArmCommand(
                         arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
+        copilot.povDown()
+                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true)
+                        .alongWith(new InstantCommand(() -> arm.setGains(true))));
+        ;
+        copilot.povLeft()
+                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
 
-        copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()));
+        // trap
+        copilot.rightStick()
+                .onTrue(new ArmCommand(
+                                arm,
+                                () -> ClimbSetPoints.trap.plus(
+                                        new Translation2d(copilot.getLeftY() * ClimbSetPoints.trapMultiplier, 0)),
+                                () -> ClimbSetPoints.trapwrist,
+                                () -> true)
+                        .alongWith(new InstantCommand(() -> arm.setGains(false))));
+
+        // reset buttons
+        copilot.start()
+                .whileTrue(new InstantCommand(() -> arm.resetEncoders())
+                        .alongWith(new InstantCommand(() -> arm.setGains(false))));
+
+        copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() -> arm.setGains(false))));
     }
 
     public Command getAutonomousCommand() {
@@ -389,7 +430,11 @@ public class RobotContainer {
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
         SmartDashboard.putNumber("angle error deg", error);
-        return zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate;
+        return Math.min(
+                Math.max(
+                        zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate,
+                        -Constants.autoTurnCeiling),
+                Constants.autoTurnCeiling);
     }
 
     public void resetGyro() {

@@ -22,7 +22,12 @@ public class Arm extends SubsystemBase {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Arm", inputs);
+        // SmartDashboard.putData("gyrea", null);
         // This method will be called once per scheduler run
+    }
+
+    public void setGains(boolean climbing) {
+        io.setGains(climbing);
     }
 
     public void setArmVelocity(Translation2d velocity) {
