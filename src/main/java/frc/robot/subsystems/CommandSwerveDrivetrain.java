@@ -59,15 +59,15 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
     // private Translation2d targetPoseSpeaker =
     // AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
-    private static Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+    private  Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
 
-    static {
-        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
-            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
-        } else {
-            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
-        }
-    }
+    // static {
+    //     if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+    //         targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+    //     } else {
+    //         targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
+    //     }
+    // }
 
     private boolean targetFollow = false;
     private Intake intake;
@@ -189,6 +189,13 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     @Override
     public void periodic() {
+
+        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+        } else {
+            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
+        }
+    
         /* Periodically try to apply the operator perspective */
         /* If we haven't applied the operator perspective before, then we should apply it regardless of DS state */
         /* This allows us to correct the perspective in case the robot code restarts mid-match */

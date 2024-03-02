@@ -259,7 +259,7 @@ public final class Constants {
 
         public static boolean USE_VISION = true;
         public static boolean USE_FRONT_CAMERA = true;
-        public static boolean USE_ADV_KIT_VISION = true;
+        public static boolean USE_ADV_KIT_VISION = false;
         public static boolean MULTI_TAG_RESULT_ENABLED = true;
 
         public static VisionDeviationDistanceStrategy VISION_DEV_DIST_STRATEGY =
