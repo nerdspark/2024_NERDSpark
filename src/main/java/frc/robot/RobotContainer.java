@@ -15,7 +15,6 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.XboxController;
@@ -24,7 +23,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
@@ -39,7 +37,6 @@ import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.NoteVisionSubsystem;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIO;
 import frc.robot.subsystems.arm.ArmIOSparkMax;
@@ -90,8 +87,8 @@ public class RobotContainer {
     private final Pigeon2 gyro = new Pigeon2(Constants.pigeonID, "canivore1");
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
-//     private NoteVisionSubsystem noteVisionSubsystem =
-//             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+    //     private NoteVisionSubsystem noteVisionSubsystem =
+    //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     private void configureBindings() {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -167,10 +164,7 @@ public class RobotContainer {
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
 
-
-         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));                                
-
-
+        NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
         NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
         NamedCommands.registerCommand("fourBarToHome", new FourBarCommand(fourBar, () -> Constants.fourBarHome));
@@ -184,9 +178,6 @@ public class RobotContainer {
                                 () -> new Translation2d(
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
-
-
-
 
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
@@ -217,10 +208,7 @@ public class RobotContainer {
         // intake button
         driver.leftTrigger()
                 .whileTrue(new SequentialCommandGroup(
-                        new IntakeCommand(
-                                        intake,
-                                        () -> ((driverRaw.getLeftTriggerAxis() - 0.4)),
-                                        IntakeMode.SOFTINTAKE)
+                        new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis() - 0.4)), IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
                         new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
         driver.leftTrigger()
@@ -251,13 +239,22 @@ public class RobotContainer {
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
-        // transfer spin up
-        copilot.leftBumper().whileTrue(new ShooterCommand(shooter, () -> 1100.0, () -> 1100.0));
-        copilot.leftBumper().onFalse(new InstantCommand(() -> shooter.stop()));
-
-        // transfer shoot
+        // cop9lot shoot
         copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
         copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+
+        // stop shoot
+        copilot.leftBumper()
+                .whileTrue(new IntakeCommand(
+                        intake,
+                        () -> ((Math.sqrt(Math.pow(drivetrain.getState().speeds.vxMetersPerSecond, 2)
+                                                + Math.pow(drivetrain.getState().speeds.vyMetersPerSecond, 2))
+                                        < Constants.stillShotSpeed)
+                                ? 1.0
+                                : 0.0),
+                        IntakeMode.FORCEINTAKE));
+        copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+
         // // // aim command
         copilot.rightTrigger()
                 .whileTrue(drivetrain
@@ -290,7 +287,8 @@ public class RobotContainer {
         //                                 intake,
         //                                 () -> ((driverRaw.getLeftTriggerAxis() - 0.5) * 2),
         //                                 IntakeMode.SOFTINTAKE)
-        //                         .deadlineWith(new ParallelCommandGroup(new FourBarCommand(fourBar, () -> Constants.fourBarOut), 
+        //                         .deadlineWith(new ParallelCommandGroup(new FourBarCommand(fourBar, () ->
+        // Constants.fourBarOut),
         //                         (drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
         //                                     * MaxSpeed
         //                                     * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
@@ -304,7 +302,7 @@ public class RobotContainer {
         //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
         //                 .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
         // }
-        
+
         // // vision-assisted following command
         // driver.rightTrigger().whileTrue((
         //     drivetrain.applyRequest(() -> drive
@@ -314,12 +312,17 @@ public class RobotContainer {
         // Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
+        // transfer spin up
+        copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1100.0, () -> 1100.0));
+        copilot.b().onFalse(new InstantCommand(() -> shooter.stop()));
+
         // // arm commands
         copilot.a()
                 .onTrue(new ArmCommand(
                         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
-        copilot.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
-        copilot.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
+        copilot.b()
+                .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
+        copilot.b().onFalse(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
         copilot.y()
                 .whileTrue(new ArmCommand(
                         arm,
@@ -336,13 +339,22 @@ public class RobotContainer {
 
         copilot.povLeft()
                 .onTrue(new ArmCommand(
-                        arm, () -> ClimbSetPoints.ready, () -> ClimbSetPoints.readyWrist + copilot.getRightX(), () -> false));
+                        arm,
+                        () -> ClimbSetPoints.ready,
+                        () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
+                        () -> false));
         copilot.povLeft().onTrue(new FourBarCommand(fourBar, () -> Constants.fourBarOut));
-        copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true));
-        copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
-        copilot.povUp().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
+        copilot.povDown()
+                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true));
+        copilot.povRight()
+                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
+        copilot.povUp()
+                .onTrue(new ArmCommand(
+                        arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
 
         copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()));
+
+        copilot.x().onTrue(new ArmResetCommand(arm, false));
     }
 
     public Command getAutonomousCommand() {

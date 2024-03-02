@@ -9,9 +9,12 @@ import frc.robot.subsystems.arm.Arm;
 
 public class ArmResetCommand extends Command {
     private Arm arm;
+    private boolean reset;
     /** Creates a new ArmResetCommand. */
-    public ArmResetCommand(Arm arm) {
+    public ArmResetCommand(Arm arm, boolean reset) {
         this.arm = arm;
+        this.reset = reset;
+        addRequirements(arm);
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -22,7 +25,9 @@ public class ArmResetCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        arm.resetEncoders();
+        if (reset) {
+            arm.resetEncoders();
+        }
     }
 
     // Called once the command ends or is interrupted.
