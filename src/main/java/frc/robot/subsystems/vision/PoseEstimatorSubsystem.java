@@ -1,30 +1,19 @@
 package frc.robot.subsystems.vision;
 
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
-import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kRedAllianceWallRightSide;
 import static frc.robot.subsystems.drive.DriveConstants.thetaStdDevCoefficient;
 import static frc.robot.subsystems.drive.DriveConstants.xyStdDevCoefficient;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
-import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.util.FieldConstants;
-import org.photonvision.EstimatedRobotPose;
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 public class PoseEstimatorSubsystem extends SubsystemBase {
 
@@ -84,36 +73,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
         tab.addString("Pose", this::getFomattedPose).withPosition(6, 2).withSize(2, 1);
     }
 
-    /**
-     * Sets the alliance. This is used to configure the origin of the AprilTag map
-     *
-     * @param alliance alliance
-     */
-    public void setAlliance(Alliance alliance) {
-        boolean allianceChanged = false;
-        switch (alliance) {
-            case Blue:
-                allianceChanged = (originPosition == kRedAllianceWallRightSide);
-                originPosition = kBlueAllianceWallRightSide;
-                break;
-            case Red:
-                allianceChanged = (originPosition == kBlueAllianceWallRightSide);
-                originPosition = kRedAllianceWallRightSide;
-                break;
-            default:
-                // No valid alliance data. Nothing we can do about it
-        }
-
-        if (allianceChanged) {
-            // The alliance changed, which changes the coordinate system.
-            // Since a tag was seen, and the tags are all relative to the coordinate system,
-            // the estimated pose
-            // needs to be transformed to the new coordinate system.
-            var newPose = flipAlliance(getCurrentPose());
-            driveTrain.seedFieldRelative(newPose);
-        }
-    }
-
     @Override
     public void periodic() {
         // Update pose estimator with drivetrain sensors
@@ -132,15 +91,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
             if (allNotifier != null) allNotifier.close();
         }
 
-        // estimatorChecker(backEstimator);
-
         // Set the pose on the dashboard
         var dashboardPose = getCurrentPose();
-        if (originPosition == kRedAllianceWallRightSide) {
-            // Flip the pose when red, since the dashboard field photo cannot be rotated
-            // dashboardPose = flipAlliance(dashboardPose);
-            dashboardPose = dashboardPose.rotateBy(new Rotation2d(Units.degreesToRadians(180)));
-        }
         field2d.setRobotPose(dashboardPose);
     }
 
@@ -176,64 +128,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     }
 
     /**
-     * Transforms a pose to the opposite alliance's coordinate system. (0,0) is
-     * always on the right corner of your
-     * alliance wall, so for 2023, the field elements are at different coordinates
-     * for each alliance.
-     *
-     * @param poseToFlip pose to transform to the other alliance
-     * @return pose relative to the other alliance's coordinate system
-     */
-    private Pose2d flipAlliance(Pose2d poseToFlip) {
-        return poseToFlip.relativeTo(new Pose2d(
-                new Translation2d(FieldConstants.fieldLength, FieldConstants.fieldWidth), new Rotation2d(Math.PI)));
-    }
-
-    // public void resetPoseRating() {
-    // xValues.clear();
-    // yValues.clear();
-    // }
-
-    private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation) {
-        double smallestDistance = Double.POSITIVE_INFINITY;
-        for (var target : estimation.targetsUsed) {
-            var t3d = target.getBestCameraToTarget();
-            var distance = Math.sqrt(Math.pow(t3d.getX(), 2) + Math.pow(t3d.getY(), 2) + Math.pow(t3d.getZ(), 2));
-            if (distance < smallestDistance) smallestDistance = distance;
-        }
-        double poseAmbiguityFactor = estimation.targetsUsed.size() != 1
-                ? 1
-                : Math.max(
-                        1,
-                        (estimation.targetsUsed.get(0).getPoseAmbiguity()
-                                        + Constants.VisionConstants.POSE_AMBIGUITY_SHIFTER)
-                                * Constants.VisionConstants.POSE_AMBIGUITY_MULTIPLIER);
-        double confidenceMultiplier = Math.max(
-                1,
-                (Math.max(
-                                        1,
-                                        Math.max(0, smallestDistance - Constants.VisionConstants.NOISY_DISTANCE_METERS)
-                                                * Constants.VisionConstants.DISTANCE_WEIGHT)
-                                * poseAmbiguityFactor)
-                        / (1 + ((estimation.targetsUsed.size() - 1) * Constants.VisionConstants.TAG_PRESENCE_WEIGHT)));
-
-        return Constants.VisionConstants.VISION_MEASUREMENT_STANDARD_DEVIATIONS.times(confidenceMultiplier);
-    }
-
-    public void estimatorChecker(PhotonVisionRunnable estamator) {
-        var cameraPose = estamator.grabLatestEstimatedPose();
-        if (cameraPose != null) {
-            // New pose from vision
-            var pose2d = cameraPose.estimatedPose.toPose2d();
-            if (originPosition == kRedAllianceWallRightSide) {
-                pose2d = flipAlliance(pose2d);
-            }
-            driveTrain.addVisionMeasurement(pose2d, cameraPose.timestampSeconds, confidenceCalculator(cameraPose));
-            // confidenceCalculator(cameraPose);
-        }
-    }
-
-    /**
      * Calculate the standard deviation of the x and y coordinates.
      *
      * @param poseEstimates The pose estimate
@@ -265,38 +159,59 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
         var cameraPose = estomator.grabLatestEstimatedPose();
 
         if (cameraPose != null) {
-            var poseStrategyUsed = cameraPose.strategy;
+            // var poseStrategyUsed = cameraPose.strategy;
 
             int[] tagIDsFrontCamera = new int[cameraPose.targetsUsed.size()];
             double averageTagDistance = 0.0;
-            double poseAmbiguity = 0.0;
+            // double poseAmbiguity = 0.0;
+            double smallestDistance = Double.POSITIVE_INFINITY;
 
             for (int i = 0; i < cameraPose.targetsUsed.size(); i++) {
                 tagIDsFrontCamera[i] =
                         (int) cameraPose.targetsUsed.get(i).getFiducialId(); // Retrieves and stores the tag ID
-                averageTagDistance += cameraPose
-                        .targetsUsed
-                        .get(i)
-                        .getBestCameraToTarget()
-                        .getTranslation()
-                        .getNorm(); // Calculates the sum of the tag distances
+                if (Constants.VisionConstants.VISION_DEV_DIST_STRATEGY
+                        == Constants.VisionDeviationDistanceStrategy.AVERAGE_DISTANCE) {
 
-                if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
-                    poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
+                    averageTagDistance += cameraPose
+                            .targetsUsed
+                            .get(i)
+                            .getBestCameraToTarget()
+                            .getTranslation()
+                            .getNorm(); // Calculates the sum of the tag distances
+
+                } else {
+                    var distance = cameraPose
+                            .targetsUsed
+                            .get(i)
+                            .getBestCameraToTarget()
+                            .getTranslation()
+                            .getNorm(); // Calculates the distance to the tag
+
+                    if (distance < smallestDistance) smallestDistance = distance;
+                }
+                var distanceUsedForCalculatingStdDev = 0.0;
+                if (Constants.VisionConstants.VISION_DEV_DIST_STRATEGY
+                        == Constants.VisionDeviationDistanceStrategy.AVERAGE_DISTANCE) {
+                    averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
+                    distanceUsedForCalculatingStdDev = averageTagDistance;
+                } else {
+                    distanceUsedForCalculatingStdDev = smallestDistance;
+                }
+                // if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+                //     poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
+
+                double timestamp = cameraPose.timestampSeconds;
+                Pose3d robotPose = cameraPose.estimatedPose;
+                // Correct the pose for rotation as camera is mounted on the back side
+                // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
+                robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
+
+                double xyStdDev = calculateXYStdDev(distanceUsedForCalculatingStdDev, cameraPose.targetsUsed.size());
+                double thetaStdDev =
+                        calculateThetaStdDev(distanceUsedForCalculatingStdDev, cameraPose.targetsUsed.size());
+                driveTrain.addVisionMeasurement(
+                        robotPose.toPose2d(), timestamp, VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev));
             }
-
-            averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
-
-            if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
-                poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
-
-            double timestamp = cameraPose.timestampSeconds;
-            Pose3d robotPose = cameraPose.estimatedPose;
-
-            double xyStdDev = calculateXYStdDev(averageTagDistance, cameraPose.targetsUsed.size());
-            double thetaStdDev = calculateThetaStdDev(averageTagDistance, cameraPose.targetsUsed.size());
-            driveTrain.addVisionMeasurement(
-                    robotPose.toPose2d(), timestamp, VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev));
         }
     }
 }

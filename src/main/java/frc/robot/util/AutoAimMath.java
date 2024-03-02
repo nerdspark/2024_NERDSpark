@@ -3,8 +3,6 @@ package frc.robot.util;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.Constants.speakerConstants;
-
 import java.util.function.Supplier;
 
 public class AutoAimMath {
@@ -20,6 +18,13 @@ public class AutoAimMath {
         return new Rotation2d(robotAimAngle + Math.toRadians(180));
     }
 
+    public static double xDistanceToSpeaker(Supplier<Pose2d> poseSupplier, Translation2d targetPose) {
+
+        double distanceXtoSpeaker = Math.abs(
+                AllianceFlipUtil.apply(targetPose.getX()) - poseSupplier.get().getX());
+
+        return distanceXtoSpeaker;
+    }
 
     // This FourBar code is not used and marked for deletion...
 

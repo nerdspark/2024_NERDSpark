@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.speakerConstants;
-
 import java.util.function.Supplier;
 
 public class AutoAim {
@@ -39,7 +37,8 @@ public class AutoAim {
                 .plus(speeds.get().times(distanceToSpeaker2 * Constants.shootMoveMultiplier))
                 .getDistance(speakerPose.getTranslation());
 
-        double angle = Constants.ShooterConstants.fourBarMap.get(Units.metersToFeet(distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD));
+        double angle = Constants.ShooterConstants.fourBarMap.get(
+                Units.metersToFeet(distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD));
         SmartDashboard.putNumber("Calculated 4Bar", angle);
         return angle;
     }
@@ -63,7 +62,8 @@ public class AutoAim {
                 .plus(speeds.get().times(distanceToSpeaker2 * Constants.shootMoveMultiplier))
                 .getDistance(speakerPose.getTranslation());
 
-        double RPM = Constants.ShooterConstants.shooterMap.get(Units.metersToFeet(distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD));
+        double RPM = Constants.ShooterConstants.shooterMap.get(
+                Units.metersToFeet(distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD));
         SmartDashboard.putNumber("Calculated RPM", RPM);
         return RPM;
     }
@@ -76,7 +76,8 @@ public class AutoAim {
         } else {
             speakerPose = Constants.speakerConstants.speakerLocRed;
         }
-        double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation()) + ShooterConstants.CONSTANT_DISTANCE_ADD;
+        double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation())
+                + ShooterConstants.CONSTANT_DISTANCE_ADD;
         if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
             angle = Constants.speakerConstants
                     .speakerLocBlue

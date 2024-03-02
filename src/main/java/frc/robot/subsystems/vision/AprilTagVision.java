@@ -12,12 +12,7 @@ import static frc.robot.subsystems.drive.DriveConstants.*;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
@@ -108,9 +103,10 @@ public class AprilTagVision extends SubsystemBase {
                 }
                 double timestamp = poseEstimates.timestampSeconds();
                 Pose3d robotPose = poseEstimates.pose();
-                // if(DriverStation.getAlliance().get() == Alliance.Red){
-                    robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
-                //}
+                // Correct the robot pose since camera is mounted on the back.
+                // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
+                robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
+
                 List<Pose3d> tagPoses = getTagPoses(poseEstimates);
                 double poseAmbiguity = poseEstimates.poseAmbiguity();
                 double xyStdDev = calculateXYStdDev(poseEstimates, tagPoses.size());
@@ -133,7 +129,7 @@ public class AprilTagVision extends SubsystemBase {
                         tagPoses,
                         poseAmbiguity,
                         xyStdDev,
-                        new Pose2d(),// robotPoseBeforeVisionUpdate,
+                        new Pose2d(), // robotPoseBeforeVisionUpdate,
                         thetaStdDev);
             }
         }
@@ -192,36 +188,6 @@ public class AprilTagVision extends SubsystemBase {
      */
     private double calculateXYStdDev(PoseEstimate poseEstimates, int tagPosesSize) {
         return xyStdDevCoefficient * Math.pow(poseEstimates.averageTagDistance(), 2.0) / tagPosesSize;
-    }
-
-    /**
-     * Calculate the standard deviation of the x and y coordinates.
-     *
-     * @param poseEstimates The pose estimate
-     * @param tagPosesSize The number of detected tag poses
-     * @return The standard deviation of the x and y coordinates
-     */
-    private double calculateXYStdDevWithAmbiguity(PoseEstimate poseEstimates, int tagPosesSize) {
-
-        double poseAmbiguityFactor = tagPosesSize != 1
-                ? 1
-                : Math.max(
-                        1,
-                        (poseEstimates.poseAmbiguity() + Constants.VisionConstants.POSE_AMBIGUITY_SHIFTER)
-                                * Constants.VisionConstants.POSE_AMBIGUITY_MULTIPLIER);
-        double confidenceMultiplier = Math.max(
-                1,
-                (Math.max(
-                                        1,
-                                        Math.max(
-                                                        0,
-                                                        poseEstimates.averageTagDistance()
-                                                                - Constants.VisionConstants.NOISY_DISTANCE_METERS)
-                                                * Constants.VisionConstants.DISTANCE_WEIGHT)
-                                * poseAmbiguityFactor)
-                        / (1 + ((tagPosesSize - 1) * Constants.VisionConstants.TAG_PRESENCE_WEIGHT)));
-
-        return confidenceMultiplier;
     }
 
     /**

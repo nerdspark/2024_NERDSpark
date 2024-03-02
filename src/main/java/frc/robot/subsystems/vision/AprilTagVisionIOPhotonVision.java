@@ -111,41 +111,50 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             double poseAmbiguity = 0.0;
             double smallestDistance = Double.POSITIVE_INFINITY;
 
-
             for (int i = 0; i < cameraPose.targetsUsed.size(); i++) {
                 tagIDsFrontCamera[i] =
                         (int) cameraPose.targetsUsed.get(i).getFiducialId(); // Retrieves and stores the tag ID
-                // averageTagDistance += cameraPose
-                //         .targetsUsed
-                //         .get(i)
-                //         .getBestCameraToTarget()
-                //         .getTranslation()
-                //         .getNorm(); // Calculates the sum of the tag distances
 
-                 var distance = cameraPose
-                        .targetsUsed
-                        .get(i)
-                        .getBestCameraToTarget()
-                        .getTranslation()
-                        .getNorm(); // Calculates the distance to the tag
+                if (Constants.VisionConstants.VISION_DEV_DIST_STRATEGY
+                        == Constants.VisionDeviationDistanceStrategy.AVERAGE_DISTANCE) {
+
+                    averageTagDistance += cameraPose
+                            .targetsUsed
+                            .get(i)
+                            .getBestCameraToTarget()
+                            .getTranslation()
+                            .getNorm(); // Calculates the sum of the tag distances
+
+                } else {
+
+                    var distance = cameraPose
+                            .targetsUsed
+                            .get(i)
+                            .getBestCameraToTarget()
+                            .getTranslation()
+                            .getNorm(); // Calculates the distance to the tag
 
                     if (distance < smallestDistance) smallestDistance = distance;
-               
-                
+                }
 
                 if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
                     poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
             }
-
-            // averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
-
+            var distanceUsedForCalculatingStdDev = 0.0;
+            if (Constants.VisionConstants.VISION_DEV_DIST_STRATEGY
+                    == Constants.VisionDeviationDistanceStrategy.AVERAGE_DISTANCE) {
+                averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
+                distanceUsedForCalculatingStdDev = averageTagDistance;
+            } else {
+                distanceUsedForCalculatingStdDev = smallestDistance;
+            }
             if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
                 poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
             poseEstimates.add(new PoseEstimate(
                     cameraPose.estimatedPose,
                     cameraPose.timestampSeconds,
-                    smallestDistance,
+                    distanceUsedForCalculatingStdDev,
                     tagIDsFrontCamera,
                     poseAmbiguity,
                     poseStrategyUsed)); //
