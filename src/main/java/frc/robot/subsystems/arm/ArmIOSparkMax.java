@@ -33,7 +33,7 @@ public class ArmIOSparkMax implements ArmIO {
     private RelativeEncoder elbowLeftEncoder;
     private RelativeEncoder elbowRightEncoder;
     private RelativeEncoder wristEncoder;
-    private AbsoluteEncoder wristEncoderAbsolute;
+    private static AbsoluteEncoder wristEncoderAbsolute;
     // private RelativeEncoder gripperEncoder;
 
     // private PIDController shoulderLeftController;
@@ -63,7 +63,6 @@ public class ArmIOSparkMax implements ArmIO {
         elbowRight = new CANSparkMax(Constants.elbowRightID, MotorType.kBrushless);
         wrist = new CANSparkMax(Constants.wristID, MotorType.kBrushless);
         wristEncoderAbsolute = elbowLeft.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
-
         // gripper = new CANSparkMax(Constants.gripperID, MotorType.kBrushless);
 
         shoulderLeft.setInverted(true);
@@ -82,7 +81,13 @@ public class ArmIOSparkMax implements ArmIO {
         elbowLeftEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
         elbowRightEncoder.setPositionConversionFactor(ArmConstants.elbowRadPerRot);
         wristEncoder.setPositionConversionFactor(ArmConstants.wristRadPerRot);
-        wristEncoderAbsolute.setPositionConversionFactor(2.0 * Math.PI);
+
+        wristEncoderAbsolute.setPositionConversionFactor(1);
+       // SmartDashboard.putNumber("Absolute Encoder", wristEncoderAbsolute.getPosition());
+       // SmartDashboard.updateValues();
+        
+
+
 
         wristController = wrist.getPIDController();
         wristController.setP(ArmConstants.wristP);
@@ -126,7 +131,7 @@ public class ArmIOSparkMax implements ArmIO {
         inputs.elbowRightAppliedVolts = elbowLeft.getAppliedOutput() * elbowLeft.getBusVoltage();
         inputs.elbowRightCurrentAmps = new double[] {elbowLeft.getOutputCurrent()};
 
-        inputs.wristPosition = Units.rotationsToRadians(wristEncoder.getPosition());
+        inputs.wristPosition = Units.rotationsToRadians(wristEncoderAbsolute.getPosition() * 27);
         inputs.wristVelocity = Units.rotationsPerMinuteToRadiansPerSecond(wristEncoder.getVelocity());
         inputs.wristAppliedVolts = wrist.getAppliedOutput() * wrist.getBusVoltage();
         inputs.wristCurrentAmps = new double[] {wrist.getOutputCurrent()};
@@ -297,16 +302,24 @@ public class ArmIOSparkMax implements ArmIO {
         System.out.println("wrist raw" + wristEncoderAbsolute.getPosition());
         SmartDashboard.putNumber("AbsoluteEncoder", -wristEncoderAbsolute.getPosition());
         SmartDashboard.putNumber(
-                "wristabsoluteencoder", ArmConstants.wristOffset + (-wristEncoderAbsolute.getPosition() * 2 * Math.PI));
-        SmartDashboard.putNumber("wristRawEncoder", wristEncoder.getPosition());
+
+                "wristabsoluteencoder",
+                ArmConstants.wristOffset + (-wristEncoderAbsolute.getPosition() / 2 * Math.PI));
+        SmartDashboard.putNumber(
+                "wristRawEncoder",
+                wristEncoder.getPosition());
         wristController.setReference(position, ControlType.kPosition);
     }
 
     public double getWristPosition() {
         SmartDashboard.putNumber("AbsoluteEncoder", -wristEncoderAbsolute.getPosition());
         SmartDashboard.putNumber(
-                "wristabsoluteencoder", ArmConstants.wristOffset + (-wristEncoderAbsolute.getPosition() * 2 * Math.PI));
-        SmartDashboard.putNumber("wristRawEncoder", wristEncoder.getPosition());
+
+                "wristabsoluteencoder",
+                ArmConstants.wristOffset + (-wristEncoderAbsolute.getPosition() / 2 * Math.PI));
+        SmartDashboard.putNumber(
+                "wristRawEncoder",
+                wristEncoder.getPosition());
         return wristEncoder.getPosition();
     }
 
