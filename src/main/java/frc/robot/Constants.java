@@ -200,10 +200,10 @@ public final class Constants {
     public static final Mode currentMode = Mode.REAL;
     public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
 
-    public static final double gyroP = 0.015;
-    public static final double gyroI = 0.08;
-    public static final double gyroD = 0.0005;
-    public static final double IZone = 10;
+    public static final double gyroP = 0.023;
+    public static final double gyroI = 0.0;
+    public static final double gyroD = 0.0018;
+    public static final double IZone = 5;
 
     public static final int pigeonID = 25;
     public static final int loopPeriodMs = 20;
