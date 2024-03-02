@@ -30,7 +30,6 @@ import frc.robot.Constants.ArmConstants.ClimbSetPoints;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
-import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
@@ -51,6 +50,7 @@ import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
+import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
@@ -64,9 +64,9 @@ public class RobotContainer {
     private Shooter shooter;
     private Arm arm;
 
-    private SlewRateLimiter xLimiter = new SlewRateLimiter(5.5);
-    private SlewRateLimiter yLimiter = new SlewRateLimiter(5.5);
-    private SlewRateLimiter zLimiter = new SlewRateLimiter(7);
+    private SlewRateLimiter xLimiter = new SlewRateLimiter(7.0);
+    private SlewRateLimiter yLimiter = new SlewRateLimiter(7.0);
+    private SlewRateLimiter zLimiter = new SlewRateLimiter(6.5);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
@@ -87,6 +87,7 @@ public class RobotContainer {
     private final Pigeon2 gyro = new Pigeon2(Constants.pigeonID, "canivore1");
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
+    private PoseEstimatorSubsystem poseEstimatorSubSystem;
     //     private NoteVisionSubsystem noteVisionSubsystem =
     //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
@@ -189,7 +190,7 @@ public class RobotContainer {
                 "forcedIntakeZero", new IntakeCommand(intake, () -> 0.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
         NamedCommands.registerCommand(
-                "onlySoftIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.SOFTINTAKE));
+                "onlySoftIntake", new IntakeCommand(intake, () -> 0.6, IntakeCommand.IntakeMode.SOFTINTAKE));
 
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
@@ -200,9 +201,13 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
         if (Constants.VisionConstants.USE_VISION == true) {
-            aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
-            aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
-            aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
+            if (Constants.VisionConstants.USE_ADV_KIT_VISION == true) {
+                aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
+                aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
+                aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
+            } else {
+                poseEstimatorSubSystem = new PoseEstimatorSubsystem(drivetrain);
+            }
         }
 
         // intake button

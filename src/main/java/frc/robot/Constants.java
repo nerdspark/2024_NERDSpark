@@ -19,6 +19,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.Constants.RobotType;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 import frc.robot.util.FieldConstants;
@@ -50,7 +51,6 @@ public final class Constants {
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
 
-
         public static class ArmGains {
             private final double shoulderP = 2.0;
             private final double shoulderI = 0.0;
@@ -58,7 +58,7 @@ public final class Constants {
             private final double elbowP = 0.7;
             private final double elbowI = 0.07;
             private final double elbowD = 0.0;
-            private final double shoulderS = 0.0; 
+            private final double shoulderS = 0.0;
             private final double shoulderG = 0.015;
             private final double shoulderV = 0.0;
             private final double shoulderA = 0.0;
@@ -68,31 +68,27 @@ public final class Constants {
             private final double elbowV = 0.0;
             private final double elbowA = 0.0;
 
-            public final PIDController shoulderLeftController =
-                new PIDController(shoulderP, shoulderI, shoulderD);
-            public final PIDController shoulderRightController =
-                new PIDController(shoulderP, shoulderI, shoulderD);
+            public final PIDController shoulderLeftController = new PIDController(shoulderP, shoulderI, shoulderD);
+            public final PIDController shoulderRightController = new PIDController(shoulderP, shoulderI, shoulderD);
             public PIDController elbowLeftController = new PIDController(elbowP, elbowI, elbowD);
             public PIDController elbowRightController = new PIDController(elbowP, elbowI, elbowD);
 
-            public  final ArmFeedforward shoulderLeftFeedforward = new ArmFeedforward(
-                shoulderS, shoulderG, shoulderV, shoulderA);
-            public  final ArmFeedforward shoulderRightFeedforward = new ArmFeedforward(
-                shoulderS, shoulderG, shoulderV, shoulderA);
-            public final ArmFeedforward elbowLeftFeedforward =
-                new ArmFeedforward(elbowS, elbowGLeft, elbowV, elbowA);
-            public final ArmFeedforward elbowRightFeedforward =
-                new ArmFeedforward(elbowS, elbowGRight, elbowV, elbowA);
+            public final ArmFeedforward shoulderLeftFeedforward =
+                    new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
+            public final ArmFeedforward shoulderRightFeedforward =
+                    new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
+            public final ArmFeedforward elbowLeftFeedforward = new ArmFeedforward(elbowS, elbowGLeft, elbowV, elbowA);
+            public final ArmFeedforward elbowRightFeedforward = new ArmFeedforward(elbowS, elbowGRight, elbowV, elbowA);
         }
 
-        public static class ArmGainsClimb extends ArmGains{
+        public static class ArmGainsClimb extends ArmGains {
             private final double shoulderP = 1.3;
             private final double shoulderI = 0.0;
             private final double shoulderD = 0.0;
             private final double elbowP = 0.45;
             private final double elbowI = 0.01;
             private final double elbowD = 0.0;
-            private final double shoulderS = 0.0; 
+            private final double shoulderS = 0.0;
             private final double shoulderG = 0.005;
             private final double shoulderV = 0.0;
             private final double shoulderA = 0.0;
@@ -101,21 +97,17 @@ public final class Constants {
             private final double elbowV = 0.0;
             private final double elbowA = 0.0;
 
-            public final PIDController shoulderLeftController =
-                new PIDController(shoulderP, shoulderI, shoulderD);
-            public final PIDController shoulderRightController =
-                new PIDController(shoulderP, shoulderI, shoulderD);
+            public final PIDController shoulderLeftController = new PIDController(shoulderP, shoulderI, shoulderD);
+            public final PIDController shoulderRightController = new PIDController(shoulderP, shoulderI, shoulderD);
             public PIDController elbowLeftController = new PIDController(elbowP, elbowI, elbowD);
             public PIDController elbowRightController = new PIDController(elbowP, elbowI, elbowD);
 
-            public final ArmFeedforward shoulderLeftFeedforward = new ArmFeedforward(
-                shoulderS, shoulderG, shoulderV, shoulderA);
-            public final ArmFeedforward shoulderRightFeedforward = new ArmFeedforward(
-                shoulderS, shoulderG, shoulderV, shoulderA);
-            public final ArmFeedforward elbowLeftFeedforward =
-                new ArmFeedforward(elbowS, elbowG, elbowV, elbowA);
-            public final ArmFeedforward elbowRightFeedforward =
-                new ArmFeedforward(elbowS, elbowG, elbowV, elbowA);
+            public final ArmFeedforward shoulderLeftFeedforward =
+                    new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
+            public final ArmFeedforward shoulderRightFeedforward =
+                    new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
+            public final ArmFeedforward elbowLeftFeedforward = new ArmFeedforward(elbowS, elbowG, elbowV, elbowA);
+            public final ArmFeedforward elbowRightFeedforward = new ArmFeedforward(elbowS, elbowG, elbowV, elbowA);
         }
 
         public static final double wristP = 0.4;
@@ -141,30 +133,36 @@ public final class Constants {
             public static final double dropoffWrist = -0.48;
             public static final double dropoffMultiplier = 6.4;
         }
+
         public static final class ClimbSetPoints {
             public static final double readyShoulder = Units.degreesToRadians(100);
             public static final double downElbow = Units.degreesToRadians(-90);
             public static final double pinchShoulder = Units.degreesToRadians(5);
             public static final double forwardShoulder = Units.degreesToRadians(85);
             public static final Translation2d ready = new Translation2d(
-                            baseStageLength * Math.cos(shoulderOffset + readyShoulder), baseStageLength * Math.sin(shoulderOffset + readyShoulder))
+                            baseStageLength * Math.cos(shoulderOffset + readyShoulder),
+                            baseStageLength * Math.sin(shoulderOffset + readyShoulder))
                     .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset + readyShoulder), secondStageLength * Math.sin(elbowOffset + readyShoulder))); // A
+                            secondStageLength * Math.cos(elbowOffset + readyShoulder),
+                            secondStageLength * Math.sin(elbowOffset + readyShoulder))); // A
             public static final double readyWrist = 0.0;
             public static final Translation2d down = new Translation2d(
-                            baseStageLength * Math.cos(shoulderOffset + forwardShoulder), baseStageLength * Math.sin(shoulderOffset + forwardShoulder))
+                            baseStageLength * Math.cos(shoulderOffset + forwardShoulder),
+                            baseStageLength * Math.sin(shoulderOffset + forwardShoulder))
                     .plus(new Translation2d(
                             secondStageLength * Math.cos(elbowOffset + downElbow),
-                            secondStageLength * Math.sin(elbowOffset  + downElbow))); // B
+                            secondStageLength * Math.sin(elbowOffset + downElbow))); // B
             public static final double downWrist = Math.PI;
             public static final Translation2d pinch = new Translation2d(
-                            baseStageLength * Math.cos(shoulderOffset + pinchShoulder), baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
+                            baseStageLength * Math.cos(shoulderOffset + pinchShoulder),
+                            baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
                     .plus(new Translation2d(
                             secondStageLength * Math.cos(elbowOffset + pinchShoulder),
                             secondStageLength * Math.sin(elbowOffset + pinchShoulder))); // X
             public static final double pinchWrist = 0.0;
             public static final Translation2d forward = new Translation2d(
-                            baseStageLength * Math.cos(shoulderOffset + forwardShoulder), baseStageLength * Math.sin(shoulderOffset + forwardShoulder))
+                            baseStageLength * Math.cos(shoulderOffset + forwardShoulder),
+                            baseStageLength * Math.sin(shoulderOffset + forwardShoulder))
                     .plus(new Translation2d(
                             secondStageLength * Math.cos(elbowOffset + forwardShoulder),
                             secondStageLength * Math.sin(elbowOffset + forwardShoulder))); // X
@@ -202,10 +200,10 @@ public final class Constants {
     public static final Mode currentMode = Mode.REAL;
     public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
 
-    public static final double gyroP = 0.015;
-    public static final double gyroI = 0.08;
-    public static final double gyroD = 0.0005;
-    public static final double IZone = 10;
+    public static final double gyroP = 0.023;
+    public static final double gyroI = 0.0;
+    public static final double gyroD = 0.0018;
+    public static final double IZone = 5;
 
     public static final int pigeonID = 25;
     public static final int loopPeriodMs = 20;
@@ -254,11 +252,26 @@ public final class Constants {
         }
     }
 
+    public static enum VisionDeviationDistanceStrategy {
+        SMALEST_DISTANCE,
+        AVERAGE_DISTANCE
+    }
+
     public static class VisionConstants {
 
         public static boolean USE_VISION = true;
-
         public static boolean USE_FRONT_CAMERA = true;
+        public static boolean USE_ADV_KIT_VISION = false;
+        public static boolean MULTI_TAG_RESULT_ENABLED = true;
+
+        public static VisionDeviationDistanceStrategy VISION_DEV_DIST_STRATEGY =
+                VisionDeviationDistanceStrategy.AVERAGE_DISTANCE;
+
+        /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
+        public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
+
+        public static final double NOISY_DISTANCE_METERS = 3;
+
         public static boolean USE_BACK_LEFT_CAMERA = false;
         public static boolean USE_BACK_RIGHT_CAMERA = false;
 
@@ -271,7 +284,7 @@ public final class Constants {
          * Physical location of the left camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(-36), Units.inchesToMeters(0), Units.inchesToMeters(9)),
+                new Translation3d(Units.inchesToMeters(-12.6), Units.inchesToMeters(0), Units.inchesToMeters(9)),
                 new Rotation3d(0, Math.toRadians(19.565), Math.toRadians(180)));
 
         // public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
@@ -291,19 +304,17 @@ public final class Constants {
                 new Translation3d(-Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(6.5)),
                 new Rotation3d(0, Math.toRadians(39), Math.toRadians(180)));
 
-        /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
-        public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
-
-        public static final double POSE_AMBIGUITY_SHIFTER = 0.2;
-        public static final double POSE_AMBIGUITY_MULTIPLIER = 4;
-        public static final double NOISY_DISTANCE_METERS = 2.5;
-        public static final double DISTANCE_WEIGHT = 7;
-        public static final int TAG_PRESENCE_WEIGHT = 10;
-
         // PLACEHOLDER
         public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(20);
         public static final double NOTE_HEIGHT_METERS = Units.inchesToMeters(2);
         public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(30);
+
+        // Unused for 2024
+
+        public static final double POSE_AMBIGUITY_SHIFTER = 0.2;
+        public static final double POSE_AMBIGUITY_MULTIPLIER = 4;
+        public static final double DISTANCE_WEIGHT = 7;
+        public static final int TAG_PRESENCE_WEIGHT = 10;
 
         /**
          * Standard deviations of model states. Increase these numbers to trust your
@@ -356,6 +367,8 @@ public final class Constants {
         public static final double kPThetaController = 1.2d;
         public static final double kIThetaController = 0d;
         public static final double kDThetaController = 0d;
+
+        // End Unused for 2024
     }
 
     public static class speakerConstants {
@@ -368,6 +381,8 @@ public final class Constants {
 
         public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerBlueY, new Rotation2d(0));
         public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerRedY, new Rotation2d(Math.PI));
+
+        public static final double autonAimDistanceThreshold = 2.0d;
     }
 
     public static class ShooterConstants {
@@ -385,8 +400,8 @@ public final class Constants {
             // Value: Shooter Position
             fourBarMap.put(49.5, 8.0);
             fourBarMap.put(25.5, 8.0);
-            fourBarMap.put(19.5, 7.7);
-            fourBarMap.put(17.5, 5.2);
+            fourBarMap.put(19.5, 6.2);  //6.7
+            fourBarMap.put(17.5, 3.2);  //4.2
             fourBarMap.put(15.5 + (2.0 / 12.0), 2.6);
             fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
             fourBarMap.put(13.0, 1.65);

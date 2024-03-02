@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.26,
-      "y": 5.57
+      "x": 1.45,
+      "y": 3.39
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -26,33 +26,39 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
+                      "type": "path",
                       "data": {
-                        "waitTime": 0.5
+                        "pathName": "weirdSide0.1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of combo0.1"
+                        "pathName": "weirdSide0.2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "combo0.4"
+                        "pathName": "weirdSide0.3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "combo0.5"
+                        "pathName": "weirdSide0.4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "combo0.6"
+                        "pathName": "weirdSide0.5"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "weirdSide0.6"
                       }
                     }
                   ]

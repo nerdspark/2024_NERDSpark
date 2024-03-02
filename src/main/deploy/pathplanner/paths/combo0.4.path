@@ -128,7 +128,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 2.1999999999999997,
+      "waypointRelativePos": 2.3000000000000003,
       "command": {
         "type": "sequential",
         "data": {
@@ -145,7 +145,7 @@
     },
     {
       "name": "intakingwhatever",
-      "waypointRelativePos": 2.6,
+      "waypointRelativePos": 2.45,
       "command": {
         "type": "sequential",
         "data": {
