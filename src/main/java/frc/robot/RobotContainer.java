@@ -226,7 +226,7 @@ public class RobotContainer {
         driver.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spit command
-        driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
         driver.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // // spin shooter command
@@ -325,7 +325,7 @@ public class RobotContainer {
         // // arm commands
         copilot.a()
                 .onTrue(new ArmCommand(
-                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
+                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
         copilot.b()
                 .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
         copilot.b().onFalse(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
@@ -338,29 +338,45 @@ public class RobotContainer {
                         () -> false));
         copilot.y()
                 .onFalse(new ArmCommand(
-                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
+                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
 
-        copilot.back().whileTrue(new IntakeCommand(intake, () -> -1.0, IntakeMode.FORCEINTAKE));
+        copilot.back().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
         copilot.back().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
-        copilot.povLeft()
-                .onTrue(new ArmCommand(
-                        arm,
-                        () -> ClimbSetPoints.ready,
-                        () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
-                        () -> false));
-        copilot.povLeft().onTrue(new FourBarCommand(fourBar, () -> Constants.fourBarOut));
-        copilot.povDown()
-                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true));
-        copilot.povRight()
-                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
         copilot.povUp()
                 .onTrue(new ArmCommand(
+                                arm,
+                                () -> ClimbSetPoints.ready,
+                                () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
+                                () -> false)
+                        .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
+                        .alongWith(new InstantCommand(() -> arm.setGains(false))));
+        copilot.povRight()
+                .onTrue(new ArmCommand(
                         arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
+        copilot.povDown()
+                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true)
+                        .alongWith(new InstantCommand(() -> arm.setGains(true))));
+        ;
+        copilot.povLeft()
+                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
 
-        copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()));
+        // trap
+        copilot.rightStick()
+                .onTrue(new ArmCommand(
+                                arm,
+                                () -> ClimbSetPoints.trap.plus(
+                                        new Translation2d(copilot.getLeftY() * ClimbSetPoints.trapMultiplier, 0)),
+                                () -> ClimbSetPoints.trapwrist,
+                                () -> true)
+                        .alongWith(new InstantCommand(() -> arm.setGains(false))));
 
-        copilot.x().onTrue(new ArmResetCommand(arm, false));
+        // reset buttons
+        copilot.start()
+                .whileTrue(new InstantCommand(() -> arm.resetEncoders())
+                        .alongWith(new InstantCommand(() -> arm.setGains(false))));
+
+        copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() -> arm.setGains(false))));
     }
 
     public Command getAutonomousCommand() {
@@ -396,7 +412,11 @@ public class RobotContainer {
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
         SmartDashboard.putNumber("angle error deg", error);
-        return Math.min(Math.max(zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate, -Constants.autoTurnCeiling), Constants.autoTurnCeiling);
+        return Math.min(
+                Math.max(
+                        zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate,
+                        -Constants.autoTurnCeiling),
+                Constants.autoTurnCeiling);
     }
 
     public void resetGyro() {

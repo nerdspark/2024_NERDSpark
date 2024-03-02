@@ -5,8 +5,6 @@
 package frc.robot.subsystems.arm;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.RobotContainer;
-
 import org.littletonrobotics.junction.AutoLog;
 
 public interface ArmIO {
@@ -44,6 +42,8 @@ public interface ArmIO {
     }
 
     default void updateInputs(ArmIOInputs inputs) {}
+
+    default void setGains(boolean climbing) {}
 
     default void setArmVelocity(Translation2d velocity) {}
 
