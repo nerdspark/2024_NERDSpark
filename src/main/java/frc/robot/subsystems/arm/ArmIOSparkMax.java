@@ -209,7 +209,7 @@ public class ArmIOSparkMax implements ArmIO {
         shoulderLeft.setClosedLoopRampRate(ArmConstants.rampRateShoulder);
         elbowRightEncoder.setPosition(ArmConstants.elbowOffset);
         wristEncoder.setPosition(ArmConstants.wristOffset
-                + (-(wristEncoderAbsolute.getPosition() > 0.5
+                + ((wristEncoderAbsolute.getPosition() > 0.7
                                 ? wristEncoderAbsolute.getPosition() - 1
                                 : wristEncoderAbsolute.getPosition())
                         * 2

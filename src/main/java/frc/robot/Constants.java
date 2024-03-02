@@ -37,7 +37,7 @@ public final class Constants {
 
         public static final double shoulderOffset = -0.144; // radians, fwd = 0
         public static final double elbowOffset = 2.611; // negative of measurement
-        public static final double wristOffset = 0.2;
+        public static final double wristOffset = 0.0;
 
         public static final Translation2d armBasePosition = new Translation2d();
         public static final double armForwardLimit = Units.inchesToMeters(12 + 5);
@@ -46,8 +46,8 @@ public final class Constants {
 
         public static final double maxPowerShoulder = 0.3;
         public static final double maxPowerElbow = 0.3;
-        public static final int currentLimitShoulder = 40;
-        public static final int currentLimitElbow = 25;
+        public static final int currentLimitShoulder = 60;
+        public static final int currentLimitElbow = 60;
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
 
@@ -85,14 +85,14 @@ public final class Constants {
             private final double shoulderP = 1.3;
             private final double shoulderI = 0.001;
             private final double shoulderD = 0.0;
-            private final double elbowP = 0.45;
+            private final double elbowP = 0.3;
             private final double elbowI = 0.01;
             private final double elbowD = 0.0;
-            private final double shoulderS = 1.0;
-            private final double shoulderG = -0.005;
+            private final double shoulderS = 3.0;
+            private final double shoulderG = -0.05;
             private final double shoulderV = 0.0;
             private final double shoulderA = 0.0;
-            private final double elbowS = 2.0;
+            private final double elbowS = 1.0;
             private final double elbowG = 0.0;
             private final double elbowV = 0.0;
             private final double elbowA = 0.0;
@@ -124,21 +124,22 @@ public final class Constants {
             public static final Translation2d pickup = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
                     .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(0)),
-                            secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(0)))); // B
-            public static final double pickupWrist = 1.85;
+                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(2.5)),
+                            secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(2.5)))); // B
+            public static final double pickupWrist = 1.95;
             public static final Translation2d amp = new Translation2d(-1, 16); // X
             public static final double ampWrist = pickupWrist;
             public static final Translation2d dropoff = new Translation2d(0, 25.5); // Y
-            public static final double dropoffWrist = -0.48;
+            public static final double dropoffWrist = -0.3;
             public static final double dropoffMultiplier = 6.4;
+            public static final double dropoffMultiplierY = 2;
         }
 
         public static final class ClimbSetPoints {
             public static final double readyShoulder = Units.degreesToRadians(100);
-            public static final double downElbow = Units.degreesToRadians(-150);
-            public static final double pinchShoulder = Units.degreesToRadians(2);
-            public static final double forwardShoulder = Units.degreesToRadians(85);
+            public static final double downElbow = Units.degreesToRadians(-250);
+            public static final double pinchShoulder = Units.degreesToRadians(-2.5);
+            public static final double forwardShoulder = readyShoulder - Units.degreesToRadians(15);
             public static final Translation2d ready = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + readyShoulder),
                             baseStageLength * Math.sin(shoulderOffset + readyShoulder))

@@ -17,6 +17,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -216,10 +217,12 @@ public class RobotContainer {
                 .whileTrue(new SequentialCommandGroup(
                         new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis() - 0.4)), IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
-                        new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
+                        new FourBarCommand(fourBar, () -> Constants.fourBarHome)
+                                .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))));
         driver.leftTrigger()
                 .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
-                        .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
+                        .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome))
+                        .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0))));
 
         // // // shoot command
         driver.leftBumper().whileTrue(new IntakeCommand(intake, () -> 10.0, IntakeMode.FORCEINTAKE));
@@ -319,7 +322,7 @@ public class RobotContainer {
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
         // transfer spin up
-        copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1100.0, () -> 1100.0));
+        copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1600.0, () -> 1600.0));
         copilot.b().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // // arm commands
@@ -328,12 +331,17 @@ public class RobotContainer {
                         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
         copilot.b()
                 .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
-        copilot.b().onFalse(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
+        copilot.b()
+                .onFalse(new ArmCommand(
+                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
         copilot.y()
                 .whileTrue(new ArmCommand(
                         arm,
-                        () -> ArmSetPoints.dropoff.plus(
-                                new Translation2d(copilot.getLeftY() * ArmSetPoints.dropoffMultiplier, 0)),
+                        () -> ArmSetPoints.dropoff.plus(new Translation2d(
+                                (DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1)
+                                        * copilot.getLeftX()
+                                        * ArmSetPoints.dropoffMultiplier,
+                                -copilot.getLeftY() * ArmSetPoints.dropoffMultiplierY)),
                         () -> ArmSetPoints.dropoffWrist,
                         () -> false));
         copilot.y()
