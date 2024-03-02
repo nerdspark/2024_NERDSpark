@@ -15,7 +15,6 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.XboxController;
@@ -24,7 +23,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
@@ -32,14 +30,12 @@ import frc.robot.Constants.ArmConstants.ClimbSetPoints;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
-import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.NoteVisionSubsystem;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIO;
 import frc.robot.subsystems.arm.ArmIOSparkMax;
@@ -54,6 +50,7 @@ import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
+import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
@@ -90,8 +87,9 @@ public class RobotContainer {
     private final Pigeon2 gyro = new Pigeon2(Constants.pigeonID, "canivore1");
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
-//     private NoteVisionSubsystem noteVisionSubsystem =
-//             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+    private PoseEstimatorSubsystem poseEstimatorSubSystem;
+    //     private NoteVisionSubsystem noteVisionSubsystem =
+    //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     private void configureBindings() {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -167,10 +165,7 @@ public class RobotContainer {
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
 
-
-         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));                                
-
-
+        NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
         NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
         NamedCommands.registerCommand("fourBarToHome", new FourBarCommand(fourBar, () -> Constants.fourBarHome));
@@ -184,9 +179,6 @@ public class RobotContainer {
                                 () -> new Translation2d(
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
-
-
-
 
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
@@ -209,18 +201,19 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
         if (Constants.VisionConstants.USE_VISION == true) {
-            aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
-            aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
-            aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
+            if (Constants.VisionConstants.USE_ADV_KIT_VISION == true) {
+                aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
+                aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
+                aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
+            } else {
+                poseEstimatorSubSystem = new PoseEstimatorSubsystem(drivetrain);
+            }
         }
 
         // intake button
         driver.leftTrigger()
                 .whileTrue(new SequentialCommandGroup(
-                        new IntakeCommand(
-                                        intake,
-                                        () -> ((driverRaw.getLeftTriggerAxis() - 0.4)),
-                                        IntakeMode.SOFTINTAKE)
+                        new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis() - 0.4)), IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
                         new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
         driver.leftTrigger()
@@ -290,7 +283,8 @@ public class RobotContainer {
         //                                 intake,
         //                                 () -> ((driverRaw.getLeftTriggerAxis() - 0.5) * 2),
         //                                 IntakeMode.SOFTINTAKE)
-        //                         .deadlineWith(new ParallelCommandGroup(new FourBarCommand(fourBar, () -> Constants.fourBarOut), 
+        //                         .deadlineWith(new ParallelCommandGroup(new FourBarCommand(fourBar, () ->
+        // Constants.fourBarOut),
         //                         (drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
         //                                     * MaxSpeed
         //                                     * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
@@ -304,7 +298,7 @@ public class RobotContainer {
         //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
         //                 .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
         // }
-        
+
         // // vision-assisted following command
         // driver.rightTrigger().whileTrue((
         //     drivetrain.applyRequest(() -> drive
@@ -336,11 +330,18 @@ public class RobotContainer {
 
         copilot.povLeft()
                 .onTrue(new ArmCommand(
-                        arm, () -> ClimbSetPoints.ready, () -> ClimbSetPoints.readyWrist + copilot.getRightX(), () -> false));
+                        arm,
+                        () -> ClimbSetPoints.ready,
+                        () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
+                        () -> false));
         copilot.povLeft().onTrue(new FourBarCommand(fourBar, () -> Constants.fourBarOut));
-        copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true));
-        copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
-        copilot.povUp().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
+        copilot.povDown()
+                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true));
+        copilot.povRight()
+                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
+        copilot.povUp()
+                .onTrue(new ArmCommand(
+                        arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
 
         copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()));
     }
