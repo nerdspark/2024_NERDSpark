@@ -182,6 +182,19 @@ public class RobotContainer {
                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
 
+        NamedCommands.registerCommand("fourBarToRCR2", new FourBarCommand(fourBar, () -> Constants.redCenterRing2));
+        NamedCommands.registerCommand("fourBarToRCR3", new FourBarCommand(fourBar, () -> Constants.redCenterRing3));
+        NamedCommands.registerCommand("fourBarToRCR4", new FourBarCommand(fourBar, () -> Constants.redCenterRing4));
+
+        NamedCommands.registerCommand("fourBarToBCR2", new FourBarCommand(fourBar, () -> Constants.blueCenterRing2));
+        NamedCommands.registerCommand("fourBarToBCR3", new FourBarCommand(fourBar, () -> Constants.blueCenterRing3));
+        NamedCommands.registerCommand("fourBarToBCR4", new FourBarCommand(fourBar, () -> Constants.blueCenterRing4));
+
+        NamedCommands.registerCommand("fourBarToWSR1", new FourBarCommand(fourBar, () -> Constants.weirdSideRing1));
+        NamedCommands.registerCommand("fourBarToWSR2", new FourBarCommand(fourBar, () -> Constants.weirdSideRing2));
+        NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> Constants.weirdSideRing3));
+        NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> Constants.weirdSideRing4));
+
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 

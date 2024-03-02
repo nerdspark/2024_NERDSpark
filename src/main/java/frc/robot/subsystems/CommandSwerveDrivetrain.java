@@ -129,9 +129,10 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                         driveBaseRadius,
                         new ReplanningConfig()),
                 // flips the path if on red alliance (do we want this? remove if we're making red-specific paths)
-                () -> DriverStation.getAlliance()
-                        .filter(value -> value == DriverStation.Alliance.Red)
-                        .isPresent(),
+                // () -> DriverStation.getAlliance()
+                //         .filter(value -> value == DriverStation.Alliance.Red)
+                //         .isPresent(),
+                () -> false,
                 this);
     }
 

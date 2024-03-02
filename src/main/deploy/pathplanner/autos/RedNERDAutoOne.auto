@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.45,
-      "y": 3.39
+      "x": 15.28,
+      "y": 5.57
     },
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -26,39 +26,33 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "wait",
                       "data": {
-                        "pathName": "WS1"
+                        "waitTime": 0.5
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "weirdSide0.2"
+                        "pathName": "Red Copy of combo0.1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "weirdSide0.3"
+                        "pathName": "Redcombo0.4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "weirdSide0.4"
+                        "pathName": "Redcombo0.5"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "weirdSide0.5"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "weirdSide0.6"
+                        "pathName": "Redcombo0.6"
                       }
                     }
                   ]

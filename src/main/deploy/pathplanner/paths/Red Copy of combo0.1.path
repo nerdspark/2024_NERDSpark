@@ -3,57 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2587578200067437,
+        "x": 15.28,
         "y": 5.570246205735591
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.628809141366735,
-        "y": 5.560508013064658
+        "x": 14.909835231446904,
+        "y": 5.573541195690752
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.4351272005599336,
+        "x": 13.101,
         "y": 5.570246205735591
       },
       "prevControl": {
-        "x": 2.793216523453328,
-        "y": 5.57863588095263
+        "x": 13.742910501915091,
+        "y": 5.561843136961237
       },
       "nextControl": {
-        "x": 4.180215620217718,
-        "y": 5.560508013068222
+        "x": 12.355911783693205,
+        "y": 5.579999944778508
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.533824400982135,
+        "x": 11.011,
         "y": 6.631709206478911
       },
       "prevControl": {
-        "x": 4.625530330058734,
-        "y": 6.590733534106426
+        "x": 11.919296229923692,
+        "y": 6.672636992974003
       },
       "nextControl": {
-        "x": 6.393682857687141,
-        "y": 6.670499813548311
+        "x": 10.151139499425373,
+        "y": 6.592963931728582
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.92,
+        "x": 8.621,
         "y": 5.95
       },
       "prevControl": {
-        "x": 7.356535206966847,
-        "y": 6.231793234503788
+        "x": 9.096831047859823,
+        "y": 6.187966899993797
       },
       "nextControl": null,
       "isLocked": false,
@@ -63,7 +63,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.75,
-      "rotationDegrees": 0,
+      "rotationDegrees": 180.0,
       "rotateFast": false
     }
   ],
@@ -152,7 +152,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToBCR2"
+                "name": "fourBarToRCR2"
               }
             }
           ]
@@ -236,13 +236,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -25.0,
+    "rotation": -155.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": 180.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
