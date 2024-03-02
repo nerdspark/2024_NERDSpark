@@ -53,7 +53,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToShooter"
+                "name": "fourBarToWSR4"
               }
             }
           ]
@@ -86,7 +86,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": -15.0,
     "rotateFast": false
   },
   "reversed": false,
