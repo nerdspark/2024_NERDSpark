@@ -212,6 +212,7 @@ public final class Constants {
     public static final boolean characterizationMode = false;
 
     public static final double stillShotSpeed = 0.3;
+    public static final double autoTurnCeiling = 3.0;
 
     public static RobotType getRobot() {
         if (RobotBase.isReal() && robotType == RobotType.SIMBOT) {

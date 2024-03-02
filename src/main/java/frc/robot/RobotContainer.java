@@ -30,6 +30,7 @@ import frc.robot.Constants.ArmConstants.ClimbSetPoints;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
@@ -64,8 +65,8 @@ public class RobotContainer {
     private Shooter shooter;
     private Arm arm;
 
-    private SlewRateLimiter xLimiter = new SlewRateLimiter(5.5);
-    private SlewRateLimiter yLimiter = new SlewRateLimiter(5.5);
+    private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
+    private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter zLimiter = new SlewRateLimiter(7);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
@@ -395,7 +396,7 @@ public class RobotContainer {
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
         SmartDashboard.putNumber("angle error deg", error);
-        return zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate;
+        return Math.min(Math.max(zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate, -Constants.autoTurnCeiling), Constants.autoTurnCeiling);
     }
 
     public void resetGyro() {
