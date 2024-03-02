@@ -211,6 +211,8 @@ public final class Constants {
     public static final boolean tuningMode = true;
     public static final boolean characterizationMode = false;
 
+    public static final double stillShotSpeed = 0.3;
+
     public static RobotType getRobot() {
         if (RobotBase.isReal() && robotType == RobotType.SIMBOT) {
             new Alert("Invalid Robot Selected, using COMPBOT as default", Alert.AlertType.ERROR).set(true);

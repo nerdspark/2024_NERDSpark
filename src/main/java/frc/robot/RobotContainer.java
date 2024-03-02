@@ -244,13 +244,22 @@ public class RobotContainer {
                                         drivetrain.getState().speeds.vyMetersPerSecond))));
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
-        // transfer spin up
-        copilot.leftBumper().whileTrue(new ShooterCommand(shooter, () -> 1100.0, () -> 1100.0));
-        copilot.leftBumper().onFalse(new InstantCommand(() -> shooter.stop()));
-
-        // transfer shoot
+        // cop9lot shoot
         copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
         copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+
+        // stop shoot
+        copilot.leftBumper()
+                .whileTrue(new IntakeCommand(
+                        intake,
+                        () -> ((Math.sqrt(Math.pow(drivetrain.getState().speeds.vxMetersPerSecond, 2)
+                                                + Math.pow(drivetrain.getState().speeds.vyMetersPerSecond, 2))
+                                        < Constants.stillShotSpeed)
+                                ? 1.0
+                                : 0.0),
+                        IntakeMode.FORCEINTAKE));
+        copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+
         // // // aim command
         copilot.rightTrigger()
                 .whileTrue(drivetrain
@@ -308,12 +317,17 @@ public class RobotContainer {
         // Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
+        // transfer spin up
+        copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1100.0, () -> 1100.0));
+        copilot.b().onFalse(new InstantCommand(() -> shooter.stop()));
+
         // // arm commands
         copilot.a()
                 .onTrue(new ArmCommand(
                         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getRightX(), () -> false));
-        copilot.b().onTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
-        copilot.x().onTrue(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
+        copilot.b()
+                .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
+        copilot.b().onFalse(new ArmCommand(arm, () -> ArmSetPoints.amp, () -> ArmSetPoints.ampWrist, () -> false));
         copilot.y()
                 .whileTrue(new ArmCommand(
                         arm,
@@ -344,6 +358,8 @@ public class RobotContainer {
                         arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
 
         copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()));
+
+        copilot.x().onTrue(new ArmResetCommand(arm, false));
     }
 
     public Command getAutonomousCommand() {
