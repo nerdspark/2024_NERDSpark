@@ -5,6 +5,7 @@
 package frc.robot.subsystems.arm;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.Logger;
 
@@ -22,6 +23,7 @@ public class Arm extends SubsystemBase {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Arm", inputs);
+        SmartDashboard.putData("gyrea", null);
         // This method will be called once per scheduler run
     }
 
@@ -75,6 +77,7 @@ public class Arm extends SubsystemBase {
 
     public double getElbowLeftPosition() {
         return io.getElbowLeftPosition();
+
     }
 
     public double getElbowRightPosition() {
