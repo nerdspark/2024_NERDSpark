@@ -182,12 +182,9 @@ public final class Constants {
 
     public static final double fourBarOut = 20.0;
 
-    public static final double redCenterRing2 = 2.5; //2.4
-    public static final double redCenterRing3 = 2.5; //2.4
-    public static final double redCenterRing4 = 1.9; //1.8
-    public static final double redCenterRing2 = 2.5;
-    public static final double redCenterRing3 = 2.5;
-    public static final double redCenterRing4 = 1.9;
+    public static final double redCenterRing2 = 2.5; // 2.4
+    public static final double redCenterRing3 = 2.5; // 2.4
+    public static final double redCenterRing4 = 1.9; // 1.8
 
     public static final double blueCenterRing2 = 2.7;
     public static final double blueCenterRing3 = 2.45;
