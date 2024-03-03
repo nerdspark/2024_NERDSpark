@@ -296,8 +296,8 @@ public class RobotContainer {
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond))).alongWith(drivetrain
-                        .applyRequest(
+                                                drivetrain.getState().speeds.vyMetersPerSecond)))
+                        .alongWith(drivetrain.applyRequest(
                                 () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
                                                         () -> drivetrain.getState().Pose,
                                                         () -> new Translation2d(

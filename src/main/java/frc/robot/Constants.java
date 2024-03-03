@@ -421,9 +421,9 @@ public final class Constants {
             // Value: Shooter Position
             fourBarMap.put(49.5, 8.0);
             fourBarMap.put(25.5, 8.0);
-            fourBarMap.put(19.5, 6.2); // 6.7
-            fourBarMap.put(17.5, 3.2); // 4.2
-            fourBarMap.put(15.5 + (2.0 / 12.0), 2.6);
+            fourBarMap.put(19.5, 5.8); // 6.7
+            fourBarMap.put(17.5, 2.84); // 4.2
+            fourBarMap.put(15.5 + (2.0 / 12.0), 2.52);
             fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
             fourBarMap.put(13.0, 1.65);
             fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
@@ -438,8 +438,8 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(25.5, 5400.0);
-            shooterMap.put(19.5, 5400.0);
+            shooterMap.put(24.5, 5700.0);
+            shooterMap.put(19.5, 5500.0);
             shooterMap.put(17.5, 5400.0);
             shooterMap.put(15.5 + (2.0 / 12.0), 5300.0);
             shooterMap.put(13.5 + (1.0 / 12.0), 5000.0);

@@ -58,7 +58,6 @@ public class IntakeCommand extends Command {
     public void execute() {
         SmartDashboard.putBoolean("gotNote", Intake.getBeamBreak());
 
-
         switch (mode) {
             case FORCEINTAKE:
                 Intake.setIntakePower(power.get());
