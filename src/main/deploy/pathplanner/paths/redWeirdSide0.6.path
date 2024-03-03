@@ -90,9 +90,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "redWeirdSide",
   "previewStartingState": {
-    "rotation": 165.0,
+    "rotation": -170.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

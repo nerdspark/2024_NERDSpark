@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 8.721,
+        "x": 8.62,
         "y": 2.43
       },
       "prevControl": {
-        "x": 9.373466615277732,
+        "x": 9.27246661527773,
         "y": 2.2450015172546465
       },
       "nextControl": null,
@@ -52,9 +52,16 @@
       "name": "fourBarToIntake",
       "waypointRelativePos": 0.35,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToIntake"
+              }
+            }
+          ]
         }
       }
     },
@@ -88,9 +95,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "redWeirdSide",
   "previewStartingState": {
-    "rotation": -138.0,
+    "rotation": -142.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
