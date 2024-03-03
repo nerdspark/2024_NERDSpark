@@ -82,7 +82,7 @@ public final class Constants {
         }
 
         public static class ArmGainsClimb extends ArmGains {
-            private final double shoulderP = 1.3;
+            private final double shoulderP = 2.3;
             private final double shoulderI = 0.001;
             private final double shoulderD = 0.0;
             private final double elbowP = 0.3;
@@ -129,17 +129,17 @@ public final class Constants {
             public static final double pickupWrist = 1.95;
             public static final Translation2d amp = new Translation2d(-1, 16); // X
             public static final double ampWrist = pickupWrist;
-            public static final Translation2d dropoff = new Translation2d(0, 25.5); // Y
+            public static final Translation2d dropoff = new Translation2d(0, 27.5); // Y
             public static final double dropoffWrist = -0.3;
-            public static final double dropoffMultiplier = 6.4;
-            public static final double dropoffMultiplierY = 2;
+            public static final double dropoffMultiplier = 7.4;
+            public static final double dropoffMultiplierY = 3;
         }
 
         public static final class ClimbSetPoints {
             public static final double readyShoulder = Units.degreesToRadians(100);
             public static final double downElbow = Units.degreesToRadians(-270);
-            public static final double pinchShoulder = Units.degreesToRadians(-2.5);
-            public static final double pinchElbow = Units.degreesToRadians(-50);
+            // public static final double pinchShoulder = Units.degreesToRadians(60);
+            // public static final double pinchElbow = Units.degreesToRadians(-50);
             public static final double forwardShoulder = readyShoulder - Units.degreesToRadians(15.0);
             public static final Translation2d ready = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + readyShoulder),
@@ -155,13 +155,15 @@ public final class Constants {
                             secondStageLength * Math.cos(elbowOffset + downElbow),
                             secondStageLength * Math.sin(elbowOffset + downElbow))); // B
             public static final double downWrist = Math.PI;
-            public static final Translation2d pinch = new Translation2d(
-                            baseStageLength * Math.cos(shoulderOffset + pinchShoulder),
-                            baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
-                    .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset + pinchElbow),
-                            secondStageLength * Math.sin(elbowOffset + pinchElbow))); // X
-            public static final double pinchWrist = Math.PI;
+            public static final Translation2d pinch =
+                    ArmSetPoints.home.rotateBy(new Rotation2d(Units.degreesToRadians(35)));
+            // new Translation2d(
+            //         baseStageLength * Math.cos(shoulderOffset + pinchShoulder),
+            //         baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
+            // .plus(new Translation2d(
+            //         secondStageLength * Math.cos(elbowOffset + pinchShoulder),
+            //         secondStageLength * Math.sin(elbowOffset + pinchShoulder))); // X
+            public static final double pinchWrist = 0.0;
             public static final Translation2d forward = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + forwardShoulder),
                             baseStageLength * Math.sin(shoulderOffset + forwardShoulder))
@@ -183,6 +185,9 @@ public final class Constants {
     public static final double redCenterRing2 = 2.5; //2.4
     public static final double redCenterRing3 = 2.5; //2.4
     public static final double redCenterRing4 = 1.9; //1.8
+    public static final double redCenterRing2 = 2.5;
+    public static final double redCenterRing3 = 2.5;
+    public static final double redCenterRing4 = 1.9;
 
     public static final double blueCenterRing2 = 2.7;
     public static final double blueCenterRing3 = 2.45;
@@ -310,7 +315,7 @@ public final class Constants {
          * Physical location of the left camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(-12.6), Units.inchesToMeters(0), Units.inchesToMeters(9)),
+                new Translation3d(Units.inchesToMeters(0), Units.inchesToMeters(0), Units.inchesToMeters(9)),
                 new Rotation3d(0, Math.toRadians(19.565), Math.toRadians(180)));
 
         // public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
@@ -417,7 +422,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = -0.0; // ft
+        public static final double CONSTANT_DISTANCE_ADD = 0.0; // ft
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 
