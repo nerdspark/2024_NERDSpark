@@ -32,13 +32,13 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarEncoder1 = FourBarMotor1.getEncoder();
         FourBarEncoder2 = FourBarMotor2.getEncoder();
 
-        FourBarMotor1.setSmartCurrentLimit(50);
-        FourBarMotor2.setSmartCurrentLimit(50);
+        FourBarMotor1.setSmartCurrentLimit(70);
+        FourBarMotor2.setSmartCurrentLimit(70);
 
-        FourBarMotor1.setClosedLoopRampRate(0.18);
-        FourBarMotor1.setClosedLoopRampRate(0.18);
-        FourBarMotor1.setOpenLoopRampRate(0.18);
-        FourBarMotor1.setOpenLoopRampRate(0.18);
+        FourBarMotor1.setClosedLoopRampRate(0.15);
+        FourBarMotor1.setClosedLoopRampRate(0.15);
+        FourBarMotor1.setOpenLoopRampRate(0.15);
+        FourBarMotor1.setOpenLoopRampRate(0.15);
 
         FourBarEncoder1.setPosition(0);
         FourBarEncoder2.setPosition(0);

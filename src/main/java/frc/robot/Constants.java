@@ -423,7 +423,7 @@ public final class Constants {
             fourBarMap.put(25.5, 8.0);
             fourBarMap.put(19.5, 5.8); // 6.7
             fourBarMap.put(17.5, 2.84); // 4.2
-            fourBarMap.put(15.5 + (2.0 / 12.0), 2.52);
+            fourBarMap.put(15.5 + (2.0 / 12.0), 2.37);
             fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
             fourBarMap.put(13.0, 1.65);
             fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
