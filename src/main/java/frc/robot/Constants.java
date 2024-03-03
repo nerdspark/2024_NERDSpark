@@ -155,13 +155,14 @@ public final class Constants {
                             secondStageLength * Math.cos(elbowOffset + downElbow),
                             secondStageLength * Math.sin(elbowOffset + downElbow))); // B
             public static final double downWrist = Math.PI;
-            public static final Translation2d pinch = ArmSetPoints.home.rotateBy(new Rotation2d(Units.degreesToRadians(56)));
-                    //new Translation2d(
-                    //         baseStageLength * Math.cos(shoulderOffset + pinchShoulder),
-                    //         baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
-                    // .plus(new Translation2d(
-                    //         secondStageLength * Math.cos(elbowOffset + pinchShoulder),
-                    //         secondStageLength * Math.sin(elbowOffset + pinchShoulder))); // X
+            public static final Translation2d pinch =
+                    ArmSetPoints.home.rotateBy(new Rotation2d(Units.degreesToRadians(56)));
+            // new Translation2d(
+            //         baseStageLength * Math.cos(shoulderOffset + pinchShoulder),
+            //         baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
+            // .plus(new Translation2d(
+            //         secondStageLength * Math.cos(elbowOffset + pinchShoulder),
+            //         secondStageLength * Math.sin(elbowOffset + pinchShoulder))); // X
             public static final double pinchWrist = 0.0;
             public static final Translation2d forward = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + forwardShoulder),
@@ -418,7 +419,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = -12.6 / 12.0; // ft
+        public static final double CONSTANT_DISTANCE_ADD = +1.0; // ft
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 

@@ -195,11 +195,14 @@ public class RobotContainer {
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> Constants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> Constants.weirdSideRing4));
 
-        NamedCommands.registerCommand("RfourBarToWSR1", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing1));
-        NamedCommands.registerCommand("RfourBarToWSR2", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing2));
-        NamedCommands.registerCommand("RfourBarToWSR3", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing3));
-        NamedCommands.registerCommand("RfourBarToWSR4", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing4));
-
+        NamedCommands.registerCommand(
+                "RfourBarToWSR1", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing1));
+        NamedCommands.registerCommand(
+                "RfourBarToWSR2", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing2));
+        NamedCommands.registerCommand(
+                "RfourBarToWSR3", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing3));
+        NamedCommands.registerCommand(
+                "RfourBarToWSR4", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing4));
 
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
@@ -394,7 +397,7 @@ public class RobotContainer {
         copilot.povDown()
                 .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true)
                         .alongWith(new InstantCommand(() -> arm.setGains(true))));
-        
+
         copilot.povLeft()
                 .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
 
