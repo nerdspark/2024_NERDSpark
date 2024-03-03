@@ -190,9 +190,9 @@ public final class Constants {
     public static final double blueCenterRing3 = 2.45;
     public static final double blueCenterRing4 = 1.9;
 
-    public static final double weirdSideRing1 = 2.9;
+    public static final double weirdSideRing1 = 3.2;
     public static final double weirdSideRing2 = 3.5;
-    public static final double weirdSideRing3 = 2.6;
+    public static final double weirdSideRing3 = 2.75;
     public static final double weirdSideRing4 = 1.9;
 
     public static final double red_weirdSideRing1 = 2.9;
