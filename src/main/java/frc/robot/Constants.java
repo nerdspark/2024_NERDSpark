@@ -182,12 +182,12 @@ public final class Constants {
 
     public static final double fourBarOut = 20.0;
 
-    public static final double redCenterRing2 = 2.4;
-    public static final double redCenterRing3 = 2.4;
-    public static final double redCenterRing4 = 1.8;
+    public static final double redCenterRing2 = 2.5;
+    public static final double redCenterRing3 = 2.5;
+    public static final double redCenterRing4 = 1.9;
 
     public static final double blueCenterRing2 = 2.7;
-    public static final double blueCenterRing3 = 2.4;
+    public static final double blueCenterRing3 = 2.5;
     public static final double blueCenterRing4 = 2.0;
 
     public static final double weirdSideRing1 = 2.9;
@@ -419,7 +419,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = +1.0; // ft
+        public static final double CONSTANT_DISTANCE_ADD = 0.0; // ft
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 

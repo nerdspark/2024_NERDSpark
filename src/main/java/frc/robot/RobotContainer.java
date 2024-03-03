@@ -354,7 +354,7 @@ public class RobotContainer {
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
         // transfer spin up
-        copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1750.0, () -> 1750.0));
+        copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1650.0, () -> 1650.0));
         copilot.b().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // // arm commands
