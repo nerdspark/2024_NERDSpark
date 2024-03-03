@@ -6,6 +6,7 @@ package frc.robot.subsystems.arm;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -64,6 +65,9 @@ public class ArmIOSparkMax implements ArmIO {
         wrist = new CANSparkMax(Constants.wristID, MotorType.kBrushless);
         wristEncoderAbsolute = elbowLeft.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         // gripper = new CANSparkMax(Constants.gripperID, MotorType.kBrushless);
+
+        shoulderLeft.setIdleMode(IdleMode.kBrake);
+        shoulderRight.setIdleMode(IdleMode.kBrake);
 
         shoulderLeft.setInverted(true);
         shoulderRight.setInverted(false);

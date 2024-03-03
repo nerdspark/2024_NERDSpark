@@ -131,7 +131,7 @@ public final class Constants {
             public static final double ampWrist = pickupWrist;
             public static final Translation2d dropoff = new Translation2d(0, 27.5); // Y
             public static final double dropoffWrist = -0.3;
-            public static final double dropoffMultiplier = 6.4;
+            public static final double dropoffMultiplier = 7.4;
             public static final double dropoffMultiplierY = 3;
         }
 
@@ -156,7 +156,7 @@ public final class Constants {
                             secondStageLength * Math.sin(elbowOffset + downElbow))); // B
             public static final double downWrist = Math.PI;
             public static final Translation2d pinch =
-                    ArmSetPoints.home.rotateBy(new Rotation2d(Units.degreesToRadians(56)));
+                    ArmSetPoints.home.rotateBy(new Rotation2d(Units.degreesToRadians(35)));
             // new Translation2d(
             //         baseStageLength * Math.cos(shoulderOffset + pinchShoulder),
             //         baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
@@ -187,8 +187,8 @@ public final class Constants {
     public static final double redCenterRing4 = 1.9;
 
     public static final double blueCenterRing2 = 2.7;
-    public static final double blueCenterRing3 = 2.5;
-    public static final double blueCenterRing4 = 2.0;
+    public static final double blueCenterRing3 = 2.45;
+    public static final double blueCenterRing4 = 1.9;
 
     public static final double weirdSideRing1 = 2.9;
     public static final double weirdSideRing2 = 3.5;
