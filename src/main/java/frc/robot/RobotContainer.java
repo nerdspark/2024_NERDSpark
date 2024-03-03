@@ -351,7 +351,7 @@ public class RobotContainer {
         //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
         // transfer spin up
-        copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1600.0, () -> 1600.0));
+        copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1750.0, () -> 1750.0));
         copilot.b().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // // arm commands
@@ -386,7 +386,7 @@ public class RobotContainer {
                                 () -> ClimbSetPoints.ready,
                                 () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
                                 () -> false)
-                        .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
+                        // .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
                         .alongWith(new InstantCommand(() -> arm.setGains(false))));
         copilot.povRight()
                 .onTrue(new ArmCommand(
@@ -394,7 +394,7 @@ public class RobotContainer {
         copilot.povDown()
                 .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true)
                         .alongWith(new InstantCommand(() -> arm.setGains(true))));
-        ;
+        
         copilot.povLeft()
                 .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
 
