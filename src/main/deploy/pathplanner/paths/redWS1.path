@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.091,
+        "x": 15.09,
         "y": 3.39
       },
       "prevControl": null,
       "nextControl": {
-        "x": 12.604625678596198,
+        "x": 12.603625678596199,
         "y": 1.43973265066971
       },
       "isLocked": false,
@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 8.77,
-        "y": 0.81
+        "x": 8.72,
+        "y": 0.78
       },
       "prevControl": {
-        "x": 12.252628874821339,
-        "y": 1.247488423001853
+        "x": 12.20262887482134,
+        "y": 1.217488423001853
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,7 +59,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToWSR1"
+                "name": "RfourBarToWSR1"
               }
             }
           ]

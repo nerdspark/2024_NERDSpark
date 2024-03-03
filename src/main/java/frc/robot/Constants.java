@@ -180,18 +180,23 @@ public final class Constants {
 
     public static final double fourBarOut = 20.0;
 
-    public static final double redCenterRing2 = 2.9;
-    public static final double redCenterRing3 = 2.6;
-    public static final double redCenterRing4 = 2.6;
+    public static final double redCenterRing2 = 2.7;
+    public static final double redCenterRing3 = 2.4;
+    public static final double redCenterRing4 = 2.0;
 
-    public static final double blueCenterRing2 = 2.9;
-    public static final double blueCenterRing3 = 2.6;
-    public static final double blueCenterRing4 = 2.6;
+    public static final double blueCenterRing2 = 2.7;
+    public static final double blueCenterRing3 = 2.4;
+    public static final double blueCenterRing4 = 2.0;
 
-    public static final double weirdSideRing1 = 2.6;
-    public static final double weirdSideRing2 = 3.2;
+    public static final double weirdSideRing1 = 2.9;
+    public static final double weirdSideRing2 = 3.5;
     public static final double weirdSideRing3 = 2.6;
-    public static final double weirdSideRing4 = 2.6;
+    public static final double weirdSideRing4 = 2.0;
+
+    public static final double red_weirdSideRing1 = 2.9;
+    public static final double red_weirdSideRing2 = 3.5;
+    public static final double red_weirdSideRing3 = 2.6;
+    public static final double red_weirdSideRing4 = 2.0;
 
     public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;

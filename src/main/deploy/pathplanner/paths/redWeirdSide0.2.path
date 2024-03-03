@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.77,
-        "y": 0.81
+        "x": 8.72,
+        "y": 0.78
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.185342242357944,
-        "y": 1.3513159508855912
+        "x": 10.135342242357945,
+        "y": 1.3213159508855912
       },
       "isLocked": false,
       "linkedName": null
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToWSR2"
+                "name": "RfourBarToWSR2"
               }
             }
           ]
