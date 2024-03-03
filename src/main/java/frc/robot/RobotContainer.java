@@ -258,18 +258,7 @@ public class RobotContainer {
                                 () -> drivetrain.getState().Pose,
                                 () -> new Translation2d(
                                         drivetrain.getState().speeds.vxMetersPerSecond,
-                                        drivetrain.getState().speeds.vyMetersPerSecond))).alongWith(drivetrain
-                        .applyRequest(
-                                () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-                                                        () -> drivetrain.getState().Pose,
-                                                        () -> new Translation2d(
-                                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                                drivetrain.getState().speeds.vyMetersPerSecond))
-                                                .getDegrees()))
-                                        .withVelocityX(xLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                        .withVelocityY(yLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))));
+                                        drivetrain.getState().speeds.vyMetersPerSecond))));
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // cop9lot shoot
@@ -291,18 +280,7 @@ public class RobotContainer {
         // point blank aim
         copilot.leftBumper()
                 .whileTrue(new FourBarCommand(fourBar, () -> Constants.fourBarOut)
-                        .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4500.0)).alongWith(drivetrain
-                        .applyRequest(
-                                () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-                                                        () -> drivetrain.getState().Pose,
-                                                        () -> new Translation2d(
-                                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                                drivetrain.getState().speeds.vyMetersPerSecond))
-                                                .getDegrees()))
-                                        .withVelocityX(xLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                        .withVelocityY(yLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))));
+                        .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4500.0)));
         copilot.leftBumper()
                 .onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome)
                         .alongWith(new InstantCommand(() -> shooter.stop())));
@@ -318,7 +296,18 @@ public class RobotContainer {
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond))));
+                                                drivetrain.getState().speeds.vyMetersPerSecond))).alongWith(drivetrain
+                        .applyRequest(
+                                () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
+                                                        () -> drivetrain.getState().Pose,
+                                                        () -> new Translation2d(
+                                                                drivetrain.getState().speeds.vxMetersPerSecond,
+                                                                drivetrain.getState().speeds.vyMetersPerSecond))
+                                                .getDegrees()))
+                                        .withVelocityX(xLimiter.calculate(
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                                        .withVelocityY(yLimiter.calculate(
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))));
         copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
         // // // vision-assisted intake command
