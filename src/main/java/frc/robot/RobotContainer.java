@@ -442,7 +442,7 @@ public class RobotContainer {
             targetAngle = -driverRaw.getPOV();
         } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
             targetAngle = currentAngle - 10 * driver.getLeftX();
-            return -driver.getLeftX() * Math.abs(driver.getLeftX()) * 3;
+            return -driver.getLeftX() * Math.abs(driver.getLeftX()) * 5;
             // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }
 
