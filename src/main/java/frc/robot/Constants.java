@@ -89,7 +89,7 @@ public final class Constants {
             private final double elbowI = 0.01;
             private final double elbowD = 0.0;
             private final double shoulderS = 3.0;
-            private final double shoulderG = -0.05;
+            private final double shoulderG = -0.5;
             private final double shoulderV = 0.0;
             private final double shoulderA = 0.0;
             private final double elbowS = 1.0;
@@ -137,9 +137,10 @@ public final class Constants {
 
         public static final class ClimbSetPoints {
             public static final double readyShoulder = Units.degreesToRadians(100);
-            public static final double downElbow = Units.degreesToRadians(-250);
+            public static final double downElbow = Units.degreesToRadians(-270);
             public static final double pinchShoulder = Units.degreesToRadians(-2.5);
-            public static final double forwardShoulder = readyShoulder - Units.degreesToRadians(15);
+            public static final double pinchElbow = Units.degreesToRadians(-50);
+            public static final double forwardShoulder = readyShoulder - Units.degreesToRadians(15.0);
             public static final Translation2d ready = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + readyShoulder),
                             baseStageLength * Math.sin(shoulderOffset + readyShoulder))
@@ -158,9 +159,9 @@ public final class Constants {
                             baseStageLength * Math.cos(shoulderOffset + pinchShoulder),
                             baseStageLength * Math.sin(shoulderOffset + pinchShoulder))
                     .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset + pinchShoulder),
-                            secondStageLength * Math.sin(elbowOffset + pinchShoulder))); // X
-            public static final double pinchWrist = 0.0;
+                            secondStageLength * Math.cos(elbowOffset + pinchElbow),
+                            secondStageLength * Math.sin(elbowOffset + pinchElbow))); // X
+            public static final double pinchWrist = Math.PI;
             public static final Translation2d forward = new Translation2d(
                             baseStageLength * Math.cos(shoulderOffset + forwardShoulder),
                             baseStageLength * Math.sin(shoulderOffset + forwardShoulder))
@@ -169,8 +170,8 @@ public final class Constants {
                             secondStageLength * Math.sin(elbowOffset + forwardShoulder))); // X
             public static final double forwardWrist = Math.PI;
             public static final Translation2d trap =
-                    new Translation2d(-5, baseStageLength + secondStageLength - 0.1); // right stick
-            public static final double trapwrist = Math.PI;
+                    new Translation2d(0, baseStageLength + secondStageLength); // right stick
+            public static final double trapwrist = Math.PI / 2;
             public static final double trapMultiplier = 3.0;
         }
     }
@@ -281,7 +282,7 @@ public final class Constants {
 
         public static boolean USE_VISION = true;
         public static boolean USE_FRONT_CAMERA = true;
-        public static boolean USE_ADV_KIT_VISION = false;
+        public static boolean USE_ADV_KIT_VISION = true;
         public static boolean MULTI_TAG_RESULT_ENABLED = true;
 
         public static VisionDeviationDistanceStrategy VISION_DEV_DIST_STRATEGY =
@@ -411,7 +412,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = 0.1; // ft
+        public static final double CONSTANT_DISTANCE_ADD = -0.0; // ft
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 
@@ -420,9 +421,9 @@ public final class Constants {
             // Value: Shooter Position
             fourBarMap.put(49.5, 8.0);
             fourBarMap.put(25.5, 8.0);
-            fourBarMap.put(19.5, 6.2); // 6.7
-            fourBarMap.put(17.5, 3.2); // 4.2
-            fourBarMap.put(15.5 + (2.0 / 12.0), 2.6);
+            fourBarMap.put(19.5, 5.8); // 6.7
+            fourBarMap.put(17.5, 2.84); // 4.2
+            fourBarMap.put(15.5 + (2.0 / 12.0), 2.37);
             fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
             fourBarMap.put(13.0, 1.65);
             fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
@@ -437,8 +438,8 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(25.5, 5400.0);
-            shooterMap.put(19.5, 5400.0);
+            shooterMap.put(24.5, 5700.0);
+            shooterMap.put(19.5, 5500.0);
             shooterMap.put(17.5, 5400.0);
             shooterMap.put(15.5 + (2.0 / 12.0), 5300.0);
             shooterMap.put(13.5 + (1.0 / 12.0), 5000.0);

@@ -18,6 +18,9 @@ public interface ShooterIO {
         public double shooterVelocity2 = 0.0;
         public double shooterAppliedVolts2 = 0.0;
         public double[] shooterCurrentAmps2 = new double[] {};
+
+        public double shooterI1 = 0.0;
+        public double shooterI2 = 0.0;
     }
 
     /** Updates the set of loggable inputs. */

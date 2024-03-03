@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class FourBarIOSparkMax implements FourBarIO {
@@ -31,13 +32,13 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarEncoder1 = FourBarMotor1.getEncoder();
         FourBarEncoder2 = FourBarMotor2.getEncoder();
 
-        FourBarMotor1.setSmartCurrentLimit(30);
-        FourBarMotor2.setSmartCurrentLimit(30);
+        FourBarMotor1.setSmartCurrentLimit(70);
+        FourBarMotor2.setSmartCurrentLimit(70);
 
-        FourBarMotor1.setClosedLoopRampRate(0.2);
-        FourBarMotor1.setClosedLoopRampRate(0.2);
-        FourBarMotor1.setOpenLoopRampRate(0.2);
-        FourBarMotor1.setOpenLoopRampRate(0.2);
+        FourBarMotor1.setClosedLoopRampRate(0.15);
+        FourBarMotor1.setClosedLoopRampRate(0.15);
+        FourBarMotor1.setOpenLoopRampRate(0.15);
+        FourBarMotor1.setOpenLoopRampRate(0.15);
 
         FourBarEncoder1.setPosition(0);
         FourBarEncoder2.setPosition(0);
@@ -46,8 +47,9 @@ public class FourBarIOSparkMax implements FourBarIO {
 
         FourBarPIDController1 = FourBarMotor1.getPIDController();
         FourBarPIDController1.setP(0.08);
-        FourBarPIDController1.setI(0.0);
+        FourBarPIDController1.setI(0.000);
         FourBarPIDController1.setD(0.0);
+        FourBarPIDController1.setIZone(1.0);
     }
 
     @Override
@@ -64,7 +66,10 @@ public class FourBarIOSparkMax implements FourBarIO {
     }
 
     public void setFourBarAngle(double angle) {
+
         FourBarPIDController1.setReference(angle, CANSparkMax.ControlType.kPosition);
+        SmartDashboard.putNumber(
+                "fourbar Error", angle - ((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()) / 2));
     }
 
     public double getFourBarAngle() {

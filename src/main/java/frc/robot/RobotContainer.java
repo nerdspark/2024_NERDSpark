@@ -266,21 +266,38 @@ public class RobotContainer {
         copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // stop shoot
+        // copilot.leftBumper()
+        //         .whileTrue(new IntakeCommand(
+        //                 intake,
+        //                 () -> ((Math.sqrt(Math.pow(drivetrain.getState().speeds.vxMetersPerSecond, 2)
+        //                                         + Math.pow(drivetrain.getState().speeds.vyMetersPerSecond, 2))
+        //                                 < Constants.stillShotSpeed)
+        //                         ? 1.0
+        //                         : 0.0),
+        //                 IntakeMode.FORCEINTAKE));
+        // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+
+        // point blank aim
         copilot.leftBumper()
-                .whileTrue(new IntakeCommand(
-                        intake,
-                        () -> ((Math.sqrt(Math.pow(drivetrain.getState().speeds.vxMetersPerSecond, 2)
-                                                + Math.pow(drivetrain.getState().speeds.vyMetersPerSecond, 2))
-                                        < Constants.stillShotSpeed)
-                                ? 1.0
-                                : 0.0),
-                        IntakeMode.FORCEINTAKE));
-        copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+                .whileTrue(new FourBarCommand(fourBar, () -> Constants.fourBarOut)
+                        .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4500.0)));
+        copilot.leftBumper()
+                .onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome)
+                        .alongWith(new InstantCommand(() -> shooter.stop())));
+
+        copilot.leftStick().whileTrue(new FourBarCommand(fourBar, () -> 3.0));
+        copilot.leftStick().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
         // // // aim command
         copilot.rightTrigger()
-                .whileTrue(drivetrain
-                        .applyRequest(
+                .whileTrue(new FourBarCommand(
+                                fourBar,
+                                () -> AutoAim.calculateFourBarPosition(
+                                        () -> drivetrain.getState().Pose,
+                                        () -> new Translation2d(
+                                                drivetrain.getState().speeds.vxMetersPerSecond,
+                                                drivetrain.getState().speeds.vyMetersPerSecond)))
+                        .alongWith(drivetrain.applyRequest(
                                 () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
                                                         () -> drivetrain.getState().Pose,
                                                         () -> new Translation2d(
@@ -290,14 +307,7 @@ public class RobotContainer {
                                         .withVelocityX(xLimiter.calculate(
                                                 -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                                         .withVelocityY(yLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))
-                        .alongWith(new FourBarCommand(
-                                fourBar,
-                                () -> AutoAim.calculateFourBarPosition(
-                                        () -> drivetrain.getState().Pose,
-                                        () -> new Translation2d(
-                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond)))));
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))));
         copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
         // // // vision-assisted intake command
