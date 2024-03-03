@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.11,
-        "y": 1.92
+        "x": 11.96,
+        "y": 4.66
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.18628330969592,
-        "y": 1.606801790116036
+        "x": 10.908821439924502,
+        "y": 4.187361085279584
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.822299677814065,
-        "y": 2.43
+        "x": 9.511,
+        "y": 3.5154875529205394
       },
       "prevControl": {
-        "x": 7.169840769100282,
-        "y": 2.2449743393199717
+        "x": 10.533538655256605,
+        "y": 4.002337488915931
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,10 +29,22 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.2,
+      "maxWaypointRelativePos": 0.5,
+      "constraints": {
+        "maxVelocity": 4.86,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
-      "name": "forceIntakeZero",
+      "name": "fourBarToHome",
       "waypointRelativePos": 0.1,
       "command": {
         "type": "sequential",
@@ -41,7 +53,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntakeZero"
+                "name": "fourBarToHome"
               }
             }
           ]
@@ -49,18 +61,8 @@
       }
     },
     {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 0.35,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "softIntake",
-      "waypointRelativePos": 0.45,
+      "name": "forceIntake",
+      "waypointRelativePos": 0.25,
       "command": {
         "type": "sequential",
         "data": {
@@ -68,7 +70,7 @@
             {
               "type": "named",
               "data": {
-                "name": "onlySoftIntake"
+                "name": "forcedIntakeZero"
               }
             }
           ]
@@ -84,13 +86,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -35.0,
+    "rotation": 165.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
