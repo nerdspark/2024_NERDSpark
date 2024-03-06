@@ -416,7 +416,8 @@ public class RobotContainer {
                 .whileTrue(new InstantCommand(() -> arm.resetEncoders())
                         .alongWith(new InstantCommand(() -> arm.setGains(false))));
 
-        copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() -> arm.setGains(false))));
+        // copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() -> arm.setGains(false))));
+        copilot.x().whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0).alongWith(new FourBarCommand(fourBar, () -> 8.0))); // speed1 = CAN ID 6 = top motor
     }
 
     public Command getAutonomousCommand() {
