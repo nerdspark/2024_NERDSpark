@@ -7,6 +7,8 @@ package frc.robot.subsystems.fourBar;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -18,6 +20,8 @@ public class FourBarIOSparkMax implements FourBarIO {
     private CANSparkMax FourBarMotor2;
     private RelativeEncoder FourBarEncoder1;
     private RelativeEncoder FourBarEncoder2;
+    private ArmFeedforward fourBarFeedforward1;
+    private ArmFeedforward fourBarFeedforward2;
 
     private final SparkPIDController FourBarPIDController1;
 
@@ -50,6 +54,9 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarPIDController1.setI(0.000);
         FourBarPIDController1.setD(0.0);
         FourBarPIDController1.setIZone(1.0);
+        
+        fourBarFeedforward1 = new ArmFeedforward(Constants.FourBarGains.kS, Constants.FourBarGains.kG, Constants.FourBarGains.kV, Constants.FourBarGains.kA);
+        fourBarFeedforward2 = new ArmFeedforward(Constants.FourBarGains.kS, Constants.FourBarGains.kG, Constants.FourBarGains.kV, Constants.FourBarGains.kA);
     }
 
     @Override
@@ -67,7 +74,9 @@ public class FourBarIOSparkMax implements FourBarIO {
 
     public void setFourBarAngle(double angle) {
 
-        FourBarPIDController1.setReference(angle, CANSparkMax.ControlType.kPosition);
+        FourBarPIDController1.setReference(angle
+        + fourBarFeedforward1.calculate(FourBarEncoder1.getPosition(), FourBarEncoder1.getVelocity())
+        , CANSparkMax.ControlType.kPosition);
         SmartDashboard.putNumber(
                 "fourbar Error", angle - ((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()) / 2));
     }

@@ -20,12 +20,20 @@ import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Constants.RobotType;
+import frc.robot.actions.startUp;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 import frc.robot.util.FieldConstants;
 // import frc.robot.config.RobotIdentity;
 
 public final class Constants {
+    public final class FourBarGains {
+        public static final double kS = 0.0;
+        public static final double kV = 0.0;
+        public static final double kG = 0.0;
+        public static final double kA = 0.0;
+    }
+
     public final class ArmConstants {
         public static final double baseStageLength = 18.75; // inches
         public static final double secondStageLength = 16.975; // inches
