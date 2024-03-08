@@ -55,12 +55,14 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
+import frc.robot.util.RobotConstants;
+
 import java.util.function.Supplier;
 
 public class RobotContainer {
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
-
+    private TunerConstants tunerConstants = RobotConstants.getRobotConstants(RobotIdentity.getIdentity());
     private Intake intake;
     private FourBar fourBar;
     private Shooter shooter;
@@ -72,7 +74,7 @@ public class RobotContainer {
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
-    private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
 
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -98,17 +100,17 @@ public class RobotContainer {
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(
-                        () -> drive.withVelocityX(
-                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-                                                * MaxSpeed)) // Drive forward with
-                                // negative Y (forward)
-                                .withVelocityY(
-                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-                                                * MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(
-                                        calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
-                        ));
+        drivetrain.applyRequest(
+        () -> drive.withVelocityX(
+        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
+        * MaxSpeed)) // Drive forward with
+        // negative Y (forward)
+        .withVelocityY(
+        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
+        * MaxSpeed)) // Drive left with negative X (left)
+        .withRotationalRate(
+        calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
+        ));
 
         // driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // driver.b()
@@ -418,21 +420,21 @@ public class RobotContainer {
 
         // copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() -> arm.setGains(false))));
         copilot.x().whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0).alongWith(new FourBarCommand(fourBar, () -> 8.0))); // speed1 = CAN ID 6 = top motor
-        copilot.x().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0).alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome))); 
+        copilot.x().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0).alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
     }
-
+    
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
     }
 
     private void configureDashboard() {
-        /**** Driver tab ****/
+    /**** Driver tab ****/
 
-        // /**** Vision tab ****/
-        final var visionTab = Shuffleboard.getTab("Vision");
+    // /**** Vision tab ****/
+    final var visionTab = Shuffleboard.getTab("Vision");
 
-        // Pose estimation
-        drivetrain.addDashboardWidgets(visionTab);
+    // Pose estimation
+    drivetrain.addDashboardWidgets(visionTab);
     }
 
     public double calculateAutoTurn(Supplier<Double> target) {
