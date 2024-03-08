@@ -6,8 +6,7 @@ import frc.robot.generated.TunerConstantsTestbot;
 
 public interface RobotConstants {
 
-
-    static TunerConstants getRobotConstants(RobotIdentity robot) {
+    public static TunerConstants getRobotConstants(RobotIdentity robot) {
         switch (robot) {
             case COMPETITION_ROBOT_2024:
                 return new TunerConstants();
