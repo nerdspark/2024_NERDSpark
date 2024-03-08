@@ -31,11 +31,11 @@ import frc.robot.Constants.ArmConstants.ClimbSetPoints;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
-import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.config.RobotIdentity;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
@@ -55,12 +55,13 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
+import frc.robot.util.RobotConstants;
 import java.util.function.Supplier;
 
 public class RobotContainer {
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
-
+    private TunerConstants tunerConstants = RobotConstants.getRobotConstants(RobotIdentity.getIdentity());
     private Intake intake;
     private FourBar fourBar;
     private Shooter shooter;
@@ -417,8 +418,12 @@ public class RobotContainer {
                         .alongWith(new InstantCommand(() -> arm.setGains(false))));
 
         // copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() -> arm.setGains(false))));
-        copilot.x().whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0).alongWith(new FourBarCommand(fourBar, () -> 8.0))); // speed1 = CAN ID 6 = top motor
-        copilot.x().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0).alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome))); 
+        copilot.x()
+                .whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0)
+                        .alongWith(new FourBarCommand(fourBar, () -> 8.0))); // speed1 = CAN ID 6 = top motor
+        copilot.x()
+                .onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0)
+                        .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
     }
 
     public Command getAutonomousCommand() {
