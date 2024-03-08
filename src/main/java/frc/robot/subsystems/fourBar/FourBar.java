@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.fourBar;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class FourBar extends SubsystemBase {
@@ -19,6 +21,8 @@ public class FourBar extends SubsystemBase {
     @Override
     public void periodic() {
         io.updateInputs(inputs);
+        Logger.processInputs("fourBar", inputs);
+
         // This method will be called once per scheduler run
 
     }
