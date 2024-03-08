@@ -36,13 +36,13 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarEncoder1 = FourBarMotor1.getEncoder();
         FourBarEncoder2 = FourBarMotor2.getEncoder();
 
-        FourBarMotor1.setSmartCurrentLimit(70);
-        FourBarMotor2.setSmartCurrentLimit(70);
+        FourBarMotor1.setSmartCurrentLimit(Constants.FourBarConstants.currentLimit);
+        FourBarMotor2.setSmartCurrentLimit(Constants.FourBarConstants.currentLimit);
 
-        FourBarMotor1.setClosedLoopRampRate(0.15);
-        FourBarMotor1.setClosedLoopRampRate(0.15);
-        FourBarMotor1.setOpenLoopRampRate(0.15);
-        FourBarMotor1.setOpenLoopRampRate(0.15);
+        FourBarMotor1.setClosedLoopRampRate(Constants.FourBarConstants.closedLoopRampRate);
+        FourBarMotor1.setClosedLoopRampRate(Constants.FourBarConstants.closedLoopRampRate);
+        FourBarMotor1.setOpenLoopRampRate(Constants.FourBarConstants.openLoopRampRate);
+        FourBarMotor1.setOpenLoopRampRate(Constants.FourBarConstants.openLoopRampRate);
 
         FourBarEncoder1.setPosition(0);
         FourBarEncoder2.setPosition(0);
@@ -50,10 +50,10 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarMotor2.follow(FourBarMotor1, true);
 
         FourBarPIDController1 = FourBarMotor1.getPIDController();
-        FourBarPIDController1.setP(0.08);
-        FourBarPIDController1.setI(0.000);
-        FourBarPIDController1.setD(0.0);
-        FourBarPIDController1.setIZone(1.0);
+        FourBarPIDController1.setP(Constants.FourBarGains.kP);
+        FourBarPIDController1.setI(Constants.FourBarGains.kI);
+        FourBarPIDController1.setD(Constants.FourBarGains.kD);
+        FourBarPIDController1.setIZone(Constants.FourBarGains.kIZone);
         
         fourBarFeedforward1 = new ArmFeedforward(Constants.FourBarGains.kS, Constants.FourBarGains.kG, Constants.FourBarGains.kV, Constants.FourBarGains.kA);
         fourBarFeedforward2 = new ArmFeedforward(Constants.FourBarGains.kS, Constants.FourBarGains.kG, Constants.FourBarGains.kV, Constants.FourBarGains.kA);

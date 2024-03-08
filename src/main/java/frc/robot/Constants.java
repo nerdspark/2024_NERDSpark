@@ -28,10 +28,21 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
     public final class FourBarGains {
+        public static final double kP = 0.08;
+        public static final double kI = 0.000;
+        public static final double kD = 0.0;
+        public static final double kIZone = 1.0;
+
         public static final double kS = 0.0;
         public static final double kV = 0.0;
         public static final double kG = 0.0;
         public static final double kA = 0.0;
+    }
+
+    public final class FourBarConstants {
+        public static final int currentLimit = 70;
+        public static final double closedLoopRampRate = 0.15;
+        public static final double openLoopRampRate = 0.15;
     }
 
     public final class ArmConstants {
