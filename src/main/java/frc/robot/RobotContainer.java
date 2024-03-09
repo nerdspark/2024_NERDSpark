@@ -37,6 +37,7 @@ import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.config.RobotIdentity;
 import frc.robot.generated.TunerConstants;
+import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIO;
@@ -58,10 +59,10 @@ import frc.robot.util.JoystickMap;
 import frc.robot.util.RobotConstants;
 import java.util.function.Supplier;
 
-public class RobotContainer {
+public class RobotContainer extends RobotContainerSmudge{
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
-    private TunerConstants tunerConstants = RobotConstants.getRobotConstants(RobotIdentity.getIdentity());
+    private TunerConstantsSmudge tunerConstants = new TunerConstants(); //RobotConstants.getRobotConstants(RobotIdentity.getIdentity());
     private Intake intake;
     private FourBar fourBar;
     private Shooter shooter;
@@ -73,7 +74,7 @@ public class RobotContainer {
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
-    private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+    private final CommandSwerveDrivetrain drivetrain = tunerConstants.DriveTrain; // My drivetrain
 
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -128,17 +129,17 @@ public class RobotContainer {
         // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
     }
 
-    public RobotContainer() {
+        public RobotContainer() {
 
         switch (Constants.currentMode) {
-            case REAL:
+                case REAL:
                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
                 fourBar = new FourBar(new FourBarIOSparkMax());
                 shooter = new Shooter(new ShooterIOSparkMax());
                 arm = new Arm(new ArmIOSparkMax());
                 break;
 
-            default:
+                default:
                 // Replayed robot, disable IO implementations
                 intake = new Intake(new IntakeIO() {});
                 shooter = new Shooter(new ShooterIO() {});
@@ -154,19 +155,19 @@ public class RobotContainer {
         drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
 
         NamedCommands.registerCommand(
-                "shootSpeed",
-                new ShooterCommand(
-                        shooter,
-                        () -> AutoAim.calculateShooterRPM(
-                                () -> drivetrain.getState().Pose,
-                                () -> new Translation2d(
-                                        drivetrain.getState().speeds.vxMetersPerSecond,
-                                        drivetrain.getState().speeds.vyMetersPerSecond)),
-                        () -> AutoAim.calculateShooterRPM(
-                                () -> drivetrain.getState().Pose,
-                                () -> new Translation2d(
-                                        drivetrain.getState().speeds.vxMetersPerSecond,
-                                        drivetrain.getState().speeds.vyMetersPerSecond))));
+        "shootSpeed",
+        new ShooterCommand(
+        shooter,
+        () -> AutoAim.calculateShooterRPM(
+        () -> drivetrain.getState().Pose,
+        () -> new Translation2d(
+        drivetrain.getState().speeds.vxMetersPerSecond,
+        drivetrain.getState().speeds.vyMetersPerSecond)),
+        () -> AutoAim.calculateShooterRPM(
+        () -> drivetrain.getState().Pose,
+        () -> new Translation2d(
+        drivetrain.getState().speeds.vxMetersPerSecond,
+        drivetrain.getState().speeds.vyMetersPerSecond))));
 
         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
@@ -426,6 +427,7 @@ public class RobotContainer {
                         .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
     }
 
+    @Override
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
     }
@@ -440,6 +442,7 @@ public class RobotContainer {
         drivetrain.addDashboardWidgets(visionTab);
     }
 
+    @Override
     public double calculateAutoTurn(Supplier<Double> target) {
         double currentAngle = -(gyro.getAngle() - gyroOffset);
 
@@ -466,6 +469,7 @@ public class RobotContainer {
                 Constants.autoTurnCeiling);
     }
 
+    @Override
     public void resetGyro() {
         gyroPid.setIZone(Constants.IZone);
         gyroOffset = gyro.getAngle();

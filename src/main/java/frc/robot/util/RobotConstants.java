@@ -1,20 +1,33 @@
 package frc.robot.util;
 
+import frc.robot.RobotContainer;
+import frc.robot.RobotContainerSmudge;
 import frc.robot.config.RobotIdentity;
 import frc.robot.generated.TunerConstants;
-import frc.robot.generated.TunerConstantsTestbot;
+import frc.robot.generated.TunerConstantsSmudge;
 
 public interface RobotConstants {
 
-    public static TunerConstants getRobotConstants(RobotIdentity robot) {
+    public static TunerConstantsSmudge getRobotConstants(RobotIdentity robot) {
         switch (robot) {
-            case COMPETITION_ROBOT_2024:
+            case SMUDGE_2024:
+                return new TunerConstantsSmudge();
+            case SMIDGE_2024:
                 return new TunerConstants();
-            case PRACTICE_ROBOT_2024:
-                return new TunerConstantsTestbot();
             default:
                 // Something went wrong if this branch is reached, by default we will return our Comp Bot
-                return new TunerConstants();
+                return new TunerConstantsSmudge();
+        }
+    }
+    public static RobotContainerSmudge getRobotContainer(RobotIdentity robot) {
+        switch (robot) {
+            case SMUDGE_2024:
+                return new RobotContainerSmudge();
+            case SMIDGE_2024:
+                return new RobotContainer();
+            default:
+                // Something went wrong if this branch is reached, by default we will return our Comp Bot
+                return new RobotContainerSmudge();
         }
     }
 }

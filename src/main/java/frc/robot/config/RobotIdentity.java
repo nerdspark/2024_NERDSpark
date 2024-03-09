@@ -7,24 +7,24 @@ import frc.robot.Robot;
 import frc.robot.util.MacAddress;
 
 public enum RobotIdentity {
-    COMPETITION_ROBOT_2024,
-    PRACTICE_ROBOT_2024,
+    SMUDGE_2024,
+    SMIDGE_2024,
     SIMULATION;
 
     public static RobotIdentity getIdentity() {
         if (Robot.isReal()) {
             String mac = getMACAddress();
             if (!mac.equals("")) {
-                if (mac.equals(MacAddress.SMIDGE_MAC) || mac.equals(SECONDARY_ROBOT_ONE_MAC)) {
-                    return COMPETITION_ROBOT_2024;
-                } else if (mac.equals(MacAddress.SWERVEBOT_2_MAC)) {
-                    return PRACTICE_ROBOT_2024;
+                if (mac.equals(MacAddress.SMIDGE_MAC)) {
+                    return SMIDGE_2024;
+                } else if (mac.equals(MacAddress.SMUDGE_MAC)) {
+                    return SMUDGE_2024;
                 }
             }
-            if (Constants.compRobot == COMPETITION_ROBOT_2024) {
-                return COMPETITION_ROBOT_2024;
+            if (Constants.compRobot == SMUDGE_2024) {
+                return SMUDGE_2024;
             } else {
-                return PRACTICE_ROBOT_2024;
+                return SMIDGE_2024;
             }
         } else {
             return SIMULATION;

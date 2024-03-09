@@ -225,7 +225,7 @@ public final class Constants {
     public static final double indexDistance = 1000;
 
     public static final Mode currentMode = Mode.REAL;
-    public static final RobotIdentity compRobot = RobotIdentity.COMPETITION_ROBOT_2024;
+    public static final RobotIdentity compRobot = RobotIdentity.SMUDGE_2024;
 
     public static final double gyroP = 0.023;
     public static final double gyroI = 0.0;
