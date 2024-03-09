@@ -32,11 +32,6 @@ public class IntakeCommand extends Command {
     private boolean isIndexing = false;
     private double referencePosition = 0;
 
-    /**
-     * Creates a new ExampleCommand.
-     *
-     * @param subsystem The subsystem used by this command.
-     */
     public IntakeCommand(Intake Intake, Supplier<Double> power, IntakeMode mode) {
         this.Intake = Intake;
         this.power = power;

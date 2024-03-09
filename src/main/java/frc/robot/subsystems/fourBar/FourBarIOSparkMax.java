@@ -11,8 +11,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
+import frc.robot.Constants.RobotMap;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.FourBarGains;
 import frc.robot.util.LightningShuffleboard;
@@ -29,8 +28,8 @@ public class FourBarIOSparkMax implements FourBarIO {
 
     public FourBarIOSparkMax() {
 
-        FourBarMotor1 = new CANSparkMax(Constants.fourBarLeftID, CANSparkMax.MotorType.kBrushless);
-        FourBarMotor2 = new CANSparkMax(Constants.fourBarRightID, CANSparkMax.MotorType.kBrushless);
+        FourBarMotor1 = new CANSparkMax(RobotMap.fourBarLeftID, CANSparkMax.MotorType.kBrushless);
+        FourBarMotor2 = new CANSparkMax(RobotMap.fourBarRightID, CANSparkMax.MotorType.kBrushless);
 
         FourBarMotor1.setInverted(false);
         FourBarMotor2.setInverted(true);
@@ -60,6 +59,7 @@ public class FourBarIOSparkMax implements FourBarIO {
     }
 
     @Override
+    @SuppressWarnings("static-access")
     public void updateInputs(FourBarIOInputs inputs) {
         inputs.FourBarPosition1 = Units.rotationsToRadians(FourBarEncoder1.getPosition());
         inputs.FourBarVelocity1 = Units.rotationsPerMinuteToRadiansPerSecond(FourBarEncoder1.getVelocity());

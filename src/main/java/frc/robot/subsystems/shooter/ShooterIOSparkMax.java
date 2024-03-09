@@ -10,8 +10,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.util.Units;
-import frc.robot.Constants;
-import frc.robot.subsystems.shooter.ShooterIO.ShooterIoInputs;
+import frc.robot.Constants.RobotMap;
 
 public class ShooterIOSparkMax implements ShooterIO {
     /** Creates a new ShooterIOSparkMax. */
@@ -29,8 +28,8 @@ public class ShooterIOSparkMax implements ShooterIO {
     private final SparkPIDController shooterController2;
 
     public ShooterIOSparkMax() {
-        shooterMotor1 = new CANSparkMax(Constants.shooterMotor1ID, CANSparkMax.MotorType.kBrushless);
-        shooterMotor2 = new CANSparkMax(Constants.shooterMotor2ID, CANSparkMax.MotorType.kBrushless);
+        shooterMotor1 = new CANSparkMax(RobotMap.shooterMotor1ID, CANSparkMax.MotorType.kBrushless);
+        shooterMotor2 = new CANSparkMax(RobotMap.shooterMotor2ID, CANSparkMax.MotorType.kBrushless);
         shooterMotor1.setInverted(false);
         shooterMotor2.setInverted(true);
         shooterEncoder1 = shooterMotor1.getEncoder();
@@ -58,6 +57,7 @@ public class ShooterIOSparkMax implements ShooterIO {
     }
 
     @Override
+    @SuppressWarnings("static-access")
     public void updateInputs(ShooterIoInputs inputs) {
         inputs.shooterPosition1 = Units.rotationsToRadians(shooterEncoder1.getPosition());
         inputs.shooterVelocity1 = Units.rotationsPerMinuteToRadiansPerSecond(shooterEncoder1.getVelocity());
