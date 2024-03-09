@@ -28,10 +28,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.Constants.ArmConstants.ClimbSetPoints;
+import frc.robot.Constants.FourBarConstants;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
-import frc.robot.commands.ArmResetCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
@@ -169,8 +169,9 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
-        NamedCommands.registerCommand("fourBarToIntake", new FourBarCommand(fourBar, () -> Constants.fourBarOut));
-        NamedCommands.registerCommand("fourBarToHome", new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        NamedCommands.registerCommand(
+                "fourBarToIntake", new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut));
+        NamedCommands.registerCommand("fourBarToHome", new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
 
         NamedCommands.registerCommand(
                 "fourBarToShooter",
@@ -238,12 +239,12 @@ public class RobotContainer {
         driver.leftTrigger()
                 .whileTrue(new SequentialCommandGroup(
                         new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis() - 0.4)), IntakeMode.SOFTINTAKE)
-                                .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
-                        new FourBarCommand(fourBar, () -> Constants.fourBarHome)
+                                .deadlineWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)),
+                        new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome)
                                 .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))));
         driver.leftTrigger()
                 .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
-                        .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome))
+                        .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome))
                         .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0))));
 
         // // // shoot command
@@ -288,14 +289,14 @@ public class RobotContainer {
 
         // point blank aim
         copilot.leftBumper()
-                .whileTrue(new FourBarCommand(fourBar, () -> Constants.fourBarOut)
+                .whileTrue(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)
                         .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4500.0)));
         copilot.leftBumper()
-                .onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome)
+                .onFalse(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome)
                         .alongWith(new InstantCommand(() -> shooter.stop())));
 
         copilot.leftStick().whileTrue(new FourBarCommand(fourBar, () -> 3.0));
-        copilot.leftStick().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        copilot.leftStick().onFalse(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
 
         // // // aim command
         copilot.rightTrigger()
@@ -317,7 +318,7 @@ public class RobotContainer {
                                                 -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                                         .withVelocityY(yLimiter.calculate(
                                                 -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))));
-        copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
+        copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
 
         // // // vision-assisted intake command
         // if (noteVisionSubsystem.hasTargets()) {
@@ -417,8 +418,12 @@ public class RobotContainer {
                         .alongWith(new InstantCommand(() -> arm.setGains(false))));
 
         // copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() -> arm.setGains(false))));
-        copilot.x().whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0).alongWith(new FourBarCommand(fourBar, () -> 8.0))); // speed1 = CAN ID 6 = top motor
-        copilot.x().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0).alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome))); 
+        copilot.x()
+                .whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0)
+                        .alongWith(new FourBarCommand(fourBar, () -> 8.0))); // speed1 = CAN ID 6 = top motor
+        copilot.x()
+                .onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0)
+                        .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome)));
     }
 
     public Command getAutonomousCommand() {

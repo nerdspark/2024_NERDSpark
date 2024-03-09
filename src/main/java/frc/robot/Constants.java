@@ -20,7 +20,6 @@ import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Constants.RobotType;
-import frc.robot.actions.startUp;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 import frc.robot.util.FieldConstants;
@@ -43,6 +42,10 @@ public final class Constants {
         public static final int currentLimit = 70;
         public static final double closedLoopRampRate = 0.15;
         public static final double openLoopRampRate = 0.15;
+        public static final double positionConversionFactor = 2.0 * Math.PI * 2.0; // TODO ????
+        public static final double resetPosition = 16.0;
+        public static final double fourBarOut = 20.0 + resetPosition;
+        public static final double fourBarHome = 0.75 + resetPosition;
     }
 
     public final class ArmConstants {
@@ -199,8 +202,6 @@ public final class Constants {
 
     public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
 
-    public static final double fourBarOut = 20.0;
-
     public static final double redCenterRing2 = 2.5; // 2.4
     public static final double redCenterRing3 = 2.5; // 2.4
     public static final double redCenterRing4 = 1.9; // 1.8
@@ -219,7 +220,6 @@ public final class Constants {
     public static final double red_weirdSideRing3 = 2.6;
     public static final double red_weirdSideRing4 = 1.9;
 
-    public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;
     // public static final int deployMotorId = 0;
     public static final int shooterMotor2ID = 7;
@@ -445,6 +445,21 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
+
+            // OLD POSITIONS CONVERSIONS AND GAINS W/O FF
+            // fourBarMap.put(49.5, 8.0);
+            // fourBarMap.put(25.5, 8.0);
+            // fourBarMap.put(19.5, 5.4); // 6.7
+            // fourBarMap.put(17.5, 2.84); // 4.2
+            // fourBarMap.put(15.5 + (2.0 / 12.0), 2.37);
+            // fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
+            // fourBarMap.put(13.0, 1.65);
+            // fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
+            // fourBarMap.put(6.5, 0.8);
+            // fourBarMap.put(6.4, 18.0);
+            // fourBarMap.put(5.4, 20.0);
+            // fourBarMap.put(3.0, 20.0);
+
             fourBarMap.put(49.5, 8.0);
             fourBarMap.put(25.5, 8.0);
             fourBarMap.put(19.5, 5.4); // 6.7
