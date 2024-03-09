@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.Constants.ArmConstants.ClimbSetPoints;
 import frc.robot.Constants.FourBarConstants;
+import frc.robot.Constants.speakerConstants;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
@@ -57,6 +58,8 @@ import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
 import frc.robot.util.RobotConstants;
+import frc.robot.util.LightningShuffleboard;
+
 import java.util.function.Supplier;
 
 public class RobotContainer {
@@ -421,7 +424,9 @@ public class RobotContainer {
 
         // copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() -> arm.setGains(false))));
         copilot.x().whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0).alongWith(new FourBarCommand(fourBar, () -> 8.0))); // speed1 = CAN ID 6 = top motor
-        copilot.x().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0).alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome))); 
+        copilot.x().onFalse(new ShooterCommand(shooter, () -> 0.0, () -> 0.0).alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome))); 
+        
+        LightningShuffleboard.setDoubleSupplier("four bar", "distance from speaker", () -> drivetrain.getState().Pose.getTranslation().getDistance(DriverStation.getAlliance().get() == Alliance.Blue ? speakerConstants.speakerLocBlue.getTranslation() : speakerConstants.speakerLocRed.getTranslation()));
     }
 
     public Command getAutonomousCommand() {

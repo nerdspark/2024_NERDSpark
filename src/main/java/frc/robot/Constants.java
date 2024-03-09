@@ -443,7 +443,7 @@ public final class Constants {
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 
         static {
-            // Key: Distance
+            // Key: Distance in feet
             // Value: Shooter Position
 
             // OLD POSITIONS CONVERSIONS AND GAINS W/O FF
@@ -460,18 +460,47 @@ public final class Constants {
             // fourBarMap.put(5.4, 20.0);
             // fourBarMap.put(3.0, 20.0);
 
-            fourBarMap.put(49.5, 1.641);
-            fourBarMap.put(25.5, 1.641);
-            fourBarMap.put(19.5, 1.431);
-            fourBarMap.put(17.5, 1.224);
-            fourBarMap.put(15.7, 1.186);
-            fourBarMap.put(13.6, 1.140);
-            fourBarMap.put(13.0, 1.128);
-            fourBarMap.put(11.3, 1.099);
-            fourBarMap.put( 6.5, 1.059);
-            fourBarMap.put( 6.4, 2.448);
-            fourBarMap.put( 5.4, 2.610);
-            fourBarMap.put( 3.0, 2.610);
+            // fourBarMap.put(49.5, 1.500);
+            // fourBarMap.put(25.5, 1.500);
+            // fourBarMap.put(19.5, 1.710);
+            // fourBarMap.put(17.5, 1.917);
+            // fourBarMap.put(15.7, 1.955);
+            // fourBarMap.put(13.6, 2.001);
+            // fourBarMap.put(13.0, 2.013);
+            // fourBarMap.put(11.3, 2.041);
+            // fourBarMap.put( 6.5, 2.082);
+            // fourBarMap.put( 6.4, 0.692);
+            // fourBarMap.put( 5.4, 0.531);
+            // fourBarMap.put( 3.0, 0.531);
+
+            // fourBarMap.put(15.091, 1.500);
+            // fourBarMap.put(7.774, 1.500);
+            // fourBarMap.put(5.945, 1.710);
+            // fourBarMap.put(5.335, 1.917);
+            // fourBarMap.put(4.786, 1.955);
+            // fourBarMap.put(4.146, 2.001);
+            // fourBarMap.put(3.963, 2.013);
+            // fourBarMap.put(3.445, 2.041);
+            // fourBarMap.put(1.981, 2.082);
+            // fourBarMap.put(1.951, 0.692);
+            // fourBarMap.put(1.646, 0.531);
+            // fourBarMap.put(0.914, 0.531);
+
+            fourBarMap.put(3.8, 2.05);
+            fourBarMap.put(3.17, 2.08);
+            fourBarMap.put(4.4, 2d);
+            fourBarMap.put(4.6, 1.95d);
+            fourBarMap.put(4.75, 1.925d);
+            fourBarMap.put(4.85, 1.925d);
+            fourBarMap.put(4.9, 1.925);
+            fourBarMap.put(5.0, 1.85);
+            fourBarMap.put(5.1, 1.9);
+            fourBarMap.put(5.3, 1.79);
+            fourBarMap.put(5.4, 1.5);
+            fourBarMap.put(15.091, 1.500);
+
+
+
         }
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();

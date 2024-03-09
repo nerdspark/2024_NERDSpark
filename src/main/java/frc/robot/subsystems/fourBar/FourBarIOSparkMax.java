@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.FourBarGains;
+import frc.robot.util.LightningShuffleboard;
 
 public class FourBarIOSparkMax implements FourBarIO {
     /** Creates a new FourBarIOSparkMax. */
@@ -72,12 +73,15 @@ public class FourBarIOSparkMax implements FourBarIO {
     }
 
     public void setFourBarAngle(double angle) {
+        angle = MathUtil.clamp(angle, FourBarConstants.fourBarOut, FourBarConstants.fourBarHome);
+
         double G = FourBarFeedforward1.calculate(FourBarEncoder1.getPosition(), FourBarEncoder1.getVelocity());
-        double PID = FourBarPIDController1.calculate(FourBarEncoder1.getPosition(), MathUtil.clamp(angle, FourBarConstants.fourBarOut, FourBarConstants.fourBarHome));
+        double PID = FourBarPIDController1.calculate(FourBarEncoder1.getPosition(), angle);
 
         FourBarMotor1.set(PID + G);
 
         LightningShuffleboard.setDouble("four bar", "error", angle - FourBarEncoder1.getPosition());
+        LightningShuffleboard.setDouble("four bar", "PID", PID);
 
     }
 

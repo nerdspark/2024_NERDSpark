@@ -1,4 +1,4 @@
-package frc.robot.subsystems.fourBar;
+package frc.robot.util;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
