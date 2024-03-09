@@ -15,11 +15,10 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
+import frc.robot.Constants.RobotMap;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.ArmGains;
 import frc.robot.Constants.ArmConstants.ArmGainsClimb;
-import frc.robot.subsystems.arm.ArmIO.ArmIOInputs;
 
 public class ArmIOSparkMax implements ArmIO {
     private CANSparkMax shoulderLeft;
@@ -43,26 +42,23 @@ public class ArmIOSparkMax implements ArmIO {
     // private PIDController elbowRightController;
 
     private SparkPIDController wristController;
-    private double a;
+    private double a; //TODO: come on dude
     private boolean inBend;
-    // private PIDController shoulderController; //
-    // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-feedforward.html#introduction-to-dc-motor-feedforward
+    // private PIDController shoulderController; 
     // private PIDController elbowController;
     // private ArmFeedforward shoulderLeftFeedforward;
     // private ArmFeedforward shoulderRightFeedforward;
     // private ArmFeedforward elbowLeftFeedforward;
-    // private ArmFeedforward
-    //         elbowRightFeedforward; //
-    // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/feedforward.html#armfeedforward
+    // private ArmFeedforward elbowRightFeedforward;
     private ArmGains armGains = new ArmGains();
 
     /** Creates a new ArmIOSparkMax. */
     public ArmIOSparkMax() {
-        shoulderLeft = new CANSparkMax(Constants.shoulderLeftID, MotorType.kBrushless);
-        shoulderRight = new CANSparkMax(Constants.shoulderRightID, MotorType.kBrushless);
-        elbowLeft = new CANSparkMax(Constants.elbowLeftID, MotorType.kBrushless);
-        elbowRight = new CANSparkMax(Constants.elbowRightID, MotorType.kBrushless);
-        wrist = new CANSparkMax(Constants.wristID, MotorType.kBrushless);
+        shoulderLeft = new CANSparkMax(RobotMap.shoulderLeftID, MotorType.kBrushless);
+        shoulderRight = new CANSparkMax(RobotMap.shoulderRightID, MotorType.kBrushless);
+        elbowLeft = new CANSparkMax(RobotMap.elbowLeftID, MotorType.kBrushless);
+        elbowRight = new CANSparkMax(RobotMap.elbowRightID, MotorType.kBrushless);
+        wrist = new CANSparkMax(RobotMap.wristID, MotorType.kBrushless);
         wristEncoderAbsolute = elbowLeft.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         // gripper = new CANSparkMax(Constants.gripperID, MotorType.kBrushless);
 
@@ -91,10 +87,10 @@ public class ArmIOSparkMax implements ArmIO {
         // SmartDashboard.updateValues();
 
         wristController = wrist.getPIDController();
-        wristController.setP(ArmConstants.wristP);
-        wristController.setI(ArmConstants.wristI);
-        wristController.setD(ArmConstants.wristD);
-        wristController.setOutputRange(-ArmConstants.wristMaxPower, ArmConstants.wristMaxPower);
+        wristController.setP(ArmGains.wristP);
+        wristController.setI(ArmGains.wristI);
+        wristController.setD(ArmGains.wristD);
+        wristController.setOutputRange(-ArmConstants.maxPowerWrist, ArmConstants.maxPowerWrist);
         // wrist.setSoftLimit(null, 0)
 
         inBend = false;

@@ -31,6 +31,7 @@ public class ClimbIOSparkMax implements ClimbIO {
     }
 
     @Override
+    @SuppressWarnings("static-access")
     public void updateInputs(ClimbIOInputs inputs) {
         inputs.climbPosition1 = Units.rotationsToRadians(climbEncoder1.getPosition());
         inputs.climbVelocity1 = Units.rotationsPerMinuteToRadiansPerSecond(climbEncoder1.getVelocity());
