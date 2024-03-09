@@ -6,10 +6,16 @@ package frc.robot.subsystems.fourBar;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Constants.FourBarConstants;
+import frc.robot.Constants.FourBarGains;
+import frc.robot.util.LightningShuffleboard;
 
 public class FourBarIOSparkMax implements FourBarIO {
     /** Creates a new FourBarIOSparkMax. */
@@ -17,39 +23,40 @@ public class FourBarIOSparkMax implements FourBarIO {
 
     private CANSparkMax FourBarMotor2;
     private RelativeEncoder FourBarEncoder1;
-    private RelativeEncoder FourBarEncoder2;
 
-    private final SparkPIDController FourBarPIDController1;
+    private ArmFeedforward FourBarFeedforward1;
+    private PIDController FourBarPIDController1;
 
     public FourBarIOSparkMax() {
 
         FourBarMotor1 = new CANSparkMax(Constants.fourBarLeftID, CANSparkMax.MotorType.kBrushless);
         FourBarMotor2 = new CANSparkMax(Constants.fourBarRightID, CANSparkMax.MotorType.kBrushless);
 
-        FourBarMotor1.setInverted(true);
-        FourBarMotor2.setInverted(false);
+        FourBarMotor1.setInverted(false);
+        FourBarMotor2.setInverted(true);
 
         FourBarEncoder1 = FourBarMotor1.getEncoder();
-        FourBarEncoder2 = FourBarMotor2.getEncoder();
 
-        FourBarMotor1.setSmartCurrentLimit(70);
-        FourBarMotor2.setSmartCurrentLimit(70);
+        FourBarMotor1.setSmartCurrentLimit(FourBarConstants.currentLimit);
+        FourBarMotor2.setSmartCurrentLimit(FourBarConstants.currentLimit);
 
-        FourBarMotor1.setClosedLoopRampRate(0.15);
-        FourBarMotor1.setClosedLoopRampRate(0.15);
-        FourBarMotor1.setOpenLoopRampRate(0.15);
-        FourBarMotor1.setOpenLoopRampRate(0.15);
+        FourBarMotor1.setClosedLoopRampRate(FourBarConstants.closedLoopRampRate);
+        FourBarMotor1.setClosedLoopRampRate(FourBarConstants.closedLoopRampRate);
+        FourBarMotor1.setOpenLoopRampRate(FourBarConstants.openLoopRampRate);
+        FourBarMotor1.setOpenLoopRampRate(FourBarConstants.openLoopRampRate);
 
-        FourBarEncoder1.setPosition(0);
-        FourBarEncoder2.setPosition(0);
+        FourBarEncoder1.setPositionConversionFactor(FourBarConstants.positionConversionFactor);
+        FourBarEncoder1.setVelocityConversionFactor(FourBarConstants.positionConversionFactor);
+        FourBarEncoder1.setPosition(FourBarConstants.resetPosition);
 
         FourBarMotor2.follow(FourBarMotor1, true);
 
-        FourBarPIDController1 = FourBarMotor1.getPIDController();
-        FourBarPIDController1.setP(0.08);
-        FourBarPIDController1.setI(0.000);
-        FourBarPIDController1.setD(0.0);
-        FourBarPIDController1.setIZone(1.0);
+        FourBarPIDController1 = new PIDController(FourBarGains.kP, FourBarGains.kI, FourBarGains.kD);
+        FourBarPIDController1.setIZone(FourBarGains.kIZone);
+
+        FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, FourBarGains.kG, FourBarGains.kV, FourBarGains.kA);
+        // fourBarFeedforward2 = new ArmFeedforward(Constants.FourBarGains.kS, Constants.FourBarGains.kG,
+        // Constants.FourBarGains.kV, Constants.FourBarGains.kA);
     }
 
     @Override
@@ -59,20 +66,33 @@ public class FourBarIOSparkMax implements FourBarIO {
         inputs.FourBarAppliedVolts1 = FourBarMotor1.getAppliedOutput() * FourBarMotor1.getBusVoltage();
         inputs.FourBarCurrentAmps1 = new double[] {FourBarMotor1.getOutputCurrent()};
 
-        inputs.FourBarPosition2 = Units.rotationsToRadians(FourBarEncoder2.getPosition());
-        inputs.FourBarVelocity2 = Units.rotationsPerMinuteToRadiansPerSecond(FourBarEncoder2.getVelocity());
-        inputs.FourBarAppliedVolts2 = FourBarMotor2.getAppliedOutput() * FourBarMotor2.getBusVoltage();
-        inputs.FourBarCurrentAmps2 = new double[] {FourBarMotor2.getOutputCurrent()};
+        // inputs.FourBarPosition2 = Units.rotationsToRadians(FourBarEncoder2.getPosition());
+        // inputs.FourBarVelocity2 = Units.rotationsPerMinuteToRadiansPerSecond(FourBarEncoder2.getVelocity());
+        // inputs.FourBarAppliedVolts2 = FourBarMotor2.getAppliedOutput() * FourBarMotor2.getBusVoltage();
+        // inputs.FourBarCurrentAmps2 = new double[] {FourBarMotor2.getOutputCurrent()};
     }
 
     public void setFourBarAngle(double angle) {
+        angle = MathUtil.clamp(angle, FourBarConstants.fourBarOut, FourBarConstants.fourBarHome);
 
-        FourBarPIDController1.setReference(angle, CANSparkMax.ControlType.kPosition);
-        SmartDashboard.putNumber(
-                "fourbar Error", angle - ((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()) / 2));
+        double G = FourBarFeedforward1.calculate(FourBarEncoder1.getPosition(), FourBarEncoder1.getVelocity());
+        double PID = FourBarPIDController1.calculate(FourBarEncoder1.getPosition(), angle);
+
+        FourBarMotor1.set(PID + G);
+
+        LightningShuffleboard.setDouble("four bar", "error", angle - FourBarEncoder1.getPosition());
+        LightningShuffleboard.setDouble("four bar", "PID", PID);
+
     }
 
     public double getFourBarAngle() {
         return FourBarEncoder1.getPosition();
+    }
+
+    public void setPIDGGains(double kP, double kI, double kD, double kG) {
+        FourBarPIDController1.setP(kP);
+        FourBarPIDController1.setI(kI);
+        FourBarPIDController1.setD(kD);
+        FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, kG, FourBarGains.kV, FourBarGains.kA);
     }
 }

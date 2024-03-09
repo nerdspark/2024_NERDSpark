@@ -26,6 +26,28 @@ import frc.robot.util.FieldConstants;
 // import frc.robot.config.RobotIdentity;
 
 public final class Constants {
+    public final class FourBarGains {
+        public static final double kP = 0.85;
+        public static final double kI = 0.2;
+        public static final double kD = 0.01;
+        public static final double kIZone = 0.05;
+
+        public static final double kS = 0.0;
+        public static final double kV = 0.0;
+        public static final double kG = 0.03;
+        public static final double kA = 0.0;
+    }
+
+    public final class FourBarConstants {
+        public static final int currentLimit = 70;
+        public static final double closedLoopRampRate = 0.15;
+        public static final double openLoopRampRate = 0.15;
+        public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d/18d * 25d);
+        public static final double resetPosition = Math.PI - 0.9948; //zero position from CAD
+        public static final double fourBarOut = -20.0 * positionConversionFactor + resetPosition;
+        public static final double fourBarHome = -0.75 * positionConversionFactor + resetPosition;
+    }
+
     public final class ArmConstants {
         public static final double baseStageLength = 18.75; // inches
         public static final double secondStageLength = 16.975; // inches
@@ -180,8 +202,6 @@ public final class Constants {
 
     public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
 
-    public static final double fourBarOut = 20.0;
-
     public static final double redCenterRing2 = 2.5; // 2.4
     public static final double redCenterRing3 = 2.5; // 2.4
     public static final double redCenterRing4 = 1.9; // 1.8
@@ -200,7 +220,6 @@ public final class Constants {
     public static final double red_weirdSideRing3 = 2.6;
     public static final double red_weirdSideRing4 = 1.9;
 
-    public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;
     // public static final int deployMotorId = 0;
     public static final int shooterMotor2ID = 7;
@@ -424,20 +443,64 @@ public final class Constants {
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 
         static {
-            // Key: Distance
+            // Key: Distance in feet
             // Value: Shooter Position
-            fourBarMap.put(49.5, 8.0);
-            fourBarMap.put(25.5, 8.0);
-            fourBarMap.put(19.5, 5.4); // 6.7
-            fourBarMap.put(17.5, 2.84); // 4.2
-            fourBarMap.put(15.5 + (2.0 / 12.0), 2.37);
-            fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
-            fourBarMap.put(13.0, 1.65);
-            fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
-            fourBarMap.put(6.5, 0.8);
-            fourBarMap.put(6.4, 18.0);
-            fourBarMap.put(5.4, 20.0);
-            fourBarMap.put(3.0, 20.0);
+
+            // OLD POSITIONS CONVERSIONS AND GAINS W/O FF
+            // fourBarMap.put(49.5, 8.0);
+            // fourBarMap.put(25.5, 8.0);
+            // fourBarMap.put(19.5, 5.4); // 6.7
+            // fourBarMap.put(17.5, 2.84); // 4.2
+            // fourBarMap.put(15.5 + (2.0 / 12.0), 2.37);
+            // fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
+            // fourBarMap.put(13.0, 1.65);
+            // fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
+            // fourBarMap.put(6.5, 0.8);
+            // fourBarMap.put(6.4, 18.0);
+            // fourBarMap.put(5.4, 20.0);
+            // fourBarMap.put(3.0, 20.0);
+
+            // fourBarMap.put(49.5, 1.500);
+            // fourBarMap.put(25.5, 1.500);
+            // fourBarMap.put(19.5, 1.710);
+            // fourBarMap.put(17.5, 1.917);
+            // fourBarMap.put(15.7, 1.955);
+            // fourBarMap.put(13.6, 2.001);
+            // fourBarMap.put(13.0, 2.013);
+            // fourBarMap.put(11.3, 2.041);
+            // fourBarMap.put( 6.5, 2.082);
+            // fourBarMap.put( 6.4, 0.692);
+            // fourBarMap.put( 5.4, 0.531);
+            // fourBarMap.put( 3.0, 0.531);
+
+            // fourBarMap.put(15.091, 1.500);
+            // fourBarMap.put(7.774, 1.500);
+            // fourBarMap.put(5.945, 1.710);
+            // fourBarMap.put(5.335, 1.917);
+            // fourBarMap.put(4.786, 1.955);
+            // fourBarMap.put(4.146, 2.001);
+            // fourBarMap.put(3.963, 2.013);
+            // fourBarMap.put(3.445, 2.041);
+            // fourBarMap.put(1.981, 2.082);
+            // fourBarMap.put(1.951, 0.692);
+            // fourBarMap.put(1.646, 0.531);
+            // fourBarMap.put(0.914, 0.531);
+
+            fourBarMap.put(3.8, 2.05);
+            fourBarMap.put(3.17, 2.08);
+            fourBarMap.put(4.4, 2d);
+            fourBarMap.put(4.6, 1.95d);
+            fourBarMap.put(4.75, 1.925d);
+            fourBarMap.put(4.85, 1.925d);
+            fourBarMap.put(4.9, 1.925);
+            fourBarMap.put(5.0, 1.85);
+            fourBarMap.put(5.1, 1.9);
+            fourBarMap.put(5.3, 1.79);
+            fourBarMap.put(5.4, 1.5);
+            fourBarMap.put(15.091, 1.500);
+
+
+
         }
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
