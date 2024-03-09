@@ -25,9 +25,12 @@ public class PhotonVisionRunnable implements Runnable {
     private final PhotonCamera photonCamera;
     private final AtomicReference<EstimatedRobotPose> atomicEstimatedRobotPose =
             new AtomicReference<EstimatedRobotPose>();
+    private final Transform3d robotToCamera;
 
     public PhotonVisionRunnable(String photonCameraName, Transform3d robotToCamera) {
         this.photonCamera = new PhotonCamera(photonCameraName);
+        this.robotToCamera = robotToCamera;
+
         PhotonPoseEstimator photonPoseEstimator = null;
         var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
         // PV estimates will always be blue, they'll get flipped by robot thread
@@ -101,5 +104,10 @@ public class PhotonVisionRunnable implements Runnable {
      */
     public EstimatedRobotPose grabLatestEstimatedPose() {
         return atomicEstimatedRobotPose.getAndSet(null);
+    }
+
+    public Transform3d getRobotToCameraTransform() {
+
+        return this.robotToCamera;
     }
 }

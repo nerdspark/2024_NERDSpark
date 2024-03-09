@@ -8,7 +8,7 @@ import frc.robot.generated.TunerConstantsSmudge;
 
 public interface RobotConstants {
 
-    static TunerConstantsSmudge getRobotConstants(RobotIdentity robot) {
+    TunerConstantsSmudge getRobotConstants(RobotIdentity robot) {
         switch (robot) {
             case SMUDGE_2024:
                 return new TunerConstantsSmudge();
@@ -20,7 +20,7 @@ public interface RobotConstants {
         }
     }
 
-    static RobotContainerSmudge getRobotContainer(RobotIdentity robot) {
+    RobotContainerSmudge getRobotContainer(RobotIdentity robot) {
         switch (robot) {
             case SMUDGE_2024:
                 return new RobotContainerSmudge();

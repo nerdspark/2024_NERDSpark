@@ -149,8 +149,10 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
                 poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
+            var robotPose = cameraPose.estimatedPose.transformBy(estomator.getRobotToCameraTransform());
             poseEstimates.add(new PoseEstimate(
-                    cameraPose.estimatedPose,
+                    // cameraPose.estimatedPose,
+                    robotPose,
                     cameraPose.timestampSeconds,
                     distanceUsedForCalculatingStdDev,
                     tagIDsFrontCamera,

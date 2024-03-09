@@ -38,8 +38,7 @@ public class AutoAim {
                 .plus(speeds.get().times(distanceToSpeaker2 * ShooterConstants.shootMoveMultiplier))
                 .getDistance(speakerPose.getTranslation());
 
-        double angle = FourBarConstants.fourBarMap.get(
-                distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD);
+        double angle = FourBarConstants.fourBarMap.get(distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD);
         SmartDashboard.putNumber("Calculated 4Bar", angle);
         return angle;
     }

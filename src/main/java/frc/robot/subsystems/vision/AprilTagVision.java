@@ -14,7 +14,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers.PoseEstimate;
@@ -106,7 +105,7 @@ public class AprilTagVision extends SubsystemBase {
                 // LightningShuffleboard.setDouble("Vision", "raw vision input", robotPose.getX());
                 // Correct the robot pose since camera is mounted on the back.
                 // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
-                robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
+                // robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
 
                 // LightningShuffleboard.setDouble("Vision", "translated vision input", robotPose.getX());
 
