@@ -50,18 +50,18 @@ public final class Constants {
         static {
             // Key: Distance in feet
             // Value: Shooter Position
-            fourBarMap.put(3.8, 2.05);
-            fourBarMap.put(3.17, 2.08);
-            fourBarMap.put(4.4, 2d);
-            fourBarMap.put(4.6, 1.95d);
-            fourBarMap.put(4.75, 1.925d);
-            fourBarMap.put(4.85, 1.925d);
-            fourBarMap.put(4.9, 1.925);
-            fourBarMap.put(5.0, 1.85);
-            fourBarMap.put(5.1, 1.9);
-            fourBarMap.put(5.3, 1.79);
-            fourBarMap.put(5.4, 1.5);
-            fourBarMap.put(15.091, 1.5);
+            fourBarMap.put(3.80 + 0.2, 2.05);
+            fourBarMap.put(3.17 + 0.2, 2.08);
+            fourBarMap.put(4.40 + 0.2, 2d);
+            fourBarMap.put(4.60 + 0.2, 1.95d);
+            fourBarMap.put(4.75 + 0.2, 1.925d);
+            fourBarMap.put(4.85 + 0.2, 1.925d);
+            fourBarMap.put(4.90 + 0.2, 1.925);
+            fourBarMap.put(5.00 + 0.2, 1.85);
+            fourBarMap.put(5.10 + 0.2, 1.9);
+            fourBarMap.put(5.30 + 0.2, 1.79);
+            fourBarMap.put(5.40 + 0.15, 1.5);
+            fourBarMap.put(15.1, 1.5);
 
             /* OLD POSITIONS W/O NEW CONVERSION FACTOR */
             // fourBarMap.put(49.5, 8.0);
@@ -329,8 +329,8 @@ public final class Constants {
          * Physical location of the left camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(0), Units.inchesToMeters(0), Units.inchesToMeters(9)),
-                new Rotation3d(0, Math.toRadians(19.565), Math.toRadians(180)));
+                new Translation3d(-Units.inchesToMeters(12.6), Units.inchesToMeters(0), Units.inchesToMeters(0)),
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(180)));
 
         // public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
         //         new Translation3d(Units.inchesToMeters(12.6), Units.inchesToMeters(0), Units.inchesToMeters(9)),
@@ -420,8 +420,8 @@ public final class Constants {
         public static final double speakerBlueY = Units.inchesToMeters(218.42);
         public static final double speakerRedY = Units.inchesToMeters(218.42);
         public static final double speakerBlueX = Units.inchesToMeters(4);
-
         public static final double speakerRedX = Units.inchesToMeters(652.73 - 4);
+
         public static final double speakerHeight = Units.inchesToMeters(80.515); // (82.90 + 78.13) / 2
 
         public static final Pose2d speakerLocBlue = new Pose2d(speakerBlueX, speakerBlueY, new Rotation2d(0));
@@ -445,9 +445,9 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(24.5, 5700.0);
-            shooterMap.put(19.5, 5500.0);
-            shooterMap.put(17.5, 5400.0);
+            shooterMap.put(24.5, 5300.0);
+            shooterMap.put(19.5, 5300.0);
+            shooterMap.put(17.5, 5300.0);
             shooterMap.put(15.5 + (2.0 / 12.0), 5300.0);
             shooterMap.put(13.5 + (1.0 / 12.0), 5000.0);
             shooterMap.put(10.5 + (9.0 / 12.0), 4800.0);

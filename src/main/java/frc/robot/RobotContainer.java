@@ -108,7 +108,7 @@ public class RobotContainer extends RobotContainerSmudge {
                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
                 fourBar = new FourBar(new FourBarIOSparkMax());
                 shooter = new Shooter(new ShooterIOSparkMax());
-                arm = new Arm(new ArmIOSparkMax());
+                // arm = new Arm(new ArmIOSparkMax());
                 break;
 
             default:
@@ -116,7 +116,7 @@ public class RobotContainer extends RobotContainerSmudge {
                 intake = new Intake(new IntakeIO() {});
                 shooter = new Shooter(new ShooterIO() {});
                 fourBar = new FourBar(new FourBarIO() {});
-                arm = new Arm(new ArmIO() {});
+                // arm = new Arm(new ArmIO() {});
                 // break;
         }
 
@@ -355,60 +355,46 @@ public class RobotContainer extends RobotContainerSmudge {
         copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
 
         // arm commands
-        copilot.a()
-                .onTrue(new ArmCommand(
-                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
-        copilot.b()
-                .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
-        copilot.b()
-                .onFalse(new ArmCommand(
-                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
-        copilot.y()
-                .whileTrue(new ArmCommand(
-                        arm,
-                        () -> ArmSetPoints.dropoff.plus(new Translation2d(
-                                (DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1)
-                                        * copilot.getLeftX()
-                                        * ArmSetPoints.dropoffMultiplier,
-                                -copilot.getLeftY() * ArmSetPoints.dropoffMultiplierY)),
-                        () -> ArmSetPoints.dropoffWrist,
-                        () -> false));
-        copilot.y()
-                .onFalse(new ArmCommand(
-                        arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
+        // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
+        // copilot.b().whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
+        // copilot.b().onFalse(new ArmCommand(
+        //         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
+        //         copilot.y().whileTrue(new ArmCommand(
+        //                 arm,
+        //                 () -> ArmSetPoints.dropoff.plus(new Translation2d(
+        //                         (DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1)
+        //                                 * copilot.getLeftX()
+        //                                 * ArmSetPoints.dropoffMultiplier,
+        //                                 -copilot.getLeftY() * ArmSetPoints.dropoffMultiplierY)),
+        //                 () -> ArmSetPoints.dropoffWrist,
+        //                 () -> false));
+        // copilot.y().onFalse(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
+        
 
-        copilot.povUp()
-                .onTrue(new ArmCommand(
-                                arm,
-                                () -> ClimbSetPoints.ready,
-                                () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
-                                () -> false)
-                        // .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
-                        .alongWith(new InstantCommand(() -> arm.setGains(false))));
-        copilot.povRight()
-                .onTrue(new ArmCommand(
-                        arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
-        copilot.povDown()
-                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true)
-                        .alongWith(new InstantCommand(() -> arm.setGains(true))));
+        // copilot.povUp().onTrue(new ArmCommand(
+        //                         arm,
+        //                         () -> ClimbSetPoints.ready,
+        //                         () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
+        //                         () -> false)
+        //                 // .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
+        //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
+        // copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
+        // copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true)
+        //                 .alongWith(new InstantCommand(() -> arm.setGains(true))));
 
-        copilot.povLeft()
-                .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
+        // copilot.povLeft().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
 
-        // trap
-        copilot.rightStick()
-                .onTrue(new ArmCommand(
-                                arm,
-                                () -> ClimbSetPoints.trap.plus(
-                                        new Translation2d(copilot.getLeftY() * ClimbSetPoints.trapMultiplier, 0)),
-                                () -> ClimbSetPoints.trapwrist,
-                                () -> true)
-                        .alongWith(new InstantCommand(() -> arm.setGains(false))));
+        // // trap
+        // copilot.rightStick().onTrue(new ArmCommand(
+        //                         arm,
+        //                         () -> ClimbSetPoints.trap.plus(
+        //                                 new Translation2d(copilot.getLeftY() * ClimbSetPoints.trapMultiplier, 0)),
+        //                         () -> ClimbSetPoints.trapwrist,
+        //                         () -> true)
+        //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
 
-        // reset buttons
-        copilot.start()
-                .whileTrue(new InstantCommand(() -> arm.resetEncoders())
-                        .alongWith(new InstantCommand(() -> arm.setGains(false))));
+        // // reset buttons
+        // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() -> arm.setGains(false))));
 
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
         // copilot.x().whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0).alongWith(new

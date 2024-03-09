@@ -39,7 +39,7 @@ public class AutoAim {
                 .getDistance(speakerPose.getTranslation());
 
         double angle = FourBarConstants.fourBarMap.get(
-                Units.metersToFeet(distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD));
+                distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD);
         SmartDashboard.putNumber("Calculated 4Bar", angle);
         return angle;
     }
@@ -77,6 +77,7 @@ public class AutoAim {
         } else {
             speakerPose = Constants.SpeakerConstants.speakerLocRed;
         }
+
         double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation())
                 + ShooterConstants.CONSTANT_DISTANCE_ADD;
         if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {

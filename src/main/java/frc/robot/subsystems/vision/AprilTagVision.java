@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
 import frc.robot.util.FieldConstants;
+import frc.robot.util.LightningShuffleboard;
 import frc.robot.util.VisionHelpers.PoseEstimate;
 import frc.robot.util.VisionHelpers.TimestampedVisionUpdate;
 import java.util.ArrayList;
@@ -103,9 +104,12 @@ public class AprilTagVision extends SubsystemBase {
                 }
                 double timestamp = poseEstimates.timestampSeconds();
                 Pose3d robotPose = poseEstimates.pose();
+                LightningShuffleboard.setDouble("Vision", "raw vision input", robotPose.getX());
                 // Correct the robot pose since camera is mounted on the back.
                 // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
                 robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
+
+                LightningShuffleboard.setDouble("Vision", "translated vision input", robotPose.getX());
 
                 List<Pose3d> tagPoses = getTagPoses(poseEstimates);
                 double poseAmbiguity = poseEstimates.poseAmbiguity();
