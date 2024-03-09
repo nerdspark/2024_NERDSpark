@@ -5,6 +5,9 @@
 package frc.robot.subsystems.fourBar;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.FourBarConstants;
+import frc.robot.util.LightningShuffleboard;
+import org.littletonrobotics.junction.Logger;
 
 public class FourBar extends SubsystemBase {
     /** Creates a new FourBar. */
@@ -19,8 +22,13 @@ public class FourBar extends SubsystemBase {
     @Override
     public void periodic() {
         io.updateInputs(inputs);
+        Logger.processInputs("fourBar", inputs);
+
         // This method will be called once per scheduler run
 
+        setFourBarAngle(LightningShuffleboard.getDouble("four bar", "target", FourBarConstants.fourBarHome));
+
+        LightningShuffleboard.setDouble("four bar", "position", getFourBarAngle());
     }
 
     public void setFourBarAngle(double angle) {

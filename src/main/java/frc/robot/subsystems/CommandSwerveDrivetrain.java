@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.Constants.speakerConstants;
+import frc.robot.Constants.SpeakerConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.util.AutoAimMath;
@@ -99,7 +99,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         // Some condition that should decide if we want to override rotation
         if (intake.getBeamBreak()
                 && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker)
-                        > speakerConstants.autonAimDistanceThreshold) {
+                        > SpeakerConstants.autonAimDistanceThreshold) {
             // if (intake.getBeamBreak()) {
             // Return an optional containing the rotation override (this should be a field relative rotation)
             return Optional.of(AutoAimMath.getAutoAimCalcRobot(() -> this.getState().Pose, targetPoseSpeaker));

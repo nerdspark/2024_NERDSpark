@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.LocalADStarAK;
 import frc.robot.util.RobotConstants;
-
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;

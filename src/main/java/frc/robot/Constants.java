@@ -19,13 +19,80 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
-import frc.robot.Constants.RobotType;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 import frc.robot.util.FieldConstants;
-// import frc.robot.config.RobotIdentity;
 
 public final class Constants {
+    public final class FourBarGains {
+        public static final double kP = 0.85;
+        public static final double kI = 0.2;
+        public static final double kD = 0.01;
+        public static final double kIZone = 0.05;
+
+        public static final double kS = 0.0;
+        public static final double kV = 0.0;
+        public static final double kG = 0.03;
+        public static final double kA = 0.0;
+    }
+
+    public final class FourBarConstants {
+        public static final int currentLimit = 70;
+        public static final double closedLoopRampRate = 0.15;
+        public static final double openLoopRampRate = 0.15;
+        public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
+        public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
+        public static final double fourBarOut = -20.0 * positionConversionFactor + resetPosition;
+        public static final double fourBarHome = -0.75 * positionConversionFactor + resetPosition;
+
+        public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
+
+        static {
+            // Key: Distance in feet
+            // Value: Shooter Position
+            fourBarMap.put(3.8, 2.05);
+            fourBarMap.put(3.17, 2.08);
+            fourBarMap.put(4.4, 2d);
+            fourBarMap.put(4.6, 1.95d);
+            fourBarMap.put(4.75, 1.925d);
+            fourBarMap.put(4.85, 1.925d);
+            fourBarMap.put(4.9, 1.925);
+            fourBarMap.put(5.0, 1.85);
+            fourBarMap.put(5.1, 1.9);
+            fourBarMap.put(5.3, 1.79);
+            fourBarMap.put(5.4, 1.5);
+            fourBarMap.put(15.091, 1.5);
+
+            /* OLD POSITIONS W/O NEW CONVERSION FACTOR */
+            // fourBarMap.put(49.5, 8.0);
+            // fourBarMap.put(25.5, 8.0);
+            // fourBarMap.put(19.5, 5.4); // 6.7
+            // fourBarMap.put(17.5, 2.84); // 4.2
+            // fourBarMap.put(15.5 + (2.0 / 12.0), 2.37);
+            // fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
+            // fourBarMap.put(13.0, 1.65);
+            // fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
+            // fourBarMap.put(6.5, 0.8);
+            // fourBarMap.put(6.4, 18.0);
+            // fourBarMap.put(5.4, 20.0);
+            // fourBarMap.put(3.0, 20.0);
+
+            /* OLD POSITIONS WITH NEW CONVERSION FACTOR */
+            // fourBarMap.put(15.091, 1.500);
+            // fourBarMap.put(7.774, 1.500);
+            // fourBarMap.put(5.945, 1.710);
+            // fourBarMap.put(5.335, 1.917);
+            // fourBarMap.put(4.786, 1.955);
+            // fourBarMap.put(4.146, 2.001);
+            // fourBarMap.put(3.963, 2.013);
+            // fourBarMap.put(3.445, 2.041);
+            // fourBarMap.put(1.981, 2.082);
+            // fourBarMap.put(1.951, 0.692);
+            // fourBarMap.put(1.646, 0.531);
+            // fourBarMap.put(0.914, 0.531);
+        }
+    }
+
     public final class ArmConstants {
         public static final double baseStageLength = 18.75; // inches
         public static final double secondStageLength = 16.975; // inches
@@ -46,6 +113,7 @@ public final class Constants {
 
         public static final double maxPowerShoulder = 0.3;
         public static final double maxPowerElbow = 0.3;
+        public static final double maxPowerWrist = 0.35;
         public static final int currentLimitShoulder = 60;
         public static final int currentLimitElbow = 60;
         public static final double rampRateShoulder = 0.1;
@@ -67,6 +135,9 @@ public final class Constants {
             private final double elbowGRight = .03;
             private final double elbowV = 0.0;
             private final double elbowA = 0.0;
+            public static final double wristP = 0.4;
+            public static final double wristI = 0.0;
+            public static final double wristD = 0.0;
 
             public final PIDController shoulderLeftController = new PIDController(shoulderP, shoulderI, shoulderD);
             public final PIDController shoulderRightController = new PIDController(shoulderP, shoulderI, shoulderD);
@@ -109,11 +180,6 @@ public final class Constants {
             public final ArmFeedforward elbowLeftFeedforward = new ArmFeedforward(elbowS, elbowG, elbowV, elbowA);
             public final ArmFeedforward elbowRightFeedforward = new ArmFeedforward(elbowS, elbowG, elbowV, elbowA);
         }
-
-        public static final double wristP = 0.4;
-        public static final double wristI = 0.0;
-        public static final double wristD = 0.0;
-        public static final double wristMaxPower = 0.35;
 
         public static final class ArmSetPoints {
             public static final Translation2d home = new Translation2d(
@@ -178,114 +244,65 @@ public final class Constants {
         }
     }
 
-    public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
+    public final class AutoConstants {
+        public static final double redCenterRing2 = 2.5; // 2.4
+        public static final double redCenterRing3 = 2.5; // 2.4
+        public static final double redCenterRing4 = 1.9; // 1.8
 
-    public static final double fourBarOut = 20.0;
+        public static final double blueCenterRing2 = 2.7;
+        public static final double blueCenterRing3 = 2.45;
+        public static final double blueCenterRing4 = 1.9;
 
-    public static final double redCenterRing2 = 2.5; // 2.4
-    public static final double redCenterRing3 = 2.5; // 2.4
-    public static final double redCenterRing4 = 1.9; // 1.8
+        public static final double weirdSideRing1 = 3.2;
+        public static final double weirdSideRing2 = 3.5;
+        public static final double weirdSideRing3 = 2.75;
+        public static final double weirdSideRing4 = 1.9;
 
-    public static final double blueCenterRing2 = 2.7;
-    public static final double blueCenterRing3 = 2.45;
-    public static final double blueCenterRing4 = 1.9;
-
-    public static final double weirdSideRing1 = 3.2;
-    public static final double weirdSideRing2 = 3.5;
-    public static final double weirdSideRing3 = 2.75;
-    public static final double weirdSideRing4 = 1.9;
-
-    public static final double red_weirdSideRing1 = 3.2;
-    public static final double red_weirdSideRing2 = 3.5;
-    public static final double red_weirdSideRing3 = 2.6;
-    public static final double red_weirdSideRing4 = 1.9;
-
-    public static final double fourBarHome = 0.75;
-    public static final int intakeMotorId = 4;
-    // public static final int deployMotorId = 0;
-    public static final int shooterMotor2ID = 7;
-    public static final int shooterMotor1ID = 6;
-    // public static final int anglemotorID = 0;
-
-    public static final int fourBarLeftID = 2;
-    public static final int fourBarRightID = 3;
-
-    public static final int shoulderLeftID = 11;
-    public static final int shoulderRightID = 9;
-    public static final int elbowLeftID = 10;
-    public static final int elbowRightID = 8;
-    public static final int wristID = 5;
-    // public static final int gripperID = 0;
-
-    public static final int wristChannel1 = 0;
-    public static final int wristChannel2 = 1;
-    // public static final double wristPulseDist = 8192.0 * 2.0 * Math.PI;
-    public static final double wristOffset = 0.0;
-
-    public static final double indexDistance = 1000;
-
-    public static final Mode currentMode = Mode.REAL;
-    public static final RobotIdentity compRobot = RobotIdentity.SMUDGE_2024;
-
-    public static final double gyroP = 0.023;
-    public static final double gyroI = 0.0;
-    public static final double gyroD = 0.0018;
-    public static final double IZone = 5;
-
-    public static final int pigeonID = 25;
-    public static final int loopPeriodMs = 20;
-    private static RobotType robotType = RobotType.COMPBOT;
-    public static final boolean tuningMode = true;
-    public static final boolean characterizationMode = false;
-
-    public static final double stillShotSpeed = 0.3;
-    public static final double autoTurnCeiling = 6.0;
-
-    public static RobotType getRobot() {
-        if (RobotBase.isReal() && robotType == RobotType.SIMBOT) {
-            new Alert("Invalid Robot Selected, using COMPBOT as default", Alert.AlertType.ERROR).set(true);
-            robotType = RobotType.COMPBOT;
-        }
-        return robotType;
+        public static final double red_weirdSideRing1 = 3.2;
+        public static final double red_weirdSideRing2 = 3.5;
+        public static final double red_weirdSideRing3 = 2.6;
+        public static final double red_weirdSideRing4 = 1.9;
     }
 
-    public static Mode getMode() {
-        return switch (getRobot()) {
-            case COMPBOT -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
-            case SIMBOT -> Mode.SIM;
-        };
+    public final class RobotMap {
+        public static final int intakeMotorId = 4;
+        // public static final int deployMotorId = 0;
+        public static final int shooterMotor2ID = 7;
+        public static final int shooterMotor1ID = 6;
+        // public static final int anglemotorID = 0;
+
+        public static final int fourBarLeftID = 2;
+        public static final int fourBarRightID = 3;
+
+        public static final int shoulderLeftID = 11;
+        public static final int shoulderRightID = 9;
+        public static final int elbowLeftID = 10;
+        public static final int elbowRightID = 8;
+        public static final int wristID = 5;
+        // public static final int gripperID = 0;
+
+        public static final int wristChannel1 = 0;
+        public static final int wristChannel2 = 1;
+
+        public static final int pigeonID = 25;
+        // public static final double wristPulseDist = 8192.0 * 2.0 * Math.PI;
     }
 
-    public enum Mode {
-        /** Running on a real robot. */
-        REAL,
+    public final class DrivetrainConstants {
+        public static final double gyroP = 0.023;
+        public static final double gyroI = 0.0;
+        public static final double gyroD = 0.0018;
+        public static final double IZone = 5;
 
-        /** Running a physics simulator. */
-        SIM,
-
-        /** Replaying from a log file. */
-        REPLAY
-    }
-
-    public enum RobotType {
-        SIMBOT,
-        COMPBOT
-    }
-
-    /** Checks whether the robot the correct robot is selected when deploying. */
-    public static void main(String... args) {
-        if (robotType == RobotType.SIMBOT) {
-            System.err.println("Cannot deploy, invalid robot selected: " + robotType.toString());
-            System.exit(1);
-        }
-    }
-
-    public static enum VisionDeviationDistanceStrategy {
-        SMALEST_DISTANCE,
-        AVERAGE_DISTANCE
+        public static final double autoTurnCeiling = 6.0;
     }
 
     public static class VisionConstants {
+
+        public static enum VisionDeviationDistanceStrategy {
+            SMALEST_DISTANCE,
+            AVERAGE_DISTANCE
+        }
 
         public static boolean USE_VISION = true;
         public static boolean USE_FRONT_CAMERA = true;
@@ -399,7 +416,7 @@ public final class Constants {
         // End Unused for 2024
     }
 
-    public static class speakerConstants {
+    public static class SpeakerConstants {
         public static final double speakerBlueY = Units.inchesToMeters(218.42);
         public static final double speakerRedY = Units.inchesToMeters(218.42);
         public static final double speakerBlueX = Units.inchesToMeters(4);
@@ -414,33 +431,16 @@ public final class Constants {
     }
 
     public static class ShooterConstants {
-        public static double FOURBAR_ANGLE_THRESHOLD = 5; // Not sure what is this
         public static Measure<Distance> MAXIMUM_READYSHOOT_DISTANCE = Meters.of(Units.feetToMeters(15));
 
         public static double SHOOTER_SPEED = 10;
 
         public static final double CONSTANT_DISTANCE_ADD = 0.0; // ft
 
-        public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
-
-        static {
-            // Key: Distance
-            // Value: Shooter Position
-            fourBarMap.put(49.5, 8.0);
-            fourBarMap.put(25.5, 8.0);
-            fourBarMap.put(19.5, 5.4); // 6.7
-            fourBarMap.put(17.5, 2.84); // 4.2
-            fourBarMap.put(15.5 + (2.0 / 12.0), 2.37);
-            fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
-            fourBarMap.put(13.0, 1.65);
-            fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
-            fourBarMap.put(6.5, 0.8);
-            fourBarMap.put(6.4, 18.0);
-            fourBarMap.put(5.4, 20.0);
-            fourBarMap.put(3.0, 20.0);
-        }
-
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
+
+        public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
+        public static final double stillShotSpeed = 0.3;
 
         static {
             // Key: Distance
@@ -453,6 +453,56 @@ public final class Constants {
             shooterMap.put(10.5 + (9.0 / 12.0), 4800.0);
             shooterMap.put(8.5 + (5.0 / 12.0), 4700.0);
             shooterMap.put(2.5, 4500.0);
+        }
+    }
+
+    /* MISCELLANEOUS CONSTANTS */
+    public static final double indexDistance = 1000;
+
+    public static final Mode currentMode = Mode.REAL;
+    public static final RobotIdentity compRobot = RobotIdentity.SMUDGE_2024;
+
+    public static final int loopPeriodMs = 20;
+    private static RobotType robotType = RobotType.COMPBOT;
+    public static final boolean tuningMode = true;
+    public static final boolean characterizationMode = false;
+
+    public static RobotType getRobot() {
+        if (RobotBase.isReal() && robotType == RobotType.SIMBOT) {
+            new Alert("Invalid Robot Selected, using COMPBOT as default", Alert.AlertType.ERROR).set(true);
+            robotType = RobotType.COMPBOT;
+        }
+        return robotType;
+    }
+
+    public static Mode getMode() {
+        return switch (getRobot()) {
+            case COMPBOT -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
+            case SIMBOT -> Mode.SIM;
+        };
+    }
+
+    public enum Mode {
+        /** Running on a real robot. */
+        REAL,
+
+        /** Running a physics simulator. */
+        SIM,
+
+        /** Replaying from a log file. */
+        REPLAY
+    }
+
+    public enum RobotType {
+        SIMBOT,
+        COMPBOT
+    }
+
+    /** Checks whether the robot the correct robot is selected when deploying. */
+    public static void main(String... args) {
+        if (robotType == RobotType.SIMBOT) {
+            System.err.println("Cannot deploy, invalid robot selected: " + robotType.toString());
+            System.exit(1);
         }
     }
 }

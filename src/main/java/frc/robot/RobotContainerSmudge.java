@@ -9,7 +9,6 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -17,55 +16,32 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.ArmConstants.ArmSetPoints;
-import frc.robot.Constants.ArmConstants.ClimbSetPoints;
-import frc.robot.actions.activeIntaking;
-import frc.robot.actions.backToSafety;
-import frc.robot.commands.ArmCommand;
-import frc.robot.commands.FourBarCommand;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.IntakeCommand.IntakeMode;
-import frc.robot.commands.ShooterCommand;
-import frc.robot.config.RobotIdentity;
+import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.Constants.RobotMap;
 import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.arm.Arm;
-import frc.robot.subsystems.arm.ArmIO;
-import frc.robot.subsystems.arm.ArmIOSparkMax;
-import frc.robot.subsystems.fourBar.FourBar;
-import frc.robot.subsystems.fourBar.FourBarIO;
-import frc.robot.subsystems.fourBar.FourBarIOSparkMax;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.IntakeIO;
-import frc.robot.subsystems.intake.IntakeIOSparkMax;
-import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.ShooterIO;
-import frc.robot.subsystems.shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
-import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
-import frc.robot.util.RobotConstants;
 import java.util.function.Supplier;
 
 public class RobotContainerSmudge {
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
-    private TunerConstantsSmudge tunerConstants = new TunerConstantsSmudge();//RobotConstants.getRobotConstants(RobotIdentity.getIdentity());
-//     private Intake intake;
-//     private FourBar fourBar;
-//     private Shooter shooter;
-//     private Arm arm;
+    private TunerConstantsSmudge tunerConstants =
+            new TunerConstantsSmudge(); // RobotConstants.getRobotConstants(RobotIdentity.getIdentity());
+    //     private Intake intake;
+    //     private FourBar fourBar;
+    //     private Shooter shooter;
+    //     private Arm arm;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
@@ -85,9 +61,10 @@ public class RobotContainerSmudge {
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final Telemetry logger = new Telemetry(MaxSpeed);
     private final SendableChooser<Command> autoChooser;
-    private PIDController gyroPid = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD);
+    private PIDController gyroPid =
+            new PIDController(DrivetrainConstants.gyroP, DrivetrainConstants.gyroI, DrivetrainConstants.gyroD);
     private double targetAngle = 0;
-    private final Pigeon2 gyro = new Pigeon2(Constants.pigeonID, "canivore1");
+    private final Pigeon2 gyro = new Pigeon2(RobotMap.pigeonID, "canivore1");
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
@@ -128,22 +105,22 @@ public class RobotContainerSmudge {
         // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
     }
 
-        public RobotContainerSmudge() {
+    public RobotContainerSmudge() {
 
         switch (Constants.currentMode) {
             case REAL:
-//                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
-//                 fourBar = new FourBar(new FourBarIOSparkMax());
-//                 shooter = new Shooter(new ShooterIOSparkMax());
-//                 arm = new Arm(new ArmIOSparkMax());
+                //                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
+                //                 fourBar = new FourBar(new FourBarIOSparkMax());
+                //                 shooter = new Shooter(new ShooterIOSparkMax());
+                //                 arm = new Arm(new ArmIOSparkMax());
                 break;
 
             default:
-//                 // Replayed robot, disable IO implementations
-//                 intake = new Intake(new IntakeIO() {});
-//                 shooter = new Shooter(new ShooterIO() {});
-//                 fourBar = new FourBar(new FourBarIO() {});
-//                 arm = new Arm(new ArmIO() {});
+                //                 // Replayed robot, disable IO implementations
+                //                 intake = new Intake(new IntakeIO() {});
+                //                 shooter = new Shooter(new ShooterIO() {});
+                //                 fourBar = new FourBar(new FourBarIO() {});
+                //                 arm = new Arm(new ArmIO() {});
                 break;
         }
 
@@ -209,7 +186,8 @@ public class RobotContainerSmudge {
         //         "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
         // NamedCommands.registerCommand(
-        //         "forcedIntakeShoot", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKESHOOT));
+        //         "forcedIntakeShoot", new IntakeCommand(intake, () -> 1.0,
+        // IntakeCommand.IntakeMode.FORCEINTAKESHOOT));
 
         // NamedCommands.registerCommand(
         //         "forcedIntakeZero", new IntakeCommand(intake, () -> 0.0, IntakeCommand.IntakeMode.FORCEINTAKE));
@@ -221,7 +199,7 @@ public class RobotContainerSmudge {
         // NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
         configureBindings();
-// 
+        //
         configureDashboard();
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
@@ -238,10 +216,12 @@ public class RobotContainerSmudge {
         // intake button
         // driver.leftTrigger()
         //         .whileTrue(new SequentialCommandGroup(
-        //                 new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis() - 0.4)), IntakeMode.SOFTINTAKE)
+        //                 new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis() - 0.4)),
+        // IntakeMode.SOFTINTAKE)
         //                         .deadlineWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut)),
         //                 new FourBarCommand(fourBar, () -> Constants.fourBarHome)
-        //                         .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))));
+        //                         .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble,
+        // 1)))));
         // driver.leftTrigger()
         //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
         //                 .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome))
@@ -308,7 +288,8 @@ public class RobotContainerSmudge {
         //                                         drivetrain.getState().speeds.vxMetersPerSecond,
         //                                         drivetrain.getState().speeds.vyMetersPerSecond)))
         //                 .alongWith(drivetrain.applyRequest(
-        //                         () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
+        //                         () -> drive.withRotationalRate(calculateAutoTurn(() ->
+        // AutoAim.calculateAngleToSpeaker(
         //                                                 () -> drivetrain.getState().Pose,
         //                                                 () -> new Translation2d(
         //                                                         drivetrain.getState().speeds.vxMetersPerSecond,
@@ -317,7 +298,8 @@ public class RobotContainerSmudge {
         //                                 .withVelocityX(xLimiter.calculate(
         //                                         -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
         //                                 .withVelocityY(yLimiter.calculate(
-        //                                         -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))));
+        //                                         -JoystickMap.JoystickPowerCalculate(driver.getRightX()) *
+        // MaxSpeed)))));
         // copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
 
         // // // vision-assisted intake command
@@ -361,12 +343,15 @@ public class RobotContainerSmudge {
         // // // arm commands
         // copilot.a()
         //         .onTrue(new ArmCommand(
-        //                 arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
+        //                 arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () ->
+        // false));
         // copilot.b()
-        //         .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
+        //         .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () ->
+        // false));
         // copilot.b()
         //         .onFalse(new ArmCommand(
-        //                 arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
+        //                 arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () ->
+        // false));
         // copilot.y()
         //         .whileTrue(new ArmCommand(
         //                 arm,
@@ -379,7 +364,8 @@ public class RobotContainerSmudge {
         //                 () -> false));
         // copilot.y()
         //         .onFalse(new ArmCommand(
-        //                 arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
+        //                 arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () ->
+        // false));
 
         // copilot.back().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
         // copilot.back().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
@@ -400,7 +386,8 @@ public class RobotContainerSmudge {
         //                 .alongWith(new InstantCommand(() -> arm.setGains(true))));
 
         // copilot.povLeft()
-        //         .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
+        //         .onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () ->
+        // false));
 
         // // trap
         // copilot.rightStick()
@@ -417,7 +404,8 @@ public class RobotContainerSmudge {
         //         .whileTrue(new InstantCommand(() -> arm.resetEncoders())
         //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
 
-        // // copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() -> arm.setGains(false))));
+        // // copilot.x().onTrue(new ArmResetCommand(arm, false).alongWith(new InstantCommand(() ->
+        // arm.setGains(false))));
         // copilot.x()
         //         .whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0)
         //                 .alongWith(new FourBarCommand(fourBar, () -> 8.0))); // speed1 = CAN ID 6 = top motor
@@ -426,7 +414,6 @@ public class RobotContainerSmudge {
         //                 .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
     }
 
-    
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
         // return null;
@@ -441,8 +428,7 @@ public class RobotContainerSmudge {
         // Pose estimation
         drivetrain.addDashboardWidgets(visionTab);
     }
-    
-    
+
     public double calculateAutoTurn(Supplier<Double> target) {
         double currentAngle = -(gyro.getAngle() - gyroOffset);
 
@@ -465,13 +451,12 @@ public class RobotContainerSmudge {
         return Math.min(
                 Math.max(
                         zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate,
-                        -Constants.autoTurnCeiling),
-                Constants.autoTurnCeiling);
+                        -DrivetrainConstants.autoTurnCeiling),
+                DrivetrainConstants.autoTurnCeiling);
     }
 
-    
     public void resetGyro() {
-        gyroPid.setIZone(Constants.IZone);
+        gyroPid.setIZone(DrivetrainConstants.IZone);
         gyroOffset = gyro.getAngle();
         targetAngle = 0;
         drivetrain.seedFieldRelative(
