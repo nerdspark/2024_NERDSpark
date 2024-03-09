@@ -131,7 +131,7 @@ public class AprilTagVision extends SubsystemBase {
                         tagPoses,
                         poseAmbiguity,
                         xyStdDev,
-                        new Pose2d(), // robotPoseBeforeVisionUpdate,
+                        poseSupplier.get(), // robotPoseBeforeVisionUpdate,
                         thetaStdDev);
             }
         }
@@ -227,7 +227,7 @@ public class AprilTagVision extends SubsystemBase {
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPose3D", robotPose);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/PoseAmbiguity", poseAmbiguity);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/xyStdDev", xyStdDev);
-        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPose", robotPoseBeforeUpdate);
+        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPoseBeforeVisionUpdate", robotPoseBeforeUpdate);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/thetaStdDev", thetaStdDev);
 
         Logger.recordOutput(
