@@ -27,14 +27,14 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
     public final class FourBarGains {
-        public static final double kP = 0.08;
-        public static final double kI = 0.000;
-        public static final double kD = 0.0;
-        public static final double kIZone = 1.0;
+        public static final double kP = 0.85;
+        public static final double kI = 0.2;
+        public static final double kD = 0.01;
+        public static final double kIZone = 0.05;
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
-        public static final double kG = 0.0;
+        public static final double kG = 0.03;
         public static final double kA = 0.0;
     }
 
@@ -42,10 +42,10 @@ public final class Constants {
         public static final int currentLimit = 70;
         public static final double closedLoopRampRate = 0.15;
         public static final double openLoopRampRate = 0.15;
-        public static final double positionConversionFactor = 2.0 * Math.PI * 2.0; // TODO ????
-        public static final double resetPosition = 16.0;
-        public static final double fourBarOut = 20.0 + resetPosition;
-        public static final double fourBarHome = 0.75 + resetPosition;
+        public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d/18d * 25d);
+        public static final double resetPosition = Math.PI - 0.9948; //zero position from CAD
+        public static final double fourBarOut = -20.0 * positionConversionFactor + resetPosition;
+        public static final double fourBarHome = -0.75 * positionConversionFactor + resetPosition;
     }
 
     public final class ArmConstants {
@@ -460,18 +460,18 @@ public final class Constants {
             // fourBarMap.put(5.4, 20.0);
             // fourBarMap.put(3.0, 20.0);
 
-            fourBarMap.put(49.5, 8.0);
-            fourBarMap.put(25.5, 8.0);
-            fourBarMap.put(19.5, 5.4); // 6.7
-            fourBarMap.put(17.5, 2.84); // 4.2
-            fourBarMap.put(15.5 + (2.0 / 12.0), 2.37);
-            fourBarMap.put(13.5 + (1.0 / 12.0), 1.80);
-            fourBarMap.put(13.0, 1.65);
-            fourBarMap.put(10.5 + (9.0 / 12.0), 1.3);
-            fourBarMap.put(6.5, 0.8);
-            fourBarMap.put(6.4, 18.0);
-            fourBarMap.put(5.4, 20.0);
-            fourBarMap.put(3.0, 20.0);
+            fourBarMap.put(49.5, 1.641);
+            fourBarMap.put(25.5, 1.641);
+            fourBarMap.put(19.5, 1.431);
+            fourBarMap.put(17.5, 1.224);
+            fourBarMap.put(15.7, 1.186);
+            fourBarMap.put(13.6, 1.140);
+            fourBarMap.put(13.0, 1.128);
+            fourBarMap.put(11.3, 1.099);
+            fourBarMap.put( 6.5, 1.059);
+            fourBarMap.put( 6.4, 2.448);
+            fourBarMap.put( 5.4, 2.610);
+            fourBarMap.put( 3.0, 2.610);
         }
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
