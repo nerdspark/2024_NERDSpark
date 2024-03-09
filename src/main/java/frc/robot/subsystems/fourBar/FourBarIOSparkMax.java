@@ -13,7 +13,6 @@ import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.FourBarGains;
 import frc.robot.Constants.RobotMap;
-import frc.robot.util.LightningShuffleboard;
 
 public class FourBarIOSparkMax implements FourBarIO {
     /** Creates a new FourBarIOSparkMax. */
@@ -79,8 +78,8 @@ public class FourBarIOSparkMax implements FourBarIO {
 
         FourBarMotor1.set(PID + G);
 
-        LightningShuffleboard.setDouble("four bar", "error", angle - FourBarEncoder1.getPosition());
-        LightningShuffleboard.setDouble("four bar", "PID", PID);
+        // LightningShuffleboard.setDouble("four bar", "error", angle - FourBarEncoder1.getPosition());
+        // LightningShuffleboard.setDouble("four bar", "PID", PID);
     }
 
     public double getFourBarAngle() {

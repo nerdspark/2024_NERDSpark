@@ -26,16 +26,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.ArmConstants.ArmSetPoints;
-import frc.robot.Constants.ArmConstants.ClimbSetPoints;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.RobotMap;
-import frc.robot.Constants.SpeakerConstants;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
-import frc.robot.commands.ArmCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
@@ -44,8 +40,6 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
-import frc.robot.subsystems.arm.ArmIO;
-import frc.robot.subsystems.arm.ArmIOSparkMax;
 import frc.robot.subsystems.fourBar.FourBar;
 import frc.robot.subsystems.fourBar.FourBarIO;
 import frc.robot.subsystems.fourBar.FourBarIOSparkMax;
@@ -60,7 +54,6 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
-import frc.robot.util.LightningShuffleboard;
 import java.util.function.Supplier;
 
 public class RobotContainer extends RobotContainerSmudge {
@@ -89,7 +82,7 @@ public class RobotContainer extends RobotContainerSmudge {
     // driving in open loop
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-//     private final Telemetry logger = new Telemetry(MaxSpeed);
+    //     private final Telemetry logger = new Telemetry(MaxSpeed);
     private final SendableChooser<Command> autoChooser;
     private PIDController gyroPid =
             new PIDController(DrivetrainConstants.gyroP, DrivetrainConstants.gyroI, DrivetrainConstants.gyroD);
@@ -145,14 +138,14 @@ public class RobotContainer extends RobotContainerSmudge {
 
         configureButtonBindings();
 
-        LightningShuffleboard.setDoubleSupplier("four bar", "distance from speaker", () -> drivetrain
-                .getState()
-                .Pose
-                .getTranslation()
-                .getDistance(
-                        DriverStation.getAlliance().get() == Alliance.Blue
-                                ? SpeakerConstants.speakerLocBlue.getTranslation()
-                                : SpeakerConstants.speakerLocRed.getTranslation()));
+        // LightningShuffleboard.setDoubleSupplier("four bar", "distance from speaker", () -> drivetrain
+        //         .getState()
+        //         .Pose
+        //         .getTranslation()
+        //         .getDistance(
+        //                 DriverStation.getAlliance().get() == Alliance.Blue
+        //                         ? SpeakerConstants.speakerLocBlue.getTranslation()
+        //                         : SpeakerConstants.speakerLocRed.getTranslation()));
     }
 
     private void configureDefaultCommands() {
@@ -355,8 +348,10 @@ public class RobotContainer extends RobotContainerSmudge {
         copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
 
         // arm commands
-        // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
-        // copilot.b().whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () -> false));
+        // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
+        // copilot.getLeftX(), () -> false));
+        // copilot.b().whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () ->
+        // false));
         // copilot.b().onFalse(new ArmCommand(
         //         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
         //         copilot.y().whileTrue(new ArmCommand(
@@ -368,8 +363,8 @@ public class RobotContainer extends RobotContainerSmudge {
         //                                 -copilot.getLeftY() * ArmSetPoints.dropoffMultiplierY)),
         //                 () -> ArmSetPoints.dropoffWrist,
         //                 () -> false));
-        // copilot.y().onFalse(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
-        
+        // copilot.y().onFalse(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
+        // copilot.getLeftX(), () -> false));
 
         // copilot.povUp().onTrue(new ArmCommand(
         //                         arm,
@@ -378,11 +373,14 @@ public class RobotContainer extends RobotContainerSmudge {
         //                         () -> false)
         //                 // .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
         //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
-        // copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () -> ClimbSetPoints.forwardWrist, () -> false));
-        // copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () -> true)
+        // copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () ->
+        // ClimbSetPoints.forwardWrist, () -> false));
+        // copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () ->
+        // true)
         //                 .alongWith(new InstantCommand(() -> arm.setGains(true))));
 
-        // copilot.povLeft().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, () -> false));
+        // copilot.povLeft().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, ()
+        // -> false));
 
         // // trap
         // copilot.rightStick().onTrue(new ArmCommand(
@@ -394,7 +392,8 @@ public class RobotContainer extends RobotContainerSmudge {
         //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
 
         // // reset buttons
-        // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() -> arm.setGains(false))));
+        // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() ->
+        // arm.setGains(false))));
 
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
         // copilot.x().whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0).alongWith(new
