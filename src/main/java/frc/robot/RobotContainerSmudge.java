@@ -59,7 +59,7 @@ public class RobotContainerSmudge {
     // driving in open loop
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-    private final Telemetry logger = new Telemetry(MaxSpeed);
+    // private final Telemetry logger = new Telemetry(MaxSpeed);
     private final SendableChooser<Command> autoChooser;
     private PIDController gyroPid =
             new PIDController(DrivetrainConstants.gyroP, DrivetrainConstants.gyroI, DrivetrainConstants.gyroD);
@@ -99,7 +99,7 @@ public class RobotContainerSmudge {
         if (Utils.isSimulation()) {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
-        drivetrain.registerTelemetry(logger::telemeterize);
+        // drivetrain.registerTelemetry(logger::telemeterize);
         // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () ->
         // false));
         // fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> Constants.fourBarHome));
