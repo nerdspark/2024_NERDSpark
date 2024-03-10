@@ -39,7 +39,6 @@ import frc.robot.commands.ShooterCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.NoteVisionSubsystem;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.fourBar.FourBar;
 import frc.robot.subsystems.fourBar.FourBarIO;
@@ -92,8 +91,8 @@ public class RobotContainer { // } extends RobotContainerSmudge {
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
-//     private NoteVisionSubsystem noteVisionSubsystem =
-//             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+    //     private NoteVisionSubsystem noteVisionSubsystem =
+    //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     public RobotContainer() {
 
@@ -218,12 +217,13 @@ public class RobotContainer { // } extends RobotContainerSmudge {
         NamedCommands.registerCommand(
                 "fourBarToBCR4", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing4));
 
-        NamedCommands.registerCommand("fourBarToWSR1", new FourBarCommand(fourBar, () -> Constants.weirdSideRing1));
-        NamedCommands.registerCommand("fourBarToWSR2", new FourBarCommand(fourBar, () -> Constants.weirdSideRing2));
-        NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> Constants.weirdSideRing3));
-        NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> Constants.weirdSideRing4));
+        NamedCommands.registerCommand("fourBarToWSR1", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing1));
+        NamedCommands.registerCommand("fourBarToWSR2", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing2));
+        NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
+        NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
 
-        NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () -> Constants.weirdSideRing4));
+        // NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () ->
+        // AutoConstants.weirdSideRing4));
 
         NamedCommands.registerCommand(
                 "RfourBarToWSR1", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing1));
@@ -236,15 +236,9 @@ public class RobotContainer { // } extends RobotContainerSmudge {
 
         // Choreo Shoot Commands
         NamedCommands.registerCommand(
-                "fourBarToBCR5Choreo", new FourBarCommand(fourBar, () -> Constants.blueCenterRing5Choreo));
+                "fourBarToBCR5Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing5Choreo));
         NamedCommands.registerCommand(
-                "fourBarToBCR7Choreo", new FourBarCommand(fourBar, () -> Constants.blueCenterRing7Choreo));
-
-        // Choreo Shoot Commands
-        NamedCommands.registerCommand(
-                "fourBarToBCR5Choreo", new FourBarCommand(fourBar, () -> Constants.blueCenterRing5Choreo));
-        NamedCommands.registerCommand(
-                "fourBarToBCR7Choreo", new FourBarCommand(fourBar, () -> Constants.blueCenterRing7Choreo));
+                "fourBarToBCR7Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing7Choreo));
 
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
