@@ -3,8 +3,9 @@
   "robotLength": 0.8636,
   "holonomicMode": true,
   "pathFolders": [
-    "blueCenter",
+    "4noteCenter",
     "TestPaths",
+    "blueCenter",
     "blueWeirdSide",
     "redCenter",
     "redWeirdSide"

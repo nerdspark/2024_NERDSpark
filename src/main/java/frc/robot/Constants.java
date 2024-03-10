@@ -195,10 +195,15 @@ public final class Constants {
     public static final double weirdSideRing3 = 2.75;
     public static final double weirdSideRing4 = 1.9;
 
-    public static final double red_weirdSideRing1 = 2.9;
-    public static final double red_weirdSideRing2 = 3.5;
-    public static final double red_weirdSideRing3 = 2.6;
-    public static final double red_weirdSideRing4 = 1.9;
+    public static final double red_weirdSideRing1 = 3.2; // 2.9
+    public static final double red_weirdSideRing2 = 3.5; //
+    public static final double red_weirdSideRing3 = 2.6; //
+    public static final double red_weirdSideRing4 = 1.9; //
+
+    public static final double red_replannerShoot = 1.11; //
+
+    public static final double blueCenterRing5Choreo = 1.11; //
+    public static final double blueCenterRing7Choreo = 1.9;
 
     public static final double fourBarHome = 0.75;
     public static final int intakeMotorId = 4;

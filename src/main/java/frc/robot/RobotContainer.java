@@ -195,6 +195,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> Constants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> Constants.weirdSideRing4));
 
+        NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () -> Constants.weirdSideRing4));
+
         NamedCommands.registerCommand(
                 "RfourBarToWSR1", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing1));
         NamedCommands.registerCommand(
@@ -203,6 +205,12 @@ public class RobotContainer {
                 "RfourBarToWSR3", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing3));
         NamedCommands.registerCommand(
                 "RfourBarToWSR4", new FourBarCommand(fourBar, () -> Constants.red_weirdSideRing4));
+
+        // Choreo Shoot Commands
+        NamedCommands.registerCommand(
+                "fourBarToBCR5Choreo", new FourBarCommand(fourBar, () -> Constants.blueCenterRing5Choreo));
+        NamedCommands.registerCommand(
+                "fourBarToBCR7Choreo", new FourBarCommand(fourBar, () -> Constants.blueCenterRing7Choreo));
 
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
@@ -233,6 +241,9 @@ public class RobotContainer {
                 poseEstimatorSubSystem = new PoseEstimatorSubsystem(drivetrain);
             }
         }
+
+        // replanner to shoot
+        // driver.b().onTrue(Autos.pathfindingCommand);
 
         // intake button
         driver.leftTrigger()
