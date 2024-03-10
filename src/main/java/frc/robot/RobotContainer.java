@@ -39,6 +39,7 @@ import frc.robot.commands.ShooterCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.NoteVisionSubsystem;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.fourBar.FourBar;
 import frc.robot.subsystems.fourBar.FourBarIO;
@@ -56,7 +57,7 @@ import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
 
-public class RobotContainer extends RobotContainerSmudge {
+public class RobotContainer { // } extends RobotContainerSmudge {
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
     private TunerConstantsSmudge tunerConstants =
@@ -91,8 +92,8 @@ public class RobotContainer extends RobotContainerSmudge {
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
-    //     private NoteVisionSubsystem noteVisionSubsystem =
-    //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+//     private NoteVisionSubsystem noteVisionSubsystem =
+//             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     public RobotContainer() {
 
@@ -257,7 +258,7 @@ public class RobotContainer extends RobotContainerSmudge {
         // intake
         driver.leftTrigger()
                 .whileTrue(new SequentialCommandGroup(
-                        new IntakeCommand(intake, () -> ((driverRaw.getLeftTriggerAxis() - 0.4)), IntakeMode.SOFTINTAKE)
+                        new IntakeCommand(intake, () -> ((1.0)), IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)),
                         new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome)
                                 .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))));
@@ -461,7 +462,7 @@ public class RobotContainer extends RobotContainerSmudge {
 
     }
 
-    @Override
+    //     @Override
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
     }
@@ -476,7 +477,7 @@ public class RobotContainer extends RobotContainerSmudge {
         drivetrain.addDashboardWidgets(visionTab);
     }
 
-    @Override
+    //     @Override
     public double calculateAutoTurn(Supplier<Double> target) {
         double currentAngle = -(gyro.getAngle() - gyroOffset);
 
@@ -503,7 +504,7 @@ public class RobotContainer extends RobotContainerSmudge {
                 DrivetrainConstants.autoTurnCeiling);
     }
 
-    @Override
+    //     @Override
     public void resetGyro() {
         gyroPid.setIZone(DrivetrainConstants.IZone);
         gyroOffset = gyro.getAngle();

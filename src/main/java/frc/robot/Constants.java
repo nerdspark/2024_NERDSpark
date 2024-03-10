@@ -25,9 +25,9 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
     public final class FourBarGains {
-        public static final double kP = 0.85;
-        public static final double kI = 0.2;
-        public static final double kD = 0.01;
+        public static final double kP = 0.45; // 0.85
+        public static final double kI = 0; // 0.2
+        public static final double kD = 0.0015; // 0.01
         public static final double kIZone = 0.05;
 
         public static final double kS = 0.0;
@@ -43,7 +43,7 @@ public final class Constants {
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = -20.0 * positionConversionFactor + resetPosition;
-        public static final double fourBarHome = -0.75 * positionConversionFactor + resetPosition;
+        public static final double fourBarHome = /*-0.75*/ 0 * positionConversionFactor + resetPosition;
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 
@@ -350,9 +350,9 @@ public final class Constants {
                 new Rotation3d(0, Math.toRadians(39), Math.toRadians(180)));
 
         // PLACEHOLDER
-        public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(20);
+        public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(12.5);
         public static final double NOTE_HEIGHT_METERS = Units.inchesToMeters(2);
-        public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(30);
+        public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(26);
 
         // Unused for 2024
 

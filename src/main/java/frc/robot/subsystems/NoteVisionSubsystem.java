@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import java.util.List;
@@ -50,12 +51,13 @@ public class NoteVisionSubsystem extends SubsystemBase {
             this.skewValue = result.getBestTarget().getSkew();
             this.areaVal = result.getBestTarget().getArea();
             this.hasTarget = true;
-            // SmartDashboard.putNumber("Note Vision Camera Distance from target", getRange());
-            // SmartDashboard.putNumber("Yaw", this.yawVal);
-            // SmartDashboard.putNumber("Pitch", this.pitchVal);
-            // SmartDashboard.putNumber("Skew", this.skewValue);
-            // SmartDashboard.putNumber("Area", this.areaVal);
-            // SmartDashboard.putBoolean("Has Target", hasTarget);
+            SmartDashboard.putNumber("Yaw", this.yawVal);
+            SmartDashboard.putNumber("Pitch", this.pitchVal);
+            SmartDashboard.putNumber("Skew", this.skewValue);
+            SmartDashboard.putNumber("Area", this.areaVal);
+            SmartDashboard.putBoolean("Has Target", hasTarget);
+            SmartDashboard.putNumber("Distance To Target", getRange());
+
         } else {
             this.hasTarget = false;
         }

@@ -102,12 +102,6 @@ public class AprilTagVision extends SubsystemBase {
                 }
                 double timestamp = poseEstimates.timestampSeconds();
                 Pose3d robotPose = poseEstimates.pose();
-                // LightningShuffleboard.setDouble("Vision", "raw vision input", robotPose.getX());
-                // Correct the robot pose since camera is mounted on the back.
-                // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
-                // robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
-
-                // LightningShuffleboard.setDouble("Vision", "translated vision input", robotPose.getX());
 
                 List<Pose3d> tagPoses = getTagPoses(poseEstimates);
                 double poseAmbiguity = poseEstimates.poseAmbiguity();
@@ -115,14 +109,6 @@ public class AprilTagVision extends SubsystemBase {
                 double thetaStdDev = calculateThetaStdDev(poseEstimates, tagPoses.size());
                 visionUpdates.add(new TimestampedVisionUpdate(
                         timestamp, robotPose.toPose2d(), VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev)));
-
-                // double xyStdDevCustom = calculateXYStdDevWithAmbiguity(poseEstimates, tagPoses.size());
-                // visionUpdates.add(new TimestampedVisionUpdate(
-                //         timestamp,
-                //         robotPose.toPose2d(),
-                //         Constants.VisionConstants.VISION_MEASUREMENT_STANDARD_DEVIATIONS.times(xyStdDev)));
-
-                // var robotPoseBeforeVisionUpdate = poseSupplier.get();
 
                 logData(
                         instanceIndex,
@@ -227,7 +213,8 @@ public class AprilTagVision extends SubsystemBase {
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPose3D", robotPose);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/PoseAmbiguity", poseAmbiguity);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/xyStdDev", xyStdDev);
-        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPoseBeforeVisionUpdate", robotPoseBeforeUpdate);
+        Logger.recordOutput(
+                VISION_PATH + Integer.toString(instanceIndex) + "/RobotPoseBeforeVisionUpdate", robotPoseBeforeUpdate);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/thetaStdDev", thetaStdDev);
 
         Logger.recordOutput(
