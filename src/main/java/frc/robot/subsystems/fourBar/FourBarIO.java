@@ -26,6 +26,8 @@ public interface FourBarIO {
 
     default void setFourBarAngle(double FourBarAngle) {}
 
+    default void setPIDGGains(double kP, double kI, double kD, double kG) {}
+
     default double getFourBarAngle() {
         return 0;
     }

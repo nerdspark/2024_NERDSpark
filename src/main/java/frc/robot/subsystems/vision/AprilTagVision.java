@@ -14,7 +14,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers.PoseEstimate;
@@ -103,9 +102,6 @@ public class AprilTagVision extends SubsystemBase {
                 }
                 double timestamp = poseEstimates.timestampSeconds();
                 Pose3d robotPose = poseEstimates.pose();
-                // Correct the robot pose since camera is mounted on the back.
-                // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
-                robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
 
                 List<Pose3d> tagPoses = getTagPoses(poseEstimates);
                 double poseAmbiguity = poseEstimates.poseAmbiguity();
@@ -114,14 +110,6 @@ public class AprilTagVision extends SubsystemBase {
                 visionUpdates.add(new TimestampedVisionUpdate(
                         timestamp, robotPose.toPose2d(), VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev)));
 
-                // double xyStdDevCustom = calculateXYStdDevWithAmbiguity(poseEstimates, tagPoses.size());
-                // visionUpdates.add(new TimestampedVisionUpdate(
-                //         timestamp,
-                //         robotPose.toPose2d(),
-                //         Constants.VisionConstants.VISION_MEASUREMENT_STANDARD_DEVIATIONS.times(xyStdDev)));
-
-                // var robotPoseBeforeVisionUpdate = poseSupplier.get();
-
                 logData(
                         instanceIndex,
                         timestamp,
@@ -129,7 +117,7 @@ public class AprilTagVision extends SubsystemBase {
                         tagPoses,
                         poseAmbiguity,
                         xyStdDev,
-                        new Pose2d(), // robotPoseBeforeVisionUpdate,
+                        poseSupplier.get(), // robotPoseBeforeVisionUpdate,
                         thetaStdDev);
             }
         }
@@ -225,7 +213,8 @@ public class AprilTagVision extends SubsystemBase {
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPose3D", robotPose);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/PoseAmbiguity", poseAmbiguity);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/xyStdDev", xyStdDev);
-        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPose", robotPoseBeforeUpdate);
+        Logger.recordOutput(
+                VISION_PATH + Integer.toString(instanceIndex) + "/RobotPoseBeforeVisionUpdate", robotPoseBeforeUpdate);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/thetaStdDev", thetaStdDev);
 
         Logger.recordOutput(

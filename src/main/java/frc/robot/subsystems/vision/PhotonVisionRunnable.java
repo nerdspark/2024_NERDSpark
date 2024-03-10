@@ -25,9 +25,12 @@ public class PhotonVisionRunnable implements Runnable {
     private final PhotonCamera photonCamera;
     private final AtomicReference<EstimatedRobotPose> atomicEstimatedRobotPose =
             new AtomicReference<EstimatedRobotPose>();
+    private final Transform3d robotToCamera;
 
     public PhotonVisionRunnable(String photonCameraName, Transform3d robotToCamera) {
         this.photonCamera = new PhotonCamera(photonCameraName);
+        this.robotToCamera = robotToCamera;
+
         PhotonPoseEstimator photonPoseEstimator = null;
         var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
         // PV estimates will always be blue, they'll get flipped by robot thread
@@ -50,9 +53,7 @@ public class PhotonVisionRunnable implements Runnable {
             if (Constants.VisionConstants.MULTI_TAG_RESULT_ENABLED
                     && photonResults.getMultiTagResult().estimatedPose.isPresent) {
                 Transform3d fieldToCamera = photonResults.getMultiTagResult().estimatedPose.best;
-                Transform3d fieldToRobot =
-                        fieldToCamera; // .plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA); //No need.
-                // Photonvision is doing this.
+                Transform3d fieldToRobot = fieldToCamera;
                 Pose3d estimatedMultitagPose3d = new Pose3d(fieldToRobot.getTranslation(), fieldToRobot.getRotation());
 
                 if (estimatedMultitagPose3d.getX() > 0.0
@@ -101,5 +102,10 @@ public class PhotonVisionRunnable implements Runnable {
      */
     public EstimatedRobotPose grabLatestEstimatedPose() {
         return atomicEstimatedRobotPose.getAndSet(null);
+    }
+
+    public Transform3d getRobotToCameraTransform() {
+
+        return this.robotToCamera;
     }
 }
