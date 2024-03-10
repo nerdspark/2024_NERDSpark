@@ -25,9 +25,9 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
     public final class FourBarGains {
-        public static final double kP = 0.45; // 0.85
+        public static final double kP = 0.65; // 0.85
         public static final double kI = 0; // 0.2
-        public static final double kD = 0.0015; // 0.01
+        public static final double kD = 0.006; // 0.01
         public static final double kIZone = 0.05;
 
         public static final double kS = 0.0;
