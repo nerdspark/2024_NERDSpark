@@ -16,12 +16,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "shootSpeed"
-                }
-              },
-              {
                 "type": "sequential",
                 "data": {
                   "commands": [
