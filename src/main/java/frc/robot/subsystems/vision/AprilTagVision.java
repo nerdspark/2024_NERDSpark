@@ -12,8 +12,10 @@ import static frc.robot.subsystems.drive.DriveConstants.*;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers.PoseEstimate;
@@ -53,6 +55,9 @@ public class AprilTagVision extends SubsystemBase {
     private final AprilTagVisionIO[] io;
     private final AprilTagVisionIOInputs[] inputs;
 
+    double speakerTagDistance = 0.0;
+    double speakerTagAngle = 0.0;
+
     public void setDataInterfaces(Consumer<List<TimestampedVisionUpdate>> visionConsumer) {
         this.visionConsumer = visionConsumer;
     }
@@ -80,6 +85,10 @@ public class AprilTagVision extends SubsystemBase {
 
     @Override
     public void periodic() {
+
+        speakerTagDistance = 0.0;
+        speakerTagAngle = 0.0;
+
         for (int i = 0; i < io.length; i++) {
             io[i].updateInputs(inputs[i]);
             Logger.processInputs(VISION_PATH + Integer.toString(i), inputs[i]);
@@ -102,6 +111,9 @@ public class AprilTagVision extends SubsystemBase {
                 }
                 double timestamp = poseEstimates.timestampSeconds();
                 Pose3d robotPose = poseEstimates.pose();
+                // Correct the robot pose since camera is mounted on the back.
+                // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
+                robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
 
                 List<Pose3d> tagPoses = getTagPoses(poseEstimates);
                 double poseAmbiguity = poseEstimates.poseAmbiguity();
@@ -110,6 +122,17 @@ public class AprilTagVision extends SubsystemBase {
                 visionUpdates.add(new TimestampedVisionUpdate(
                         timestamp, robotPose.toPose2d(), VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev)));
 
+                // double xyStdDevCustom = calculateXYStdDevWithAmbiguity(poseEstimates, tagPoses.size());
+                // visionUpdates.add(new TimestampedVisionUpdate(
+                //         timestamp,
+                //         robotPose.toPose2d(),
+                //         Constants.VisionConstants.VISION_MEASUREMENT_STANDARD_DEVIATIONS.times(xyStdDev)));
+
+                // var robotPoseBeforeVisionUpdate = poseSupplier.get();
+
+                speakerTagDistance = poseEstimates.speakerTagDistance();
+                speakerTagAngle = Units.radiansToDegrees(poseEstimates.speakerTagAngle());
+
                 logData(
                         instanceIndex,
                         timestamp,
@@ -117,11 +140,21 @@ public class AprilTagVision extends SubsystemBase {
                         tagPoses,
                         poseAmbiguity,
                         xyStdDev,
-                        poseSupplier.get(), // robotPoseBeforeVisionUpdate,
-                        thetaStdDev);
+                        this.poseSupplier.get(), // robotPoseBeforeVisionUpdate,
+                        thetaStdDev,
+                        speakerTagDistance,
+                        speakerTagAngle);
             }
         }
         return visionUpdates;
+    }
+
+    public double getSpeakerTagDistance() {
+        return this.speakerTagDistance;
+    }
+
+    public double getSpeakerTagAngle() {
+        return this.speakerTagAngle;
     }
 
     /**
@@ -130,6 +163,7 @@ public class AprilTagVision extends SubsystemBase {
      * @param poseEstimates The pose estimate
      * @return True if the pose estimate should be skipped, false otherwise
      */
+
     private boolean shouldSkipPoseEstimate(PoseEstimate poseEstimates) {
         return poseEstimates.tagIDs().length < 1
                 || poseEstimates.pose() == null
@@ -206,16 +240,20 @@ public class AprilTagVision extends SubsystemBase {
             double poseAmbiguity,
             double xyStdDev,
             Pose2d robotPoseBeforeUpdate,
-            double thetaStdDev) {
+            double thetaStdDev,
+            double speakerTagDistance,
+            double speakerTagAngle) {
         Logger.recordOutput(
                 VISION_PATH + Integer.toString(instanceIndex) + "/LatencySecs", Timer.getFPGATimestamp() - timestamp);
-        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPose", robotPose.toPose2d());
-        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPose3D", robotPose);
+        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPoseVision", robotPose.toPose2d());
+        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/RobotPose3DVision", robotPose);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/PoseAmbiguity", poseAmbiguity);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/xyStdDev", xyStdDev);
         Logger.recordOutput(
-                VISION_PATH + Integer.toString(instanceIndex) + "/RobotPoseBeforeVisionUpdate", robotPoseBeforeUpdate);
+                VISION_PATH + Integer.toString(instanceIndex) + "/RobotPoseBeforeVision", robotPoseBeforeUpdate);
         Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/thetaStdDev", thetaStdDev);
+        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/speakerTagDistance", speakerTagDistance);
+        Logger.recordOutput(VISION_PATH + Integer.toString(instanceIndex) + "/speakerTagAngle", speakerTagAngle);
 
         Logger.recordOutput(
                 VISION_PATH + Integer.toString(instanceIndex) + "/TagPoses",

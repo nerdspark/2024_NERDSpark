@@ -35,6 +35,8 @@ public interface AprilTagVisionIO {
                 table.put(
                         "poseStrategyUsed/" + Integer.toString(posePosition),
                         poseEstimate.poseStrategyUsed().toString());
+                table.put("distanceToSpeakerTag/" + Integer.toString(posePosition), poseEstimate.speakerTagDistance());
+                table.put("speakerTagAngle/" + Integer.toString(posePosition), poseEstimate.speakerTagAngle());
             }
             table.put("valid", !poseEstimates.isEmpty());
         }
@@ -51,9 +53,18 @@ public interface AprilTagVisionIO {
                 double poseAmbiguiy = table.get("poseAmbiguity/" + Integer.toString(i), 0);
                 PoseStrategy poseStrategyUsed =
                         table.get("poseStrategyUsed/" + Integer.toString(i), PoseStrategy.valueOf("Not Sure"));
+                double distanceToSpeakerTag = table.get("distanceToSpeakerTag/" + Integer.toString(i), 0);
+                double speakerTagAngle = table.get("poseAmbiguity/" + Integer.toString(i), 0);
 
                 poseEstimates.add(new PoseEstimate(
-                        poseEstimation, timestamp, averageTagDistance, tagIDs, poseAmbiguiy, poseStrategyUsed));
+                        poseEstimation,
+                        timestamp,
+                        averageTagDistance,
+                        tagIDs,
+                        poseAmbiguiy,
+                        poseStrategyUsed,
+                        distanceToSpeakerTag,
+                        speakerTagAngle));
             }
             table.get("valid", false);
         }

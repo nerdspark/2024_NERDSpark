@@ -1,11 +1,5 @@
 package frc.robot.actions;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.Command;
-
 // public class Autos {
 
 //     // Load the path we want to pathfind to and follow

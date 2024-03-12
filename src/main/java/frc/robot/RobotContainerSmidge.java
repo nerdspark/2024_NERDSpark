@@ -36,8 +36,7 @@ import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
-import frc.robot.generated.TunerConstants;
-import frc.robot.generated.TunerConstantsSmudge;
+import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.fourBar.FourBar;
@@ -56,11 +55,11 @@ import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
 
-public class RobotContainer { // } extends RobotContainerSmudge {
+public class RobotContainerSmidge { // implements RobotConstants{
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
-    private TunerConstantsSmudge tunerConstants =
-            new TunerConstants(); // RobotConstants.getRobotConstants(RobotIdentity.getIdentity());
+    private TunerConstantsSmidge tunerConstants =
+            new TunerConstantsSmidge(); // RobotConstants.getRobotConstants(RobotIdentity.getIdentity());
     private Intake intake;
     private FourBar fourBar;
     private Shooter shooter;
@@ -94,7 +93,7 @@ public class RobotContainer { // } extends RobotContainerSmudge {
     //     private NoteVisionSubsystem noteVisionSubsystem =
     //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
-    public RobotContainer() {
+    public RobotContainerSmidge() {
 
         switch (Constants.currentMode) {
             case REAL:
@@ -285,6 +284,7 @@ public class RobotContainer { // } extends RobotContainerSmudge {
 
         // zero gyro
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
+        driver.a().onTrue(new InstantCommand(() -> printSpeakerDistanceAndAngle(aprilTagVision)));
 
         /* COPILOT COMMANDS:
          * left trigger: spin shooter
@@ -521,5 +521,11 @@ public class RobotContainer { // } extends RobotContainerSmudge {
                 (DriverStation.getAlliance().get() == Alliance.Red)
                         ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
                         : new Pose2d());
+    }
+
+    public void printSpeakerDistanceAndAngle(AprilTagVision aprilTagVision) {
+
+        SmartDashboard.putNumber("Speaker Distance", aprilTagVision.getSpeakerTagDistance());
+        SmartDashboard.putNumber("Speaker Angle", aprilTagVision.getSpeakerTagAngle());
     }
 }

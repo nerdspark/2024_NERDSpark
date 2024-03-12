@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.generated.TunerConstants;
+import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.util.AutoAimMath;
 import frc.robot.util.FieldConstants;
@@ -124,7 +124,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 new HolonomicPathFollowerConfig(
                         new PIDConstants(10, 0, 0),
                         new PIDConstants(5, 0, 0),
-                        TunerConstants.kSpeedAt12VoltsMps,
+                        TunerConstantsSmidge.kSpeedAt12VoltsMps,
                         driveBaseRadius,
                         new ReplanningConfig()),
                 // flips the path if on red alliance (do we want this? remove if we're making red-specific paths)

@@ -33,7 +33,7 @@ import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
 
-public class RobotContainerSmudge {
+public class RobotContainerSmudge { // implements RobotConstants {
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
     private TunerConstantsSmudge tunerConstants =
