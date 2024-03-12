@@ -35,10 +35,13 @@ import frc.robot.actions.backToSafety;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
+import frc.robot.config.RobotIdentity;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.generated.TunerConstantsSmidge;
+import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.ArmIOSparkMax;
 import frc.robot.subsystems.fourBar.FourBar;
 import frc.robot.subsystems.fourBar.FourBarIO;
 import frc.robot.subsystems.fourBar.FourBarIOSparkMax;
@@ -55,11 +58,9 @@ import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
 
-public class RobotContainerSmidge { // implements RobotConstants{
+public class RobotContainer { // implements RobotConstants{
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
-    private TunerConstantsSmidge tunerConstants =
-            new TunerConstantsSmidge(); // RobotConstants.getRobotConstants(RobotIdentity.getIdentity());
     private Intake intake;
     private FourBar fourBar;
     private Shooter shooter;
@@ -71,7 +72,7 @@ public class RobotContainerSmidge { // implements RobotConstants{
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
-    private final CommandSwerveDrivetrain drivetrain = tunerConstants.DriveTrain; // My drivetrain
+    private final CommandSwerveDrivetrain drivetrain = RobotIdentity.getIdentity() == RobotIdentity.SMIDGE_2024  ? TunerConstantsSmidge.DriveTrain : TunerConstantsSmudge.DriveTrain; 
 
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -93,14 +94,12 @@ public class RobotContainerSmidge { // implements RobotConstants{
     //     private NoteVisionSubsystem noteVisionSubsystem =
     //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
-    public RobotContainerSmidge() {
-
+    public RobotContainer() {
         switch (Constants.currentMode) {
             case REAL:
                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
                 fourBar = new FourBar(new FourBarIOSparkMax());
                 shooter = new Shooter(new ShooterIOSparkMax());
-                // arm = new Arm(new ArmIOSparkMax());
                 break;
 
             default:
@@ -137,6 +136,11 @@ public class RobotContainerSmidge { // implements RobotConstants{
 
         configureButtonBindings();
 
+        //only schedule arm commands if using smudge
+        if(RobotIdentity.getIdentity() != RobotIdentity.SMIDGE_2024) {
+                arm = new Arm(new ArmIOSparkMax());
+                scheduleArmCommands();
+        }
         // LightningShuffleboard.setDoubleSupplier("four bar", "distance from speaker", () -> drivetrain
         //         .getState()
         //         .Pose
@@ -356,54 +360,6 @@ public class RobotContainerSmidge { // implements RobotConstants{
                                                 -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))));
         copilot.rightTrigger().onFalse(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
 
-        // arm commands
-        // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
-        // copilot.getLeftX(), () -> false));
-        // copilot.b().whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () ->
-        // false));
-        // copilot.b().onFalse(new ArmCommand(
-        //         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
-        //         copilot.y().whileTrue(new ArmCommand(
-        //                 arm,
-        //                 () -> ArmSetPoints.dropoff.plus(new Translation2d(
-        //                         (DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1)
-        //                                 * copilot.getLeftX()
-        //                                 * ArmSetPoints.dropoffMultiplier,
-        //                                 -copilot.getLeftY() * ArmSetPoints.dropoffMultiplierY)),
-        //                 () -> ArmSetPoints.dropoffWrist,
-        //                 () -> false));
-        // copilot.y().onFalse(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
-        // copilot.getLeftX(), () -> false));
-
-        // copilot.povUp().onTrue(new ArmCommand(
-        //                         arm,
-        //                         () -> ClimbSetPoints.ready,
-        //                         () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
-        //                         () -> false)
-        //                 // .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
-        //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
-        // copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () ->
-        // ClimbSetPoints.forwardWrist, () -> false));
-        // copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () ->
-        // true)
-        //                 .alongWith(new InstantCommand(() -> arm.setGains(true))));
-
-        // copilot.povLeft().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, ()
-        // -> false));
-
-        // // trap
-        // copilot.rightStick().onTrue(new ArmCommand(
-        //                         arm,
-        //                         () -> ClimbSetPoints.trap.plus(
-        //                                 new Translation2d(copilot.getLeftY() * ClimbSetPoints.trapMultiplier, 0)),
-        //                         () -> ClimbSetPoints.trapwrist,
-        //                         () -> true)
-        //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
-
-        // // reset buttons
-        // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() ->
-        // arm.setGains(false))));
-
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
         // copilot.x().whileTrue(new ShooterCommand(shooter, () -> 4700.0, () -> 5000.0).alongWith(new
         // FourBarCommand(fourBar, () -> 8.0))); // speed1 = CAN ID 6 = top motor
@@ -468,6 +424,56 @@ public class RobotContainerSmidge { // implements RobotConstants{
         //                 IntakeMode.FORCEINTAKE));
         // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
+    }
+
+    private void scheduleArmCommands() {
+        // arm commands
+        // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
+        // copilot.getLeftX(), () -> false));
+        // copilot.b().whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () ->
+        // false));
+        // copilot.b().onFalse(new ArmCommand(
+        //         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
+        //         copilot.y().whileTrue(new ArmCommand(
+        //                 arm,
+        //                 () -> ArmSetPoints.dropoff.plus(new Translation2d(
+        //                         (DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1)
+        //                                 * copilot.getLeftX()
+        //                                 * ArmSetPoints.dropoffMultiplier,
+        //                                 -copilot.getLeftY() * ArmSetPoints.dropoffMultiplierY)),
+        //                 () -> ArmSetPoints.dropoffWrist,
+        //                 () -> false));
+        // copilot.y().onFalse(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
+        // copilot.getLeftX(), () -> false));
+
+        // copilot.povUp().onTrue(new ArmCommand(
+        //                         arm,
+        //                         () -> ClimbSetPoints.ready,
+        //                         () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
+        //                         () -> false)
+        //                 // .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
+        //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
+        // copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () ->
+        // ClimbSetPoints.forwardWrist, () -> false));
+        // copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () ->
+        // true)
+        //                 .alongWith(new InstantCommand(() -> arm.setGains(true))));
+
+        // copilot.povLeft().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, ()
+        // -> false));
+
+        // // trap
+        // copilot.rightStick().onTrue(new ArmCommand(
+        //                         arm,
+        //                         () -> ClimbSetPoints.trap.plus(
+        //                                 new Translation2d(copilot.getLeftY() * ClimbSetPoints.trapMultiplier, 0)),
+        //                         () -> ClimbSetPoints.trapwrist,
+        //                         () -> true)
+        //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
+
+        // // reset buttons
+        // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() ->
+        // arm.setGains(false))));
     }
 
     //     @Override
