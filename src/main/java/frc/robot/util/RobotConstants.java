@@ -1,9 +1,5 @@
 package frc.robot.util;
 
-import frc.robot.RobotContainerSmidge;
-import frc.robot.RobotContainerSmudge;
-import frc.robot.config.RobotIdentity;
-
 public interface RobotConstants {
 
     // TunerConstantsSmudge getRobotConstants(RobotIdentity robot) {

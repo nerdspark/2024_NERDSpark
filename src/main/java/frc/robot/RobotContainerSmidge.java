@@ -53,11 +53,9 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
-import frc.robot.util.RobotConstants;
-
 import java.util.function.Supplier;
 
-public class RobotContainerSmidge {//implements RobotConstants{
+public class RobotContainerSmidge { // implements RobotConstants{
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
     private TunerConstantsSmidge tunerConstants =
@@ -286,6 +284,7 @@ public class RobotContainerSmidge {//implements RobotConstants{
 
         // zero gyro
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
+        driver.a().onTrue(new InstantCommand(() -> printSpeakerDistanceAndAngle(aprilTagVision)));
 
         /* COPILOT COMMANDS:
          * left trigger: spin shooter
@@ -522,5 +521,11 @@ public class RobotContainerSmidge {//implements RobotConstants{
                 (DriverStation.getAlliance().get() == Alliance.Red)
                         ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
                         : new Pose2d());
+    }
+
+    public void printSpeakerDistanceAndAngle(AprilTagVision aprilTagVision) {
+
+        SmartDashboard.putNumber("Speaker Distance", aprilTagVision.getSpeakerTagDistance());
+        SmartDashboard.putNumber("Speaker Angle", aprilTagVision.getSpeakerTagAngle());
     }
 }

@@ -28,6 +28,9 @@ public class VisionHelpers {
      * @param averageTagDistance The average distance to the detected tags.
      * @param tagIDs The IDs of the detected tags.
      * @param poseAmbiguity Pose Ambiguity.
+     * @param poseStrategyUsed Pose Ambiguity.
+     * @param speakerTagDistance Pose Ambiguity.
+     *
      */
     public record PoseEstimate(
             /** The pose (position and orientation) estimate. */
@@ -41,7 +44,11 @@ public class VisionHelpers {
             /** Ambiguity of Vision pose */
             double poseAmbiguity,
             /** StrategyUsed to Compute the Pose */
-            PoseStrategy poseStrategyUsed) {
+            PoseStrategy poseStrategyUsed,
+            /** Speaker tag distance */
+            double speakerTagDistance,
+            /** Speaker tag Angle */
+            double speakerTagAngle) {
 
         /**
          * Checks if this pose estimate is equal to another object.
@@ -63,7 +70,9 @@ public class VisionHelpers {
                     && Double.compare(timestampSeconds, other.timestampSeconds) == 0
                     && Double.compare(averageTagDistance, other.averageTagDistance) == 0
                     && Double.compare(poseAmbiguity, other.poseAmbiguity) == 0
-                    && poseStrategyUsed == other.poseStrategyUsed;
+                    && poseStrategyUsed == other.poseStrategyUsed
+                    && speakerTagDistance == other.speakerTagDistance
+                    && speakerTagAngle == other.speakerTagAngle;
         }
 
         /**
@@ -79,7 +88,9 @@ public class VisionHelpers {
                     averageTagDistance,
                     Arrays.hashCode(tagIDs),
                     poseAmbiguity,
-                    poseStrategyUsed);
+                    poseStrategyUsed,
+                    speakerTagDistance,
+                    speakerTagAngle);
         }
 
         /**
@@ -102,6 +113,10 @@ public class VisionHelpers {
                     + Double.toString(poseAmbiguity)
                     + ", poseStrategy ="
                     + poseStrategyUsed.toString()
+                    + ", speakerTagDistance ="
+                    + Double.toString(speakerTagDistance)
+                    + ", speakerTagAngle ="
+                    + Double.toString(speakerTagAngle)
                     + '}';
         }
     }
