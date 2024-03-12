@@ -33,7 +33,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
  */
 public class Robot extends LoggedRobot {
     private Command autonomousCommand;
-    private RobotContainer robotContainer;
+    private RobotContainerSmidge robotContainer;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -90,7 +90,7 @@ public class Robot extends LoggedRobot {
 
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our autonomous chooser on the dashboard.
-        robotContainer = new RobotContainer(); // RobotConstants.getRobotContainer(RobotIdentity.getIdentity());
+        robotContainer = new RobotContainerSmidge(); // RobotConstants.getRobotContainer(RobotIdentity.getIdentity());
     }
 
     /** This function is called periodically during all modes. */
@@ -112,7 +112,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void disabledPeriodic() {}
 
-    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+    /** This autonomous runs the autonomous command selected by your {@link RobotContainerSmidge} class. */
     @Override
     public void autonomousInit() {
         autonomousCommand = robotContainer.getAutonomousCommand();

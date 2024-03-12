@@ -9,7 +9,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
-public class TunerConstantsTestbot extends TunerConstants {
+public class TunerConstantsTestbot extends TunerConstantsSmidge {
 
     // Both sets of gains need to be tuned to your individual robot.
 
