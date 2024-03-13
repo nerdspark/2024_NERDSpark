@@ -28,12 +28,12 @@ public class FourBar extends SubsystemBase {
 
         // This method will be called once per scheduler run
 
-        setFourBarAngle(LightningShuffleboard.getDouble("four bar", "target", FourBarConstants.fourBarHome));
+        // setFourBarAngle(LightningShuffleboard.getDouble("four bar", "target", FourBarConstants.fourBarHome));
 
-        io.setPIDGGains(LightningShuffleboard.getDouble("four bar", "kP", FourBarGains.kP),
-        LightningShuffleboard.getDouble("four bar", "kI", FourBarGains.kI), LightningShuffleboard.getDouble("four bar", "kD", FourBarGains.kD), LightningShuffleboard.getDouble("four bar", "kG", FourBarGains.kG));
+        // io.setPIDGGains(LightningShuffleboard.getDouble("four bar", "kP", FourBarGains.kP),
+        // LightningShuffleboard.getDouble("four bar", "kI", FourBarGains.kI), LightningShuffleboard.getDouble("four bar", "kD", FourBarGains.kD), LightningShuffleboard.getDouble("four bar", "kG", FourBarGains.kG));
 
-        LightningShuffleboard.setDouble("four bar", "position", getFourBarAngle());
+        // LightningShuffleboard.setDouble("four bar", "position", getFourBarAngle());
     }
 
     public void setFourBarAngle(double angle) {
