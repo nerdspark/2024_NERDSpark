@@ -2,6 +2,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.Meters;
 
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -38,12 +40,13 @@ public final class Constants {
 
     public final class FourBarConstants {
         public static final int currentLimit = 70;
-        public static final double closedLoopRampRate = 0.15;
+        public static final double closedLoopRampRate = 0.25;
         public static final double openLoopRampRate = 0.15;
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = -20.0 * positionConversionFactor + resetPosition;
         public static final double fourBarHome = /*-0.75*/ 0 * positionConversionFactor + resetPosition;
+        public static final IdleMode fourBarIdleMode = IdleMode.kBrake;
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 

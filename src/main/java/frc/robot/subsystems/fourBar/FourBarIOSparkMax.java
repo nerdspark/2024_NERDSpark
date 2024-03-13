@@ -32,6 +32,9 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarMotor1.setInverted(false);
         FourBarMotor2.setInverted(true);
 
+        FourBarMotor1.setIdleMode(FourBarConstants.fourBarIdleMode);
+        FourBarMotor2.setIdleMode(FourBarConstants.fourBarIdleMode);
+
         FourBarEncoder1 = FourBarMotor1.getEncoder();
 
         FourBarMotor1.setSmartCurrentLimit(FourBarConstants.currentLimit);
