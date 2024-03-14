@@ -17,8 +17,13 @@ public class FourBar extends SubsystemBase {
 
     private final FourBarIOInputsAutoLogged inputs = new FourBarIOInputsAutoLogged();
 
+    private double targetAngle = FourBarConstants.fourBarHome;
+
     public FourBar(FourBarIO FourBarIO) {
         this.io = FourBarIO;
+
+        // LightningShuffleboard.setDoubleSupplier("four bar", "position", this::getFourBarAngle);
+
     }
 
     @Override
@@ -33,11 +38,12 @@ public class FourBar extends SubsystemBase {
         // io.setPIDGGains(LightningShuffleboard.getDouble("four bar", "kP", FourBarGains.kP),
         // LightningShuffleboard.getDouble("four bar", "kI", FourBarGains.kI), LightningShuffleboard.getDouble("four bar", "kD", FourBarGains.kD), LightningShuffleboard.getDouble("four bar", "kG", FourBarGains.kG));
 
-        // LightningShuffleboard.setDouble("four bar", "position", getFourBarAngle());
+        io.setFourBarAngle(targetAngle);
+
     }
 
     public void setFourBarAngle(double angle) {
-        io.setFourBarAngle(angle);
+        targetAngle = angle;
     }
 
     public double getFourBarAngle() {

@@ -63,7 +63,7 @@ public class AutoAim {
                 .getDistance(speakerPose.getTranslation());
 
         double RPM = Constants.ShooterConstants.shooterMap.get(
-                Units.metersToFeet(distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD));
+                (distanceToSpeaker3 + ShooterConstants.CONSTANT_DISTANCE_ADD));
         SmartDashboard.putNumber("Calculated RPM", RPM);
         return RPM;
     }
