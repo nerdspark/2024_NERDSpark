@@ -10,15 +10,11 @@ public interface ClimbIO {
     /** Creates a new ClimbIO. */
     @AutoLog
     class ClimbIOInputs {
-        public static double climbPosition1 = 0.0;
-        public double climbVelocity1 = 0.0;
-        public double climbAppliedVolts1 = 0.0;
-        public double[] climbCurrentAmps1 = new double[] {};
+        public static double climbPosition = 0.0;
+        public double climbVelocity = 0.0;
+        public double climbAppliedVolts = 0.0;
+        public double[] climbCurrentAmps = new double[] {};
 
-        public double climbPosition2 = 0.0;
-        public double climbVelocity2 = 0.0;
-        public double climbAppliedVolts2 = 0.0;
-        public double[] climbCurrentAmps2 = new double[] {};
     }
 
     default void updateInputs(ClimbIOInputs inputs) {}

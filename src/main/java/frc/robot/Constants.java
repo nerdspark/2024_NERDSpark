@@ -27,14 +27,14 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
     public final class FourBarGains {
-        public static final double kP = 0.65; // 0.85
-        public static final double kI = 0; // 0.2
-        public static final double kD = 0.006; // 0.01
+        public static final double kP = 0.75; //0.65; // 0.85
+        public static final double kI = 0.5; //0; // 0.2
+        public static final double kD = 0.04; //0.006; // 0.01
         public static final double kIZone = 0.05;
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
-        public static final double kG = 0.03;
+        public static final double kG = 0.035;
         public static final double kA = 0.0;
     }
 
@@ -44,8 +44,8 @@ public final class Constants {
         public static final double openLoopRampRate = 0.15;
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
-        public static final double fourBarOut = -20.0 * positionConversionFactor + resetPosition;
-        public static final double fourBarHome = /*-0.75*/ 0 * positionConversionFactor + resetPosition;
+        public static final double fourBarOut = 0.558;
+        public static final double fourBarHome = 2.148;
         public static final IdleMode fourBarIdleMode = IdleMode.kBrake;
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();

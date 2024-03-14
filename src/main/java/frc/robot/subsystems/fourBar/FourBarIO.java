@@ -10,15 +10,12 @@ public interface FourBarIO {
 
     @AutoLog
     class FourBarIOInputs {
-        public static double FourBarPosition1 = 0.0;
-        public double FourBarVelocity1 = 0.0;
-        public double FourBarAppliedVolts1 = 0.0;
-        public double[] FourBarCurrentAmps1 = new double[] {};
+        public static double FourBarPosition = 0.0;
+        public double FourBarVelocity = 0.0;
+        public double FourBarAppliedVolts = 0.0;
+        public double[] FourBarCurrentAmps = new double[] {};
+        public double FourBarTarget = 0.0;
 
-        public double FourBarPosition2 = 0.0;
-        public double FourBarVelocity2 = 0.0;
-        public double FourBarAppliedVolts2 = 0.0;
-        public double[] FourBarCurrentAmps2 = new double[] {};
     }
 
     /** Updates the set of loggable inputs. */
