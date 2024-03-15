@@ -3,7 +3,6 @@ package frc.robot;
 import static edu.wpi.first.units.Units.Meters;
 
 import com.revrobotics.CANSparkBase.IdleMode;
-
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -27,9 +26,9 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
     public final class FourBarGains {
-        public static final double kP = 0.75; //0.65; // 0.85
-        public static final double kI = 0.5; //0; // 0.2
-        public static final double kD = 0.04; //0.006; // 0.01
+        public static final double kP = 0.75; // 0.65; // 0.85
+        public static final double kI = 0.5; // 0; // 0.2
+        public static final double kD = 0.04; // 0.006; // 0.01
         public static final double kIZone = 0.05;
 
         public static final double kS = 0.0;

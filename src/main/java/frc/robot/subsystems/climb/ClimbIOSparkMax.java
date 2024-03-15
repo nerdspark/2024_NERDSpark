@@ -6,12 +6,12 @@ package frc.robot.subsystems.climb;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import edu.wpi.first.math.util.Units;
 // import frc.robot.Subsystems.climb.climbIO.climbIOInputs;
 
 public class ClimbIOSparkMax implements ClimbIO {
     /** Creates a new ClimbIOSparkMax. */
     private CANSparkMax climbMotor;
+
     private RelativeEncoder climbEncoder;
 
     public ClimbIOSparkMax() {
@@ -20,7 +20,6 @@ public class ClimbIOSparkMax implements ClimbIO {
         climbEncoder = climbMotor.getEncoder();
 
         climbEncoder.setPosition(0);
-
     }
 
     @Override
@@ -30,7 +29,6 @@ public class ClimbIOSparkMax implements ClimbIO {
         inputs.climbVelocity = climbEncoder.getVelocity();
         inputs.climbAppliedVolts = climbMotor.getAppliedOutput() * climbMotor.getBusVoltage();
         inputs.climbCurrentAmps = new double[] {climbMotor.getOutputCurrent()};
-
     }
 
     public void setClimbMotorPower(double climbPower) {

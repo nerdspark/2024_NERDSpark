@@ -16,7 +16,6 @@ package frc.robot.subsystems.intake;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogInput;
 import frc.robot.Constants.RobotMap;
 

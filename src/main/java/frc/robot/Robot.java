@@ -115,12 +115,12 @@ public class Robot extends LoggedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
-        autonomousCommand = robotContainer.getAutonomousCommand();
+        // autonomousCommand = robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) {
-            autonomousCommand.schedule();
-        }
+        // if (autonomousCommand != null) {
+        //     autonomousCommand.schedule();
+        // }
 
         SignalLogger.setPath("/media/sda1/");
         SignalLogger.start();

@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.RobotMap;
 
 public class ShooterIOSparkMax implements ShooterIO {

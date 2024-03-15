@@ -2,8 +2,8 @@ package frc.robot.config;
 
 import static frc.robot.util.MacAddress.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.util.MacAddress;
 
 public enum RobotIdentity {
@@ -12,21 +12,23 @@ public enum RobotIdentity {
     SIMULATION;
 
     public static RobotIdentity getIdentity() {
-        if (Robot.isReal()) {
-            String mac = getMACAddress();
-            if (!mac.equals("")) {
-                if (mac.equals(MacAddress.SMIDGE_MAC)) {
-                    return SMIDGE_2024;
-                } else if (mac.equals(MacAddress.SMUDGE_MAC)) {
-                    return SMUDGE_2024;
-                }
-            }
+        SmartDashboard.putString("robotMac", getMACAddress());
+        // if (Robot.isReal()) {
+        String mac = getMACAddress();
+        // if (!mac.equals("")) {
+        if (mac.equals(MacAddress.SMIDGE_MAC)) {
 
-            // if none of the above, default to comp bot
-            return Constants.compRobot;
-        } else {
-            return SIMULATION;
+            return SMIDGE_2024;
+        } else if (mac.equals(MacAddress.SMUDGE_MAC)) {
+            SmartDashboard.putString("robotMac", getMACAddress());
+            return SMUDGE_2024;
         }
+        // }
+
+        // if none of the above, default to comp bot
+        return Constants.compRobot;
+        // } else {
+        // return SIMULATION;
     }
 }
 /*public enum RobotIdentity {

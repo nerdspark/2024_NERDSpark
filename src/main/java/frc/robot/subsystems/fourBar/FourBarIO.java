@@ -15,7 +15,6 @@ public interface FourBarIO {
         public double FourBarAppliedVolts = 0.0;
         public double[] FourBarCurrentAmps = new double[] {};
         public double FourBarTarget = 0.0;
-
     }
 
     /** Updates the set of loggable inputs. */

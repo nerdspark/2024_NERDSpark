@@ -4,8 +4,6 @@ import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAll
 import static frc.robot.subsystems.drive.DriveConstants.thetaStdDevCoefficient;
 import static frc.robot.subsystems.drive.DriveConstants.xyStdDevCoefficient;
 
-import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
