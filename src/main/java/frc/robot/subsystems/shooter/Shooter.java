@@ -21,6 +21,10 @@ public class Shooter extends SubsystemBase {
         io.setSpeed(speed1, speed2);
     }
 
+    public boolean onTarget() {
+        return io.onTarget();
+    }
+
     @Override
     public void periodic() {
         io.updateInputs(inputs);

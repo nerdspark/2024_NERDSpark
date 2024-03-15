@@ -56,6 +56,7 @@ public final class Constants {
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
         public static final double fourBarHome = 2.148;
+        public static final double fourBarTolerance = 0.04;
         public static final IdleMode fourBarIdleMode = IdleMode.kBrake;
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
@@ -319,6 +320,7 @@ public final class Constants {
         public static final double IZone = 5;
 
         public static final double autoTurnCeiling = 6.0;
+        public static final double poseSyncTolerance = 0.5; //the tolerance at which vision pose and estimated pose have to be in for driver station to report happy
     }
 
     public static class VisionConstants {
@@ -465,6 +467,9 @@ public final class Constants {
 
         public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
         public static final double stillShotSpeed = 0.3;
+
+        public static final double shooterTolerance = 10;
+
 
         static {
             // Key: Distance

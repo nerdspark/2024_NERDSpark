@@ -36,5 +36,9 @@ public interface ShooterIO {
         return new double[2];
     }
 
+    default boolean onTarget() {
+        return false;
+    }
+
     default void stop() {}
 }

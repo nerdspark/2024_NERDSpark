@@ -46,6 +46,10 @@ public class FourBar extends SubsystemBase {
         targetAngle = angle;
     }
 
+    public boolean onTarget() {
+        return io.onTarget();
+    }
+
     public double getFourBarAngle() {
         return io.getFourBarAngle();
     }
