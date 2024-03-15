@@ -39,6 +39,9 @@ public interface ArmIO {
         public double gripperVelocity = 0.0;
         public double gripperAppliedVolts = 0.0;
         public double[] gripperCurrentAmps = new double[] {};
+
+        public double armX = 0.0;
+        public double armY = 0.0;
     }
 
     default void updateInputs(ArmIOInputs inputs) {}

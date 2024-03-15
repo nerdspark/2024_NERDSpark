@@ -158,11 +158,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                             .get(i)
                             .getBestCameraToTarget()
                             .getRotation().toRotation2d().getDegrees();
-                            // .getAngle();
-                } else {
-                    distanceToSpeakerTag = 0;
-                    angleToSpeakerTag = 1000;
-                }
+                } 
             }
             var distanceUsedForCalculatingStdDev = 0.0;
             if (Constants.VisionConstants.VISION_DEV_DIST_STRATEGY

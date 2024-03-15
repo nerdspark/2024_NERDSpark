@@ -21,11 +21,9 @@ public enum RobotIdentity {
                     return SMUDGE_2024;
                 }
             }
-            if (Constants.compRobot == SMUDGE_2024) {
-                return SMUDGE_2024;
-            } else {
-                return SMIDGE_2024;
-            }
+
+            // if none of the above, default to comp bot
+            return Constants.compRobot;
         } else {
             return SIMULATION;
         }

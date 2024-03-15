@@ -2,6 +2,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.Meters;
 
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -25,43 +27,58 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
     public final class FourBarGains {
-        public static final double kP = 0.65; // 0.85
-        public static final double kI = 0; // 0.2
-        public static final double kD = 0.006; // 0.01
+        public static final double kP = 0.75; //0.65; // 0.85
+        public static final double kI = 0.5; //0; // 0.2
+        public static final double kD = 0.04; //0.006; // 0.01
         public static final double kIZone = 0.05;
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
-        public static final double kG = 0.03;
+        public static final double kG = 0.035;
         public static final double kA = 0.0;
+    }
+
+    public final class FixedShotConstants {
+        public static final double fourBarLong = 1.35; // TODO T UNE
+        public static final double fourBarPodium = 1.7; //TODO tune
+
+        public static final double RPMLong = 5000.0;
+        public static final double RPMPodium = 4500.0;
+        public static final double RPMPointBlank = 4500.0;
+        public static final double RPMHome = 4500.0;
     }
 
     public final class FourBarConstants {
         public static final int currentLimit = 70;
-        public static final double closedLoopRampRate = 0.15;
+        public static final double closedLoopRampRate = 0.25;
         public static final double openLoopRampRate = 0.15;
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
-        public static final double fourBarOut = -20.0 * positionConversionFactor + resetPosition;
-        public static final double fourBarHome = /*-0.75*/ 0 * positionConversionFactor + resetPosition;
+        public static final double fourBarOut = 0.558;
+        public static final double fourBarHome = 2.148;
+        public static final IdleMode fourBarIdleMode = IdleMode.kBrake;
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
 
         static {
             // Key: Distance in feet
             // Value: Shooter Position
-            fourBarMap.put(3.80 + 0.2, 2.05);
-            fourBarMap.put(3.17 + 0.2, 2.08);
-            fourBarMap.put(4.40 + 0.2, 2d);
-            fourBarMap.put(4.60 + 0.2, 1.95d);
-            fourBarMap.put(4.75 + 0.2, 1.925d);
-            fourBarMap.put(4.85 + 0.2, 1.925d);
-            fourBarMap.put(4.90 + 0.2, 1.925);
-            fourBarMap.put(5.00 + 0.2, 1.85);
-            fourBarMap.put(5.10 + 0.2, 1.9);
-            fourBarMap.put(5.30 + 0.2, 1.79);
-            fourBarMap.put(5.40 + 0.15, 1.5);
-            fourBarMap.put(15.1, 1.5);
+            fourBarMap.put(3.5, 2.14);
+            fourBarMap.put(4.0, 2.08);
+            fourBarMap.put(4.6, 2.02d);
+            fourBarMap.put(4.8, 1.93d);
+            fourBarMap.put(4.89, 1.99d);
+            fourBarMap.put(5.06, 1.99d);
+            fourBarMap.put(5.15, 2d);
+            fourBarMap.put(5.42, 1.35d);
+            // fourBarMap.put(4.75 + 0.2, 1.925d);
+            // fourBarMap.put(4.85 + 0.2, 1.925d);
+            // fourBarMap.put(4.90 + 0.2, 1.925);
+            // fourBarMap.put(5.00 + 0.2, 1.85);
+            // fourBarMap.put(5.10 + 0.2, 1.9);
+            // fourBarMap.put(5.30 + 0.2, 1.79);
+            // fourBarMap.put(5.40 + 0.15, 1.5);
+            fourBarMap.put(15.1, 1.35);
 
             /* OLD POSITIONS W/O NEW CONVERSION FACTOR */
             // fourBarMap.put(49.5, 8.0);
@@ -452,14 +469,14 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(24.5, 5300.0);
-            shooterMap.put(19.5, 5300.0);
-            shooterMap.put(17.5, 5300.0);
-            shooterMap.put(15.5 + (2.0 / 12.0), 5300.0);
-            shooterMap.put(13.5 + (1.0 / 12.0), 5000.0);
-            shooterMap.put(10.5 + (9.0 / 12.0), 4800.0);
-            shooterMap.put(8.5 + (5.0 / 12.0), 4700.0);
-            shooterMap.put(2.5, 4500.0);
+            shooterMap.put(7.4676, 5100.0);
+            shooterMap.put(5.9436, 4900.0);
+            shooterMap.put(5.334, 4800.0);
+            shooterMap.put(4.7752, 4800.0);
+            shooterMap.put(4.1402, 4700.0);
+            shooterMap.put(3.429, 4700.0);
+            shooterMap.put(2.7178, 4700.0);
+            shooterMap.put(0.762, 4500.0);
         }
     }
 

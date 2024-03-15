@@ -51,8 +51,8 @@ public class IntakeIOSparkMax implements IntakeIO {
     @Override
     @SuppressWarnings("static-access")
     public void updateInputs(IntakeIOInputs inputs) {
-        inputs.intakePosition1 = Units.rotationsToRadians(intakeEncoder.getPosition());
-        inputs.intakeVelocity1 = Units.rotationsPerMinuteToRadiansPerSecond(intakeEncoder.getVelocity());
+        inputs.intakePosition1 = intakeEncoder.getPosition();
+        inputs.intakeVelocity1 = intakeEncoder.getVelocity();
         inputs.intakeAppliedVolts1 = intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage();
         inputs.intakeCurrentAmps1 = new double[] {intakeMotor.getOutputCurrent()};
     }

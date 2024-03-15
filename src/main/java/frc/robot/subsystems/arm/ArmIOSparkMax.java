@@ -108,30 +108,33 @@ public class ArmIOSparkMax implements ArmIO {
 
     @Override
     public void updateInputs(ArmIOInputs inputs) {
-        inputs.shoulderLeftPosition = Units.rotationsToRadians(shoulderLeftEncoder.getPosition());
-        inputs.shoulderLeftVelocity = Units.rotationsPerMinuteToRadiansPerSecond(shoulderLeftEncoder.getVelocity());
+        inputs.shoulderLeftPosition = shoulderLeftEncoder.getPosition();
+        inputs.shoulderLeftVelocity = shoulderLeftEncoder.getVelocity();
         inputs.shoulderLeftAppliedVolts = shoulderLeft.getAppliedOutput() * shoulderLeft.getBusVoltage();
         inputs.shoulderLeftCurrentAmps = new double[] {shoulderLeft.getOutputCurrent()};
 
-        inputs.elbowLeftPosition = Units.rotationsToRadians(elbowLeftEncoder.getPosition());
-        inputs.elbowLeftVelocity = Units.rotationsPerMinuteToRadiansPerSecond(elbowLeftEncoder.getVelocity());
+        inputs.elbowLeftPosition = elbowLeftEncoder.getPosition();
+        inputs.elbowLeftVelocity = elbowLeftEncoder.getVelocity();
         inputs.elbowLeftAppliedVolts = elbowLeft.getAppliedOutput() * elbowLeft.getBusVoltage();
         inputs.elbowLeftCurrentAmps = new double[] {elbowLeft.getOutputCurrent()};
 
-        inputs.shoulderRightPosition = Units.rotationsToRadians(shoulderLeftEncoder.getPosition());
-        inputs.shoulderRightVelocity = Units.rotationsPerMinuteToRadiansPerSecond(shoulderLeftEncoder.getVelocity());
+        inputs.shoulderRightPosition = (shoulderLeftEncoder.getPosition());
+        inputs.shoulderRightVelocity = (shoulderLeftEncoder.getVelocity());
         inputs.shoulderRightAppliedVolts = shoulderLeft.getAppliedOutput() * shoulderLeft.getBusVoltage();
         inputs.shoulderRightCurrentAmps = new double[] {shoulderLeft.getOutputCurrent()};
 
-        inputs.elbowRightPosition = Units.rotationsToRadians(elbowLeftEncoder.getPosition());
-        inputs.elbowRightVelocity = Units.rotationsPerMinuteToRadiansPerSecond(elbowLeftEncoder.getVelocity());
+        inputs.elbowRightPosition = elbowLeftEncoder.getPosition();
+        inputs.elbowRightVelocity = elbowLeftEncoder.getVelocity();
         inputs.elbowRightAppliedVolts = elbowLeft.getAppliedOutput() * elbowLeft.getBusVoltage();
         inputs.elbowRightCurrentAmps = new double[] {elbowLeft.getOutputCurrent()};
 
-        inputs.wristPosition = Units.rotationsToRadians(wristEncoderAbsolute.getPosition() * 27);
-        inputs.wristVelocity = Units.rotationsPerMinuteToRadiansPerSecond(wristEncoder.getVelocity());
+        inputs.wristPosition = (wristEncoderAbsolute.getPosition() * 27);
+        inputs.wristVelocity = (wristEncoder.getVelocity());
         inputs.wristAppliedVolts = wrist.getAppliedOutput() * wrist.getBusVoltage();
         inputs.wristCurrentAmps = new double[] {wrist.getOutputCurrent()};
+
+        inputs.armX = getArmPosition().getX();
+        inputs.armY = getArmPosition().getY();
 
         // inputs.gripperPosition = Units.rotationsToRadians(gripperEncoder.getPosition());
         // inputs.gripperVelocity = Units.rotationsPerMinuteToRadiansPerSecond(gripperEncoder.getVelocity());
