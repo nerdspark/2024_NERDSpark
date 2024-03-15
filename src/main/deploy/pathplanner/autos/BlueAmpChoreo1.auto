@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3198214769363403,
-      "y": 5.401586532592773
+      "x": 0.79631108045578,
+      "y": 6.610645771026611
     },
-    "rotation": 1.7322388861529245e-23
+    "rotation": 60.16056848873644
   },
   "command": {
     "type": "sequential",
@@ -34,37 +34,25 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ChoreoBlueCenter1Comp.1"
+                        "pathName": "ChoreoBlueAmp1.1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ChoreoBlueCenter2Comp.1"
+                        "pathName": "ChoreoBlueAmp2.1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ChoreoBlueCenter3Comp.1"
+                        "pathName": "ChoreoBlueAmp3.1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ChoreoBlueCenter4Comp.1"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ChoreoBlueCenter5Comp.1"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ChoreoBlueCenter6RingComp1.1"
+                        "pathName": "ChoreoBlueAmp4.1"
                       }
                     }
                   ]

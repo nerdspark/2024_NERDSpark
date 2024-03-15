@@ -265,7 +265,9 @@ public final class Constants {
 
         public static final double red_replannerShoot = 1.11; //
 
-        public static final double blueCenterRing5Choreo = 1.11; //
+        public static final double blueCenterRing5Choreo = 2.45;
+        public static final double blueCenterRing6Choreo = 2.45;
+        public static final double blueCenterRing62Choreo = 2.45; //
         public static final double blueCenterRing7Choreo = 1.9;
     }
 

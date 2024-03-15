@@ -237,6 +237,10 @@ public class RobotContainerSmidge { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "fourBarToBCR5Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing5Choreo));
         NamedCommands.registerCommand(
+                "fourBarToBCR6Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing6Choreo));
+        NamedCommands.registerCommand(
+                "fourBarToBCR62Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing62Choreo));
+        NamedCommands.registerCommand(
                 "fourBarToBCR7Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing7Choreo));
 
         NamedCommands.registerCommand(
