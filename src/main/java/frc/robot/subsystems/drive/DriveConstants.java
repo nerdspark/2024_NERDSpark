@@ -54,9 +54,9 @@ public final class DriveConstants {
             };
     public static final double thetaStdDevCoefficient =
             switch (Constants.getRobot()) {
-                case COMPBOT -> 1.0;
-                case SIMBOT -> 1.0;
-                default -> 1.0;
+                case COMPBOT -> 1;
+                case SIMBOT -> 1;
+                default -> 1;
             };
 
     public static final int gyroID = 13;

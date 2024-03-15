@@ -7,15 +7,13 @@
 
 package frc.robot.subsystems.vision;
 
-import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
-import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kRedAllianceWallRightSide;
-
-import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.Constants;
-import frc.robot.util.VisionHelpers;
 import frc.robot.util.VisionHelpers.PoseEstimate;
 import java.util.ArrayList;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 /** This class represents the implementation of AprilTagVisionIO using Limelight camera. */
 public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
@@ -25,7 +23,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
     private static PhotonVisionRunnable backRightEstimator;
     private static Notifier allNotifier;
 
-    private OriginPosition originPosition = kBlueAllianceWallRightSide;
+    // private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
     /**
      * Constructs a new AprilTagVisionIOLimelight instance.
@@ -74,7 +72,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
     @Override
     public void updateInputs(AprilTagVisionIOInputs inputs) {
 
-        inputs.poseEstimates = new ArrayList<>();
+        // inputs.poseEstimates = new ArrayList<>();
 
         if (Constants.VisionConstants.USE_VISION == true) {
             if (Constants.VisionConstants.USE_FRONT_CAMERA) {
@@ -99,44 +97,91 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
 
         var cameraPose = estomator.grabLatestEstimatedPose();
 
-        // ArrayList<PoseEstimate> poseEstimates = new ArrayList<>(); // Creates an empty ArrayList to store pose
+        ArrayList<PoseEstimate> poseEstimates = new ArrayList<>(); // Creates an empty ArrayList to store pose
         // estimates
 
         if (cameraPose != null) {
+            var poseStrategyUsed = cameraPose.strategy;
             // New pose from vision
-            var cameraPose2d = cameraPose.estimatedPose.toPose2d();
-            if (originPosition == kRedAllianceWallRightSide) {
-                cameraPose2d = VisionHelpers.flipAlliance(cameraPose2d);
-            }
+            // var cameraPose2d = cameraPose.estimatedPose.toPose2d();
+            // if (originPosition == kRedAllianceWallRightSide) {
+            //     cameraPose2d = VisionHelpers.flipAlliance(cameraPose2d);
+            // }
 
             int[] tagIDsFrontCamera = new int[cameraPose.targetsUsed.size()];
             double averageTagDistance = 0.0;
             double poseAmbiguity = 0.0;
+            double smallestDistance = Double.POSITIVE_INFINITY;
+            double distanceToSpeakerTag = 0.0;
+            double angleToSpeakerTag = 0.0;
+            double speakerTagId = DriverStation.getAlliance().get() == Alliance.Blue ? 7 : 4;
 
             for (int i = 0; i < cameraPose.targetsUsed.size(); i++) {
                 tagIDsFrontCamera[i] =
                         (int) cameraPose.targetsUsed.get(i).getFiducialId(); // Retrieves and stores the tag ID
-                averageTagDistance += cameraPose
-                        .targetsUsed
-                        .get(i)
-                        .getBestCameraToTarget()
-                        .getTranslation()
-                        .getNorm(); // Calculates the sum of the tag distances
 
-                poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
+                if (Constants.VisionConstants.VISION_DEV_DIST_STRATEGY
+                        == Constants.VisionConstants.VisionDeviationDistanceStrategy.AVERAGE_DISTANCE) {
+
+                    averageTagDistance += cameraPose
+                            .targetsUsed
+                            .get(i)
+                            .getBestCameraToTarget()
+                            .getTranslation()
+                            .getNorm(); // Calculates the sum of the tag distances
+
+                } else {
+
+                    var distance = cameraPose
+                            .targetsUsed
+                            .get(i)
+                            .getBestCameraToTarget()
+                            .getTranslation()
+                            .getNorm(); // Calculates the distance to the tag
+
+                    if (distance < smallestDistance) smallestDistance = distance;
+                }
+
+                if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+                    poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
+
+                if (cameraPose.targetsUsed.get(i).getFiducialId() == speakerTagId) {
+
+                    distanceToSpeakerTag = cameraPose
+                            .targetsUsed
+                            .get(i)
+                            .getBestCameraToTarget()
+                            .getTranslation()
+                            .getNorm();
+                    angleToSpeakerTag = cameraPose
+                            .targetsUsed
+                            .get(i)
+                            .getBestCameraToTarget()
+                            .getRotation().toRotation2d().getDegrees();
+                } 
             }
-            averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
+            var distanceUsedForCalculatingStdDev = 0.0;
+            if (Constants.VisionConstants.VISION_DEV_DIST_STRATEGY
+                    == Constants.VisionConstants.VisionDeviationDistanceStrategy.AVERAGE_DISTANCE) {
+                averageTagDistance /= cameraPose.targetsUsed.size(); // Calculates the average tag distance
+                distanceUsedForCalculatingStdDev = averageTagDistance;
+            } else {
+                distanceUsedForCalculatingStdDev = smallestDistance;
+            }
+            if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+                poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
-            poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
-
-            inputs.poseEstimates.add(new PoseEstimate(
+            poseEstimates.add(new PoseEstimate(
                     cameraPose.estimatedPose,
                     cameraPose.timestampSeconds,
-                    averageTagDistance,
+                    distanceUsedForCalculatingStdDev,
                     tagIDsFrontCamera,
-                    poseAmbiguity)); //
+                    poseAmbiguity,
+                    poseStrategyUsed,
+                    distanceToSpeakerTag,
+                    angleToSpeakerTag)); //
 
-            // inputs.poseEstimates = poseEstimates;
+            inputs.poseEstimates = poseEstimates;
         }
     }
 }

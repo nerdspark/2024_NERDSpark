@@ -28,23 +28,7 @@
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.25,
-      "rotationDegrees": 90.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 180.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": -90.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -70,7 +54,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "TestPaths",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

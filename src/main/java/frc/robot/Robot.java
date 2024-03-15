@@ -90,7 +90,7 @@ public class Robot extends LoggedRobot {
 
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our autonomous chooser on the dashboard.
-        robotContainer = new RobotContainer();
+        robotContainer = new RobotContainer(); // RobotConstants.getRobotContainer(RobotIdentity.getIdentity());
     }
 
     /** This function is called periodically during all modes. */
@@ -139,6 +139,8 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void teleopInit() {
+        // robotContainer.resetGyro();
+
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove

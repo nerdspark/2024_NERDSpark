@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
-import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kRedAllianceWallRightSide;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
@@ -15,21 +14,23 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.generated.TunerConstants;
+import frc.robot.generated.TunerConstantsSmidge;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.util.AutoAimMath;
 import frc.robot.util.FieldConstants;
-import frc.robot.util.VisionHelpers;
 import frc.robot.util.VisionHelpers.TimestampedVisionUpdate;
 import java.util.List;
 import java.util.Optional;
@@ -47,11 +48,28 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     private final Field2d field2d = new Field2d();
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
+    /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
+    private final Rotation2d BlueAlliancePerspectiveRotation = Rotation2d.fromDegrees(0);
+    /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
+    private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
+    /* Keep track if we've ever applied the operator perspective before or not */
+    private boolean hasAppliedOperatorPerspective = false;
+
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
     // private Translation2d targetPoseSpeaker =
     // AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
     private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+
+    // static {
+    //     if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+    //         targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+    //     } else {
+    //         targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
+    //     }
+    // }
+
     private boolean targetFollow = false;
+    private Intake intake;
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
 
@@ -78,7 +96,10 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public Optional<Rotation2d> getRotationTargetOverride() {
         // Some condition that should decide if we want to override rotation
-        if (targetFollow) {
+        if (targetFollow /*intake.getBeamBreak()
+                         && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker)
+                                 > SpeakerConstants.autonAimDistanceThreshold*/) {
+            // if (intake.getBeamBreak()) {
             // Return an optional containing the rotation override (this should be a field relative rotation)
             return Optional.of(AutoAimMath.getAutoAimCalcRobot(() -> this.getState().Pose, targetPoseSpeaker));
         } else {
@@ -102,14 +123,15 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 (speeds) -> this.setControl(autoRequest.withSpeeds(speeds)),
                 new HolonomicPathFollowerConfig(
                         new PIDConstants(10, 0, 0),
-                        new PIDConstants(10, 0, 0),
-                        TunerConstants.kSpeedAt12VoltsMps,
+                        new PIDConstants(5, 0, 0),
+                        TunerConstantsSmidge.kSpeedAt12VoltsMps,
                         driveBaseRadius,
                         new ReplanningConfig()),
                 // flips the path if on red alliance (do we want this? remove if we're making red-specific paths)
-                () -> DriverStation.getAlliance()
-                        .filter(value -> value == DriverStation.Alliance.Red)
-                        .isPresent(),
+                // () -> DriverStation.getAlliance()
+                //         .filter(value -> value == DriverStation.Alliance.Red)
+                //         .isPresent(),
+                () -> false,
                 this);
     }
 
@@ -163,14 +185,39 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 pose.getX(), pose.getY(), pose.getRotation().getDegrees());
     }
 
+    public Pose2d getCurrentPose() {
+        return this.getState().Pose;
+    }
+
     @Override
     public void periodic() {
+
+        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+        } else {
+            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
+        }
+
+        /* Periodically try to apply the operator perspective */
+        /* If we haven't applied the operator perspective before, then we should apply it regardless of DS state */
+        /* This allows us to correct the perspective in case the robot code restarts mid-match */
+        /* Otherwise, only check and apply the operator perspective if the DS is disabled */
+        /* This ensures driving behavior doesn't change until an explicit disable event occurs during testing*/
+        if (!hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+            DriverStation.getAlliance().ifPresent((allianceColor) -> {
+                this.setOperatorPerspectiveForward(
+                        allianceColor == Alliance.Red
+                                ? RedAlliancePerspectiveRotation
+                                : BlueAlliancePerspectiveRotation);
+                hasAppliedOperatorPerspective = true;
+            });
+        }
         // Set the pose on the dashboard
         var dashboardPose = this.getState().Pose;
-        if (originPosition == kRedAllianceWallRightSide) {
-            // Flip the pose when red, since the dashboard field photo cannot be rotated
-            dashboardPose = VisionHelpers.flipAlliance(dashboardPose);
-        }
         field2d.setRobotPose(dashboardPose);
+    }
+
+    public void setRobotIntake(Intake intake) {
+        this.intake = intake;
     }
 }
