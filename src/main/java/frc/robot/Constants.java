@@ -40,12 +40,12 @@ public final class Constants {
 
     public final class FixedShotConstants {
         public static final double fourBarLong = 1.35; // TODO T UNE
-        public static final double fourBarPodium = 1.7; //TODO tune
+        // public static final double fourBarPodium = 1.95; //TODO tune
 
         public static final double RPMLong = 5000.0;
-        public static final double RPMPodium = 4500.0;
-        public static final double RPMPointBlank = 4500.0;
-        public static final double RPMHome = 4500.0;
+        // public static final double RPMPodium = 3000.0;
+        public static final double RPMPointBlank = 3000.0;
+        public static final double RPMHome = 4300.0;
     }
 
     public final class FourBarConstants {
@@ -54,7 +54,7 @@ public final class Constants {
         public static final double openLoopRampRate = 0.15;
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
-        public static final double fourBarOut = 0.558;
+        public static final double fourBarOut = 0.52;
         public static final double fourBarHome = 2.148;
         public static final IdleMode fourBarIdleMode = IdleMode.kBrake;
 

@@ -63,9 +63,9 @@ public class FourBarIOSparkMax implements FourBarIO {
     @SuppressWarnings("static-access")
     public void updateInputs(FourBarIOInputs inputs) {
         inputs.FourBarPosition = FourBarEncoder1.getPosition();
-        inputs.FourBarVelocity = FourBarEncoder1.getVelocity();
-        inputs.FourBarAppliedVolts = FourBarMotor1.getAppliedOutput() * FourBarMotor1.getBusVoltage();
-        inputs.FourBarCurrentAmps = new double[] {FourBarMotor1.getOutputCurrent()};
+        // inputs.FourBarVelocity = FourBarEncoder1.getVelocity();
+        // inputs.FourBarAppliedVolts = FourBarMotor1.getAppliedOutput() * FourBarMotor1.getBusVoltage();
+        // inputs.FourBarCurrentAmps = new double[] {FourBarMotor1.getOutputCurrent()};
         inputs.FourBarTarget = FourBarPIDController1.getSetpoint();
 
         // inputs.FourBarPosition2 = Units.rotationsToRadians(FourBarEncoder2.getPosition());

@@ -111,7 +111,7 @@ public class RobotContainer { // implements RobotConstants{
                 // arm = new Arm(new ArmIO() {});
                 // break;
         }
-        drivetrain = RobotIdentity.getIdentity() == RobotIdentity.SMIDGE_2024  ? TunerConstantsSmidge.DriveTrain : TunerConstantsSmudge.DriveTrain;
+        drivetrain =TunerConstantsSmidge.DriveTrain;// RobotIdentity.getIdentity() == RobotIdentity.SMIDGE_2024  ? TunerConstantsSmidge.DriveTrain : TunerConstantsSmudge.DriveTrain;
         
         drivetrain.setRobotIntake(intake);
         drivetrain.getModule(0).getDriveMotor().setInverted(false);
@@ -369,13 +369,14 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
         copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
-        // 4 bar + shooter FIXED shots
-        copilot.x()
-                .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarPodium)
-                        .alongWith(new ShooterCommand(shooter, () -> FixedShotConstants.RPMPodium, () -> FixedShotConstants.RPMPodium)));
-        copilot.x()
+        //TEST COMMAND
+        copilot.back()
+                .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
+                        .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4800.0)));
+        copilot.back()
                 .onFalse(new InstantCommand(shooter::stop));
 
+        // 4 bar + shooter FIXED shots
 
         copilot.a()
                 .whileTrue(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)
@@ -391,9 +392,9 @@ public class RobotContainer { // implements RobotConstants{
                 .onFalse(new InstantCommand(shooter::stop));    
 
 
-        copilot.back()
+        copilot.x()
                 .whileTrue(new ShooterCommand(shooter, () -> FixedShotConstants.RPMHome, () -> FixedShotConstants.RPMHome));
-        copilot.back()
+        copilot.x()
                 .onFalse(new InstantCommand(shooter::stop));  
 
         // aim command

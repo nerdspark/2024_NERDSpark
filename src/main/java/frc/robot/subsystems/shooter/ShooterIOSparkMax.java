@@ -59,15 +59,15 @@ public class ShooterIOSparkMax implements ShooterIO {
     @Override
     @SuppressWarnings("static-access")
     public void updateInputs(ShooterIoInputs inputs) {
-        inputs.shooterPosition1 = shooterEncoder1.getPosition();
+        // inputs.shooterPosition1 = shooterEncoder1.getPosition();
         inputs.shooterVelocity1 = shooterEncoder1.getVelocity();
-        inputs.shooterAppliedVolts1 = shooterMotor1.getAppliedOutput() * shooterMotor1.getBusVoltage();
-        inputs.shooterCurrentAmps1 = new double[] {shooterMotor1.getOutputCurrent()};
+        // inputs.shooterAppliedVolts1 = shooterMotor1.getAppliedOutput() * shooterMotor1.getBusVoltage();
+        // inputs.shooterCurrentAmps1 = new double[] {shooterMotor1.getOutputCurrent()};
 
-        inputs.shooterPosition2 = shooterEncoder2.getPosition();
+        // inputs.shooterPosition2 = shooterEncoder2.getPosition();
         inputs.shooterVelocity2 = shooterEncoder2.getVelocity();
-        inputs.shooterAppliedVolts2 = shooterMotor2.getAppliedOutput() * shooterMotor2.getBusVoltage();
-        inputs.shooterCurrentAmps2 = new double[] {shooterMotor2.getOutputCurrent()};
+        // inputs.shooterAppliedVolts2 = shooterMotor2.getAppliedOutput() * shooterMotor2.getBusVoltage();
+        // inputs.shooterCurrentAmps2 = new double[] {shooterMotor2.getOutputCurrent()};
 
         inputs.shooterI1 = shooterController1.getIAccum();
         inputs.shooterI2 = shooterController2.getIAccum();
