@@ -72,7 +72,7 @@ public class RobotContainer { // implements RobotConstants{
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
-    private final CommandSwerveDrivetrain drivetrain = RobotIdentity.getIdentity() == RobotIdentity.SMIDGE_2024  ? TunerConstantsSmidge.DriveTrain : TunerConstantsSmudge.DriveTrain; 
+    private final CommandSwerveDrivetrain drivetrain; 
 
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -110,7 +110,8 @@ public class RobotContainer { // implements RobotConstants{
                 // arm = new Arm(new ArmIO() {});
                 // break;
         }
-
+        drivetrain = RobotIdentity.getIdentity() == RobotIdentity.SMIDGE_2024  ? TunerConstantsSmidge.DriveTrain : TunerConstantsSmudge.DriveTrain;
+        
         drivetrain.setRobotIntake(intake);
         drivetrain.getModule(0).getDriveMotor().setInverted(false);
         drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
