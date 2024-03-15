@@ -38,6 +38,16 @@ public final class Constants {
         public static final double kA = 0.0;
     }
 
+    public final class FixedShotConstants {
+        public static final double fourBarLong = 1.35; // TODO T UNE
+        public static final double fourBarPodium = 1.7; //TODO tune
+
+        public static final double RPMLong = 5000.0;
+        public static final double RPMPodium = 4500.0;
+        public static final double RPMPointBlank = 4500.0;
+        public static final double RPMHome = 4500.0;
+    }
+
     public final class FourBarConstants {
         public static final int currentLimit = 70;
         public static final double closedLoopRampRate = 0.25;
