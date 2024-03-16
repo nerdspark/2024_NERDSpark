@@ -10,11 +10,15 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathConstraints;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -317,6 +321,11 @@ public class RobotContainer { // implements RobotConstants{
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
         driver.a().onTrue(new InstantCommand(() -> printSpeakerDistanceAndAngle(aprilTagVision)));
 
+        driver.x().whileTrue(AutoBuilder.pathfindToPose(
+            /*DriverStation.getAlliance().get() == Alliance.Blue ?*/ DrivetrainConstants.ampPoseBlue,// : DrivetrainConstants.ampPoseRed,
+            DrivetrainConstants.constraints
+    ));
+
         /* COPILOT COMMANDS:
          * left trigger: full auto aim 4 bar + shooter
          * right trigger: full auto vision turn
@@ -587,7 +596,6 @@ public class RobotContainer { // implements RobotConstants{
     }
 
     public void printSpeakerDistanceAndAngle(AprilTagVision aprilTagVision) {
-
         SmartDashboard.putNumber("Speaker Distance", aprilTagVision.getSpeakerTagDistance());
         SmartDashboard.putNumber("Speaker Angle", aprilTagVision.getSpeakerTagAngle());
     }

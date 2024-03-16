@@ -2,6 +2,7 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.Meters;
 
+import com.pathplanner.lib.path.PathConstraints;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.Matrix;
@@ -341,6 +342,16 @@ public final class Constants {
 
         public static final double autoTurnCeiling = 6.0;
         public static final double poseSyncTolerance = 0.5; //the tolerance at which vision pose and estimated pose have to be in for driver station to report happy
+    
+        public static final double deadband = 0.1;
+
+        
+        //PathFinding constants
+        public static final Pose2d ampPoseBlue = new Pose2d(1.81, 7.53, Rotation2d.fromDegrees(-90));
+        public static final Pose2d ampPoseRed = new Pose2d(14.71, 7.53, Rotation2d.fromDegrees(-90));
+        public static final PathConstraints constraints = new PathConstraints(
+                    4.89, 6.0,
+                    Units.degreesToRadians(540), Units.degreesToRadians(720));
     }
 
     public static class VisionConstants {
