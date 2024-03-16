@@ -26,6 +26,9 @@ import frc.robot.util.Alert;
 import frc.robot.util.FieldConstants;
 
 public final class Constants {
+
+    public static final boolean PracticeBot = true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE 
+
     public final class FourBarGains {
         public static final double kP = 0.75; //0.65; // 0.85
         public static final double kI = 0.55; //0; // 0.2
@@ -334,7 +337,7 @@ public final class Constants {
         public static final double gyroP = 0.023;
         public static final double gyroI = 0.0;
         public static final double gyroD = 0.0018;
-        public static final double IZone = 5;
+        public static final double IZone = 10.0;
 
         public static final double autoTurnCeiling = 6.0;
         public static final double poseSyncTolerance = 0.5; //the tolerance at which vision pose and estimated pose have to be in for driver station to report happy
