@@ -27,8 +27,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants.SpeakerConstants;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.util.AllianceFlipUtil;
 import frc.robot.util.AutoAimMath;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers.TimestampedVisionUpdate;
@@ -56,8 +58,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     private boolean hasAppliedOperatorPerspective = false;
 
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
-    // private Translation2d targetPoseSpeaker =
-    // AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
+    // private Translation2d targetPoseSpeaker = AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
     private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
 
     // static {
@@ -96,9 +97,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public Optional<Rotation2d> getRotationTargetOverride() {
         // Some condition that should decide if we want to override rotation
-        if (targetFollow /*intake.getBeamBreak()
+        if (intake.getBeamBreak()
                          && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker)
-                                 > SpeakerConstants.autonAimDistanceThreshold*/) {
+                                 > SpeakerConstants.autonAimDistanceThreshold) {
             // if (intake.getBeamBreak()) {
             // Return an optional containing the rotation override (this should be a field relative rotation)
             return Optional.of(AutoAimMath.getAutoAimCalcRobot(() -> this.getState().Pose, targetPoseSpeaker));

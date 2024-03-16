@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 8.02,
-        "y": 0.71
+        "y": 0.91
       },
       "prevControl": {
         "x": 6.9180593522211,
-        "y": 1.0587898962750855
+        "y": 1.2587898962750854
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.1,
-      "rotationDegrees": -70.0,
+      "rotationDegrees": -65.0,
       "rotateFast": false
     },
     {
@@ -40,7 +40,19 @@
       "rotateFast": false
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.1,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 1.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
       "name": "fourBarToIntake",
@@ -52,7 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToIntake"
+                "name": "fourBarToHome"
               }
             }
           ]
@@ -61,7 +73,7 @@
     },
     {
       "name": "shootRing1",
-      "waypointRelativePos": 0.05,
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "sequential",
         "data": {
@@ -78,7 +90,7 @@
     },
     {
       "name": "fourBarHome",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "sequential",
         "data": {
@@ -145,5 +157,5 @@
     "rotation": -60.0,
     "velocity": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

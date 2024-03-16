@@ -16,9 +16,21 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "shootSpeed"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.3
+                      }
+                    },
                     {
                       "type": "path",
                       "data": {
@@ -35,12 +47,6 @@
                       "type": "path",
                       "data": {
                         "pathName": "RE4noteCenter3"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "forcedIntakeShoot"
                       }
                     },
                     {
