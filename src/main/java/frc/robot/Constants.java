@@ -27,7 +27,7 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
-    public static final boolean PracticeBot = true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE 
+    public static final boolean PracticeBot = false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE 
 
     public final class FourBarGains {
         public static final double kP = 0.75; //0.65; // 0.85
@@ -366,9 +366,9 @@ public final class Constants {
         public static boolean USE_BACK_LEFT_CAMERA = false;
         public static boolean USE_BACK_RIGHT_CAMERA = false;
 
-        public static final String FRONT_CAMERA_NAME = "FrontCamera"; // LEFT
-        public static final String BACK_LEFT_CAMERA_NAME = "BlackCamera"; // RIGHT
-        public static final String BACK_RIGHT_CAMERA_NAME = "TEMP_NAME_CHANGE_THIS";
+        public static final String FRONT_CAMERA_NAME = "BackCamera"; // LEFT
+        public static final String BACK_LEFT_CAMERA_NAME = "BackLeft"; // RIGHT
+        public static final String BACK_RIGHT_CAMERA_NAME = "BackRight";
         public static final String NOTE_CAMERA_NAME = "NoteCamera";
 
         /**
@@ -386,14 +386,14 @@ public final class Constants {
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(-15), Units.inchesToMeters(-0.25), Units.inchesToMeters(6)),
-                new Rotation3d(0, -Math.toRadians(35), Math.toRadians(0)));
+                new Translation3d(-Units.inchesToMeters(9.75), Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(45)));
 
         // Physical location of the back right camera on the robot, relative to the center of the robot. CHANGE THIS
 
         public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(6.5)),
-                new Rotation3d(0, Math.toRadians(39), Math.toRadians(180)));
+                new Translation3d(-Units.inchesToMeters(9.75), -Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(225)));
 
         // PLACEHOLDER
         public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(12.5);
