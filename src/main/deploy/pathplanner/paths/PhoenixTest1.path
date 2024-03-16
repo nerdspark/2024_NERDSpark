@@ -20,7 +20,7 @@
         "y": 5.5
       },
       "prevControl": {
-        "x": 1.4793093674254454,
+        "x": 1.5429112274018262,
         "y": 5.5
       },
       "nextControl": null,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "TestPaths",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
