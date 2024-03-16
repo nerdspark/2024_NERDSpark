@@ -334,12 +334,12 @@ public final class Constants {
     }
 
     public final class DrivetrainConstants {
-        public static final double gyroP = 0.023;
-        public static final double gyroI = 0.0;
-        public static final double gyroD = 0.0018;
+        public static final double gyroP = 0.1;
+        public static final double gyroI = 0.1;
+        public static final double gyroD = 0.008;
         public static final double IZone = 10.0;
 
-        public static final double autoTurnCeiling = 6.0;
+        public static final double autoTurnCeiling = 7.0;
         public static final double poseSyncTolerance = 0.5; //the tolerance at which vision pose and estimated pose have to be in for driver station to report happy
     }
 

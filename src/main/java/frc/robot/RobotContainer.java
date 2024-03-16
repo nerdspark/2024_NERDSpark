@@ -60,7 +60,7 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
-import frc.robot.util.LightningShuffleboard;
+// import frc.robot.util.LightningShuffleboard;
 
 import java.util.function.Supplier;
 
@@ -74,7 +74,7 @@ public class RobotContainer { // implements RobotConstants{
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
-    private SlewRateLimiter zLimiter = new SlewRateLimiter(7);
+    private SlewRateLimiter zLimiter = new SlewRateLimiter(20);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
@@ -83,7 +83,7 @@ public class RobotContainer { // implements RobotConstants{
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
-            .withRotationalDeadband(MaxAngularRate * 0.1); // Add a 10% deadband; // I want field-centric
+            .withRotationalDeadband(0.0); // Add a 10% deadband; // I want field-centric
     // driving in open loop
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -576,13 +576,13 @@ public class RobotContainer { // implements RobotConstants{
         // targetAngle = currentAngle + error;
         SmartDashboard.putNumber("angle error deg", gyroPid.getPositionError());
 
-        LightningShuffleboard.setDouble("gyro", "targetAngle", targetAngle);
-        LightningShuffleboard.setDouble("gyro", "currentAngle", currentAngle);
-        gyroPid.setP(LightningShuffleboard.getDouble("gyro", "P", DrivetrainConstants.gyroP));
-        gyroPid.setI(LightningShuffleboard.getDouble("gyro", "I", DrivetrainConstants.gyroI));
-        gyroPid.setD(LightningShuffleboard.getDouble("gyro", "D", DrivetrainConstants.gyroD));
+        // LightningShuffleboard.setDouble("gyro", "targetAngle", targetAngle);
+        // LightningShuffleboard.setDouble("gyro", "currentAngle", currentAngle);
+        // gyroPid.setP(LightningShuffleboard.getDouble("gyro", "P", DrivetrainConstants.gyroP));
+        // gyroPid.setI(LightningShuffleboard.getDouble("gyro", "I", DrivetrainConstants.gyroI));
+        // gyroPid.setD(LightningShuffleboard.getDouble("gyro", "D", DrivetrainConstants.gyroD));
 
-        LightningShuffleboard.setDouble("gyro", "error", gyroPid.getPositionError());
+        // LightningShuffleboard.setDouble("gyro", "error", gyroPid.getPositionError());
 
         return zLimiter.calculate(MathUtil.clamp(gyroPid.calculate(currentAngle, targetAngle), -DrivetrainConstants.autoTurnCeiling, DrivetrainConstants.autoTurnCeiling));
     }
@@ -590,7 +590,7 @@ public class RobotContainer { // implements RobotConstants{
     //     @Override
     public void resetGyro() {
         gyroPid.setIZone(DrivetrainConstants.IZone);
-        gyroPid.enableContinuousInput(0, 360);
+        gyroPid.enableContinuousInput(0, -360);
         gyroOffset = gyro.getAngle();
         targetAngle = 0;
         drivetrain.seedFieldRelative(
