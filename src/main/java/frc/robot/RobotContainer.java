@@ -64,7 +64,7 @@ import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
-    private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = 1.5 * Math.PI; // DO NOT CHANGE
     private Intake intake;
     private FourBar fourBar;
     private Shooter shooter;
@@ -72,7 +72,7 @@ public class RobotContainer { // implements RobotConstants{
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
-    private SlewRateLimiter zLimiter = new SlewRateLimiter(7);
+    private SlewRateLimiter zLimiter = new SlewRateLimiter(25);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
@@ -550,8 +550,9 @@ public class RobotContainer { // implements RobotConstants{
         } else if (driverRaw.getPOV() != -1) {
             targetAngle = -driverRaw.getPOV();
         } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
-            targetAngle = currentAngle - 10 * driver.getLeftX();
-            return -driver.getLeftX() * Math.abs(driver.getLeftX()) * 5;
+            double speed = Math.copySign(Math.pow(Math.abs(driver.getLeftX()), 1.7), -driver.getLeftX()) * 5.0;
+            targetAngle = currentAngle + 30.0 * speed;
+            return zLimiter.calculate(speed);
             // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }
 
@@ -563,7 +564,7 @@ public class RobotContainer { // implements RobotConstants{
         SmartDashboard.putNumber("angle error deg", error);
         return Math.min(
                 Math.max(
-                        zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle)) * MaxAngularRate,
+                        zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle) * MaxAngularRate),
                         -DrivetrainConstants.autoTurnCeiling),
                 DrivetrainConstants.autoTurnCeiling);
     }

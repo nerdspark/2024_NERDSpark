@@ -41,14 +41,14 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarMotor2.setSmartCurrentLimit(FourBarConstants.currentLimit);
 
         FourBarMotor1.setClosedLoopRampRate(FourBarConstants.closedLoopRampRate);
-        FourBarMotor1.setClosedLoopRampRate(FourBarConstants.closedLoopRampRate);
+        FourBarMotor2.setClosedLoopRampRate(FourBarConstants.closedLoopRampRate);
         FourBarMotor1.setOpenLoopRampRate(FourBarConstants.openLoopRampRate);
-        FourBarMotor1.setOpenLoopRampRate(FourBarConstants.openLoopRampRate);
+        FourBarMotor2.setOpenLoopRampRate(FourBarConstants.openLoopRampRate);
 
         FourBarEncoder1.setPositionConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder1.setVelocityConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder1.setPosition(FourBarConstants.resetPosition);
-
+        
         FourBarMotor2.follow(FourBarMotor1, true);
 
         FourBarPIDController1 = new PIDController(FourBarGains.kP, FourBarGains.kI, FourBarGains.kD);
