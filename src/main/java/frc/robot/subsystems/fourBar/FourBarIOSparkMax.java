@@ -6,6 +6,9 @@ package frc.robot.subsystems.fourBar;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -23,6 +26,8 @@ public class FourBarIOSparkMax implements FourBarIO {
 
     private ArmFeedforward FourBarFeedforward1;
     private PIDController FourBarPIDController;
+    
+    private SparkPIDController BuiltInPID;
 
     public FourBarIOSparkMax() {
 
@@ -58,6 +63,12 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, FourBarGains.kG, FourBarGains.kV, FourBarGains.kA);
         // fourBarFeedforward2 = new ArmFeedforward(Constants.FourBarGains.kS, Constants.FourBarGains.kG,
         // Constants.FourBarGains.kV, Constants.FourBarGains.kA);
+
+        BuiltInPID = FourBarMotor1.getPIDController();
+        BuiltInPID.setP(0.55);
+        BuiltInPID.setI(0.000);
+        BuiltInPID.setD(0.0);
+        BuiltInPID.setIZone(1.0);
     }
 
     @Override
@@ -81,7 +92,9 @@ public class FourBarIOSparkMax implements FourBarIO {
         double G = FourBarFeedforward1.calculate(FourBarEncoder1.getPosition(), FourBarEncoder1.getVelocity());
         double PID = FourBarPIDController.calculate(FourBarEncoder1.getPosition(), angle);
 
-        FourBarMotor1.set(PID + G);
+        // FourBarMotor1.set(PID + G);
+
+        BuiltInPID.setReference(angle, ControlType.kPosition);
 
         // LightningShuffleboard.setDouble("four bar", "error", angle - FourBarEncoder1.getPosition());
         // LightningShuffleboard.setDouble("four bar", "PID", PID);

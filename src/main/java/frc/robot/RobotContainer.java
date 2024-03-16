@@ -10,6 +10,8 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -64,7 +66,7 @@ import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
     private double MaxSpeed = 6.0; // 6 meters per second desired top speed
-    private double MaxAngularRate = 1.5 * Math.PI; // DO NOT CHANGE
+    private double MaxAngularRate = 8.0; //E 
     private Intake intake;
     private FourBar fourBar;
     private Shooter shooter;
@@ -72,7 +74,7 @@ public class RobotContainer { // implements RobotConstants{
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
-    private SlewRateLimiter zLimiter = new SlewRateLimiter(25);
+    private SlewRateLimiter zLimiter = new SlewRateLimiter(7);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
@@ -80,9 +82,8 @@ public class RobotContainer { // implements RobotConstants{
 
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1)
-            .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+            .withRotationalDeadband(MaxAngularRate * 0.1); // Add a 10% deadband; // I want field-centric
     // driving in open loop
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -147,7 +148,7 @@ public class RobotContainer { // implements RobotConstants{
         configureButtonBindings();
 
         //only schedule arm commands if using smudge
-        if(RobotIdentity.getIdentity() != RobotIdentity.SMIDGE_2024) {
+        if(!Constants.PracticeBot) {
                 arm = new Arm(new ArmIOSparkMax());
                 scheduleArmCommands();
         }
@@ -168,11 +169,11 @@ public class RobotContainer { // implements RobotConstants{
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(
                         () -> drive.withVelocityX(
-                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
+                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightY(), 0.1))
                                                 * MaxSpeed)) // Drive forward with
                                 // negative Y (forward)
                                 .withVelocityY(
-                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
+                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightX(), 0.1))
                                                 * MaxSpeed)) // Drive left with negative X (left)
                                 .withRotationalRate(
                                         calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
@@ -308,10 +309,13 @@ public class RobotContainer { // implements RobotConstants{
                                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                                 drivetrain.getState().speeds.vyMetersPerSecond))
                                                 .getDegrees()))
-                                        .withVelocityX(xLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                        .withVelocityY(yLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))));
+                                                .withVelocityX(
+                                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightY(), 0.1))
+                                                                * MaxSpeed)) // Drive forward with
+                                                // negative Y (forward)
+                                                .withVelocityY(
+                                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightX(), 0.1))
+                                                                * MaxSpeed))));
 
         // zero gyro
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
@@ -346,10 +350,13 @@ public class RobotContainer { // implements RobotConstants{
                                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                                 drivetrain.getState().speeds.vyMetersPerSecond))
                                                 .getDegrees()))
-                                        .withVelocityX(xLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                        .withVelocityY(yLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))));
+                                                .withVelocityX(
+                                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightY(), 0.1))
+                                                                * MaxSpeed)) // Drive forward with
+                                                // negative Y (forward)
+                                                .withVelocityY(
+                                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightX(), 0.1))
+                                                                * MaxSpeed))));
         
         //4 bar + shooter autoaim
         copilot.leftTrigger().whileTrue(new ShooterCommand(
@@ -555,29 +562,35 @@ public class RobotContainer { // implements RobotConstants{
             targetAngle = -target.get();
         } else if (driverRaw.getPOV() != -1) {
             targetAngle = -driverRaw.getPOV();
-        } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
-            double speed = Math.copySign(Math.pow(Math.abs(driver.getLeftX()), 1.7), -driver.getLeftX()) * 5.0;
-            targetAngle = currentAngle + 30.0 * speed;
+        } else if (Math.abs(driver.getLeftX()) >= 0.05) {
+            double speed = Math.copySign(Math.pow(Math.abs(driver.getLeftX()), 1.7), -driver.getLeftX()) * MaxAngularRate;
+            targetAngle = currentAngle;// + 30.0 * gyro.getAngularVelocityZDevice().getValue();
             return zLimiter.calculate(speed);
             // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }
 
-        double error = (targetAngle - currentAngle) % (360.0);
+        // double error = (targetAngle - currentAngle) % (360.0);
 
-        error = error > 180.0 ? error - 360.0 : error;
-        error = error < -180.0 ? error + 360.0 : error;
-        targetAngle = currentAngle + error;
-        SmartDashboard.putNumber("angle error deg", error);
-        return Math.min(
-                Math.max(
-                        zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle) * MaxAngularRate),
-                        -DrivetrainConstants.autoTurnCeiling),
-                DrivetrainConstants.autoTurnCeiling);
+        // error = error > 180.0 ? error - 360.0 : error;
+        // error = error < -180.0 ? error + 360.0 : error;
+        // targetAngle = currentAngle + error;
+        SmartDashboard.putNumber("angle error deg", gyroPid.getPositionError());
+
+        LightningShuffleboard.setDouble("gyro", "targetAngle", targetAngle);
+        LightningShuffleboard.setDouble("gyro", "currentAngle", currentAngle);
+        gyroPid.setP(LightningShuffleboard.getDouble("gyro", "P", DrivetrainConstants.gyroP));
+        gyroPid.setI(LightningShuffleboard.getDouble("gyro", "I", DrivetrainConstants.gyroI));
+        gyroPid.setD(LightningShuffleboard.getDouble("gyro", "D", DrivetrainConstants.gyroD));
+
+        LightningShuffleboard.setDouble("gyro", "error", gyroPid.getPositionError());
+
+        return zLimiter.calculate(MathUtil.clamp(gyroPid.calculate(currentAngle, targetAngle), -DrivetrainConstants.autoTurnCeiling, DrivetrainConstants.autoTurnCeiling));
     }
 
     //     @Override
     public void resetGyro() {
         gyroPid.setIZone(DrivetrainConstants.IZone);
+        gyroPid.enableContinuousInput(0, 360);
         gyroOffset = gyro.getAngle();
         targetAngle = 0;
         drivetrain.seedFieldRelative(
