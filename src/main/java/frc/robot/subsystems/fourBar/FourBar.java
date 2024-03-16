@@ -30,10 +30,9 @@ public class FourBar extends SubsystemBase {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("fourBar", inputs);
-
-        // This method will be called once per scheduler run
-
-        // setFourBarAngle(LightningShuffleboard.getDouble("four bar", "target", FourBarConstants.fourBarHome));
+        // if(LightningShuffleboard.getBool("four bar", "useInput", false)) {
+            // setFourBarAngle(LightningShuffleboard.getDouble("four bar", "target", FourBarConstants.fourBarHome));
+        // }
 
         // io.setPIDGGains(LightningShuffleboard.getDouble("four bar", "kP", FourBarGains.kP),
         // LightningShuffleboard.getDouble("four bar", "kI", FourBarGains.kI), LightningShuffleboard.getDouble("four bar", "kD", FourBarGains.kD), LightningShuffleboard.getDouble("four bar", "kG", FourBarGains.kG));
