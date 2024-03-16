@@ -31,14 +31,13 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.RobotMap;
-import frc.robot.Constants.SpeakerConstants;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
-import frc.robot.config.RobotIdentity;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.config.RobotIdentity;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -58,8 +57,6 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
-import frc.robot.util.LightningShuffleboard;
-
 import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
@@ -76,7 +73,7 @@ public class RobotContainer { // implements RobotConstants{
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
     private final CommandXboxController copilot = new CommandXboxController(1);
-    private final CommandSwerveDrivetrain drivetrain; 
+    private final CommandSwerveDrivetrain drivetrain;
 
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -115,14 +112,14 @@ public class RobotContainer { // implements RobotConstants{
                 // break;
         }
         if (Constants.PracticeBot) {
-                drivetrain =TunerConstantsSmidge.DriveTrain;
-        
-                drivetrain.getModule(0).getDriveMotor().setInverted(false);
-                drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
-                drivetrain.getModule(2).getDriveMotor().setInverted(true); // b
-                drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
+            drivetrain = TunerConstantsSmidge.DriveTrain;
+
+            drivetrain.getModule(0).getDriveMotor().setInverted(false);
+            drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
+            drivetrain.getModule(2).getDriveMotor().setInverted(true); // b
+            drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
         } else {
-                drivetrain =TunerConstantsSmudge.DriveTrain;
+            drivetrain = TunerConstantsSmudge.DriveTrain;
         }
 
         drivetrain.setRobotIntake(intake);
@@ -146,10 +143,10 @@ public class RobotContainer { // implements RobotConstants{
 
         configureButtonBindings();
 
-        //only schedule arm commands if using smudge
-        if(RobotIdentity.getIdentity() != RobotIdentity.SMIDGE_2024) {
-                arm = new Arm(new ArmIOSparkMax());
-                scheduleArmCommands();
+        // only schedule arm commands if using smudge
+        if (RobotIdentity.getIdentity() != RobotIdentity.SMIDGE_2024) {
+            arm = new Arm(new ArmIOSparkMax());
+            scheduleArmCommands();
         }
         // LightningShuffleboard.setDoubleSupplier("four bar", "distance from speaker", () -> drivetrain
         //         .getState()
@@ -300,18 +297,17 @@ public class RobotContainer { // implements RobotConstants{
         driver.rightBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
         driver.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
-        //autoaim robot
-        driver.leftBumper().whileTrue(drivetrain.applyRequest(
-                                () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-                                                        () -> drivetrain.getState().Pose,
-                                                        () -> new Translation2d(
-                                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                                drivetrain.getState().speeds.vyMetersPerSecond))
-                                                .getDegrees()))
-                                        .withVelocityX(xLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                        .withVelocityY(yLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))));
+        // autoaim robot
+        driver.leftBumper().whileTrue(drivetrain.applyRequest(() -> drive.withRotationalRate(
+                        calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
+                                        () -> drivetrain.getState().Pose,
+                                        () -> new Translation2d(
+                                                drivetrain.getState().speeds.vxMetersPerSecond,
+                                                drivetrain.getState().speeds.vyMetersPerSecond))
+                                .getDegrees()))
+                .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                .withVelocityY(
+                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))));
 
         // zero gyro
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
@@ -322,49 +318,49 @@ public class RobotContainer { // implements RobotConstants{
          * right trigger: full auto vision turn
          * left bumper: spit
          * right bumper: shoot
-         * 
-         * back: home position FIXED SHOT
-         * start:long position FIXED SHOT 
          *
-         * a: point blank FIXED SHOT 
-         * x: stage safe zone FIXED SHOT 
+         * back: home position FIXED SHOT
+         * start:long position FIXED SHOT
+         *
+         * a: point blank FIXED SHOT
+         * x: stage safe zone FIXED SHOT
          * b: arm amp pickup
          * y: arm amp dropoff
          * POV UP: climb up
          * POV down: climb down
          * POV left: trap
-         * 
+         *
          */
 
         // NEW COMMAND BINDINGS
 
-        //autoaim robot
-        copilot.rightTrigger().whileTrue(drivetrain.applyRequest(
-                                () -> drive.withRotationalRate(calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-                                                        () -> drivetrain.getState().Pose,
-                                                        () -> new Translation2d(
-                                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                                drivetrain.getState().speeds.vyMetersPerSecond))
-                                                .getDegrees()))
-                                        .withVelocityX(xLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                                        .withVelocityY(yLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))));
-        
-        //4 bar + shooter autoaim
-        copilot.leftTrigger().whileTrue(new ShooterCommand(
-                        shooter,
-                        () -> AutoAim.calculateShooterRPM(
-                                () -> drivetrain.getState().Pose,
-                                () -> new Translation2d(
-                                        drivetrain.getState().speeds.vxMetersPerSecond,
-                                        drivetrain.getState().speeds.vyMetersPerSecond)),
-                        () -> AutoAim.calculateShooterRPM(
-                                () -> drivetrain.getState().Pose,
-                                () -> new Translation2d(
-                                        drivetrain.getState().speeds.vxMetersPerSecond,
-                                        drivetrain.getState().speeds.vyMetersPerSecond)))
-                .alongWith(new FourBarCommand(
+        // autoaim robot
+        copilot.rightTrigger().whileTrue(drivetrain.applyRequest(() -> drive.withRotationalRate(
+                        calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
+                                        () -> drivetrain.getState().Pose,
+                                        () -> new Translation2d(
+                                                drivetrain.getState().speeds.vxMetersPerSecond,
+                                                drivetrain.getState().speeds.vyMetersPerSecond))
+                                .getDegrees()))
+                .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                .withVelocityY(
+                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))));
+
+        // 4 bar + shooter autoaim
+        copilot.leftTrigger()
+                .whileTrue(new ShooterCommand(
+                                shooter,
+                                () -> AutoAim.calculateShooterRPM(
+                                        () -> drivetrain.getState().Pose,
+                                        () -> new Translation2d(
+                                                drivetrain.getState().speeds.vxMetersPerSecond,
+                                                drivetrain.getState().speeds.vyMetersPerSecond)),
+                                () -> AutoAim.calculateShooterRPM(
+                                        () -> drivetrain.getState().Pose,
+                                        () -> new Translation2d(
+                                                drivetrain.getState().speeds.vxMetersPerSecond,
+                                                drivetrain.getState().speeds.vyMetersPerSecond)))
+                        .alongWith(new FourBarCommand(
                                 fourBar,
                                 () -> AutoAim.calculateFourBarPosition(
                                         () -> drivetrain.getState().Pose,
@@ -381,33 +377,32 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
         copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
-        //TEST COMMAND
+        // TEST COMMAND
         copilot.back()
                 .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
                         .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4800.0)));
-        copilot.back()
-                .onFalse(new InstantCommand(shooter::stop));
+        copilot.back().onFalse(new InstantCommand(shooter::stop));
 
         // 4 bar + shooter FIXED shots
 
         copilot.a()
                 .whileTrue(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)
-                        .alongWith(new ShooterCommand(shooter, () -> FixedShotConstants.RPMPointBlank, () -> FixedShotConstants.RPMPointBlank)));
-        copilot.a()
-                .onFalse(new InstantCommand(shooter::stop));     
-
+                        .alongWith(new ShooterCommand(
+                                shooter,
+                                () -> FixedShotConstants.RPMPointBlank,
+                                () -> FixedShotConstants.RPMPointBlank)));
+        copilot.a().onFalse(new InstantCommand(shooter::stop));
 
         copilot.start()
                 .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
-                        .alongWith(new ShooterCommand(shooter, () -> FixedShotConstants.RPMLong, () -> FixedShotConstants.RPMLong)));
-        copilot.start()
-                .onFalse(new InstantCommand(shooter::stop));    
-
+                        .alongWith(new ShooterCommand(
+                                shooter, () -> FixedShotConstants.RPMLong, () -> FixedShotConstants.RPMLong)));
+        copilot.start().onFalse(new InstantCommand(shooter::stop));
 
         copilot.x()
-                .whileTrue(new ShooterCommand(shooter, () -> FixedShotConstants.RPMHome, () -> FixedShotConstants.RPMHome));
-        copilot.x()
-                .onFalse(new InstantCommand(shooter::stop));  
+                .whileTrue(new ShooterCommand(
+                        shooter, () -> FixedShotConstants.RPMHome, () -> FixedShotConstants.RPMHome));
+        copilot.x().onFalse(new InstantCommand(shooter::stop));
 
         // aim command
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
@@ -541,10 +536,18 @@ public class RobotContainer { // implements RobotConstants{
         drivetrain.addDashboardWidgets(visionTab);
 
         // final var driverTab = Shuffleboard.getTab("Driver");
-        visionTab.addBoolean("SHOOT", () -> /*shooter.onTarget() &&*/ fourBar.onTarget()); //fourbar and shooter within tolerance of target values
-        visionTab.addBoolean("SYNCED", () -> drivetrain.getCurrentPose().getTranslation().getDistance(aprilTagVision.getVisionPose().getTranslation()) < DrivetrainConstants.poseSyncTolerance); //vision pose within tolerance of estimated pose
-        visionTab.addBoolean("COLLECTED", intake::getBeamBreak); //collector beambreak triggered
-
+        visionTab.addBoolean(
+                "SHOOT",
+                () -> /*shooter.onTarget() &&*/
+                        fourBar.onTarget()); // fourbar and shooter within tolerance of target values
+        visionTab.addBoolean(
+                "SYNCED",
+                () -> drivetrain
+                                .getCurrentPose()
+                                .getTranslation()
+                                .getDistance(aprilTagVision.getVisionPose().getTranslation())
+                        < DrivetrainConstants.poseSyncTolerance); // vision pose within tolerance of estimated pose
+        visionTab.addBoolean("COLLECTED", intake::getBeamBreak); // collector beambreak triggered
     }
 
     //     @Override

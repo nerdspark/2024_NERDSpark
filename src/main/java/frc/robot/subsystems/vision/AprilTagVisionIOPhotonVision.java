@@ -72,7 +72,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
     @Override
     public void updateInputs(AprilTagVisionIOInputs inputs) {
 
-        // inputs.poseEstimates = new ArrayList<>();
+        inputs.poseEstimates = new ArrayList<>();
 
         if (Constants.VisionConstants.USE_VISION == true) {
             if (Constants.VisionConstants.USE_FRONT_CAMERA) {
@@ -97,7 +97,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
 
         var cameraPose = estomator.grabLatestEstimatedPose();
 
-        ArrayList<PoseEstimate> poseEstimates = new ArrayList<>(); // Creates an empty ArrayList to store pose
+        // ArrayList<PoseEstimate> poseEstimates = new ArrayList<>(); // Creates an empty ArrayList to store pose
         // estimates
 
         if (cameraPose != null) {
@@ -157,8 +157,10 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                             .targetsUsed
                             .get(i)
                             .getBestCameraToTarget()
-                            .getRotation().toRotation2d().getDegrees();
-                } 
+                            .getRotation()
+                            .toRotation2d()
+                            .getDegrees();
+                }
             }
             var distanceUsedForCalculatingStdDev = 0.0;
             if (Constants.VisionConstants.VISION_DEV_DIST_STRATEGY
@@ -171,8 +173,8 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
                 poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
-            poseEstimates.add(new PoseEstimate(
-                    cameraPose.estimatedPose,
+            inputs.poseEstimates.add(new PoseEstimate(
+                    cameraPose.estimatedPose.transformBy(estomator.getRobotToCameraTransform()),
                     cameraPose.timestampSeconds,
                     distanceUsedForCalculatingStdDev,
                     tagIDsFrontCamera,
@@ -181,7 +183,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                     distanceToSpeakerTag,
                     angleToSpeakerTag)); //
 
-            inputs.poseEstimates = poseEstimates;
+            // inputs.poseEstimates = poseEstimates;
         }
     }
 }

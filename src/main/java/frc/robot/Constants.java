@@ -3,7 +3,6 @@ package frc.robot;
 import static edu.wpi.first.units.Units.Meters;
 
 import com.revrobotics.CANSparkBase.IdleMode;
-
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -27,12 +26,13 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
-    public static final boolean PracticeBot = false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE 
+    public static final boolean PracticeBot =
+            false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
-        public static final double kP = 0.75; //0.65; // 0.85
-        public static final double kI = 0.55; //0; // 0.2
-        public static final double kD = 0.04; //0.006; // 0.01
+        public static final double kP = 0.75; // 0.65; // 0.85
+        public static final double kI = 0.55; // 0; // 0.2
+        public static final double kD = 0.04; // 0.006; // 0.01
         public static final double kIZone = 0.1;
 
         public static final double kS = 0.0;
@@ -82,11 +82,11 @@ public final class Constants {
             fourBarMap.put(2.35, 0.67);
             fourBarMap.put(3.19, fourBarHotel);
             fourBarMap.put(3.1999999999, fourBarHotel);
-            
+
             fourBarMap.put(3.2, fourBarHome);
 
             fourBarMap.put(3.3, fourBarHome);
-            fourBarMap.put(3.31, fourBarHome - 0.1); //4barhome un-backlash
+            fourBarMap.put(3.31, fourBarHome - 0.1); // 4barhome un-backlash
             fourBarMap.put(4.08, 2.08 - 0.1);
             fourBarMap.put(4.45, 2.07 - 0.1);
             fourBarMap.put(5.0, 2.05 - 0.1);
@@ -340,7 +340,9 @@ public final class Constants {
         public static final double IZone = 10.0;
 
         public static final double autoTurnCeiling = 6.0;
-        public static final double poseSyncTolerance = 0.5; //the tolerance at which vision pose and estimated pose have to be in for driver station to report happy
+        public static final double poseSyncTolerance =
+                0.5; // the tolerance at which vision pose and estimated pose have to be in for driver station to report
+        // happy
     }
 
     public static class VisionConstants {
@@ -361,10 +363,10 @@ public final class Constants {
         /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
         public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
 
-        public static final double NOISY_DISTANCE_METERS = 3;
+        public static final double NOISY_DISTANCE_METERS = 6;
 
         public static boolean USE_BACK_LEFT_CAMERA = false;
-        public static boolean USE_BACK_RIGHT_CAMERA = false;
+        public static boolean USE_BACK_RIGHT_CAMERA = true;
 
         public static final String FRONT_CAMERA_NAME = "BackCamera"; // LEFT
         public static final String BACK_LEFT_CAMERA_NAME = "BackLeft"; // RIGHT
@@ -387,13 +389,13 @@ public final class Constants {
          */
         public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
                 new Translation3d(-Units.inchesToMeters(9.75), Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(45)));
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(-45)));
 
         // Physical location of the back right camera on the robot, relative to the center of the robot. CHANGE THIS
 
         public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
                 new Translation3d(-Units.inchesToMeters(9.75), -Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(225)));
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(45)));
 
         // PLACEHOLDER
         public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(12.5);
@@ -489,7 +491,6 @@ public final class Constants {
         public static final double stillShotSpeed = 0.3;
 
         public static final double shooterTolerance = 100;
-
 
         static {
             // Key: Distance
