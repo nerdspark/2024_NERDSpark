@@ -83,7 +83,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
+        // PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
     }
 
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
@@ -92,10 +92,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
+        // PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
     }
 
-    public Optional<Rotation2d> getRotationTargetOverride() {
+/*
+public Optional<Rotation2d> getRotationTargetOverride() {
         // Some condition that should decide if we want to override rotation
         if (intake.getBeamBreak()
                          && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker)
@@ -108,7 +109,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             return Optional.empty();
         }
     }
-
+*/
     private void configurePathPlanner() {
         double driveBaseRadius = Units.inchesToMeters(13.25);
         for (var moduleLocation : m_moduleLocations) {

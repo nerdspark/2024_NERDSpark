@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.02,
-        "y": 0.91
+        "x": 8.01,
+        "y": 7.33
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.601832585041208,
-        "y": 1.4438705880970484
+        "x": 7.341474633403437,
+        "y": 7.082213735030277
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.10534392361786,
-        "y": 1.9184239554718743
+        "x": 4.684885207920705,
+        "y": 6.283188123766833
       },
       "prevControl": {
-        "x": 5.514348015647395,
-        "y": 1.7139219094571063
+        "x": 5.1843227117616495,
+        "y": 6.309530814419803
+      },
+      "nextControl": {
+        "x": 4.185447704079761,
+        "y": 6.256845433113863
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.01,
+        "y": 5.805138612754517
+      },
+      "prevControl": {
+        "x": 5.804886919435276,
+        "y": 7.007091669014056
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,15 +46,15 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -40.0,
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": 15.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToShooter",
+      "name": "fourBarToShoot",
       "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
@@ -55,10 +71,10 @@
       }
     },
     {
-      "name": "forceIntakeSHoot",
-      "waypointRelativePos": 0.6,
+      "name": "forcedIntake",
+      "waypointRelativePos": 0.75,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
@@ -68,6 +84,26 @@
               }
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "fourBarToIntake",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "softIntake",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
         }
       }
     }
@@ -80,13 +116,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -40.0,
+    "rotation": -10.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "blueWeirdSide",
+  "folder": "ampSide",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": 25.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

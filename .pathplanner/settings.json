@@ -4,6 +4,7 @@
   "holonomicMode": true,
   "pathFolders": [
     "4noteCenter",
+    "ampSide",
     "RE4noteCenter",
     "TestPaths",
     "blueCenter",
