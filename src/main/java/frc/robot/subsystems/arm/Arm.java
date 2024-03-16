@@ -34,8 +34,12 @@ public class Arm extends SubsystemBase {
         io.setArmVelocity(velocity);
     }
 
-    public void setArmPosition(Translation2d position, boolean inBend, double wrist) {
-        io.setArmPosition(position, inBend, wrist);
+    public void setArmPosition(Translation2d position, boolean inBend) {
+        io.setArmPosition(position, inBend);
+    }
+
+    public void setGripperPower (double power) {
+        io.setGripperPower(power);
     }
 
     public void resetEncoders() {
@@ -86,11 +90,7 @@ public class Arm extends SubsystemBase {
         return io.getElbowRightPosition();
     }
 
-    public void setWristPosition(double position) {
-        io.setWristPosition(position);
-    }
-
-    public double getWristPosition() {
-        return io.getWristPosition();
+    public double getGripperPosition() {
+        return io.getGripperPosition();
     }
 }

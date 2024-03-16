@@ -30,10 +30,6 @@ public interface ArmIO {
         public double elbowRightAppliedVolts = 0.0;
         public double[] elbowRightCurrentAmps = new double[] {};
 
-        public double wristPosition = 0.0;
-        public double wristVelocity = 0.0;
-        public double wristAppliedVolts = 0.0;
-        public double[] wristCurrentAmps = new double[] {};
 
         public double gripperPosition = 0.0;
         public double gripperVelocity = 0.0;
@@ -50,7 +46,7 @@ public interface ArmIO {
 
     default void setArmVelocity(Translation2d velocity) {}
 
-    default void setArmPosition(Translation2d position, boolean inBend, double wrist) {}
+    default void setArmPosition(Translation2d position, boolean inBend) {}
 
     default void resetEncoders() {}
 
@@ -59,6 +55,8 @@ public interface ArmIO {
     }
 
     default void setShoulderPosition(double position) {}
+
+    default void setGripperPower(double power) {}
 
     default double getShoulderLeftPosition() {
         return 0.0;
@@ -94,9 +92,8 @@ public interface ArmIO {
         return 0.0;
     }
 
-    default void setWristPosition(double position) {}
-
-    default double getWristPosition() {
+    default double getGripperPosition() {
         return 0.0;
     }
+
 }

@@ -182,7 +182,7 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         // drivetrain.registerTelemetry(logger::telemeterize);
-        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () ->
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () ->
         // false));
         fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
     }
@@ -480,7 +480,7 @@ public class RobotContainer { // implements RobotConstants{
         // arm commands
         // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
         // copilot.getLeftX(), () -> false));
-        // copilot.b().whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () ->
+        // copilot.b().whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () ->
         // false));
         // copilot.b().onFalse(new ArmCommand(
         //         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
@@ -491,7 +491,7 @@ public class RobotContainer { // implements RobotConstants{
         //                                 * copilot.getLeftX()
         //                                 * ArmSetPoints.dropoffMultiplier,
         //                                 -copilot.getLeftY() * ArmSetPoints.dropoffMultiplierY)),
-        //                 () -> ArmSetPoints.dropoffWrist,
+        //                 
         //                 () -> false));
         // copilot.y().onFalse(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
         // copilot.getLeftX(), () -> false));
@@ -503,13 +503,12 @@ public class RobotContainer { // implements RobotConstants{
         //                         () -> false)
         //                 // .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
         //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
-        // copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () ->
-        // ClimbSetPoints.forwardWrist, () -> false));
-        // copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () ->
+        // copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () -> false));
+        // copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () ->
         // true)
         //                 .alongWith(new InstantCommand(() -> arm.setGains(true))));
 
-        // copilot.povLeft().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, ()
+        // copilot.povLeft().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, ()
         // -> false));
 
         // // trap
@@ -517,7 +516,6 @@ public class RobotContainer { // implements RobotConstants{
         //                         arm,
         //                         () -> ClimbSetPoints.trap.plus(
         //                                 new Translation2d(copilot.getLeftY() * ClimbSetPoints.trapMultiplier, 0)),
-        //                         () -> ClimbSetPoints.trapwrist,
         //                         () -> true)
         //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
 
