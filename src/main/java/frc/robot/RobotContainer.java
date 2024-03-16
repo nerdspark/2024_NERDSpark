@@ -114,13 +114,18 @@ public class RobotContainer { // implements RobotConstants{
                 // arm = new Arm(new ArmIO() {});
                 // break;
         }
-        drivetrain =TunerConstantsSmidge.DriveTrain;// RobotIdentity.getIdentity() == RobotIdentity.SMIDGE_2024  ? TunerConstantsSmidge.DriveTrain : TunerConstantsSmudge.DriveTrain;
+        if (Constants.PracticeBot) {
+                drivetrain =TunerConstantsSmidge.DriveTrain;
         
+                drivetrain.getModule(0).getDriveMotor().setInverted(false);
+                drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
+                drivetrain.getModule(2).getDriveMotor().setInverted(true); // b
+                drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
+        } else {
+                drivetrain =TunerConstantsSmudge.DriveTrain;
+        }
+
         drivetrain.setRobotIntake(intake);
-        drivetrain.getModule(0).getDriveMotor().setInverted(false);
-        drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
-        drivetrain.getModule(2).getDriveMotor().setInverted(true); // b
-        drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
 
         configureNamedCommands();
 
