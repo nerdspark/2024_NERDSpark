@@ -535,10 +535,10 @@ public class RobotContainer { // implements RobotConstants{
         // Pose estimation
         drivetrain.addDashboardWidgets(visionTab);
 
-        final var driverTab = Shuffleboard.getTab("Driver");
-        driverTab.addBoolean("SHOOT", () -> shooter.onTarget() && fourBar.onTarget()); //fourbar and shooter within tolerance of target values
-        driverTab.addBoolean("SYNCED", () -> drivetrain.getCurrentPose().getTranslation().getDistance(aprilTagVision.getVisionPose().getTranslation()) < DrivetrainConstants.poseSyncTolerance); //vision pose within tolerance of estimated pose
-        driverTab.addBoolean("COLLECTED", intake::getBeamBreak); //collector beambreak triggered
+        // final var driverTab = Shuffleboard.getTab("Driver");
+        visionTab.addBoolean("SHOOT", () -> /*shooter.onTarget() &&*/ fourBar.onTarget()); //fourbar and shooter within tolerance of target values
+        visionTab.addBoolean("SYNCED", () -> drivetrain.getCurrentPose().getTranslation().getDistance(aprilTagVision.getVisionPose().getTranslation()) < DrivetrainConstants.poseSyncTolerance); //vision pose within tolerance of estimated pose
+        visionTab.addBoolean("COLLECTED", intake::getBeamBreak); //collector beambreak triggered
 
     }
 

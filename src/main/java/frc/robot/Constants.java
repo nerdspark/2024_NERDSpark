@@ -28,7 +28,7 @@ import frc.robot.util.FieldConstants;
 public final class Constants {
     public final class FourBarGains {
         public static final double kP = 0.75; //0.65; // 0.85
-        public static final double kI = 0.5; //0; // 0.2
+        public static final double kI = 0.55; //0; // 0.2
         public static final double kD = 0.04; //0.006; // 0.01
         public static final double kIZone = 0.1;
 
@@ -56,7 +56,7 @@ public final class Constants {
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
         public static final double fourBarHome = 2.148;
-        public static final double fourBarTolerance = 0.04;
+        public static final double fourBarTolerance = 0.015;
         public static final double fourBarHotel = 88;
         public static final IdleMode fourBarIdleMode = IdleMode.kBrake;
 
@@ -78,7 +78,8 @@ public final class Constants {
             fourBarMap.put(2.14, 0.62);
             fourBarMap.put(2.35, 0.67);
             fourBarMap.put(3.19, fourBarHotel);
-            fourBarMap.put(3.19, fourBarHotel);
+            fourBarMap.put(3.1999999999, fourBarHotel);
+            
             fourBarMap.put(3.2, fourBarHome);
 
             fourBarMap.put(3.3, fourBarHome);
@@ -484,7 +485,7 @@ public final class Constants {
         public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
         public static final double stillShotSpeed = 0.3;
 
-        public static final double shooterTolerance = 10;
+        public static final double shooterTolerance = 100;
 
 
         static {
