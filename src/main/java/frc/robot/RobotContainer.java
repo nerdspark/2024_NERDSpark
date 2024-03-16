@@ -31,6 +31,7 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.RobotMap;
+import frc.robot.Constants.SpeakerConstants;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.FourBarCommand;
@@ -57,6 +58,8 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
+import frc.robot.util.LightningShuffleboard;
+
 import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
@@ -531,6 +534,12 @@ public class RobotContainer { // implements RobotConstants{
 
         // Pose estimation
         drivetrain.addDashboardWidgets(visionTab);
+
+        // final var driverTab = Shuffleboard.getTab("Driver");
+        visionTab.addBoolean("SHOOT", () -> /*shooter.onTarget() &&*/ fourBar.onTarget()); //fourbar and shooter within tolerance of target values
+        visionTab.addBoolean("SYNCED", () -> drivetrain.getCurrentPose().getTranslation().getDistance(aprilTagVision.getVisionPose().getTranslation()) < DrivetrainConstants.poseSyncTolerance); //vision pose within tolerance of estimated pose
+        visionTab.addBoolean("COLLECTED", intake::getBeamBreak); //collector beambreak triggered
+
     }
 
     //     @Override

@@ -22,7 +22,7 @@ public class FourBarIOSparkMax implements FourBarIO {
     private RelativeEncoder FourBarEncoder1;
 
     private ArmFeedforward FourBarFeedforward1;
-    private PIDController FourBarPIDController1;
+    private PIDController FourBarPIDController;
 
     public FourBarIOSparkMax() {
 
@@ -51,8 +51,9 @@ public class FourBarIOSparkMax implements FourBarIO {
 
         FourBarMotor2.follow(FourBarMotor1, true);
 
-        FourBarPIDController1 = new PIDController(FourBarGains.kP, FourBarGains.kI, FourBarGains.kD);
-        FourBarPIDController1.setIZone(FourBarGains.kIZone);
+        FourBarPIDController = new PIDController(FourBarGains.kP, FourBarGains.kI, FourBarGains.kD);
+        FourBarPIDController.setIZone(FourBarGains.kIZone);
+        FourBarPIDController.setTolerance(FourBarConstants.fourBarTolerance);
 
         FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, FourBarGains.kG, FourBarGains.kV, FourBarGains.kA);
         // fourBarFeedforward2 = new ArmFeedforward(Constants.FourBarGains.kS, Constants.FourBarGains.kG,
@@ -63,10 +64,10 @@ public class FourBarIOSparkMax implements FourBarIO {
     @SuppressWarnings("static-access")
     public void updateInputs(FourBarIOInputs inputs) {
         inputs.FourBarPosition = FourBarEncoder1.getPosition();
-        // inputs.FourBarVelocity = FourBarEncoder1.getVelocity();
-        // inputs.FourBarAppliedVolts = FourBarMotor1.getAppliedOutput() * FourBarMotor1.getBusVoltage();
-        // inputs.FourBarCurrentAmps = new double[] {FourBarMotor1.getOutputCurrent()};
-        inputs.FourBarTarget = FourBarPIDController1.getSetpoint();
+        inputs.FourBarVelocity = FourBarEncoder1.getVelocity();
+        inputs.FourBarAppliedVolts = FourBarMotor1.getAppliedOutput() * FourBarMotor1.getBusVoltage();
+        inputs.FourBarCurrentAmps = new double[] {FourBarMotor1.getOutputCurrent()};
+        inputs.FourBarTarget = FourBarPIDController.getSetpoint();
 
         // inputs.FourBarPosition2 = Units.rotationsToRadians(FourBarEncoder2.getPosition());
         // inputs.FourBarVelocity2 = Units.rotationsPerMinuteToRadiansPerSecond(FourBarEncoder2.getVelocity());
@@ -78,7 +79,7 @@ public class FourBarIOSparkMax implements FourBarIO {
         angle = MathUtil.clamp(angle, FourBarConstants.fourBarOut, FourBarConstants.fourBarHome);
 
         double G = FourBarFeedforward1.calculate(FourBarEncoder1.getPosition(), FourBarEncoder1.getVelocity());
-        double PID = FourBarPIDController1.calculate(FourBarEncoder1.getPosition(), angle);
+        double PID = FourBarPIDController.calculate(FourBarEncoder1.getPosition(), angle);
 
         FourBarMotor1.set(PID + G);
 
@@ -91,9 +92,13 @@ public class FourBarIOSparkMax implements FourBarIO {
     }
 
     public void setPIDGGains(double kP, double kI, double kD, double kG) {
-        FourBarPIDController1.setP(kP);
-        FourBarPIDController1.setI(kI);
-        FourBarPIDController1.setD(kD);
+        FourBarPIDController.setP(kP);
+        FourBarPIDController.setI(kI);
+        FourBarPIDController.setD(kD);
         FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, kG, FourBarGains.kV, FourBarGains.kA);
+    }
+
+    public boolean onTarget() {
+        return FourBarPIDController.atSetpoint();
     }
 }

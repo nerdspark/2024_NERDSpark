@@ -58,6 +58,8 @@ public class AprilTagVision extends SubsystemBase {
     double speakerTagDistance = 0.0;
     double speakerTagAngle = 0.0;
 
+    private Pose3d reportedVisionPose = new Pose3d();
+
     public void setDataInterfaces(Consumer<List<TimestampedVisionUpdate>> visionConsumer) {
         this.visionConsumer = visionConsumer;
     }
@@ -132,6 +134,7 @@ public class AprilTagVision extends SubsystemBase {
 
                 speakerTagDistance = poseEstimates.speakerTagDistance();
                 speakerTagAngle = Units.radiansToDegrees(poseEstimates.speakerTagAngle());
+                reportedVisionPose = robotPose;
 
                 logData(
                         instanceIndex,
@@ -155,6 +158,10 @@ public class AprilTagVision extends SubsystemBase {
 
     public double getSpeakerTagAngle() {
         return this.speakerTagAngle;
+    }
+
+    public Pose2d getVisionPose() {
+        return reportedVisionPose.toPose2d();
     }
 
     /**

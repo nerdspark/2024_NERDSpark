@@ -28,4 +28,8 @@ public interface FourBarIO {
     default double getFourBarAngle() {
         return 0;
     }
+
+    default boolean onTarget() {
+        return false;
+    }
 }

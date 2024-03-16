@@ -11,6 +11,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.RobotMap;
+import frc.robot.Constants.ShooterConstants;
 
 public class ShooterIOSparkMax implements ShooterIO {
     /** Creates a new ShooterIOSparkMax. */
@@ -26,6 +27,8 @@ public class ShooterIOSparkMax implements ShooterIO {
 
     private final SparkPIDController shooterController1;
     private final SparkPIDController shooterController2;
+
+    private double speed1 = 0, speed2 = 0;
 
     public ShooterIOSparkMax() {
         shooterMotor1 = new CANSparkMax(RobotMap.shooterMotor1ID, CANSparkMax.MotorType.kBrushless);
@@ -76,6 +79,19 @@ public class ShooterIOSparkMax implements ShooterIO {
     public void setSpeed(double speed1, double speed2) {
         shooterController1.setReference(speed1, ControlType.kVelocity);
         shooterController2.setReference(speed2, ControlType.kVelocity);
+
+        this.speed1 = speed1;
+        this.speed2 = speed2;
+    }
+
+    public boolean onTarget() {
+        double currSpeed1 = getSpeed()[0], currSpeed2 = getSpeed()[1];
+        return Math.abs(currSpeed1 - speed1) < ShooterConstants.shooterTolerance
+            && Math.abs(currSpeed2 - speed2) < ShooterConstants.shooterTolerance;
+    }
+
+    public double[] getSpeed() {
+        return new double[]{shooterEncoder1.getVelocity(), shooterEncoder2.getVelocity()};
     }
 
     public void stop() {
