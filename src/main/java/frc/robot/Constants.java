@@ -27,7 +27,7 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
-    public static final boolean PracticeBot = false; // SMIDGE true; SMUDGE false
+    public static final boolean PracticeBot = false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE 
 
     public final class FourBarGains {
         public static final double kP = 0.75; //0.65; // 0.85
