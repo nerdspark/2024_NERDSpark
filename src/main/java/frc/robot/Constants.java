@@ -341,6 +341,8 @@ public final class Constants {
 
         public static final double autoTurnCeiling = 7.0;
         public static final double poseSyncTolerance = 0.5; //the tolerance at which vision pose and estimated pose have to be in for driver station to report happy
+    
+        public static final double deadband = 0.1;
     }
 
     public static class VisionConstants {

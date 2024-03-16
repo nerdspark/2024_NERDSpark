@@ -96,6 +96,8 @@ public class RobotContainer { // implements RobotConstants{
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
+
+    private boolean doGyroPid = false;
     //     private NoteVisionSubsystem noteVisionSubsystem =
     //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
@@ -169,14 +171,14 @@ public class RobotContainer { // implements RobotConstants{
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(
                         () -> drive.withVelocityX(
-                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightY(), 0.1))
+                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightY(), DrivetrainConstants.deadband))
                                                 * MaxSpeed)) // Drive forward with
                                 // negative Y (forward)
                                 .withVelocityY(
-                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightX(), 0.1))
+                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightX(), DrivetrainConstants.deadband))
                                                 * MaxSpeed)) // Drive left with negative X (left)
                                 .withRotationalRate(
-                                        calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
+                                        calculateAutoTurn(() -> -1d)) // Drive counterclockwise with negative X (left)
                         ));
 
         if (Utils.isSimulation()) {
@@ -310,11 +312,11 @@ public class RobotContainer { // implements RobotConstants{
                                                                 drivetrain.getState().speeds.vyMetersPerSecond))
                                                 .getDegrees()))
                                                 .withVelocityX(
-                                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightY(), 0.1))
+                                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightY(), DrivetrainConstants.deadband))
                                                                 * MaxSpeed)) // Drive forward with
                                                 // negative Y (forward)
                                                 .withVelocityY(
-                                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightX(), 0.1))
+                                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightX(), DrivetrainConstants.deadband))
                                                                 * MaxSpeed))));
 
         // zero gyro
@@ -351,11 +353,11 @@ public class RobotContainer { // implements RobotConstants{
                                                                 drivetrain.getState().speeds.vyMetersPerSecond))
                                                 .getDegrees()))
                                                 .withVelocityX(
-                                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightY(), 0.1))
+                                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightY(), DrivetrainConstants.deadband))
                                                                 * MaxSpeed)) // Drive forward with
                                                 // negative Y (forward)
                                                 .withVelocityY(
-                                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightX(), 0.1))
+                                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(MathUtil.applyDeadband(driver.getRightX(), DrivetrainConstants.deadband))
                                                                 * MaxSpeed))));
         
         //4 bar + shooter autoaim
@@ -557,15 +559,22 @@ public class RobotContainer { // implements RobotConstants{
     //     @Override
     public double calculateAutoTurn(Supplier<Double> target) {
         double currentAngle = -(gyro.getAngle() - gyroOffset);
+        double outputSpeed = 0;
 
-        if (target.get() != 0) {
+        if (target.get() != -1) {
             targetAngle = -target.get();
+
+            doGyroPid = true;
         } else if (driverRaw.getPOV() != -1) {
             targetAngle = -driverRaw.getPOV();
-        } else if (Math.abs(driver.getLeftX()) >= 0.05) {
+
+            doGyroPid = true;
+        } else if (Math.abs(driver.getLeftX()) >= DrivetrainConstants.deadband) {
             double speed = Math.copySign(Math.pow(Math.abs(driver.getLeftX()), 1.7), -driver.getLeftX()) * MaxAngularRate;
-            targetAngle = currentAngle;// + 30.0 * gyro.getAngularVelocityZDevice().getValue();
-            return zLimiter.calculate(speed);
+            
+            doGyroPid = false;
+            outputSpeed = zLimiter.calculate(speed);
+            //targetAngle = currentAngle;// + 30.0 * gyro.getAngularVelocityZDevice().getValue();
             // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }
 
@@ -584,13 +593,17 @@ public class RobotContainer { // implements RobotConstants{
 
         // LightningShuffleboard.setDouble("gyro", "error", gyroPid.getPositionError());
 
-        return zLimiter.calculate(MathUtil.clamp(gyroPid.calculate(currentAngle, targetAngle), -DrivetrainConstants.autoTurnCeiling, DrivetrainConstants.autoTurnCeiling));
+        if(doGyroPid) {
+            outputSpeed = zLimiter.calculate(MathUtil.clamp(gyroPid.calculate(currentAngle, targetAngle), -DrivetrainConstants.autoTurnCeiling, DrivetrainConstants.autoTurnCeiling));
+        }
+
+        return outputSpeed;
     }
 
     //     @Override
     public void resetGyro() {
         gyroPid.setIZone(DrivetrainConstants.IZone);
-        gyroPid.enableContinuousInput(0, -360);
+        gyroPid.enableContinuousInput(-360, 0);
         gyroOffset = gyro.getAngle();
         targetAngle = 0;
         drivetrain.seedFieldRelative(
