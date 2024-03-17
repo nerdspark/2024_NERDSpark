@@ -365,7 +365,7 @@ public final class Constants {
 
         public static final double NOISY_DISTANCE_METERS = 6;
 
-        public static boolean USE_BACK_LEFT_CAMERA = false;
+        public static boolean USE_BACK_LEFT_CAMERA = true;
         public static boolean USE_BACK_RIGHT_CAMERA = true;
 
         public static final String FRONT_CAMERA_NAME = "BackCamera"; // LEFT
@@ -389,13 +389,13 @@ public final class Constants {
          */
         public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
                 new Translation3d(-Units.inchesToMeters(9.75), Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(-45)));
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(100)));
 
         // Physical location of the back right camera on the robot, relative to the center of the robot. CHANGE THIS
 
         public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
                 new Translation3d(-Units.inchesToMeters(9.75), -Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(45)));
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(-100)));
 
         // PLACEHOLDER
         public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(12.5);
