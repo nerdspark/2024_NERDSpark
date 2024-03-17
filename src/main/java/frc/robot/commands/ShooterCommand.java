@@ -15,7 +15,7 @@ public class ShooterCommand extends Command {
     private Supplier<Double> speed1;
     private Supplier<Double> speed2;
 
-    /** Creates a new ShooterCommand. */
+    /** Creates a new ShooterCommand.  */
     public ShooterCommand(Shooter shooter, Supplier<Double> speed1, Supplier<Double> speed2) {
         this.shooter = shooter;
         this.speed1 = speed1;

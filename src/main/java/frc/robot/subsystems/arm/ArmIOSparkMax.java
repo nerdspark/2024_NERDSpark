@@ -63,7 +63,7 @@ public class ArmIOSparkMax implements ArmIO {
         shoulderRight.setInverted(false);
         elbowRight.setInverted(false);
         elbowLeft.setInverted(true);
-        gripper.setInverted(false); // TODO figure this out
+        gripper.setInverted(true); 
         shoulderLeftEncoder = shoulderLeft.getEncoder();
         shoulderRightEncoder = shoulderRight.getEncoder();
         elbowLeftEncoder = elbowLeft.getEncoder();

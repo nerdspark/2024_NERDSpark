@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
-    /** Creates a new Arm. */
+    /** Creates a new Arm.  */
     private final ArmIO io;
 
     private final ArmIOInputsAutoLogged inputs = new ArmIOInputsAutoLogged();

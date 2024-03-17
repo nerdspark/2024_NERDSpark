@@ -21,6 +21,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.actions.firstRing;
+import frc.robot.actions.startUp;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 import frc.robot.util.FieldConstants;
@@ -153,6 +155,12 @@ public final class Constants {
         public static final int currentLimitElbow = 60;
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
+        public static final double indexPowerGripper = 0.3;
+        public static final double outPowerGripper = 1.0;
+        public static final double indexDistGripper = 10.0;
+
+        public static final double intakeTimeout = 2.0;
+        public static final double spinUpTimeout = 2.0;
 
         public static class ArmGains {
             private final double shoulderP = 2.0;
@@ -487,7 +495,7 @@ public final class Constants {
     }
 
     /* MISCELLANEOUS CONSTANTS */
-    public static final double indexDistance = 1000;
+    // public static final double indexDistance = 1000;
 
     public static final Mode currentMode = Mode.REAL;
     public static final RobotIdentity compRobot = RobotIdentity.SMUDGE_2024;
