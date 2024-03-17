@@ -401,48 +401,11 @@ public final class Constants {
         public static final double NOTE_HEIGHT_METERS = Units.inchesToMeters(2);
         public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(26);
 
-        // Unused for 2024
-
-        public static final double POSE_AMBIGUITY_SHIFTER = 0.2;
-        public static final double POSE_AMBIGUITY_MULTIPLIER = 4;
-        public static final double DISTANCE_WEIGHT = 7;
-        public static final int TAG_PRESENCE_WEIGHT = 10;
-
-        /**
-         * Standard deviations of model states. Increase these numbers to trust your
-         * model's state estimates less. This
-         * matrix is in the form [x, y, theta]ᵀ, with units in meters and radians, then
-         * meters.
-         */
-        public static final Matrix<N3, N1> VISION_MEASUREMENT_STANDARD_DEVIATIONS = Matrix.mat(Nat.N3(), Nat.N1())
-                .fill(
-                        // if these numbers are less than one, multiplying will do bad things
-                        1, // x
-                        1, // y
-                        1 * Math.PI // theta
-                        );
-
-        /**
-         * Standard deviations of the vision measurements. Increase these numbers to
-         * trust global measurements from vision
-         * less. This matrix is in the form [x, y, theta]ᵀ, with units in meters and
-         * radians.
-         */
-        public static final Matrix<N3, N1> STATE_STANDARD_DEVIATIONS = Matrix.mat(Nat.N3(), Nat.N1())
-                .fill(
-                        // if these numbers are less than one, multiplying will do bad things
-                        .1, // x
-                        .1, // y
-                        .1);
-
-        // Pose on the opposite side of the field. Use with `relativeTo` to flip a pose to the opposite alliance
-        public static final Pose2d FLIPPING_POSE = new Pose2d(
-                new Translation2d(FieldConstants.fieldLength, FieldConstants.fieldWidth), new Rotation2d(Math.PI));
-
+        
         // Vision Drive Constants
 
-        public static final double TRANSLATION_TOLERANCE_X = 0.001; // Changed from 0.05 3/26/23
-        public static final double TRANSLATION_TOLERANCE_Y = 0.001; // Changed from 0.05 3/26/23
+        public static final double TRANSLATION_TOLERANCE_X = 0.025; // Changed from 0.05 3/26/23
+        public static final double TRANSLATION_TOLERANCE_Y = 0.025; // Changed from 0.05 3/26/23
         public static final double ROTATION_TOLERANCE = 0.035;
 
         public static final double MAX_VELOCITY = 3; // 3 //2
@@ -460,7 +423,7 @@ public final class Constants {
         public static final double kIThetaController = 0d;
         public static final double kDThetaController = 0d;
 
-        // End Unused for 2024
+        
     }
 
     public static class SpeakerConstants {

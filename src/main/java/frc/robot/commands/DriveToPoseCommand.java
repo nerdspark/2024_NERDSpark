@@ -146,7 +146,8 @@ public class DriveToPoseCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         ChassisSpeeds zeroChassisSpeeds = new ChassisSpeeds();
-        drivetrainSubsystem.applyRequest(() -> driveToPoseRequest.withSpeeds(zeroChassisSpeeds));
+        drivetrainSubsystem.setControl(driveToPoseRequest.withSpeeds(zeroChassisSpeeds));
+
     }
 
     // Returns true when the command should end.
