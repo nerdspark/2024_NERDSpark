@@ -48,12 +48,6 @@
                       "data": {
                         "pathName": "ampSide4"
                       }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ampSide5"
-                      }
                     }
                   ]
                 }

@@ -47,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToShooter"
+                "name": "blueRECenterNote6"
               }
             }
           ]
@@ -80,7 +80,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 5.0,
+    "rotation": 3.0,
     "rotateFast": false
   },
   "reversed": false,

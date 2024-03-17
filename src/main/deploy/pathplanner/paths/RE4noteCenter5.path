@@ -63,7 +63,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.85,
-      "rotationDegrees": 5.0,
+      "rotationDegrees": 3.0,
       "rotateFast": false
     }
   ],
@@ -79,7 +79,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToShooter"
+                "name": "blueRECenterNote5"
               }
             }
           ]
@@ -140,7 +140,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.2,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

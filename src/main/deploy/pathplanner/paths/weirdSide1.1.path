@@ -55,25 +55,8 @@
   ],
   "eventMarkers": [
     {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToHome"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "shootRing1",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "sequential",
         "data": {
@@ -82,23 +65,6 @@
               "type": "named",
               "data": {
                 "name": "forcedIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "fourBarHome",
-      "waypointRelativePos": 0.3,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "backToSafety"
               }
             }
           ]
