@@ -3,37 +3,128 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.55,
-        "y": 6.71
+        "x": 2.6,
+        "y": 6.75
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.6263470049648605,
-        "y": 6.863676815710361
+        "x": 0.9036598410900086,
+        "y": 5.742699431823306
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.846841259330743,
-        "y": 7.437336228925141
+        "x": 3.721956907163909,
+        "y": 6.317334517410571
       },
       "prevControl": {
-        "x": 6.726839547816172,
-        "y": 7.2666042607064565
+        "x": 2.518414717416106,
+        "y": 6.020984933000308
+      },
+      "nextControl": {
+        "x": 5.080983374184638,
+        "y": 6.651969175119193
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.05,
+        "y": 7.24
+      },
+      "prevControl": {
+        "x": 6.52196118595375,
+        "y": 6.893433111556562
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.35,
+      "rotationDegrees": 17.5,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "fourBarToIntake",
+      "waypointRelativePos": 1.45,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "forcedIntake",
+      "waypointRelativePos": 0.25,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "forcedIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "softIntake",
+      "waypointRelativePos": 1.45,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "onlySoftIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fourbarhome",
+      "waypointRelativePos": 0.8,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 5.0,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -45,7 +136,7 @@
   "reversed": false,
   "folder": "RE4noteCenter",
   "previewStartingState": {
-    "rotation": 40.0,
+    "rotation": 30.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -126,6 +126,7 @@ public class RobotContainer { // implements RobotConstants{
         }
 
         drivetrain.setRobotIntake(intake);
+        
 
         configureNamedCommands();
 
@@ -141,8 +142,11 @@ public class RobotContainer { // implements RobotConstants{
                 aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
             } else {
                 poseEstimatorSubSystem = new PoseEstimatorSubsystem(drivetrain);
+                
             }
+        drivetrain.setAprilTagVision(aprilTagVision);
         }
+        
 
         configureButtonBindings();
 
@@ -230,7 +234,7 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "fourBarToBCR4", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing4));
 
-        NamedCommands.registerCommand("fourBarToWSR1", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing1));
+
         NamedCommands.registerCommand("fourBarToWSR2", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing2));
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
@@ -247,15 +251,7 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "RfourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing4));
 
-        // Choreo Shoot Commands
-        NamedCommands.registerCommand(
-                "fourBarToBCR5Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing5Choreo));
-        NamedCommands.registerCommand(
-                "fourBarToBCR6Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing6Choreo));
-        NamedCommands.registerCommand(
-                "fourBarToBCR62Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing62Choreo));
-        NamedCommands.registerCommand(
-                "fourBarToBCR7Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing7Choreo));
+   
 
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
@@ -271,6 +267,18 @@ public class RobotContainer { // implements RobotConstants{
 
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
+
+
+
+        NamedCommands.registerCommand(
+                "blueRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote5));
+        NamedCommands.registerCommand(
+                "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
+
+
+
+
+
     }
 
     private void configureButtonBindings() {
