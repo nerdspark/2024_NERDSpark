@@ -15,6 +15,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -33,6 +34,7 @@ import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.RobotMap;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
+import frc.robot.commands.DriveToPoseCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
@@ -312,6 +314,8 @@ public class RobotContainer { // implements RobotConstants{
         // zero gyro
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
         driver.a().onTrue(new InstantCommand(() -> printSpeakerDistanceAndAngle(aprilTagVision)));
+        driver.y().whileTrue(new DriveToPoseCommand(drivetrain, drivetrain::getCurrentPose, new Pose2d(14.78, 7.25, new Rotation2d(Units.degreesToRadians(-90)))));
+        
 
         /* COPILOT COMMANDS:
          * left trigger: full auto aim 4 bar + shooter

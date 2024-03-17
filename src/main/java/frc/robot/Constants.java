@@ -26,8 +26,7 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
-    public static final boolean PracticeBot =
-            false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+    public static final boolean PracticeBot = false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
         public static final double kP = 0.75; // 0.65; // 0.85
@@ -387,13 +386,13 @@ public final class Constants {
         /**
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
-        public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
+        public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
                 new Translation3d(-Units.inchesToMeters(9.75), Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
                 new Rotation3d(0, Math.toRadians(0), Math.toRadians(100)));
 
         // Physical location of the back right camera on the robot, relative to the center of the robot. CHANGE THIS
 
-        public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
+        public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
                 new Translation3d(-Units.inchesToMeters(9.75), -Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
                 new Rotation3d(0, Math.toRadians(0), Math.toRadians(-100)));
 
@@ -442,12 +441,12 @@ public final class Constants {
 
         // Vision Drive Constants
 
-        public static final double TRANSLATION_TOLERANCE_X = 0.1; // Changed from 0.05 3/26/23
-        public static final double TRANSLATION_TOLERANCE_Y = 0.1; // Changed from 0.05 3/26/23
+        public static final double TRANSLATION_TOLERANCE_X = 0.001; // Changed from 0.05 3/26/23
+        public static final double TRANSLATION_TOLERANCE_Y = 0.001; // Changed from 0.05 3/26/23
         public static final double ROTATION_TOLERANCE = 0.035;
 
-        public static final double MAX_VELOCITY = 2; // 3
-        public static final double MAX_ACCELARATION = 1; // 2
+        public static final double MAX_VELOCITY = 3; // 3 //2
+        public static final double MAX_ACCELARATION = 2; // 2 //1
         public static final double MAX_VELOCITY_ROTATION = 8; // 8
         public static final double MAX_ACCELARATION_ROTATION = 8; // 8
 
