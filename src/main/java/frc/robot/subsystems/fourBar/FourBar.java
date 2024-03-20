@@ -6,9 +6,6 @@ package frc.robot.subsystems.fourBar;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FourBarConstants;
-import frc.robot.Constants.FourBarGains;
-import frc.robot.util.LightningShuffleboard;
-
 import org.littletonrobotics.junction.Logger;
 
 public class FourBar extends SubsystemBase {
@@ -31,14 +28,14 @@ public class FourBar extends SubsystemBase {
         io.updateInputs(inputs);
         Logger.processInputs("fourBar", inputs);
         // if(LightningShuffleboard.getBool("four bar", "useInput", false)) {
-            // setFourBarAngle(LightningShuffleboard.getDouble("four bar", "target", FourBarConstants.fourBarHome));
+        // setFourBarAngle(LightningShuffleboard.getDouble("four bar", "target", FourBarConstants.fourBarHome));
         // }
 
         // io.setPIDGGains(LightningShuffleboard.getDouble("four bar", "kP", FourBarGains.kP),
-        // LightningShuffleboard.getDouble("four bar", "kI", FourBarGains.kI), LightningShuffleboard.getDouble("four bar", "kD", FourBarGains.kD), LightningShuffleboard.getDouble("four bar", "kG", FourBarGains.kG));
+        // LightningShuffleboard.getDouble("four bar", "kI", FourBarGains.kI), LightningShuffleboard.getDouble("four
+        // bar", "kD", FourBarGains.kD), LightningShuffleboard.getDouble("four bar", "kG", FourBarGains.kG));
 
         io.setFourBarAngle(targetAngle);
-
     }
 
     public void setFourBarAngle(double angle) {

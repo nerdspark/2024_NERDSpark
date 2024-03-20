@@ -9,7 +9,6 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.FourBarGains;
 import frc.robot.Constants.RobotMap;
@@ -48,7 +47,7 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarEncoder1.setPositionConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder1.setVelocityConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder1.setPosition(FourBarConstants.resetPosition);
-        
+
         FourBarMotor2.follow(FourBarMotor1, true);
 
         FourBarPIDController = new PIDController(FourBarGains.kP, FourBarGains.kI, FourBarGains.kD);

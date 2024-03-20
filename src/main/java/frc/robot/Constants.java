@@ -3,7 +3,6 @@ package frc.robot;
 import static edu.wpi.first.units.Units.Meters;
 
 import com.revrobotics.CANSparkBase.IdleMode;
-
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -27,18 +26,24 @@ import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
-    public static final boolean PracticeBot = true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE 
+    public static final boolean PracticeBot =
+            true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
-        public static final double kP = 0.75; //0.65; // 0.85
-        public static final double kI = 0.55; //0; // 0.2
-        public static final double kD = 0.04; //0.006; // 0.01
+        public static final double kP = 0.75; // 0.65; // 0.85
+        public static final double kI = 0.55; // 0; // 0.2
+        public static final double kD = 0.04; // 0.006; // 0.01
         public static final double kIZone = 0.1;
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
         public static final double kG = 0.035;
         public static final double kA = 0.0;
+    }
+
+    public final class ClimbConstants {
+        public static final double servoOutPosition = 180.0;
+        public static final int servoPort = 9;
     }
 
     public final class FixedShotConstants {
@@ -82,11 +87,11 @@ public final class Constants {
             fourBarMap.put(2.35, 0.67);
             fourBarMap.put(3.19, fourBarHotel);
             fourBarMap.put(3.1999999999, fourBarHotel);
-            
+
             fourBarMap.put(3.2, fourBarHome);
 
             fourBarMap.put(3.3, fourBarHome);
-            fourBarMap.put(3.31, fourBarHome - 0.1); //4barhome un-backlash
+            fourBarMap.put(3.31, fourBarHome - 0.1); // 4barhome un-backlash
             fourBarMap.put(4.08, 2.08 - 0.1);
             fourBarMap.put(4.45, 2.07 - 0.1);
             fourBarMap.put(5.0, 2.05 - 0.1);
@@ -287,31 +292,29 @@ public final class Constants {
         public static final double redCenterRing3 = 2.5; // 2.4
         public static final double redCenterRing4 = 1.9; // 1.8
 
-        public static final double blueCenterRing2 = 2.364908944; //2.7
-        public static final double blueCenterRing3 = 2.344712991; //2.45
-        public static final double blueCenterRing4 = 2.300281895; //1.9
+        public static final double blueCenterRing2 = 2.364908944; // 2.7
+        public static final double blueCenterRing3 = 2.344712991; // 2.45
+        public static final double blueCenterRing4 = 2.300281895; // 1.9
 
-        public static final double weirdSideRing2 = 2.429535992; //3.5
-        public static final double weirdSideRing3 = 2.368948134; //2.75
-        public static final double weirdSideRing4 = 2.300281895; //1.9
+        public static final double weirdSideRing2 = 2.429535992; // 3.5
+        public static final double weirdSideRing3 = 2.368948134; // 2.75
+        public static final double weirdSideRing4 = 2.300281895; // 1.9
 
         public static final double red_weirdSideRing1 = 3.2;
         public static final double red_weirdSideRing2 = 3.5;
         public static final double red_weirdSideRing3 = 2.6;
         public static final double red_weirdSideRing4 = 1.9;
 
-        public static final double blueAmpSide1 = 2.364908944; //2.7
-        public static final double blueAmpSide2 = 2.344712991; //2.45
-        public static final double blueAmpSide3 = 2.344712991; //2.45
-        public static final double blueAmpSide4 = 2.300281895; //1.9
-        
-        
-        public static final double blueRECenterNote5 = 2.33663461; //2.35
-        public static final double blueRECenterNote6 = 2.33663461; //2.35
+        public static final double blueAmpSide1 = 2.364908944; // 2.7
+        public static final double blueAmpSide2 = 2.344712991; // 2.45
+        public static final double blueAmpSide3 = 2.344712991; // 2.45
+        public static final double blueAmpSide4 = 2.300281895; // 1.9
 
+        public static final double blueRECenterNote5 = 2.33663461; // 2.35
+        public static final double blueRECenterNote6 = 2.33663461; // 2.35
 
-        public static final double blueStarWars1 = 2.364908944; //3.5
-        public static final double blueStarWars2 = 2.429535992; //2.75
+        public static final double blueStarWars1 = 2.364908944; // 3.5
+        public static final double blueStarWars2 = 2.429535992; // 2.75
         public static final double blueStarWars3 = 2.368948134;
         public static final double blueStarWars4 = 2.300281895;
     }
@@ -347,7 +350,9 @@ public final class Constants {
         public static final double IZone = 10.0;
 
         public static final double autoTurnCeiling = 6.0;
-        public static final double poseSyncTolerance = 0.5; //the tolerance at which vision pose and estimated pose have to be in for driver station to report happy
+        public static final double poseSyncTolerance =
+                0.5; // the tolerance at which vision pose and estimated pose have to be in for driver station to report
+        // happy
     }
 
     public static class VisionConstants {
@@ -496,7 +501,6 @@ public final class Constants {
         public static final double stillShotSpeed = 0.3;
 
         public static final double shooterTolerance = 100;
-
 
         static {
             // Key: Distance

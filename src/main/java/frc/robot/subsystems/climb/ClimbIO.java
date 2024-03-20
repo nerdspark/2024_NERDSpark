@@ -14,8 +14,15 @@ public interface ClimbIO {
         public double climbVelocity = 0.0;
         public double climbAppliedVolts = 0.0;
         public double[] climbCurrentAmps = new double[] {};
-
     }
 
     default void updateInputs(ClimbIOInputs inputs) {}
+
+    default void setClimbMotorPower(double climbPower) {}
+
+    default double getClimbMotorPosition() {
+        return 0;
+    }
+
+    default void setServoPosition(double angle) {}
 }

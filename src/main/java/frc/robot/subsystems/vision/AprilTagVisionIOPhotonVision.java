@@ -157,8 +157,10 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                             .targetsUsed
                             .get(i)
                             .getBestCameraToTarget()
-                            .getRotation().toRotation2d().getDegrees();
-                } 
+                            .getRotation()
+                            .toRotation2d()
+                            .getDegrees();
+                }
             }
             var distanceUsedForCalculatingStdDev = 0.0;
             if (Constants.VisionConstants.VISION_DEV_DIST_STRATEGY

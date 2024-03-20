@@ -17,6 +17,18 @@ public class Climb extends SubsystemBase {
         this.io = climbIO;
     }
 
+    public void setClimbMotorPower(double climbPower) {
+        io.setClimbMotorPower(climbPower);
+    }
+
+    public double getClimbMotorPosition() {
+        return io.getClimbMotorPosition();
+    }
+
+    public void setServoPosition(double angle) {
+        io.setServoPosition(angle);
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
