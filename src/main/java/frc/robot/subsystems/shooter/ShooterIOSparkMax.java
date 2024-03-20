@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.RobotMap;
 import frc.robot.Constants.ShooterConstants;
 
@@ -87,11 +86,11 @@ public class ShooterIOSparkMax implements ShooterIO {
     public boolean onTarget() {
         double currSpeed1 = getSpeed()[0], currSpeed2 = getSpeed()[1];
         return Math.abs(currSpeed1 - speed1) < ShooterConstants.shooterTolerance
-            && Math.abs(currSpeed2 - speed2) < ShooterConstants.shooterTolerance;
+                && Math.abs(currSpeed2 - speed2) < ShooterConstants.shooterTolerance;
     }
 
     public double[] getSpeed() {
-        return new double[]{shooterEncoder1.getVelocity(), shooterEncoder2.getVelocity()};
+        return new double[] {shooterEncoder1.getVelocity(), shooterEncoder2.getVelocity()};
     }
 
     public void stop() {

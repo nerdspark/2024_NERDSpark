@@ -30,7 +30,6 @@ public interface ArmIO {
         public double elbowRightAppliedVolts = 0.0;
         public double[] elbowRightCurrentAmps = new double[] {};
 
-
         public double gripperPosition = 0.0;
         public double gripperVelocity = 0.0;
         public double gripperAppliedVolts = 0.0;
@@ -95,5 +94,4 @@ public interface ArmIO {
     default double getGripperPosition() {
         return 0.0;
     }
-
 }

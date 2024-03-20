@@ -15,7 +15,7 @@ public class ArmCommand extends Command {
     private Supplier<Translation2d> position;
     private Supplier<Boolean> inBend;
     /** Creates a new ArmCommand. */
-    public ArmCommand(Arm arm, Supplier<Translation2d> position,  Supplier<Boolean> inBend) {
+    public ArmCommand(Arm arm, Supplier<Translation2d> position, Supplier<Boolean> inBend) {
         this.arm = arm;
         this.position = position;
         this.inBend = inBend;
@@ -39,7 +39,6 @@ public class ArmCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         arm.setArmPosition(ArmSetPoints.home, false);
-
     }
 
     // Returns true when the command should end.

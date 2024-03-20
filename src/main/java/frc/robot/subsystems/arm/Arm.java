@@ -38,7 +38,7 @@ public class Arm extends SubsystemBase {
         io.setArmPosition(position, inBend);
     }
 
-    public void setGripperPower (double power) {
+    public void setGripperPower(double power) {
         io.setGripperPower(power);
     }
 
