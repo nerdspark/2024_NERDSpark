@@ -5,15 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
 
 public class GripperOutCommand extends Command {
     /** Creates a new GripperOuttakeCommand. */
     private final Arm arm;
 
-    public GripperOutCommand(Arm arm) {
+    private final double power;
+
+    public GripperOutCommand(Arm arm, double power) {
         this.arm = arm;
+        this.power = power;
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -24,7 +26,7 @@ public class GripperOutCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        arm.setGripperPower(Constants.ArmConstants.outPowerGripper);
+        arm.setGripperPower(power);
     }
 
     // Called once the command ends or is interrupted.

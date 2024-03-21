@@ -66,6 +66,7 @@ public final class Constants {
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
         public static final double fourBarHome = 2.148;
+        public static final double fourBarClimb = 1.0;
         public static final double fourBarTolerance = 0.015;
         public static final double fourBarHotel = 88;
         public static final IdleMode fourBarIdleMode = IdleMode.kBrake;
@@ -94,10 +95,10 @@ public final class Constants {
 
             fourBarMap.put(3.3, fourBarHome);
             fourBarMap.put(3.31, fourBarHome - 0.1); // 4barhome un-backlash
-            fourBarMap.put(4.08, 2.08 - 0.1);
-            fourBarMap.put(4.45, 2.07 - 0.1);
-            fourBarMap.put(5.0, 2.05 - 0.1);
-            fourBarMap.put(5.53, 1.97 - 0.1);
+            fourBarMap.put(4.08, 1.98);
+            fourBarMap.put(4.45, 1.97);
+            fourBarMap.put(5.0, 1.95);
+            fourBarMap.put(5.53, 1.87);
             fourBarMap.put(6.44, FixedShotConstants.fourBarLong);
             // fourBarMap.put(4.75 + 0.2, 1.925d);
             // fourBarMap.put(4.85 + 0.2, 1.925d);
@@ -143,7 +144,7 @@ public final class Constants {
         public static final double secondStageLength = 16.975; // inches
 
         public static final double virtual4BarGearRatio = 36.0 / 42.0;
-        public static final double shoulderRadPerRot = 2.0 * Math.PI / 36.0  * 14.0 / 32.0;
+        public static final double shoulderRadPerRot = 2.0 * Math.PI / 36.0 * 14.0 / 32.0;
         public static final double elbowRadPerRot = 2.0 * Math.PI / 12.0 * virtual4BarGearRatio;
 
         public static final double shoulderOffset = -0.144; // radians, fwd = 0

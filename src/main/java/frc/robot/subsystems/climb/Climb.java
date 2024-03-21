@@ -6,10 +6,7 @@ package frc.robot.subsystems.climb;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimbConstants;
-
 import org.littletonrobotics.junction.Logger;
-
-import com.ctre.phoenix6.controls.PositionVoltage;
 
 public class Climb extends SubsystemBase {
     /** Creates a new Climb. */
@@ -32,6 +29,7 @@ public class Climb extends SubsystemBase {
     public void setServoPosition(double angle) {
         io.setServoPosition(angle);
     }
+
     public void setClimbPosition(double position) {
         io.setClimbPosition(ClimbConstants.winchPos);
     }
