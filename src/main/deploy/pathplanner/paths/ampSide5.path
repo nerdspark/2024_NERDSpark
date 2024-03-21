@@ -3,43 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.11,
-        "y": 1.92
+        "x": 8.01,
+        "y": 2.45
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.18628330969592,
-        "y": 1.606801790116036
+        "x": 6.310253545362582,
+        "y": 3.5675743706565863
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.02,
-        "y": 2.55
+        "x": 4.473177567329536,
+        "y": 4.869527426916125
       },
       "prevControl": {
-        "x": 7.367541091286216,
-        "y": 2.3649743393199714
+        "x": 5.053666259273064,
+        "y": 4.49391709683502
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 30.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "forceIntakeZero",
-      "waypointRelativePos": 0.1,
+      "name": "fourBarToShoot",
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -47,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntakeZero"
+                "name": "fourBarToShooter"
               }
             }
           ]
@@ -55,8 +49,8 @@
       }
     },
     {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 0.3,
+      "name": "forcedIntake",
+      "waypointRelativePos": 0.75,
       "command": {
         "type": "sequential",
         "data": {
@@ -64,24 +58,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "softIntake",
-      "waypointRelativePos": 0.45,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "onlySoftIntake"
+                "name": "forcedIntake"
               }
             }
           ]
@@ -97,13 +74,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 30.0,
+    "rotation": -25.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "blueWeirdSide",
+  "folder": "ampSide",
   "previewStartingState": {
-    "rotation": -35.0,
+    "rotation": -25.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

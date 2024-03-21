@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 8.02,
-        "y": 4.04
+        "y": 4.64
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.6005235483780575,
-        "y": 4.059255498297475
+        "x": 6.207814364431371,
+        "y": 4.882697720308735
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.579481519579884,
-        "y": 4.664594287670188
+        "x": 3.749274022082313,
+        "y": 5.14
       },
       "prevControl": {
-        "x": 5.572777171651615,
-        "y": 4.109517305630104
+        "x": 5.1629347189330215,
+        "y": 4.887316687036346
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
   "eventMarkers": [
     {
       "name": "fourBarToShoot",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -53,7 +53,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToWSR4"
+                "name": "fourBarToShooter"
               }
             }
           ]
@@ -79,7 +79,7 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 4.86,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
@@ -95,5 +95,5 @@
     "rotation": 0.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

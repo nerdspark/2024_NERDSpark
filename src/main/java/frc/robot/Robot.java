@@ -13,7 +13,7 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.SignalLogger;
+// import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -122,8 +122,8 @@ public class Robot extends LoggedRobot {
             autonomousCommand.schedule();
         }
 
-        SignalLogger.setPath("/media/sda1/");
-        SignalLogger.start();
+        // SignalLogger.setPath("/media/sda1/");
+        // SignalLogger.start();
     }
 
     /** This function is called periodically during autonomous. */
@@ -134,7 +134,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void autonomousExit() {
 
-        SignalLogger.stop();
+        // SignalLogger.stop();
     }
 
     @Override
@@ -149,8 +149,8 @@ public class Robot extends LoggedRobot {
             autonomousCommand.cancel();
         }
 
-        SignalLogger.setPath("/media/sda1/");
-        SignalLogger.start();
+        // SignalLogger.setPath("/media/sda1/");
+        // SignalLogger.start();
     }
 
     /** This function is called periodically during operator control. */

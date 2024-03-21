@@ -7,7 +7,6 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.wpilibj.RobotState;
 import frc.robot.Constants;
 import frc.robot.util.FieldConstants;
 import java.util.concurrent.atomic.AtomicReference;
@@ -46,7 +45,7 @@ public class PhotonVisionRunnable implements Runnable {
     @Override
     public void run() {
         // Get AprilTag data
-        if (photonPoseEstimator != null && photonCamera != null && !RobotState.isAutonomous()) {
+        if (photonPoseEstimator != null && photonCamera != null /*&& !RobotState.isAutonomous()*/) {
             var photonResults = photonCamera.getLatestResult();
 
             photonPoseEstimator.update(photonResults);

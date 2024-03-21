@@ -41,6 +41,13 @@ public final class Constants {
         public static final double kA = 0.0;
     }
 
+    public final class ClimbConstants {
+        public static final double servoOutPosition = 180.0;
+        public static final int servoPort = 9;
+        public static final double winchPos = 10;
+        public static final int winchPort = 10;
+    }
+
     public final class FixedShotConstants {
         public static final double fourBarLong = 1.6; // TODO T UNE
         // public static final double fourBarPodium = 1.95; //TODO tune
@@ -213,30 +220,35 @@ public final class Constants {
     }
 
     public final class AutoConstants {
-        public static final double redCenterRing2 = 2.5; // 2.4
+        public static final double redCenterRing2 = 2.5; // 2.5
         public static final double redCenterRing3 = 2.5; // 2.4
         public static final double redCenterRing4 = 1.9; // 1.8
 
-        public static final double blueCenterRing2 = 2.7;
-        public static final double blueCenterRing3 = 2.45;
-        public static final double blueCenterRing4 = 1.9;
+        public static final double blueCenterRing2 = 2.364908944; // 2.7
+        public static final double blueCenterRing3 = 2.344712991; // 2.45
+        public static final double blueCenterRing4 = 2.300281895; // 1.9
 
-        public static final double weirdSideRing1 = 3.2;
-        public static final double weirdSideRing2 = 3.5;
-        public static final double weirdSideRing3 = 2.75;
-        public static final double weirdSideRing4 = 1.9;
+        public static final double weirdSideRing2 = 2.429535992; // 3.5
+        public static final double weirdSideRing3 = 2.368948134; // 2.75
+        public static final double weirdSideRing4 = 2.300281895; // 1.9
 
         public static final double red_weirdSideRing1 = 3.2;
         public static final double red_weirdSideRing2 = 3.5;
         public static final double red_weirdSideRing3 = 2.6;
         public static final double red_weirdSideRing4 = 1.9;
 
-        public static final double red_replannerShoot = 1.11; //
+        public static final double blueAmpSide1 = 2.364908944; // 2.7
+        public static final double blueAmpSide2 = 2.344712991; // 2.45
+        public static final double blueAmpSide3 = 2.344712991; // 2.45
+        public static final double blueAmpSide4 = 2.300281895; // 1.9
 
-        public static final double blueCenterRing5Choreo = 2.45;
-        public static final double blueCenterRing6Choreo = 2.45;
-        public static final double blueCenterRing62Choreo = 2.45; //
-        public static final double blueCenterRing7Choreo = 1.9;
+        public static final double blueRECenterNote5 = 2.33663461; // 2.35
+        public static final double blueRECenterNote6 = 2.33663461; // 2.35
+
+        public static final double blueStarWars1 = 2.364908944; // 3.5
+        public static final double blueStarWars2 = 2.429535992; // 2.75
+        public static final double blueStarWars3 = 2.368948134;
+        public static final double blueStarWars4 = 2.300281895;
     }
 
     public final class RobotMap {

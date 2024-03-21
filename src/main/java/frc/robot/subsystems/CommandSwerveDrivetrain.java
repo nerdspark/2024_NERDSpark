@@ -9,7 +9,6 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -29,11 +28,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.subsystems.intake.Intake;
-import frc.robot.util.AutoAimMath;
+import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers.TimestampedVisionUpdate;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -70,6 +68,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     private boolean targetFollow = false;
     private Intake intake;
+    private AprilTagVision aprilTagVision;
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
 
@@ -82,7 +81,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
+        // PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
     }
 
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
@@ -91,22 +90,22 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
+        // PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
     }
 
-    public Optional<Rotation2d> getRotationTargetOverride() {
-        // Some condition that should decide if we want to override rotation
-        if (targetFollow /*intake.getBeamBreak()
-                         && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker)
-                                 > SpeakerConstants.autonAimDistanceThreshold*/) {
-            // if (intake.getBeamBreak()) {
-            // Return an optional containing the rotation override (this should be a field relative rotation)
-            return Optional.of(AutoAimMath.getAutoAimCalcRobot(() -> this.getState().Pose, targetPoseSpeaker));
-        } else {
-            // return an empty optional when we don't want to override the path's rotation
-            return Optional.empty();
-        }
-    }
+    // public Optional<Rotation2d> getRotationTargetOverride() {
+    //         // Some condition that should decide if we want to override rotation
+    //         if (intake.getBeamBreak()
+    //                          && AutoAimMath.xDistanceToSpeaker(() -> this.getState().Pose, targetPoseSpeaker)
+    //                                  > SpeakerConstants.autonAimDistanceThreshold) {
+    //             // if (intake.getBeamBreak()) {
+    //             // Return an optional containing the rotation override (this should be a field relative rotation)
+    //             return Optional.of(new Rotation2d(Units.degreesToRadians(aprilTagVision.getSpeakerTagAngle())));
+    //         } else {
+    //             // return an empty optional when we don't want to override the path's rotation
+    //             return Optional.empty();
+    //         }
+    //     }
 
     private void configurePathPlanner() {
         double driveBaseRadius = Units.inchesToMeters(13.25);
@@ -219,5 +218,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public void setRobotIntake(Intake intake) {
         this.intake = intake;
+    }
+
+    public void setAprilTagVision(AprilTagVision vision) {
+        this.aprilTagVision = vision;
     }
 }

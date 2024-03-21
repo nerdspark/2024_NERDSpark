@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.05,
-        "y": 7.24
+        "x": 8.02,
+        "y": 7.49
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.296594987905087,
-        "y": 6.774896192236645
+        "x": 6.266594987905086,
+        "y": 7.024896192236645
       },
       "isLocked": false,
       "linkedName": null
@@ -49,11 +49,11 @@
     {
       "anchor": {
         "x": 8.03,
-        "y": 5.44
+        "y": 5.54
       },
       "prevControl": {
         "x": 7.109279156626026,
-        "y": 5.866602121313243
+        "y": 5.966602121313243
       },
       "nextControl": null,
       "isLocked": false,
@@ -63,7 +63,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.85,
-      "rotationDegrees": 3.0,
+      "rotationDegrees": 5.0,
       "rotateFast": false
     }
   ],
@@ -79,7 +79,7 @@
             {
               "type": "named",
               "data": {
-                "name": "blueRECenterNote5"
+                "name": "fourBarToShooter"
               }
             }
           ]
@@ -105,7 +105,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 2.05,
+      "waypointRelativePos": 1.9,
       "command": {
         "type": "sequential",
         "data": {
@@ -140,7 +140,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.2,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -150,7 +150,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "RE4noteCenter",
+  "folder": "ampSide",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

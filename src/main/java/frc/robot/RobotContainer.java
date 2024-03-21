@@ -34,6 +34,7 @@ import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.RobotMap;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.GripperIndexCommand;
@@ -41,11 +42,13 @@ import frc.robot.commands.GripperOutCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.config.RobotIdentity;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIOSparkMax;
+import frc.robot.subsystems.climb.Climb;
 import frc.robot.subsystems.fourBar.FourBar;
 import frc.robot.subsystems.fourBar.FourBarIO;
 import frc.robot.subsystems.fourBar.FourBarIOSparkMax;
@@ -69,6 +72,7 @@ public class RobotContainer { // implements RobotConstants{
     private FourBar fourBar;
     private Shooter shooter;
     private Arm arm;
+    private Climb climb;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
@@ -124,11 +128,13 @@ public class RobotContainer { // implements RobotConstants{
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
+
             arm = new Arm(new ArmIOSparkMax());
             scheduleArmCommands();
         }
 
         drivetrain.setRobotIntake(intake);
+
 
         configureNamedCommands();
 
@@ -145,6 +151,7 @@ public class RobotContainer { // implements RobotConstants{
             } else {
                 poseEstimatorSubSystem = new PoseEstimatorSubsystem(drivetrain);
             }
+            drivetrain.setAprilTagVision(aprilTagVision);
         }
 
         configureButtonBindings();
@@ -233,7 +240,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "fourBarToBCR4", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing4));
 
-        NamedCommands.registerCommand("fourBarToWSR1", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing1));
         NamedCommands.registerCommand("fourBarToWSR2", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing2));
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
@@ -250,16 +256,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "RfourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing4));
 
-        // Choreo Shoot Commands
-        NamedCommands.registerCommand(
-                "fourBarToBCR5Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing5Choreo));
-        NamedCommands.registerCommand(
-                "fourBarToBCR6Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing6Choreo));
-        NamedCommands.registerCommand(
-                "fourBarToBCR62Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing62Choreo));
-        NamedCommands.registerCommand(
-                "fourBarToBCR7Choreo", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing7Choreo));
-
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
@@ -274,6 +270,11 @@ public class RobotContainer { // implements RobotConstants{
 
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
+
+        NamedCommands.registerCommand(
+                "blueRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote5));
+        NamedCommands.registerCommand(
+                "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
     }
 
     private void configureButtonBindings() {
@@ -478,6 +479,11 @@ public class RobotContainer { // implements RobotConstants{
     }
 
     private void scheduleArmCommands() {
+        //Climb commands
+                driver.y().onTrue(new ClimbCommand(climb, () -> true, () -> false));
+                driver.b().onTrue(new ClimbCommand(climb, () -> true, () -> true));
+                climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
+
         /* spin up flywheels / move arm to catching pos,
         spin intake to transfer
         index gripper
