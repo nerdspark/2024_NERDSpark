@@ -488,13 +488,13 @@ public class RobotContainer { // implements RobotConstants{
         // arm commands
         // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> false));
         copilot.b()
-                .onTrue((new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> false)
-                                .alongWith(new ShooterCommand(shooter, () -> 1000.0, () -> 1000.0)))
-                        .withTimeout(Constants.ArmConstants.spinUpTimeout)
+                .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> false)
+                                .raceWith((new ShooterCommand(shooter, () -> 1000.0, () -> 1000.0)
+                        .withTimeout(Constants.ArmConstants.spinUpTimeout))
                         .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
                                 .withTimeout(Constants.ArmConstants.intakeTimeout))
-                        .andThen(new GripperIndexCommand(arm))
-                        .andThen(new ArmCommand(arm, () -> ArmSetPoints.home, () -> false)));
+                        .andThen(new GripperIndexCommand(arm))));
+        copilot.b().onFalse(new ArmCommand(arm, () -> ArmSetPoints.home, () -> false));
 
         copilot.y()
                 .whileTrue(new ArmCommand(

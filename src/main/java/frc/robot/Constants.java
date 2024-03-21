@@ -153,7 +153,7 @@ public final class Constants {
         public static final int currentLimitElbow = 60;
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
-        public static final double indexPowerGripper = 0.3;
+        public static final double indexPowerGripper = -0.3;
         public static final double outPowerGripper = 1.0;
         public static final double indexDistGripper = 10.0;
 
