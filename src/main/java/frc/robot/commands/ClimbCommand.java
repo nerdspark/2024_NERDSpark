@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.climb.Climb;
@@ -11,10 +13,12 @@ import frc.robot.subsystems.climb.Climb;
 public class ClimbCommand extends Command {
     private final Climb Climb;
     private final boolean isOut;
+    private final boolean winchOut;
     /** Creates a new ClimbCommand. */
-    public ClimbCommand(Climb Climb, boolean isOut) {
+    public ClimbCommand(Climb Climb, Supplier<Boolean> isOut, Supplier<Boolean> winchOut) {
         this.Climb = Climb;
-        this.isOut = isOut;
+        this.isOut = isOut.get();
+        this.winchOut = winchOut.get();
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -29,6 +33,11 @@ public class ClimbCommand extends Command {
             Climb.setServoPosition(ClimbConstants.servoOutPosition);
         } else {
             Climb.setServoPosition(0);
+        }
+        if (winchOut) {
+            Climb.setClimbPosition(ClimbConstants.winchPos);
+        } else {
+            Climb.setClimbPosition(0);
         }
     }
 

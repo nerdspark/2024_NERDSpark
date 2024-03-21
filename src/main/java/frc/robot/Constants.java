@@ -44,6 +44,8 @@ public final class Constants {
     public final class ClimbConstants {
         public static final double servoOutPosition = 180.0;
         public static final int servoPort = 9;
+        public static final double winchPos = 10;
+        public static final int winchPort = 10;
     }
 
     public final class FixedShotConstants {

@@ -126,7 +126,7 @@ public class RobotContainer { // implements RobotConstants{
         }
 
         drivetrain.setRobotIntake(intake);
-        climb.setDefaultCommand(new ClimbCommand(climb, false));
+
 
         configureNamedCommands();
 
@@ -311,7 +311,6 @@ public class RobotContainer { // implements RobotConstants{
         // zero gyro
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
         driver.a().onTrue(new InstantCommand(() -> printSpeakerDistanceAndAngle(aprilTagVision)));
-        driver.y().onTrue(new ClimbCommand(climb, true));
 
         /* COPILOT COMMANDS:
          * left trigger: full auto aim 4 bar + shooter
@@ -472,6 +471,10 @@ public class RobotContainer { // implements RobotConstants{
     }
 
     private void scheduleArmCommands() {
+        //Climb commands
+                driver.y().onTrue(new ClimbCommand(climb, () -> true, () -> false));
+                driver.b().onTrue(new ClimbCommand(climb, () -> true, () -> true));
+                climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
         // arm commands
         // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
         // copilot.getLeftX(), () -> false));

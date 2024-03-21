@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.climb;
 
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.Servo;
@@ -11,27 +13,24 @@ import frc.robot.Constants.ClimbConstants;
 
 public class ClimbIOSparkMax implements ClimbIO {
     /** Creates a new ClimbIOSparkMax. */
-    private CANSparkMax climbMotor;
-
-    private RelativeEncoder climbEncoder;
+    private TalonFX climbMotor;
     private Servo grapplingServo;
 
     public ClimbIOSparkMax() {
         grapplingServo = new Servo(ClimbConstants.servoPort);
-        climbMotor = new CANSparkMax(0, CANSparkMax.MotorType.kBrushless);
+        climbMotor = new TalonFX(ClimbConstants.winchPort);
+        climbMotor.setPosition(0);
 
-        climbEncoder = climbMotor.getEncoder();
 
-        climbEncoder.setPosition(0);
     }
 
     @Override
     @SuppressWarnings("static-access")
     public void updateInputs(ClimbIOInputs inputs) {
-        inputs.climbPosition = climbEncoder.getPosition();
-        inputs.climbVelocity = climbEncoder.getVelocity();
-        inputs.climbAppliedVolts = climbMotor.getAppliedOutput() * climbMotor.getBusVoltage();
-        inputs.climbCurrentAmps = new double[] {climbMotor.getOutputCurrent()};
+        inputs.climbPosition = climbMotor.getPosition().getValue();
+        inputs.climbVelocity = climbMotor.getVelocity().getValue();
+        inputs.climbAppliedVolts = climbMotor.getMotorVoltage().getValue();
+        inputs.climbCurrentAmps = new double[] {climbMotor.getStatorCurrent().getValue()};
     }
 
     public void setClimbMotorPower(double climbPower) {
@@ -39,10 +38,13 @@ public class ClimbIOSparkMax implements ClimbIO {
     }
 
     public double getClimbMotorPosition() {
-        return climbEncoder.getPosition();
+        return climbMotor.getPosition().getValue();
     }
 
     public void setServoPosition(double angle) {
         grapplingServo.setAngle(angle);
+    }
+    public void setClimbPosition(double position) {
+        climbMotor.setControl(new PositionVoltage(ClimbConstants.winchPos));
     }
 }
