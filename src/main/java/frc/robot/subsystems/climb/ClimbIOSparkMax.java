@@ -16,6 +16,7 @@ public class ClimbIOSparkMax implements ClimbIO {
     private TalonFX climbMotor;
     private Servo grapplingServo;
 
+
     public ClimbIOSparkMax() {
         grapplingServo = new Servo(ClimbConstants.servoPort);
         climbMotor = new TalonFX(ClimbConstants.winchPort);
@@ -31,6 +32,7 @@ public class ClimbIOSparkMax implements ClimbIO {
         inputs.climbVelocity = climbMotor.getVelocity().getValue();
         inputs.climbAppliedVolts = climbMotor.getMotorVoltage().getValue();
         inputs.climbCurrentAmps = new double[] {climbMotor.getStatorCurrent().getValue()};
+
     }
 
     public void setClimbMotorPower(double climbPower) {
