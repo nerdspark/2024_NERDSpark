@@ -79,8 +79,8 @@ public class DriveToPoseCommand extends Command {
         omegaController.reset(
                 robotPose.getRotation().getRadians(),
                 drivetrainSubsystem.getCurrentRobotChassisSpeeds().omegaRadiansPerSecond);
-        xController.reset(robotPose.getX(), drivetrainSubsystem.getCurrentRobotChassisSpeeds().vxMetersPerSecond);
-        yController.reset(robotPose.getY(), drivetrainSubsystem.getCurrentRobotChassisSpeeds().vyMetersPerSecond);
+        xController.reset(robotPose.getX(), -drivetrainSubsystem.getCurrentRobotChassisSpeeds().vxMetersPerSecond);
+        yController.reset(robotPose.getY(), -drivetrainSubsystem.getCurrentRobotChassisSpeeds().vyMetersPerSecond);
 
         SmartDashboard.putNumber(
                 "YawVelocity", drivetrainSubsystem.getCurrentRobotChassisSpeeds().omegaRadiansPerSecond);
@@ -101,18 +101,18 @@ public class DriveToPoseCommand extends Command {
         // SmartDashboard.putString("DriveToPoseCommand", "Execute");
 
         var robotPose = currentPoseProvider.get();
-        // SmartDashboard.putNumber("DriveToPoseCommand robotPose.X", robotPose.getX());
-        // SmartDashboard.putNumber("DriveToPoseCommand robotPose.Y", robotPose.getY());
-        // SmartDashboard.putNumber(
-        //         "DriveToPoseCommand robotPose.Angle", robotPose.getRotation().getRadians());
+        SmartDashboard.putNumber("DriveToPoseCommand robotPose.X", robotPose.getX());
+        SmartDashboard.putNumber("DriveToPoseCommand robotPose.Y", robotPose.getY());
+        SmartDashboard.putNumber(
+                "DriveToPoseCommand robotPose.Angle", robotPose.getRotation().getRadians());
 
-        // SmartDashboard.putNumber(
-        //         "DriveToPoseCommand goalPose.X", targetPoseSupplier.get().getX());
-        // SmartDashboard.putNumber(
-        //         "DriveToPoseCommand goalPose.Y", targetPoseSupplier.get().getY());
-        // SmartDashboard.putNumber(
-        //         "DriveToPoseCommand goalPose.Angle",
-        //         targetPoseSupplier.get().getRotation().getRadians());
+        SmartDashboard.putNumber(
+                "DriveToPoseCommand goalPose.X", targetPoseSupplier.get().getX());
+        SmartDashboard.putNumber(
+                "DriveToPoseCommand goalPose.Y", targetPoseSupplier.get().getY());
+        SmartDashboard.putNumber(
+                "DriveToPoseCommand goalPose.Angle",
+                targetPoseSupplier.get().getRotation().getRadians());
 
         var xSpeed = xController.calculate(robotPose.getX());
         if (xController.atGoal()) {
@@ -129,18 +129,25 @@ public class DriveToPoseCommand extends Command {
             omegaSpeed = 0;
         }
 
+        SmartDashboard.putNumber("DriveToPose X Speed", xSpeed);
+        SmartDashboard.putNumber("DriveToPose Y Speed", ySpeed);
+
+        SmartDashboard.putNumber("DriveToPose omega Speed", omegaSpeed);
+
         ChassisSpeeds chassisSpeeds;
         chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                xSpeed, ySpeed, omegaSpeed, drivetrainSubsystem.getRotation3d().toRotation2d());
+                -xSpeed, -ySpeed, omegaSpeed, drivetrainSubsystem.getRotation3d().toRotation2d());
 
-        drivetrainSubsystem.applyRequest(() -> driveToPoseRequest.withSpeeds(chassisSpeeds));
+        // drivetrainSubsystem.applyRequest(() -> driveToPoseRequest.withSpeeds(chassisSpeeds));
+        drivetrainSubsystem.setControl(driveToPoseRequest.withSpeeds(chassisSpeeds));
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         ChassisSpeeds zeroChassisSpeeds = new ChassisSpeeds();
-        drivetrainSubsystem.applyRequest(() -> driveToPoseRequest.withSpeeds(zeroChassisSpeeds));
+        drivetrainSubsystem.setControl(driveToPoseRequest.withSpeeds(zeroChassisSpeeds));
+
     }
 
     // Returns true when the command should end.

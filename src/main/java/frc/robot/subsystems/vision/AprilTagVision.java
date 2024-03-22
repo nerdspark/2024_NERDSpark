@@ -118,7 +118,6 @@ public class AprilTagVision extends SubsystemBase {
                 Pose3d robotPose = poseEstimates.pose();
                 // Correct the robot pose since camera is mounted on the back.
                 // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
-                robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
 
                 List<Pose3d> tagPoses = getTagPoses(poseEstimates);
                 double poseAmbiguity = poseEstimates.poseAmbiguity();
@@ -173,7 +172,6 @@ public class AprilTagVision extends SubsystemBase {
      * @param poseEstimates The pose estimate
      * @return True if the pose estimate should be skipped, false otherwise
      */
-
     private boolean shouldSkipPoseEstimate(PoseEstimate poseEstimates) {
         return poseEstimates.tagIDs().length < 1
                 || poseEstimates.pose() == null
@@ -268,7 +266,6 @@ public class AprilTagVision extends SubsystemBase {
         Logger.recordOutput(
                 VISION_PATH + Integer.toString(instanceIndex) + "/TagPoses",
                 tagPoses.toArray(new Pose3d[tagPoses.size()]));
-
 
         logTagPoses();
     }
