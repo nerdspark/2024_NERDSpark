@@ -4,7 +4,21 @@
 
 package frc.robot.subsystems.arm;
 
+import com.ctre.phoenix6.configs.ClosedLoopGeneralConfigs;
+import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.CustomParamsConfigs;
+import com.ctre.phoenix6.configs.DifferentialSensorsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
+import com.ctre.phoenix6.controls.ControlRequest;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
@@ -13,6 +27,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.ArmGains;
+import frc.robot.actions.firstRing;
 import frc.robot.Constants.RobotMap;
 
 public class ArmIOSparkMax implements ArmIO {
@@ -40,15 +55,39 @@ public class ArmIOSparkMax implements ArmIO {
 
     /** Creates a new ArmIOSparkMax. */
     public ArmIOSparkMax() {
+
         shoulderLeft = new TalonFX(RobotMap.shoulderLeftID);
         shoulderRight = new TalonFX(RobotMap.shoulderRightID);
         elbowLeft = new TalonFX(RobotMap.elbowLeftID);
         elbowRight = new TalonFX(RobotMap.elbowRightID);
 
+        TalonFXConfiguration shoulderconfig = new TalonFXConfiguration();
+        TalonFXConfiguration elbowconfig = new TalonFXConfiguration();
+
+        shoulderconfig.CurrentLimits = new CurrentLimitsConfigs().withStatorCurrentLimit(60).withStatorCurrentLimitEnable(true);
+        shoulderconfig.Feedback = new FeedbackConfigs().withFeedbackRotorOffset(ArmConstants.shoulderOffset).withSensorToMechanismRatio(ArmConstants.shoulderRadPerRot);
+        shoulderconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withTorqueClosedLoopRampPeriod(0.1);
+        shoulderconfig.Slot0 = new Slot0Configs().withKP(armGains.shoulderP).withKI(armGains.shoulderI).withKD(armGains.shoulderD).withKG(armGains.shoulderG);
+        
+        shoulderLeft.getConfigurator().apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive).withNeutralMode(NeutralModeValue.Coast)));
+        shoulderRight.getConfigurator().apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive).withNeutralMode(NeutralModeValue.Coast)));
+
+        elbowconfig.CurrentLimits = new CurrentLimitsConfigs().withStatorCurrentLimit(60).withStatorCurrentLimitEnable(true);
+        elbowconfig.Feedback = new FeedbackConfigs().withFeedbackRotorOffset(ArmConstants.elbowOffset).withSensorToMechanismRatio(ArmConstants.elbowRadPerRot);
+        elbowconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withTorqueClosedLoopRampPeriod(0.1);
+        elbowconfig.Slot0 = new Slot0Configs().withKP(armGains.elbowP).withKI(armGains.elbowI).withKD(armGains.elbowD).withKG(armGains.elbowG);
+        
+        
+        elbowLeft.getConfigurator().apply(elbowconfig.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive).withNeutralMode(NeutralModeValue.Coast)));
+        elbowRight.getConfigurator().apply(elbowconfig.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive).withNeutralMode(NeutralModeValue.Coast)));
+
+        
         gripper = new CANSparkMax(RobotMap.gripperID, MotorType.kBrushless);
 
         shoulderLeft.setNeutralMode(NeutralModeValue.Coast);
         shoulderRight.setNeutralMode(NeutralModeValue.Coast);
+        elbowLeft.setNeutralMode(NeutralModeValue.Coast);
+        elbowRight.setNeutralMode(NeutralModeValue.Coast);
 
         shoulderLeft.setInverted(true);
         shoulderRight.setInverted(false);
@@ -56,10 +95,11 @@ public class ArmIOSparkMax implements ArmIO {
         elbowLeft.setInverted(true);
         gripper.setInverted(true);
 
+        
+
         gripperEncoder = gripper.getEncoder();
 
         inBend = false;
-        setGains(false);
         resetEncoders();
         // setArmGains(climbGains);
 
@@ -156,12 +196,12 @@ public class ArmIOSparkMax implements ArmIO {
         // elbowLeft.setSmartCurrentLimit(ArmConstants.currentLimitElbow);
         // elbowLeft.setClosedLoopRampRate(ArmConstants.rampRateElbow);
         // shoulderLeft.setClosedLoopRampRate(ArmConstants.rampRateShoulder);
-        elbowLeft.setPosition(ArmConstants.elbowOffset);
-        elbowRight.setPosition(ArmConstants.elbowOffset);
-        shoulderLeft.setPosition(ArmConstants.shoulderOffset);
-        shoulderRight.setPosition(ArmConstants.shoulderOffset);
+        // elbowLeft.setPosition(ArmConstants.elbowOffset);
+        // elbowRight.setPosition(ArmConstants.elbowOffset);
+        // shoulderLeft.setPosition(ArmConstants.shoulderOffset);
+        // shoulderRight.setPosition(ArmConstants.shoulderOffset);
 
-        // gripperEncoder.setPosition(0);
+        gripperEncoder.setPosition(0);
         // elbowLeftController.setOutputRange(-ArmConstants.maxPowerElbow, ArmConstants.maxPowerElbow);
         // shoulderLeftController.setOutputRange(-ArmConstants.maxPowerShoulder, ArmConstants.maxPowerShoulder);
     }
@@ -179,10 +219,8 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setShoulderPosition(double position) {
-        shoulderLeft.set(armGains.shoulderLeftController.calculate(getShoulderLeftPosition(), position)
-                + armGains.shoulderLeftFeedforward.calculate(getShoulderLeftPosition(), getShoulderLeftVelocity()));
-        shoulderRight.set(armGains.shoulderRightController.calculate(getShoulderRightPosition(), position)
-                + armGains.shoulderRightFeedforward.calculate(getShoulderRightPosition(), getShoulderRightVelocity()));
+        shoulderLeft.setControl(new PositionTorqueCurrentFOC(position));
+        shoulderRight.setControl(new PositionTorqueCurrentFOC(position));
     }
 
     // public void setShoulderVelocity(double velocity) {
@@ -204,10 +242,8 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setElbowPosition(double position) {
-        elbowLeft.set(armGains.elbowLeftController.calculate(getElbowLeftPosition(), position)
-                + armGains.elbowLeftFeedforward.calculate(getElbowLeftPosition(), getElbowLeftVelocity()));
-        elbowRight.set(armGains.elbowRightController.calculate(getElbowRightPosition(), position)
-                + armGains.elbowRightFeedforward.calculate(getElbowRightPosition(), getElbowRightVelocity()));
+        elbowLeft.setControl(new PositionTorqueCurrentFOC(position));
+        elbowRight.setControl(new PositionTorqueCurrentFOC(position));
     }
 
     // public void setElbowVelocity(double velocity) {

@@ -169,33 +169,33 @@ public final class Constants {
         public static final double spinUpTimeout = 2.0;
 
         public static class ArmGains {
-            private final double shoulderP = 2.0;
-            private final double shoulderI = 0.0;
-            private final double shoulderD = 0.0;
-            private final double elbowP = 0.7;
-            private final double elbowI = 0.07;
-            private final double elbowD = 0.0;
-            private final double shoulderS = 0.0;
-            private final double shoulderG = 0.015;
-            private final double shoulderV = 0.0;
-            private final double shoulderA = 0.0;
-            private final double elbowS = 0.0;
-            private final double elbowGLeft = .03;
-            private final double elbowGRight = .03;
-            private final double elbowV = 0.0;
-            private final double elbowA = 0.0;
+            public final double shoulderP = 2.0;
+            public final double shoulderI = 0.0;
+            public final double shoulderD = 0.0;
+            public final double elbowP = 0.7;
+            public final double elbowI = 0.07;
+            public final double elbowD = 0.0;
+            public final double shoulderS = 0.0;
+            public final double shoulderG = 0.015;
+            public final double shoulderV = 0.0;
+            public final double shoulderA = 0.0;
+            public final double elbowS = 0.0;
+            public final double elbowG = .03;
+            public final double elbowV = 0.0;
+            public final double elbowA = 0.0;
 
-            public final PIDController shoulderLeftController = new PIDController(shoulderP, shoulderI, shoulderD);
-            public final PIDController shoulderRightController = new PIDController(shoulderP, shoulderI, shoulderD);
-            public PIDController elbowLeftController = new PIDController(elbowP, elbowI, elbowD);
-            public PIDController elbowRightController = new PIDController(elbowP, elbowI, elbowD);
+                
+            // public final PIDController shoulderLeftController = new PIDController(shoulderP, shoulderI, shoulderD);
+            // public final PIDController shoulderRightController = new PIDController(shoulderP, shoulderI, shoulderD);
+            // public PIDController elbowLeftController = new PIDController(elbowP, elbowI, elbowD);
+            // public PIDController elbowRightController = new PIDController(elbowP, elbowI, elbowD);
 
-            public final ArmFeedforward shoulderLeftFeedforward =
-                    new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
-            public final ArmFeedforward shoulderRightFeedforward =
-                    new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
-            public final ArmFeedforward elbowLeftFeedforward = new ArmFeedforward(elbowS, elbowGLeft, elbowV, elbowA);
-            public final ArmFeedforward elbowRightFeedforward = new ArmFeedforward(elbowS, elbowGRight, elbowV, elbowA);
+            // public final ArmFeedforward shoulderLeftFeedforward =
+            //         new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
+            // public final ArmFeedforward shoulderRightFeedforward =
+            //         new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
+            // public final ArmFeedforward elbowLeftFeedforward = new ArmFeedforward(elbowS, elbowGLeft, elbowV, elbowA);
+            // public final ArmFeedforward elbowRightFeedforward = new ArmFeedforward(elbowS, elbowGRight, elbowV, elbowA);
         }
 
         public static final class ArmSetPoints {
