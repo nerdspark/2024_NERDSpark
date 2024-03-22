@@ -412,9 +412,9 @@ public class RobotContainer { // implements RobotConstants{
                         shooter, () -> FixedShotConstants.RPMHome, () -> FixedShotConstants.RPMHome));
         copilot.x().onFalse(new InstantCommand(shooter::stop));
 
-        copilot.axisGreaterThan(0, BiasConstants.joystickThreshold)
+        copilot.axisGreaterThan(0, BiasConstants.joystickThreshold).and(() -> copilot.leftStick().getAsBoolean())
                 .onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
-        copilot.axisLessThan(0, -BiasConstants.joystickThreshold).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
+        copilot.axisLessThan(0, -BiasConstants.joystickThreshold).and(() -> copilot.leftStick().getAsBoolean()).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
 
         // aim command
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
