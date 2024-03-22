@@ -283,6 +283,11 @@ public final class Constants {
         // happy
     }
 
+    public static class BiasConstants {
+        public static final double joystickThreshold = 0.8;
+        public static final double distanceBiasIncrement = 0.5;
+    }
+
     public static class VisionConstants {
 
         public static enum VisionDeviationDistanceStrategy {
