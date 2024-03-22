@@ -125,7 +125,6 @@ public class RobotContainer { // implements RobotConstants{
         }
 
         drivetrain.setRobotIntake(intake);
-        
 
         configureNamedCommands();
 
@@ -141,11 +140,9 @@ public class RobotContainer { // implements RobotConstants{
                 aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
             } else {
                 poseEstimatorSubSystem = new PoseEstimatorSubsystem(drivetrain);
-                
             }
-        drivetrain.setAprilTagVision(aprilTagVision);
+            drivetrain.setAprilTagVision(aprilTagVision);
         }
-        
 
         configureButtonBindings();
 
@@ -191,20 +188,22 @@ public class RobotContainer { // implements RobotConstants{
     }
 
     private void configureNamedCommands() {
-        NamedCommands.registerCommand(
-                "shootSpeed",
-                new ShooterCommand(
-                        shooter,
-                        () -> AutoAim.calculateShooterRPM(
-                                () -> drivetrain.getState().Pose,
-                                () -> new Translation2d(
-                                        drivetrain.getState().speeds.vxMetersPerSecond,
-                                        drivetrain.getState().speeds.vyMetersPerSecond)),
-                        () -> AutoAim.calculateShooterRPM(
-                                () -> drivetrain.getState().Pose,
-                                () -> new Translation2d(
-                                        drivetrain.getState().speeds.vxMetersPerSecond,
-                                        drivetrain.getState().speeds.vyMetersPerSecond))));
+        // NamedCommands.registerCommand(
+        //         "shootSpeed",
+        //         new ShooterCommand(
+        //                 shooter,
+        //                 () -> AutoAim.calculateShooterRPM(
+        //                         () -> drivetrain.getState().Pose,
+        //                         () -> new Translation2d(
+        //                                 drivetrain.getState().speeds.vxMetersPerSecond,
+        //                                 drivetrain.getState().speeds.vyMetersPerSecond)),
+        //                 () -> AutoAim.calculateShooterRPM(
+        //                         () -> drivetrain.getState().Pose,
+        //                         () -> new Translation2d(
+        //                                 drivetrain.getState().speeds.vxMetersPerSecond,
+        //                                 drivetrain.getState().speeds.vyMetersPerSecond))));
+
+        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 4700.0, () -> 4700.0));
 
         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
@@ -233,7 +232,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "fourBarToBCR4", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing4));
 
-
         NamedCommands.registerCommand("fourBarToWSR2", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing2));
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
@@ -250,8 +248,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "RfourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing4));
 
-   
-
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
@@ -267,17 +263,10 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
-
-
         NamedCommands.registerCommand(
                 "blueRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote5));
         NamedCommands.registerCommand(
                 "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
-
-
-
-
-
     }
 
     private void configureButtonBindings() {
@@ -322,8 +311,11 @@ public class RobotContainer { // implements RobotConstants{
         // zero gyro
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
         driver.a().onTrue(new InstantCommand(() -> printSpeakerDistanceAndAngle(aprilTagVision)));
-        driver.y().whileTrue(new DriveToPoseCommand(drivetrain, drivetrain::getCurrentPose, new Pose2d(14.78, 7.25, new Rotation2d(Units.degreesToRadians(-90)))));
-        
+        driver.y()
+                .whileTrue(new DriveToPoseCommand(
+                        drivetrain,
+                        drivetrain::getCurrentPose,
+                        new Pose2d(14.78, 7.25, new Rotation2d(Units.degreesToRadians(-90)))));
 
         /* COPILOT COMMANDS:
          * left trigger: full auto aim 4 bar + shooter

@@ -3,8 +3,6 @@ package frc.robot;
 import static edu.wpi.first.units.Units.Meters;
 
 import com.revrobotics.CANSparkBase.IdleMode;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -14,19 +12,17 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
-import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
-    public static final boolean PracticeBot = false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+    public static final boolean PracticeBot =
+            true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
         public static final double kP = 0.75; // 0.65; // 0.85
@@ -282,37 +278,35 @@ public final class Constants {
     }
 
     public final class AutoConstants {
-        public static final double redCenterRing2 = 2.5; // 2.5
-        public static final double redCenterRing3 = 2.5; // 2.4
-        public static final double redCenterRing4 = 1.9; // 1.8
+        public static final double redCenterRing2 = 1.95; // 2.5
+        public static final double redCenterRing3 = 1.95; // 2.5
+        public static final double redCenterRing4 = 1.95; // 1.9
 
-        public static final double blueCenterRing2 = 2.364908944; //2.7
-        public static final double blueCenterRing3 = 2.344712991; //2.45
-        public static final double blueCenterRing4 = 2.300281895; //1.9
+        public static final double blueCenterRing2 = 1.95; // 2.7
+        public static final double blueCenterRing3 = 1.95; // 2.45
+        public static final double blueCenterRing4 = 1.97; // 1.9
 
-        public static final double weirdSideRing2 = 2.429535992; //3.5
-        public static final double weirdSideRing3 = 2.368948134; //2.75
-        public static final double weirdSideRing4 = 2.300281895; //1.9
+        public static final double weirdSideRing2 = 1.87; // 3.5
+        public static final double weirdSideRing3 = 1.87; // 2.75
+        public static final double weirdSideRing4 = 2.148; // 1.9
 
         public static final double red_weirdSideRing1 = 3.2;
-        public static final double red_weirdSideRing2 = 3.5;
-        public static final double red_weirdSideRing3 = 2.6;
-        public static final double red_weirdSideRing4 = 1.9;
+        public static final double red_weirdSideRing2 = 1.87;
+        public static final double red_weirdSideRing3 = 1.87;
+        public static final double red_weirdSideRing4 = 2.148;
 
-        public static final double blueAmpSide1 = 2.364908944; //2.7
-        public static final double blueAmpSide2 = 2.344712991; //2.45
-        public static final double blueAmpSide3 = 2.344712991; //2.45
-        public static final double blueAmpSide4 = 2.300281895; //1.9
-        
-        
-        public static final double blueRECenterNote5 = 2.33663461; //2.35
-        public static final double blueRECenterNote6 = 2.33663461; //2.35
+        public static final double blueAmpSide1 = 1.95; // 2.7
+        public static final double blueAmpSide2 = 1.87; // 2.45
+        public static final double blueAmpSide3 = 1.87; // 2.45
+        public static final double blueAmpSide4 = 1.97; // 1.9
 
+        public static final double blueRECenterNote5 = 1.92; // 1.80
+        public static final double blueRECenterNote6 = 1.95; // 1.87
 
-        public static final double blueStarWars1 = 2.364908944; //3.5
-        public static final double blueStarWars2 = 2.429535992; //2.75
-        public static final double blueStarWars3 = 2.368948134;
-        public static final double blueStarWars4 = 2.300281895;
+        public static final double blueStarWars1 = 1.95; // 3.5
+        public static final double blueStarWars2 = 1.87; // 2.75
+        public static final double blueStarWars3 = 1.87;
+        public static final double blueStarWars4 = 2.148;
     }
 
     public final class RobotMap {
@@ -408,7 +402,6 @@ public final class Constants {
         public static final double NOTE_HEIGHT_METERS = Units.inchesToMeters(2);
         public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(26);
 
-        
         // Vision Drive Constants
 
         public static final double TRANSLATION_TOLERANCE_X = 0.025; // Changed from 0.05 3/26/23
@@ -429,8 +422,6 @@ public final class Constants {
         public static final double kPThetaController = 1.2d;
         public static final double kIThetaController = 0d;
         public static final double kDThetaController = 0d;
-
-        
     }
 
     public static class SpeakerConstants {
