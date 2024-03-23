@@ -62,6 +62,14 @@ public class FourBarIOSparkMax implements FourBarIO {
 
         fourbarPIDController1 = FourBarMotor1.getPIDController();
         fourbarPIDController2 = FourBarMotor2.getPIDController();
+        fourbarPIDController1.setP(FourBarGains.kP);
+        fourbarPIDController1.setI(FourBarGains.kI);
+        fourbarPIDController1.setD(FourBarGains.kD);
+        fourbarPIDController2.setP(FourBarGains.kP);
+        fourbarPIDController2.setI(FourBarGains.kI);
+        fourbarPIDController2.setD(FourBarGains.kD);
+        fourbarPIDController1.setIZone(FourBarGains.kIZone);
+        fourbarPIDController2.setIZone(FourBarGains.kIZone);
 
         // FourBarPIDController = new PIDController(FourBarGains.kP, FourBarGains.kI, FourBarGains.kD);
         // FourBarPIDController.setIZone(FourBarGains.kIZone);
@@ -96,8 +104,10 @@ public class FourBarIOSparkMax implements FourBarIO {
         // FourBarMotor1.set(PID + G);
         fourbarPIDController1.setReference(angle, ControlType.kPosition);
         fourbarPIDController2.setReference(angle, ControlType.kPosition);
-        SmartDashboard.putNumber("fourbar1Set", FourBarMotor1.getAppliedOutput());
-        SmartDashboard.putNumber("fourbar2Set", FourBarMotor2.getAppliedOutput());
+        SmartDashboard.putNumber("fourbar1Applied", FourBarMotor1.getAppliedOutput());
+        SmartDashboard.putNumber("fourbar2Applied", FourBarMotor2.getAppliedOutput());
+        SmartDashboard.putNumber("fourbar1Vel", FourBarEncoder1.getVelocity());
+        SmartDashboard.putNumber("fourbar2Vel", FourBarEncoder2.getVelocity());
         SmartDashboard.putNumber("fourbar1error", angle - FourBarEncoder1.getPosition());
         SmartDashboard.putNumber("fourbar2error", angle - FourBarEncoder2.getPosition());
 

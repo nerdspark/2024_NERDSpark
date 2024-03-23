@@ -136,7 +136,10 @@ public class DriveToPoseCommand extends Command {
 
         ChassisSpeeds chassisSpeeds;
         chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                -xSpeed, -ySpeed, omegaSpeed, drivetrainSubsystem.getRotation3d().toRotation2d());
+                -xSpeed,
+                -ySpeed,
+                omegaSpeed,
+                drivetrainSubsystem.getRotation3d().toRotation2d());
 
         // drivetrainSubsystem.applyRequest(() -> driveToPoseRequest.withSpeeds(chassisSpeeds));
         drivetrainSubsystem.setControl(driveToPoseRequest.withSpeeds(chassisSpeeds));
@@ -147,7 +150,6 @@ public class DriveToPoseCommand extends Command {
     public void end(boolean interrupted) {
         ChassisSpeeds zeroChassisSpeeds = new ChassisSpeeds();
         drivetrainSubsystem.setControl(driveToPoseRequest.withSpeeds(zeroChassisSpeeds));
-
     }
 
     // Returns true when the command should end.

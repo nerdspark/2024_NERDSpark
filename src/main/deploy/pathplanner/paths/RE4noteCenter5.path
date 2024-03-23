@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.05,
+        "x": 8.25,
         "y": 7.24
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.296594987905087,
+        "x": 6.496594987905087,
         "y": 6.774896192236645
       },
       "isLocked": false,
@@ -48,12 +48,12 @@
     },
     {
       "anchor": {
-        "x": 8.03,
-        "y": 5.44
+        "x": 8.25,
+        "y": 5.64
       },
       "prevControl": {
-        "x": 7.109279156626026,
-        "y": 5.866602121313243
+        "x": 7.163913386456006,
+        "y": 5.934894908600716
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,8 +62,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": 3.0,
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 1.0,
       "rotateFast": false
     }
   ],
@@ -105,7 +105,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 2.05,
+      "waypointRelativePos": 1.7000000000000002,
       "command": {
         "type": "sequential",
         "data": {
