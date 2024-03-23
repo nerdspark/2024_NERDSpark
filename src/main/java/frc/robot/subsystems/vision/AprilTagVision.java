@@ -16,7 +16,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers.PoseEstimate;
@@ -97,8 +96,8 @@ public class AprilTagVision extends SubsystemBase {
             Logger.processInputs(VISION_PATH + Integer.toString(i), inputs[i]);
         }
         List<TimestampedVisionUpdate> visionUpdates = processPoseEstimates();
-        if (!RobotState.isAutonomous()){
-        sendResultsToPoseEstimator(visionUpdates);
+        if (!RobotState.isAutonomous()) {
+            sendResultsToPoseEstimator(visionUpdates);
         }
     }
 

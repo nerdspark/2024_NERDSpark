@@ -94,8 +94,8 @@ public class RobotContainer { // implements RobotConstants{
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
-    //     private NoteVisionSubsystem noteVisionSubsystem =
-    //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+        // private NoteVisionSubsystem noteVisionSubsystem =
+        //         new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     public RobotContainer() {
         switch (Constants.currentMode) {
@@ -122,10 +122,14 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
+
+            drivetrain.getModule(0).getDriveMotor().setInverted(false);
+            drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
+            drivetrain.getModule(2).getDriveMotor().setInverted(false); // b
+            drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
         }
 
         drivetrain.setRobotIntake(intake);
-        
 
         configureNamedCommands();
 
@@ -141,11 +145,9 @@ public class RobotContainer { // implements RobotConstants{
                 aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
             } else {
                 poseEstimatorSubSystem = new PoseEstimatorSubsystem(drivetrain);
-                
             }
-        drivetrain.setAprilTagVision(aprilTagVision);
+            drivetrain.setAprilTagVision(aprilTagVision);
         }
-        
 
         configureButtonBindings();
 
@@ -233,7 +235,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "fourBarToBCR4", new FourBarCommand(fourBar, () -> AutoConstants.blueCenterRing4));
 
-
         NamedCommands.registerCommand("fourBarToWSR2", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing2));
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
@@ -250,8 +251,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "RfourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing4));
 
-   
-
         NamedCommands.registerCommand(
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
@@ -267,17 +266,10 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
-
-
         NamedCommands.registerCommand(
                 "blueRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote5));
         NamedCommands.registerCommand(
                 "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
-
-
-
-
-
     }
 
     private void configureButtonBindings() {
@@ -322,8 +314,11 @@ public class RobotContainer { // implements RobotConstants{
         // zero gyro
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
         driver.a().onTrue(new InstantCommand(() -> printSpeakerDistanceAndAngle(aprilTagVision)));
-        driver.y().whileTrue(new DriveToPoseCommand(drivetrain, drivetrain::getCurrentPose, new Pose2d(14.78, 7.25, new Rotation2d(Units.degreesToRadians(-90)))));
-        
+        driver.y()
+                .whileTrue(new DriveToPoseCommand(
+                        drivetrain,
+                        drivetrain::getCurrentPose,
+                        new Pose2d(14.78, 7.25, new Rotation2d(Units.degreesToRadians(-90)))));
 
         /* COPILOT COMMANDS:
          * left trigger: full auto aim 4 bar + shooter
@@ -436,20 +431,21 @@ public class RobotContainer { // implements RobotConstants{
         // if (noteVisionSubsystem.hasTargets()) {
         // driver.rightTrigger()
         //             .whileTrue(
-        //                 new IntakeCommand
+        //                 new IntakeCommand(
         //                                 intake,
         //                                 () -> ((driverRaw.getLeftTriggerAxis() - 0.5) * 2),
         //                                 IntakeMode.SOFTINTAKE)
         //                         .deadlineWith(new ParallelCommandGroup(new FourBarCommand(fourBar, () ->
         // Constants.fourBarOut),
-        //                         (drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
+        //                         drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
         //                                     * MaxSpeed
-        //                                     * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+        //                                     * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal())))))
         //                             .withVelocityY(yLimiter.calculate(-0.1
         //                                     * MaxSpeed
         //                                     * Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
         //                             .withRotationalRate(
-        //                                     calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
+        //                                     calculateAutoTurn(() -> noteVisionSubsystem.getYawVal())))));
+        }
 
         // driver.rightTrigger()
         //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
@@ -481,7 +477,7 @@ public class RobotContainer { // implements RobotConstants{
         //                 IntakeMode.FORCEINTAKE));
         // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
-    }
+    
 
     private void scheduleArmCommands() {
         // arm commands

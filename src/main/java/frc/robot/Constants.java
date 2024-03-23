@@ -3,8 +3,6 @@ package frc.robot;
 import static edu.wpi.first.units.Units.Meters;
 
 import com.revrobotics.CANSparkBase.IdleMode;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -14,19 +12,17 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
-import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
-    public static final boolean PracticeBot = false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+    public static final boolean PracticeBot =
+            false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
         public static final double kP = 0.75; // 0.65; // 0.85
@@ -286,31 +282,29 @@ public final class Constants {
         public static final double redCenterRing3 = 2.5; // 2.4
         public static final double redCenterRing4 = 1.9; // 1.8
 
-        public static final double blueCenterRing2 = 2.364908944; //2.7
-        public static final double blueCenterRing3 = 2.344712991; //2.45
-        public static final double blueCenterRing4 = 2.300281895; //1.9
+        public static final double blueCenterRing2 = 2.364908944; // 2.7
+        public static final double blueCenterRing3 = 2.344712991; // 2.45
+        public static final double blueCenterRing4 = 2.300281895; // 1.9
 
-        public static final double weirdSideRing2 = 2.429535992; //3.5
-        public static final double weirdSideRing3 = 2.368948134; //2.75
-        public static final double weirdSideRing4 = 2.300281895; //1.9
+        public static final double weirdSideRing2 = 2.429535992; // 3.5
+        public static final double weirdSideRing3 = 2.368948134; // 2.75
+        public static final double weirdSideRing4 = 2.300281895; // 1.9
 
         public static final double red_weirdSideRing1 = 3.2;
         public static final double red_weirdSideRing2 = 3.5;
         public static final double red_weirdSideRing3 = 2.6;
         public static final double red_weirdSideRing4 = 1.9;
 
-        public static final double blueAmpSide1 = 2.364908944; //2.7
-        public static final double blueAmpSide2 = 2.344712991; //2.45
-        public static final double blueAmpSide3 = 2.344712991; //2.45
-        public static final double blueAmpSide4 = 2.300281895; //1.9
-        
-        
-        public static final double blueRECenterNote5 = 2.33663461; //2.35
-        public static final double blueRECenterNote6 = 2.33663461; //2.35
+        public static final double blueAmpSide1 = 2.364908944; // 2.7
+        public static final double blueAmpSide2 = 2.344712991; // 2.45
+        public static final double blueAmpSide3 = 2.344712991; // 2.45
+        public static final double blueAmpSide4 = 2.300281895; // 1.9
 
+        public static final double blueRECenterNote5 = 2.33663461; // 2.35
+        public static final double blueRECenterNote6 = 2.33663461; // 2.35
 
-        public static final double blueStarWars1 = 2.364908944; //3.5
-        public static final double blueStarWars2 = 2.429535992; //2.75
+        public static final double blueStarWars1 = 2.364908944; // 3.5
+        public static final double blueStarWars2 = 2.429535992; // 2.75
         public static final double blueStarWars3 = 2.368948134;
         public static final double blueStarWars4 = 2.300281895;
     }
@@ -383,7 +377,7 @@ public final class Constants {
          * Physical location of the left camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(12.6), Units.inchesToMeters(0), Units.inchesToMeters(0)),
+                new Translation3d(-Units.inchesToMeters(12.6), Units.inchesToMeters(0), Units.inchesToMeters(9)),
                 new Rotation3d(0, Math.toRadians(0), Math.toRadians(180)));
 
         // public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
@@ -394,21 +388,21 @@ public final class Constants {
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(9.75), Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(100)));
+                new Translation3d(-Units.inchesToMeters(4), Units.inchesToMeters(-10.5), Units.inchesToMeters(8)),
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(-60)));
 
         // Physical location of the back right camera on the robot, relative to the center of the robot. CHANGE THIS
 
         public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(9.75), -Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(-100)));
+                new Translation3d(-Units.inchesToMeters(4), Units.inchesToMeters(10.5), Units.inchesToMeters(8)),
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(60)));
 
         // PLACEHOLDER
-        public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(12.5);
+        public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(13);
         public static final double NOTE_HEIGHT_METERS = Units.inchesToMeters(2);
-        public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(26);
+        public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(40);
+        // when fourbar up: 18 inches high, 26 deg
 
-        
         // Vision Drive Constants
 
         public static final double TRANSLATION_TOLERANCE_X = 0.025; // Changed from 0.05 3/26/23
@@ -429,8 +423,6 @@ public final class Constants {
         public static final double kPThetaController = 1.2d;
         public static final double kIThetaController = 0d;
         public static final double kDThetaController = 0d;
-
-        
     }
 
     public static class SpeakerConstants {
