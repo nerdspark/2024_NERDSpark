@@ -267,7 +267,20 @@ public class RobotContainer { // implements RobotConstants{
                 "blueRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote5));
         NamedCommands.registerCommand(
                 "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
-    }
+    
+                
+        NamedCommands.registerCommand(
+                "blueAmpSide1", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide1));
+        NamedCommands.registerCommand(
+                "blueAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide2));
+        NamedCommands.registerCommand(
+                "blueAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide3));
+        NamedCommands.registerCommand(
+                "blueAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide4));
+    
+    
+    
+        }
 
     private void configureButtonBindings() {
         /* DRIVER BINDINGS:

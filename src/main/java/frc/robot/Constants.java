@@ -25,10 +25,10 @@ public final class Constants {
             true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
-        public static final double kP = 0.75; // 0.65; // 0.85
-        public static final double kI = 0.55; // 0; // 0.2
-        public static final double kD = 0.04; // 0.006; // 0.01
-        public static final double kIZone = 0.1;
+        public static final double kP = 0.95; // 0.65; // 0.85
+        public static final double kI = 0.001; // 0; // 0.2
+        public static final double kD = 0.10; // 0.006; // 0.01
+        public static final double kIZone = 0.2;
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
@@ -48,8 +48,8 @@ public final class Constants {
 
     public final class FourBarConstants {
         public static final int currentLimit = 70;
-        public static final double closedLoopRampRate = 0.25;
-        public static final double openLoopRampRate = 0.15;
+        public static final double closedLoopRampRate = 0.1; //0.25, 0.1
+        public static final double openLoopRampRate = 0.1; //0.15, 0.1
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
@@ -295,7 +295,7 @@ public final class Constants {
         public static final double red_weirdSideRing3 = 1.87;
         public static final double red_weirdSideRing4 = 2.148;
 
-        public static final double blueAmpSide1 = 1.95; // 2.7
+        public static final double blueAmpSide1 = 2.0; // 2.7
         public static final double blueAmpSide2 = 1.87; // 2.45
         public static final double blueAmpSide3 = 1.87; // 2.45
         public static final double blueAmpSide4 = 1.97; // 1.9
