@@ -7,7 +7,6 @@ package frc.robot.subsystems.arm;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.LightningShuffleboard;
-
 import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
@@ -19,10 +18,10 @@ public class Arm extends SubsystemBase {
     public Arm(ArmIO ArmIO) {
         this.io = ArmIO;
 
-        LightningShuffleboard.setDoubleSupplier("arm", "shoulder left pose", io::getShoulderLeftPosition);
-        LightningShuffleboard.setDoubleSupplier("arm", "shoulder right pose", io::getShoulderRightPosition);
-        LightningShuffleboard.setDoubleSupplier("arm", "elbow left pose", io::getElbowLeftPosition);
-        LightningShuffleboard.setDoubleSupplier("arm", "elbow right pose", io::getElbowRightPosition);
+        LightningShuffleboard.setDoubleSupplier("shoulder", "shoulder left pose", io::getShoulderLeftPosition);
+        LightningShuffleboard.setDoubleSupplier("shoulder", "shoulder right pose", io::getShoulderRightPosition);
+        LightningShuffleboard.setDoubleSupplier("elbow", "elbow left pose", io::getElbowLeftPosition);
+        LightningShuffleboard.setDoubleSupplier("elbow", "elbow right pose", io::getElbowRightPosition);
         LightningShuffleboard.setDoubleSupplier("arm", "gripper pose", io::getGripperPosition);
     }
 
@@ -30,6 +29,12 @@ public class Arm extends SubsystemBase {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Arm", inputs);
+
+        io.callThisInPeriodic();
+
+        io.setElbowPosition(LightningShuffleboard.getDouble("elbow", "set pose", 0));
+        io.setShoulderPosition(LightningShuffleboard.getDouble("shoulder", "set pose", 0));
+
     }
 
     public void setGains(boolean climbing) {

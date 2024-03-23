@@ -94,4 +94,9 @@ public interface ArmIO {
     default double getGripperPosition() {
         return 0.0;
     }
+
+
+    default void callThisInPeriodic() {
+        
+    }
 }

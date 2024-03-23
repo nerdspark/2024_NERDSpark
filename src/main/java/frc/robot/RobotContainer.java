@@ -129,7 +129,7 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
             arm = new Arm(new ArmIOSparkMax());
-            scheduleArmCommands();
+        //     scheduleArmCommands();
         }
 
         drivetrain.setRobotIntake(intake);
@@ -477,11 +477,11 @@ public class RobotContainer { // implements RobotConstants{
     }
 
     private void scheduleArmCommands() {
-        // Climb commands
-        climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
+        // // Climb commands
+        // climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
 
-        driver.y().onTrue(new ClimbCommand(climb, () -> true, () -> false));
-        driver.b().onTrue(new ClimbCommand(climb, () -> true, () -> true));
+        // driver.y().onTrue(new ClimbCommand(climb, () -> true, () -> false));
+        // driver.b().onTrue(new ClimbCommand(climb, () -> true, () -> true));
 
         /* spin up flywheels / move arm to catching pos,
         spin intake to transfer

@@ -5,8 +5,6 @@ import static edu.wpi.first.units.Units.Meters;
 import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -144,11 +142,11 @@ public final class Constants {
         public static final double secondStageLength = 16.975; // inches
 
         public static final double virtual4BarGearRatio = 36.0 / 42.0;
-        public static final double shoulderRadPerRot = 1.0 / 36.0 * 14.0 / 32.0;
-        public static final double elbowRadPerRot = 1.0 / 12.0 * virtual4BarGearRatio;
+        public static final double shoulderRadPerRot = 1/(1.0 / 36.0 * 14.0 / 32.0);// * 2048;
+        public static final double elbowRadPerRot = 1/(1.0 / 12.0 * virtual4BarGearRatio);// * 2048;
 
-        public static final double shoulderOffset = -0.144; // radians, fwd = 0
-        public static final double elbowOffset = 2.611; // negative of measurement
+        public static final double shoulderOffset = -0.144 / (2 * Math.PI); // radians, fwd = 0
+        public static final double elbowOffset = 2.611 / (2 * Math.PI); // negative of measurement
 
         public static final Translation2d armBasePosition = new Translation2d();
         public static final double armForwardLimit = Units.inchesToMeters(12 + 5);
@@ -169,22 +167,21 @@ public final class Constants {
         public static final double spinUpTimeout = 2.0;
 
         public static class ArmGains {
-            public final double shoulderP = 2.0;
-            public final double shoulderI = 0.0;
-            public final double shoulderD = 0.0;
-            public final double elbowP = 0.7;
-            public final double elbowI = 0.07;
-            public final double elbowD = 0.0;
-            public final double shoulderS = 0.0;
-            public final double shoulderG = 0.015;
-            public final double shoulderV = 0.0;
-            public final double shoulderA = 0.0;
-            public final double elbowS = 0.0;
-            public final double elbowG = .03;
-            public final double elbowV = 0.0;
-            public final double elbowA = 0.0;
+            public static final double shoulderP = 90.0;
+            public static final double shoulderI = 0.0;
+            public static final double shoulderD = 0.1;
+            public static final double elbowP = 0.0;
+            public static final double elbowI = 0.0;
+            public static final double elbowD = 0.0;
+            public static final double shoulderS = 0.0;
+            public static final double shoulderG = 0.0;
+            public static final double shoulderV = 0.0;
+            public static final double shoulderA = 0.0;
+            public static final double elbowS = 0.0;
+            public static final double elbowG = 0.0;
+            public static final double elbowV = 0.0;
+            public static final double elbowA = 0.0;
 
-                
             // public final PIDController shoulderLeftController = new PIDController(shoulderP, shoulderI, shoulderD);
             // public final PIDController shoulderRightController = new PIDController(shoulderP, shoulderI, shoulderD);
             // public PIDController elbowLeftController = new PIDController(elbowP, elbowI, elbowD);
@@ -194,8 +191,10 @@ public final class Constants {
             //         new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
             // public final ArmFeedforward shoulderRightFeedforward =
             //         new ArmFeedforward(shoulderS, shoulderG, shoulderV, shoulderA);
-            // public final ArmFeedforward elbowLeftFeedforward = new ArmFeedforward(elbowS, elbowGLeft, elbowV, elbowA);
-            // public final ArmFeedforward elbowRightFeedforward = new ArmFeedforward(elbowS, elbowGRight, elbowV, elbowA);
+            // public final ArmFeedforward elbowLeftFeedforward = new ArmFeedforward(elbowS, elbowGLeft, elbowV,
+            // elbowA);
+            // public final ArmFeedforward elbowRightFeedforward = new ArmFeedforward(elbowS, elbowGRight, elbowV,
+            // elbowA);
         }
 
         public static final class ArmSetPoints {
@@ -262,11 +261,11 @@ public final class Constants {
         public static final int fourBarLeftID = 2;
         public static final int fourBarRightID = 3;
 
-        public static final int shoulderLeftID = 11;
+        public static final int shoulderLeftID = 7;
         public static final int shoulderRightID = 9;
         public static final int elbowLeftID = 10;
         public static final int elbowRightID = 8;
-        public static final int gripperID = 0;
+        public static final int gripperID = 5;
 
         public static final int pigeonID = 25;
     }

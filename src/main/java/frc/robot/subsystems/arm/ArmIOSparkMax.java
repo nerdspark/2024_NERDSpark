@@ -4,31 +4,27 @@
 
 package frc.robot.subsystems.arm;
 
-import com.ctre.phoenix6.configs.ClosedLoopGeneralConfigs;
 import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.configs.CustomParamsConfigs;
-import com.ctre.phoenix6.configs.DifferentialSensorsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
-import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.configs.TalonFXConfigurator;
-import com.ctre.phoenix6.controls.ControlRequest;
-import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.ArmGains;
-import frc.robot.actions.firstRing;
+import frc.robot.util.LightningShuffleboard;
 import frc.robot.Constants.RobotMap;
 
 public class ArmIOSparkMax implements ArmIO {
@@ -54,35 +50,64 @@ public class ArmIOSparkMax implements ArmIO {
     // private ArmFeedforward elbowRightFeedforward;
     private ArmGains armGains = new ArmGains();
 
-    /** Creates a new ArmIOSparkMax. */
+
     public ArmIOSparkMax() {
 
-        shoulderLeft = new TalonFX(RobotMap.shoulderLeftID);
-        shoulderRight = new TalonFX(RobotMap.shoulderRightID);
-        elbowLeft = new TalonFX(RobotMap.elbowLeftID);
-        elbowRight = new TalonFX(RobotMap.elbowRightID);
+        shoulderLeft = new TalonFX(RobotMap.shoulderLeftID, "canivore1");
+        shoulderRight = new TalonFX(RobotMap.shoulderRightID, "canivore1");
+        elbowLeft = new TalonFX(RobotMap.elbowLeftID, "canivore1");
+        elbowRight = new TalonFX(RobotMap.elbowRightID, "canivore1");
 
         TalonFXConfiguration shoulderconfig = new TalonFXConfiguration();
         TalonFXConfiguration elbowconfig = new TalonFXConfiguration();
 
-        shoulderconfig.CurrentLimits = new CurrentLimitsConfigs().withStatorCurrentLimit(60).withStatorCurrentLimitEnable(true);
-        shoulderconfig.Feedback = new FeedbackConfigs().withFeedbackRotorOffset(ArmConstants.shoulderOffset).withSensorToMechanismRatio(ArmConstants.shoulderRadPerRot);
-        shoulderconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.1);
-        shoulderconfig.Slot0 = new Slot0Configs().withKP(armGains.shoulderP).withKI(armGains.shoulderI).withKD(armGains.shoulderD).withKG(armGains.shoulderG);
-        
-        shoulderLeft.getConfigurator().apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive).withNeutralMode(NeutralModeValue.Coast)));
-        shoulderRight.getConfigurator().apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive).withNeutralMode(NeutralModeValue.Coast)));
+        shoulderconfig.CurrentLimits =
+                new CurrentLimitsConfigs().withStatorCurrentLimit(60).withStatorCurrentLimitEnable(true);
+        shoulderconfig.Feedback = new FeedbackConfigs()
+                .withFeedbackRotorOffset(ArmConstants.shoulderOffset)
+                .withSensorToMechanismRatio(ArmConstants.shoulderRadPerRot);
+        shoulderconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.3 );
+        shoulderconfig.Slot0 = new Slot0Configs()
+                .withKP(armGains.shoulderP)
+                .withKI(armGains.shoulderI)
+                .withKD(armGains.shoulderD)
+                .withKG(armGains.shoulderG)
+                .withGravityType(GravityTypeValue.Arm_Cosine);
 
-        elbowconfig.CurrentLimits = new CurrentLimitsConfigs().withStatorCurrentLimit(60).withStatorCurrentLimitEnable(true);
-        elbowconfig.Feedback = new FeedbackConfigs().withFeedbackRotorOffset(ArmConstants.elbowOffset).withSensorToMechanismRatio(ArmConstants.elbowRadPerRot);
+        shoulderLeft
+                .getConfigurator()
+                .apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs()
+                        .withInverted(InvertedValue.CounterClockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Coast)));
+        shoulderRight
+                .getConfigurator()
+                .apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs()
+                        .withInverted(InvertedValue.Clockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Coast)));
+
+        elbowconfig.CurrentLimits =
+                new CurrentLimitsConfigs().withStatorCurrentLimit(60).withStatorCurrentLimitEnable(true);
+        elbowconfig.Feedback = new FeedbackConfigs()
+                .withFeedbackRotorOffset(ArmConstants.elbowOffset)
+                .withSensorToMechanismRatio(ArmConstants.elbowRadPerRot);
         elbowconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.1);
-        elbowconfig.Slot0 = new Slot0Configs().withKP(armGains.elbowP).withKI(armGains.elbowI).withKD(armGains.elbowD).withKG(armGains.elbowG);
-        
-        
-        elbowLeft.getConfigurator().apply(elbowconfig.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive).withNeutralMode(NeutralModeValue.Coast)));
-        elbowRight.getConfigurator().apply(elbowconfig.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive).withNeutralMode(NeutralModeValue.Coast)));
+        elbowconfig.Slot0 = new Slot0Configs()
+                .withKP(armGains.elbowP)
+                .withKI(armGains.elbowI)
+                .withKD(armGains.elbowD)
+                .withKG(armGains.elbowG);
 
-        
+        elbowLeft
+                .getConfigurator()
+                .apply(elbowconfig.withMotorOutput(new MotorOutputConfigs()
+                        .withInverted(InvertedValue.Clockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Coast)));
+        elbowRight
+                .getConfigurator()
+                .apply(elbowconfig.withMotorOutput(new MotorOutputConfigs()
+                        .withInverted(InvertedValue.CounterClockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Coast)));
+
         gripper = new CANSparkMax(RobotMap.gripperID, MotorType.kBrushless);
 
         shoulderLeft.setNeutralMode(NeutralModeValue.Coast);
@@ -95,8 +120,6 @@ public class ArmIOSparkMax implements ArmIO {
         elbowRight.setInverted(false);
         elbowLeft.setInverted(true);
         gripper.setInverted(true);
-
-        
 
         gripperEncoder = gripper.getEncoder();
 
@@ -213,28 +236,34 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void setShoulderPosition(double position) {
+        position = position / (2d * Math.PI);
+
+        position = MathUtil.clamp(position, 0, Math.PI);
+
         shoulderLeft.setControl(new PositionVoltage(position));
         shoulderRight.setControl(new PositionVoltage(position));
     }
-    
+
     public double getShoulderLeftPosition() {
         // SmartDashboard.putNumber()"shoulder l position", shoulderLeft.getPosition().getValueAsDouble());
-        return shoulderLeft.getPosition().getValueAsDouble();
+        return shoulderLeft.getPosition().getValueAsDouble() * (2d * Math.PI);
     }
 
     public double getShoulderRightPosition() {
         // SmartDashboard.putNumber("shoulder r position", shoulderRight.getPosition().getValueAsDouble());
-        return shoulderRight.getPosition().getValueAsDouble();
+        return shoulderRight.getPosition().getValueAsDouble() * (2d * Math.PI);
     }
 
     public void setElbowPosition(double position) {
-        elbowLeft.setControl(new PositionVoltage(position));
-        elbowRight.setControl(new PositionVoltage(position));
+        position = position / (2d * Math.PI);
+
+        // elbowLeft.setControl(new PositionVoltage(position));
+        // elbowRight.setControl(new PositionVoltage(position));
     }
 
     public double getElbowLeftPosition() {
-        double elbowPose = elbowLeft.getPosition().getValueAsDouble();
-        elbowPose += shoulderLeft.getPosition().getValueAsDouble() * (1 - ArmConstants.virtual4BarGearRatio);
+        double elbowPose = elbowLeft.getPosition().getValueAsDouble() * (2d * Math.PI);
+        elbowPose += getShoulderLeftPosition() * (1 - ArmConstants.virtual4BarGearRatio);
         SmartDashboard.putNumber("elbow l position", elbowPose);
         SmartDashboard.putNumber("raw elbow l position", elbowLeft.getPosition().getValueAsDouble());
         // SmartDashboard.putNumber("elbow adjustment factor", shoulderLeft.getPosition()*24.0/42.0);
@@ -244,8 +273,8 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public double getElbowRightPosition() {
-        double elbowPose = elbowRight.getPosition().getValueAsDouble();
-        elbowPose += shoulderRight.getPosition().getValueAsDouble() * (1 - ArmConstants.virtual4BarGearRatio);
+        double elbowPose = elbowRight.getPosition().getValueAsDouble() * (2d * Math.PI);
+        elbowPose += getShoulderRightPosition() * (1 - ArmConstants.virtual4BarGearRatio);
         SmartDashboard.putNumber("elbow r position", elbowPose);
         SmartDashboard.putNumber(
                 "raw elbow r position", elbowRight.getPosition().getValueAsDouble());
@@ -253,6 +282,41 @@ public class ArmIOSparkMax implements ArmIO {
         // SmartDashboard.putNumber("elbow to shoulder", elbowPose - shoulderLeft.getPosition());
         return elbowPose;
         //          + ((ArmConstants.virtual4BarGearRatio - 1) * (getShoulderPosition() - ArmConstants.shoulderOffset));
+    }
+
+    /**
+     * dont kill me
+     */
+    public void callThisInPeriodic() {
+        Slot0Configs shoulCon = new Slot0Configs();
+
+        shoulCon.kP = LightningShuffleboard.getDouble("shoulder", "kP", ArmGains.shoulderP);
+        shoulCon.kI = LightningShuffleboard.getDouble("shoulder", "kI", ArmGains.shoulderI);
+        shoulCon.kD = LightningShuffleboard.getDouble("shoulder", "kD", ArmGains.shoulderD);
+        shoulCon.kA = LightningShuffleboard.getDouble("shoulder", "kG", ArmGains.shoulderG);
+
+
+        Slot0Configs elbowCon = new Slot0Configs();
+
+        elbowCon.kP = LightningShuffleboard.getDouble("elbow", "kP", ArmGains.elbowP);
+        elbowCon.kI = LightningShuffleboard.getDouble("elbow", "kI", ArmGains.elbowI);
+        elbowCon.kD = LightningShuffleboard.getDouble("elbow", "kD", ArmGains.elbowD);
+        elbowCon.kA = LightningShuffleboard.getDouble("elbow", "kG", ArmGains.elbowG);
+
+        // if(LightningShuffleboard.getBool("shoulder", "refresh", false)) {
+            elbowLeft.getConfigurator().apply(elbowCon);
+            elbowRight.getConfigurator().apply(elbowCon);
+            shoulderLeft.getConfigurator().apply(shoulCon);
+            shoulderRight.getConfigurator().apply(shoulCon);
+
+            // LightningShuffleboard.setBool("shoulder", "refresh", false);
+        // }
+
+        LightningShuffleboard.setDouble("shoulder", "leftt out", shoulderLeft.getMotorVoltage().getValueAsDouble());
+        LightningShuffleboard.setDouble("shoulder", "right out", shoulderRight.getMotorVoltage().getValueAsDouble());
+
+        LightningShuffleboard.setDouble("elbow", "leftt out", elbowLeft.getMotorVoltage().getValueAsDouble());
+        LightningShuffleboard.setDouble("elbow", "right out", elbowRight.getMotorVoltage().getValueAsDouble());
     }
 
     public void setGripperPower(double power) {
@@ -263,12 +327,11 @@ public class ArmIOSparkMax implements ArmIO {
         return gripperEncoder.getPosition();
     }
 
-
     public double getElbowLeftVelocity() {
         return elbowLeft.getVelocity().getValueAsDouble();
     }
 
-    public double getShoulderLeftVelocity() {
+    public double getelbowLeftVelocity() {
         return shoulderLeft.getVelocity().getValueAsDouble();
     }
 
