@@ -6,9 +6,13 @@ package frc.robot.subsystems.fourBar;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.FourBarGains;
 import frc.robot.Constants.RobotMap;
@@ -19,9 +23,12 @@ public class FourBarIOSparkMax implements FourBarIO {
 
     private CANSparkMax FourBarMotor2;
     private RelativeEncoder FourBarEncoder1;
+    private RelativeEncoder FourBarEncoder2;
 
-    private ArmFeedforward FourBarFeedforward1;
-    private PIDController FourBarPIDController;
+    private SparkPIDController fourbarPIDController1;
+    private SparkPIDController fourbarPIDController2;
+    // private ArmFeedforward FourBarFeedforward1;
+    // private PIDController FourBarPIDController;
 
     public FourBarIOSparkMax() {
 
@@ -35,6 +42,7 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarMotor2.setIdleMode(FourBarConstants.fourBarIdleMode);
 
         FourBarEncoder1 = FourBarMotor1.getEncoder();
+        FourBarEncoder2 = FourBarMotor2.getEncoder();
 
         FourBarMotor1.setSmartCurrentLimit(FourBarConstants.currentLimit);
         FourBarMotor2.setSmartCurrentLimit(FourBarConstants.currentLimit);
@@ -47,14 +55,19 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarEncoder1.setPositionConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder1.setVelocityConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder1.setPosition(FourBarConstants.resetPosition);
+        FourBarEncoder2.setPositionConversionFactor(FourBarConstants.positionConversionFactor);
+        FourBarEncoder2.setVelocityConversionFactor(FourBarConstants.positionConversionFactor);
+        FourBarEncoder2.setPosition(FourBarConstants.resetPosition);
+        // FourBarMotor2.follow(FourBarMotor1, true);
 
-        FourBarMotor2.follow(FourBarMotor1, true);
+        fourbarPIDController1 = FourBarMotor1.getPIDController();
+        fourbarPIDController2 = FourBarMotor2.getPIDController();
 
-        FourBarPIDController = new PIDController(FourBarGains.kP, FourBarGains.kI, FourBarGains.kD);
-        FourBarPIDController.setIZone(FourBarGains.kIZone);
-        FourBarPIDController.setTolerance(FourBarConstants.fourBarTolerance);
+        // FourBarPIDController = new PIDController(FourBarGains.kP, FourBarGains.kI, FourBarGains.kD);
+        // FourBarPIDController.setIZone(FourBarGains.kIZone);
+        // FourBarPIDController.setTolerance(FourBarConstants.fourBarTolerance);
 
-        FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, FourBarGains.kG, FourBarGains.kV, FourBarGains.kA);
+        // FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, FourBarGains.kG, FourBarGains.kV, FourBarGains.kA);
         // fourBarFeedforward2 = new ArmFeedforward(Constants.FourBarGains.kS, Constants.FourBarGains.kG,
         // Constants.FourBarGains.kV, Constants.FourBarGains.kA);
     }
@@ -66,7 +79,7 @@ public class FourBarIOSparkMax implements FourBarIO {
         inputs.FourBarVelocity = FourBarEncoder1.getVelocity();
         inputs.FourBarAppliedVolts = FourBarMotor1.getAppliedOutput() * FourBarMotor1.getBusVoltage();
         inputs.FourBarCurrentAmps = new double[] {FourBarMotor1.getOutputCurrent()};
-        inputs.FourBarTarget = FourBarPIDController.getSetpoint();
+        // inputs.FourBarTarget = FourBarPIDController.getSetpoint();
 
         // inputs.FourBarPosition2 = Units.rotationsToRadians(FourBarEncoder2.getPosition());
         // inputs.FourBarVelocity2 = Units.rotationsPerMinuteToRadiansPerSecond(FourBarEncoder2.getVelocity());
@@ -77,10 +90,16 @@ public class FourBarIOSparkMax implements FourBarIO {
     public void setFourBarAngle(double angle) {
         angle = MathUtil.clamp(angle, FourBarConstants.fourBarOut, FourBarConstants.fourBarHome);
 
-        double G = FourBarFeedforward1.calculate(FourBarEncoder1.getPosition(), FourBarEncoder1.getVelocity());
-        double PID = FourBarPIDController.calculate(FourBarEncoder1.getPosition(), angle);
+        // double G = FourBarFeedforward1.calculate(FourBarEncoder1.getPosition(), FourBarEncoder1.getVelocity());
+        // double PID = FourBarPIDController.calculate(FourBarEncoder1.getPosition(), angle);
 
-        FourBarMotor1.set(PID + G);
+        // FourBarMotor1.set(PID + G);
+        fourbarPIDController1.setReference(angle, ControlType.kPosition);
+        fourbarPIDController2.setReference(angle, ControlType.kPosition);
+        SmartDashboard.putNumber("fourbar1Set", FourBarMotor1.getAppliedOutput());
+        SmartDashboard.putNumber("fourbar2Set", FourBarMotor2.getAppliedOutput());
+        SmartDashboard.putNumber("fourbar1error", angle - FourBarEncoder1.getPosition());
+        SmartDashboard.putNumber("fourbar2error", angle - FourBarEncoder2.getPosition());
 
         // LightningShuffleboard.setDouble("four bar", "error", angle - FourBarEncoder1.getPosition());
         // LightningShuffleboard.setDouble("four bar", "PID", PID);
@@ -90,14 +109,14 @@ public class FourBarIOSparkMax implements FourBarIO {
         return FourBarEncoder1.getPosition();
     }
 
-    public void setPIDGGains(double kP, double kI, double kD, double kG) {
-        FourBarPIDController.setP(kP);
-        FourBarPIDController.setI(kI);
-        FourBarPIDController.setD(kD);
-        FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, kG, FourBarGains.kV, FourBarGains.kA);
-    }
+    // public void setPIDGGains(double kP, double kI, double kD, double kG) {
+    //     FourBarPIDController.setP(kP);
+    //     FourBarPIDController.setI(kI);
+    //     FourBarPIDController.setD(kD);
+    //     FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, kG, FourBarGains.kV, FourBarGains.kA);
+    // }
 
-    public boolean onTarget() {
-        return FourBarPIDController.atSetpoint();
-    }
+    // public boolean onTarget() {
+    //     return FourBarPIDController.atSetpoint();
+    // }
 }
