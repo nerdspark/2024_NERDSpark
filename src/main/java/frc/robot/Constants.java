@@ -27,7 +27,7 @@ import frc.robot.util.FieldConstants;
 public final class Constants {
 
     public static final boolean PracticeBot =
-            true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+            false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
         public static final double kP = 0.75; // 0.65; // 0.85
@@ -144,8 +144,8 @@ public final class Constants {
         public static final double secondStageLength = 16.975; // inches
 
         public static final double virtual4BarGearRatio = 36.0 / 42.0;
-        public static final double shoulderRadPerRot = 2.0 * Math.PI / 36.0 * 14.0 / 32.0;
-        public static final double elbowRadPerRot = 2.0 * Math.PI / 12.0 * virtual4BarGearRatio;
+        public static final double shoulderRadPerRot = 1.0 / 36.0 * 14.0 / 32.0;
+        public static final double elbowRadPerRot = 1.0 / 12.0 * virtual4BarGearRatio;
 
         public static final double shoulderOffset = -0.144; // radians, fwd = 0
         public static final double elbowOffset = 2.611; // negative of measurement
