@@ -1,0 +1,93 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.291,
+        "y": 5.64
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 9.103428545420261,
+        "y": 5.866602121313243
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 10.83,
+        "y": 6.440261534528023
+      },
+      "prevControl": {
+        "x": 9.963917665242432,
+        "y": 6.139773270463138
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 180.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "fourBarToShoot",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "blueRECenterNote6"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "forcedIntakeShoot",
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "forcedIntakeShoot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.86,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 177.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "redRE4noteCenter",
+  "previewStartingState": {
+    "rotation": -165.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
