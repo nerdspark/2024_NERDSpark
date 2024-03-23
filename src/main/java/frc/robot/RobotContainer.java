@@ -575,9 +575,9 @@ public class RobotContainer { // implements RobotConstants{
             targetAngle = -target.get();
         } else if (driverRaw.getPOV() != -1) {
             targetAngle = -driverRaw.getPOV();
-        } else if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
-            double speed = Math.copySign(Math.pow(Math.abs(driver.getLeftX()), 1.7), -driver.getLeftX()) * 5.0;
-            targetAngle = currentAngle + 30.0 * speed;
+        } else {//if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
+            double speed = Math.copySign(Math.pow(Math.abs(driver.getLeftX()) > 0.05 ? Math.abs(driver.getLeftX()) : 0, 1.1), -driver.getLeftX()) * 5.0;
+        //     targetAngle = currentAngle;
             return zLimiter.calculate(speed);
             // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }
