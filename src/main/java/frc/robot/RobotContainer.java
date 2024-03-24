@@ -34,6 +34,7 @@ import frc.robot.Constants.ArmConstants.AmpSetpoints;
 import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.BiasConstants;
 import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
@@ -86,6 +87,7 @@ public class RobotContainer { // implements RobotConstants{
     private Shooter shooter;
     private Arm arm;
     private Climb climb;
+    private AutoAim m_AutoAim;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
@@ -121,6 +123,7 @@ public class RobotContainer { // implements RobotConstants{
                 intake = new Intake(new IntakeIOSparkMax()); // Spark Max
                 fourBar = new FourBar(new FourBarIOSparkMax());
                 shooter = new Shooter(new ShooterIOSparkMax());
+                m_AutoAim = new AutoAim();
                 break;
 
             default:
@@ -409,19 +412,19 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftTrigger()
                 .whileTrue(new ShooterCommand(
                                 shooter,
-                                () -> AutoAim.calculateShooterRPM(
+                                () -> m_AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)),
-                                () -> AutoAim.calculateShooterRPM(
+                                () -> m_AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))
                         .alongWith(new FourBarCommand(
                                 fourBar,
-                                () -> AutoAim.calculateFourBarPosition(
+                                () -> m_AutoAim.calculateFourBarPosition(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
@@ -462,6 +465,10 @@ public class RobotContainer { // implements RobotConstants{
                 .whileTrue(new ShooterCommand(
                         shooter, () -> FixedShotConstants.RPMHome, () -> FixedShotConstants.RPMHome));
         copilot.x().onFalse(new InstantCommand(shooter::stop));
+
+        copilot.axisGreaterThan(0, BiasConstants.joystickThreshold).and(() -> copilot.leftStick().getAsBoolean())
+                .onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
+        copilot.axisLessThan(0, -BiasConstants.joystickThreshold).and(() -> copilot.leftStick().getAsBoolean()).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
 
         // aim command
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
