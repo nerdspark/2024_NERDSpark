@@ -198,13 +198,12 @@ public class RobotContainer { // implements RobotConstants{
                 drivetrain.applyRequest(
                         () -> drive.withVelocityX(
                                         xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-                                                * MaxSpeed)) // Drive forward with
-                                // negative Y (forward)
+                                                * MaxSpeed)) 
                                 .withVelocityY(
                                         yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-                                                * MaxSpeed)) // Drive left with negative X (left)
+                                                * MaxSpeed)) 
                                 .withRotationalRate(
-                                        calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
+                                        calculateAutoTurn(() -> 0.0)) 
                         ));
 
         // if (Utils.isSimulation()) {
