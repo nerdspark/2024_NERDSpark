@@ -94,8 +94,8 @@ public class RobotContainer { // implements RobotConstants{
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
-    //     private NoteVisionSubsystem noteVisionSubsystem =
-    //             new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+        // private NoteVisionSubsystem noteVisionSubsystem =
+        //         new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     public RobotContainer() {
         switch (Constants.currentMode) {
@@ -122,6 +122,11 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
+
+            drivetrain.getModule(0).getDriveMotor().setInverted(false);
+            drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
+            drivetrain.getModule(2).getDriveMotor().setInverted(false); // b
+            drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
         }
 
         drivetrain.setRobotIntake(intake);
@@ -267,6 +272,7 @@ public class RobotContainer { // implements RobotConstants{
                 "blueRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote5));
         NamedCommands.registerCommand(
                 "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
+
     
                 
         NamedCommands.registerCommand(
@@ -441,20 +447,21 @@ public class RobotContainer { // implements RobotConstants{
         // if (noteVisionSubsystem.hasTargets()) {
         // driver.rightTrigger()
         //             .whileTrue(
-        //                 new IntakeCommand
+        //                 new IntakeCommand(
         //                                 intake,
         //                                 () -> ((driverRaw.getLeftTriggerAxis() - 0.5) * 2),
         //                                 IntakeMode.SOFTINTAKE)
         //                         .deadlineWith(new ParallelCommandGroup(new FourBarCommand(fourBar, () ->
         // Constants.fourBarOut),
-        //                         (drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
+        //                         drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(0.1
         //                                     * MaxSpeed
-        //                                     * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+        //                                     * Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal())))))
         //                             .withVelocityY(yLimiter.calculate(-0.1
         //                                     * MaxSpeed
         //                                     * Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
         //                             .withRotationalRate(
-        //                                     calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
+        //                                     calculateAutoTurn(() -> noteVisionSubsystem.getYawVal())))));
+        }
 
         // driver.rightTrigger()
         //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
@@ -486,7 +493,7 @@ public class RobotContainer { // implements RobotConstants{
         //                 IntakeMode.FORCEINTAKE));
         // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
-    }
+    
 
     private void scheduleArmCommands() {
         // arm commands

@@ -22,7 +22,8 @@ import frc.robot.util.Alert;
 public final class Constants {
 
     public static final boolean PracticeBot =
-            true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+            false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+
 
     public final class FourBarGains {
         public static final double kP = 0.95; // 0.65; // 0.85
@@ -377,7 +378,7 @@ public final class Constants {
          * Physical location of the left camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(12.6), Units.inchesToMeters(0), Units.inchesToMeters(0)),
+                new Translation3d(-Units.inchesToMeters(12.6), Units.inchesToMeters(0), Units.inchesToMeters(9)),
                 new Rotation3d(0, Math.toRadians(0), Math.toRadians(180)));
 
         // public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
@@ -388,19 +389,20 @@ public final class Constants {
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(9.75), Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(100)));
+                new Translation3d(-Units.inchesToMeters(4), Units.inchesToMeters(-10.5), Units.inchesToMeters(8)),
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(-60)));
 
         // Physical location of the back right camera on the robot, relative to the center of the robot. CHANGE THIS
 
         public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(9.75), -Units.inchesToMeters(11.75), Units.inchesToMeters(0)),
-                new Rotation3d(0, Math.toRadians(0), Math.toRadians(-100)));
+                new Translation3d(-Units.inchesToMeters(4), Units.inchesToMeters(10.5), Units.inchesToMeters(8)),
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(60)));
 
         // PLACEHOLDER
-        public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(12.5);
+        public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(13);
         public static final double NOTE_HEIGHT_METERS = Units.inchesToMeters(2);
-        public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(26);
+        public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(40);
+        // when fourbar up: 18 inches high, 26 deg
 
         // Vision Drive Constants
 
