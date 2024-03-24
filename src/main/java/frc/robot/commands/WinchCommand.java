@@ -5,23 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.Constants.ClimbConstants;
+import frc.robot.subsystems.climb.Climb;
 import java.util.function.Supplier;
 
-public class ShooterCommand extends Command {
-
-    private final Shooter shooter;
-
-    private Supplier<Double> speed1;
-    private Supplier<Double> speed2;
-
-    /** Creates a new ShooterCommand.  */
-    public ShooterCommand(Shooter shooter, Supplier<Double> speed1, Supplier<Double> speed2) {
-        this.shooter = shooter;
-        this.speed1 = speed1;
-        this.speed2 = speed2;
+public class WinchCommand extends Command {
+    private final Climb Climb;
+    private final boolean winchIn;
+    /** Creates a new ClimbCommand. */
+    public WinchCommand(Climb Climb, Supplier<Boolean> winchIn) {
+        this.Climb = Climb;
+        this.winchIn = winchIn.get();
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(shooter);
     }
 
     // Called when the command is initially scheduled.
@@ -31,14 +26,16 @@ public class ShooterCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shooter.setSpeed(speed1.get(), speed2.get());
+        if (winchIn) {
+            Climb.setClimbPosition(ClimbConstants.winchDist);
+        } else {
+            Climb.setClimbPosition(0);
+        }
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-                shooter.setSpeed(0, 0);
-    }
+    public void end(boolean interrupted) {}
 
     // Returns true when the command should end.
     @Override

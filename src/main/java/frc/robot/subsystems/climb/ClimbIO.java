@@ -17,4 +17,17 @@ public interface ClimbIO {
     }
 
     default void updateInputs(ClimbIOInputs inputs) {}
+
+    default void setClimbMotorPower(double climbPower) {}
+
+    default double getClimbMotorPosition() {
+        return 0;
+    }
+
+    default void setServoPosition(double angle) {}
+    default boolean getServoOut() {
+        return false;
+    }
+
+    default void setClimbPosition(double position) {}
 }
