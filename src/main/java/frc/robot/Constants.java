@@ -380,6 +380,13 @@ public final class Constants {
         public static final double autonAimDistanceThreshold = 2.0d;
     }
 
+    public static class BlinkinLightsConstants {
+
+        public static final int lightChannel = 0;  //TODO FIND THIS VALUE
+        public static final double hasNotePattern = 0.25; // heartbeat medium
+        public static final double doesNotHaveNotePattern = 0.73; // lime color
+    }
+
     public static class ShooterConstants {
         public static Measure<Distance> MAXIMUM_READYSHOOT_DISTANCE = Meters.of(Units.feetToMeters(15));
 
