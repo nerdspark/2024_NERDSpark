@@ -1,0 +1,105 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.52,
+        "y": 2.43
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 11.398066198279382,
+        "y": 0.8607408131414109
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 14.525875856045685,
+        "y": 3.346598270405458
+      },
+      "prevControl": {
+        "x": 13.740508802239734,
+        "y": 2.7729388571906783
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": -143.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.2,
+      "maxWaypointRelativePos": 0.5,
+      "constraints": {
+        "maxVelocity": 4.86,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
+  "eventMarkers": [
+    {
+      "name": "fourBarToShoot",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "forceIntake",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "forcedIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -143.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "redWeirdSideDrop",
+  "previewStartingState": {
+    "rotation": 180.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
