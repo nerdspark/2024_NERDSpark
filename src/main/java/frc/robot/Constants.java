@@ -24,11 +24,12 @@ public final class Constants {
     public static final boolean PracticeBot =
             false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
+
     public final class FourBarGains {
-        public static final double kP = 0.75; // 0.65; // 0.85
-        public static final double kI = 0.55; // 0; // 0.2
-        public static final double kD = 0.04; // 0.006; // 0.01
-        public static final double kIZone = 0.1;
+        public static final double kP = 0.95; // 0.65; // 0.85
+        public static final double kI = 0.001; // 0; // 0.2
+        public static final double kD = 0.10; // 0.006; // 0.01
+        public static final double kIZone = 0.2;
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
@@ -40,16 +41,16 @@ public final class Constants {
         public static final double fourBarLong = 1.6; // TODO T UNE
         // public static final double fourBarPodium = 1.95; //TODO tune
 
-        public static final double RPMLong = 5100.0;
+        public static final double RPMLong = 5200.0;
         // public static final double RPMPodium = 3000.0;
-        public static final double RPMPointBlank = 3000.0;
+        public static final double RPMPointBlank = 3500.0;
         public static final double RPMHome = 4300.0;
     }
 
     public final class FourBarConstants {
         public static final int currentLimit = 70;
-        public static final double closedLoopRampRate = 0.25;
-        public static final double openLoopRampRate = 0.15;
+        public static final double closedLoopRampRate = 0.1; //0.25, 0.1
+        public static final double openLoopRampRate = 0.1; //0.15, 0.1
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
@@ -278,35 +279,35 @@ public final class Constants {
     }
 
     public final class AutoConstants {
-        public static final double redCenterRing2 = 2.5; // 2.5
-        public static final double redCenterRing3 = 2.5; // 2.4
-        public static final double redCenterRing4 = 1.9; // 1.8
+        public static final double redCenterRing2 = 1.95; // 2.5
+        public static final double redCenterRing3 = 1.95; // 2.5
+        public static final double redCenterRing4 = 1.95; // 1.9
 
-        public static final double blueCenterRing2 = 2.364908944; // 2.7
-        public static final double blueCenterRing3 = 2.344712991; // 2.45
-        public static final double blueCenterRing4 = 2.300281895; // 1.9
+        public static final double blueCenterRing2 = 1.95; // 2.7
+        public static final double blueCenterRing3 = 1.95; // 2.45
+        public static final double blueCenterRing4 = 1.97; // 1.9
 
-        public static final double weirdSideRing2 = 2.429535992; // 3.5
-        public static final double weirdSideRing3 = 2.368948134; // 2.75
-        public static final double weirdSideRing4 = 2.300281895; // 1.9
+        public static final double weirdSideRing2 = 1.87; // 3.5
+        public static final double weirdSideRing3 = 1.87; // 2.75
+        public static final double weirdSideRing4 = 2.148; // 1.9
 
         public static final double red_weirdSideRing1 = 3.2;
-        public static final double red_weirdSideRing2 = 3.5;
-        public static final double red_weirdSideRing3 = 2.6;
-        public static final double red_weirdSideRing4 = 1.9;
+        public static final double red_weirdSideRing2 = 1.87;
+        public static final double red_weirdSideRing3 = 1.87;
+        public static final double red_weirdSideRing4 = 2.148;
 
-        public static final double blueAmpSide1 = 2.364908944; // 2.7
-        public static final double blueAmpSide2 = 2.344712991; // 2.45
-        public static final double blueAmpSide3 = 2.344712991; // 2.45
-        public static final double blueAmpSide4 = 2.300281895; // 1.9
+        public static final double blueAmpSide1 = 2.0; // 2.7
+        public static final double blueAmpSide2 = 1.87; // 2.45
+        public static final double blueAmpSide3 = 1.87; // 2.45
+        public static final double blueAmpSide4 = 1.97; // 1.9
 
-        public static final double blueRECenterNote5 = 2.33663461; // 2.35
-        public static final double blueRECenterNote6 = 2.33663461; // 2.35
+        public static final double blueRECenterNote5 = 1.92; // 1.80
+        public static final double blueRECenterNote6 = 1.95; // 1.87
 
-        public static final double blueStarWars1 = 2.364908944; // 3.5
-        public static final double blueStarWars2 = 2.429535992; // 2.75
-        public static final double blueStarWars3 = 2.368948134;
-        public static final double blueStarWars4 = 2.300281895;
+        public static final double blueStarWars1 = 1.95; // 3.5
+        public static final double blueStarWars2 = 1.87; // 2.75
+        public static final double blueStarWars3 = 1.87;
+        public static final double blueStarWars4 = 2.148;
     }
 
     public final class RobotMap {

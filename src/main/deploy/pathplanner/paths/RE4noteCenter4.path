@@ -32,11 +32,11 @@
     },
     {
       "anchor": {
-        "x": 8.05,
+        "x": 8.25,
         "y": 7.24
       },
       "prevControl": {
-        "x": 6.52196118595375,
+        "x": 6.72196118595375,
         "y": 6.893433111556562
       },
       "nextControl": null,
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.45,
+      "waypointRelativePos": 1.4,
       "command": {
         "type": "sequential",
         "data": {

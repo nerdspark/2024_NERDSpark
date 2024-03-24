@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 8.017573227552198,
-        "y": 7.485141180022151
+        "x": 8.22,
+        "y": 7.39
       },
       "prevControl": {
-        "x": 5.620496393758452,
-        "y": 7.573921803502696
+        "x": 5.822923166206254,
+        "y": 7.478780623480545
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.55,
-      "rotationDegrees": 25.0,
+      "waypointRelativePos": 1.5,
+      "rotationDegrees": 15.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.3,
+      "rotationDegrees": 15.0,
       "rotateFast": false
     }
   ],
@@ -63,7 +68,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToShooter"
+                "name": "blueAmpSide1"
               }
             }
           ]
@@ -89,7 +94,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.7,
+      "waypointRelativePos": 1.6,
       "command": {
         "type": "sequential",
         "data": {
@@ -124,7 +129,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -139,5 +144,5 @@
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
