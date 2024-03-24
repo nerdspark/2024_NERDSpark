@@ -15,6 +15,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -25,6 +26,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.ArmSetPoints;
@@ -36,6 +39,7 @@ import frc.robot.Constants.RobotMap;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.ArmCommandAngles;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.GripperIndexCommand;
@@ -123,13 +127,17 @@ public class RobotContainer { // implements RobotConstants{
 
             drivetrain.getModule(0).getDriveMotor().setInverted(false);
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
-            drivetrain.getModule(2).getDriveMotor().setInverted(true); // b
+            drivetrain.getModule(2).getDriveMotor().setInverted(true); // bL
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
+            drivetrain.getModule(0).getDriveMotor().setInverted(false);
+            drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
+            drivetrain.getModule(2).getDriveMotor().setInverted(false); // bL
+            drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
             arm = new Arm(new ArmIOSparkMax());
-        //     scheduleArmCommands();
+            scheduleArmCommands();
         }
 
         drivetrain.setRobotIntake(intake);
@@ -375,12 +383,12 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // copilot shoot
-        copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
-        copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        // copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
+        // copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // copilot spit
-        copilot.leftBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
-        copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        // copilot.leftBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
+        // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // TEST COMMAND
         copilot.back()
@@ -489,18 +497,16 @@ public class RobotContainer { // implements RobotConstants{
         return arm to home */
 
         driver.a().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
-        driver.x().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper));
+        driver.b().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0));
+        copilot.leftBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
 
         // arm commands
         // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> false));
         copilot.b()
-                .whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> false)
-                        .raceWith((new ShooterCommand(shooter, () -> 1000.0, () -> 1000.0)
-                                        .withTimeout(Constants.ArmConstants.spinUpTimeout))
-                                .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
-                                        .withTimeout(Constants.ArmConstants.intakeTimeout))
-                                .andThen(new GripperIndexCommand(arm))));
-        copilot.b().onFalse(new ArmCommand(arm, () -> ArmSetPoints.home, () -> false));
+                .whileTrue(new ArmCommandAngles(arm, () -> ArmConstants.elbowOffset - 0.35, () -> ArmConstants.shoulderOffset).alongWith(new ShooterCommand(shooter, () -> 400.0, () -> 400.0))
+                        .raceWith((new WaitCommand(Constants.ArmConstants.spinUpTimeout))
+                                .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE).alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak()).andThen(new WaitCommand(Constants.ArmConstants.intakeTimeout)
+                                .andThen(new GripperIndexCommand(arm)))))));
 
         copilot.y()
                 .whileTrue(new ArmCommand(
@@ -512,7 +518,7 @@ public class RobotContainer { // implements RobotConstants{
                                 -copilot.getLeftY() * ArmSetPoints.ampMultiplierY)),
                         () -> false));
         copilot.rightStick()
-                .onTrue(new ArmCommand(arm, () -> ArmSetPoints.trap, () -> false)
+                .onTrue(new ArmCommandAngles(arm, () -> ArmSetPoints.trapArmAngle - ArmSetPoints.trapArmDifference, () -> ArmSetPoints.trapArmAngle)
                         .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarClimb)));
 
         // // trap

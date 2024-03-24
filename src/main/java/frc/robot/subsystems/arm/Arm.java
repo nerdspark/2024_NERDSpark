@@ -18,11 +18,11 @@ public class Arm extends SubsystemBase {
     public Arm(ArmIO ArmIO) {
         this.io = ArmIO;
 
-        LightningShuffleboard.setDoubleSupplier("shoulder", "shoulder left pose", io::getShoulderLeftPosition);
-        LightningShuffleboard.setDoubleSupplier("shoulder", "shoulder right pose", io::getShoulderRightPosition);
-        LightningShuffleboard.setDoubleSupplier("elbow", "elbow left pose", io::getElbowLeftPosition);
-        LightningShuffleboard.setDoubleSupplier("elbow", "elbow right pose", io::getElbowRightPosition);
-        LightningShuffleboard.setDoubleSupplier("arm", "gripper pose", io::getGripperPosition);
+        // LightningShuffleboard.setDoubleSupplier("shoulder", "shoulder left pose", io::getShoulderLeftPosition);
+        // LightningShuffleboard.setDoubleSupplier("shoulder", "shoulder right pose", io::getShoulderRightPosition);
+        // LightningShuffleboard.setDoubleSupplier("elbow", "elbow left pose", io::getElbowLeftPosition);
+        // LightningShuffleboard.setDoubleSupplier("elbow", "elbow right pose", io::getElbowRightPosition);
+        // LightningShuffleboard.setDoubleSupplier("arm", "gripper pose", io::getGripperPosition);
     }
 
     @Override
@@ -30,10 +30,10 @@ public class Arm extends SubsystemBase {
         io.updateInputs(inputs);
         Logger.processInputs("Arm", inputs);
 
-        io.callThisInPeriodic();
+        // io.callThisInPeriodic();
 
-        io.setElbowPosition(LightningShuffleboard.getDouble("elbow", "set pose", 0));
-        io.setShoulderPosition(LightningShuffleboard.getDouble("shoulder", "set pose", 0));
+        // io.setElbowPosition(LightningShuffleboard.getDouble("elbow", "set pose", 0));
+        // io.setShoulderPosition(LightningShuffleboard.getDouble("shoulder", "set pose", 0));
 
     }
 

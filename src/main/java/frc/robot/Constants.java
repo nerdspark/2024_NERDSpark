@@ -64,9 +64,9 @@ public final class Constants {
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
         public static final double fourBarHome = 2.148;
-        public static final double fourBarClimb = 1.0;
+        public static final double fourBarClimb = 0.8;
         public static final double fourBarTolerance = 0.015;
-        public static final double fourBarHotel = 88;
+        public static final double fourBarHotel = .88;
         public static final IdleMode fourBarIdleMode = IdleMode.kBrake;
 
         public static InterpolatingDoubleTreeMap fourBarMap = new InterpolatingDoubleTreeMap();
@@ -139,14 +139,14 @@ public final class Constants {
 
     public final class ArmConstants {
         public static final double baseStageLength = 18.75; // inches
-        public static final double secondStageLength = 16.975; // inches
+        public static final double secondStageLength = 15.038; // inches
 
         public static final double virtual4BarGearRatio = 36.0 / 42.0;
         public static final double shoulderRadPerRot = 1/(1.0 / 36.0 * 14.0 / 32.0);// * 2048;
         public static final double elbowRadPerRot = 1/(1.0 / 12.0 * virtual4BarGearRatio);// * 2048;
 
-        public static final double shoulderOffset = -0.144 / (2 * Math.PI); // radians, fwd = 0
-        public static final double elbowOffset = 2.611 / (2 * Math.PI); // negative of measurement
+        public static final double shoulderOffset = -0.07; // radians, fwd = 0
+        public static final double elbowOffset = 2.68; // negative of measurement
 
         public static final Translation2d armBasePosition = new Translation2d();
         public static final double armForwardLimit = Units.inchesToMeters(12 + 5);
@@ -159,26 +159,26 @@ public final class Constants {
         public static final int currentLimitElbow = 60;
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
-        public static final double indexPowerGripper = -0.3;
+        public static final double indexPowerGripper = 0.55;
         public static final double outPowerGripper = 1.0;
-        public static final double indexDistGripper = 10.0;
+        public static final double indexDistGripper = 22.0;
 
-        public static final double intakeTimeout = 2.0;
-        public static final double spinUpTimeout = 2.0;
+        public static final double intakeTimeout = 0.25;
+        public static final double spinUpTimeout = 0.7;
 
         public static class ArmGains {
             public static final double shoulderP = 90.0;
             public static final double shoulderI = 0.0;
-            public static final double shoulderD = 0.1;
-            public static final double elbowP = 0.0;
+            public static final double shoulderD = 5.0;
+            public static final double elbowP = 30.0;
             public static final double elbowI = 0.0;
-            public static final double elbowD = 0.0;
+            public static final double elbowD = 2.0;
             public static final double shoulderS = 0.0;
-            public static final double shoulderG = 0.0;
+            public static final double shoulderG = 0.1;
             public static final double shoulderV = 0.0;
             public static final double shoulderA = 0.0;
             public static final double elbowS = 0.0;
-            public static final double elbowG = 0.0;
+            public static final double elbowG = 0.55;
             public static final double elbowV = 0.0;
             public static final double elbowA = 0.0;
 
@@ -202,20 +202,22 @@ public final class Constants {
                             baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
                     .plus(new Translation2d(
                             secondStageLength * Math.cos(elbowOffset), secondStageLength * Math.sin(elbowOffset))); // A
-            public static final Translation2d pickup = new Translation2d(
-                            baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
-                    .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(2.5)),
-                            secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(2.5)))); // B
-            public static final Translation2d amp = new Translation2d(0, 27.5); // dropoff - Y
-            public static final double ampMultiplier = 7.4;
-            public static final double ampMultiplierY = 3;
-            public static final Translation2d trap = new Translation2d(
-                            baseStageLength * Math.cos(Units.degreesToRadians(110.0)),
-                            baseStageLength * Math.sin(Units.degreesToRadians(110.0)))
-                    .plus(new Translation2d(
-                            secondStageLength * Math.cos(Units.degreesToRadians(110.0)),
-                            secondStageLength * Math.sin(Units.degreesToRadians(110.0))));
+            // public static final Translation2d pickup = new Translation2d(6, 9);
+                    //         baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
+                    // .plus(new Translation2d(
+                    //         secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(2.5)),
+                    //         secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(2.5)))); // B
+            public static final Translation2d amp = new Translation2d(0.0, 26.0); // dropoff - Y
+            public static final double ampMultiplier = 8.5;
+            public static final double ampMultiplierY = 5;
+            public static final double trapArmAngle = Units.degreesToRadians(110);
+            public static final double trapArmDifference = Units.degreesToRadians(30);
+            // public static final Translation2d trap = new Translation2d(
+            //                 baseStageLength * Math.cos(Units.degreesToRadians(110.0)),
+            //                 baseStageLength * Math.sin(Units.degreesToRadians(110.0)))
+            //         .plus(new Translation2d(
+            //                 secondStageLength * Math.cos(Units.degreesToRadians(110.0)),
+            //                 secondStageLength * Math.sin(Units.degreesToRadians(110.0))));
         }
     }
 
