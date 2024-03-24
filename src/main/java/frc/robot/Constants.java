@@ -170,24 +170,22 @@ public final class Constants {
         public static final int currentLimitElbow = 60;
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
-        public static final double indexPowerGripper = 0.55;
         public static final double outPowerGripper = 1.0;
-        public static final double indexDistGripper = 17.0;
 
 
         public static class ArmGains {
             public static final double shoulderP = 90.0;
             public static final double shoulderI = 0.0;
             public static final double shoulderD = 5.0;
-            public static final double elbowP = 30.0;
+            public static final double elbowP = 50.0;
             public static final double elbowI = 0.0;
-            public static final double elbowD = 2.0;
+            public static final double elbowD = 3.5;
             public static final double shoulderS = 0.0;
             public static final double shoulderG = 0.1;
             public static final double shoulderV = 0.0;
             public static final double shoulderA = 0.0;
             public static final double elbowS = 0.0;
-            public static final double elbowG = 0.32;
+            public static final double elbowG = 1.05;
             public static final double elbowV = 0.0;
             public static final double elbowA = 0.0;
 
@@ -210,17 +208,20 @@ public final class Constants {
 
             // PICKUP SEQUENCE
 
-            public static final double pickupElbow = ArmConstants.elbowOffset - 0.38;
+            public static final double pickupElbow = ArmConstants.elbowOffset - 0.285;
             public static final double pickupShoulder = ArmConstants.shoulderOffset;
             public static final double pullOutDifference = 0.5;
             public static final double pullOutElbow = pickupElbow + pullOutDifference;
             public static final double pullOutShoulder = pickupShoulder + pullOutDifference;
             
-            public static final double intakeTimeout = 0.20;
+            public static final double intakeTimeout = 0.38;
             public static final double spinUpTimeout = 0.4;
             public static final double pickupPullTimeout = 0.5;
 
             public static final double pickupShooterRPM = 650;
+
+            public static final double indexPowerGripper = 0.40;
+            public static final double indexDistGripper = 12.0;
         }
 
         public static final class AmpSetpoints {

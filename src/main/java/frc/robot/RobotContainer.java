@@ -88,6 +88,7 @@ public class RobotContainer { // implements RobotConstants{
     private Arm arm;
     private Climb climb;
     private AutoAim m_AutoAim;
+    private boolean enableSlowMode = false;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
@@ -99,10 +100,7 @@ public class RobotContainer { // implements RobotConstants{
 
     private final XboxController driverRaw = new XboxController(0);
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1)
-            .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
-    // driving in open loop
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); 
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     //     private final Telemetry logger = new Telemetry(MaxSpeed);
@@ -209,9 +207,9 @@ public class RobotContainer { // implements RobotConstants{
                                         calculateAutoTurn(() -> 0.0)) // Drive counterclockwise with negative X (left)
                         ));
 
-        if (Utils.isSimulation()) {
-            drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
-        }
+        // if (Utils.isSimulation()) {
+        //     drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+        // }
         // drivetrain.registerTelemetry(logger::telemeterize);
         // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () ->
         // false));
@@ -368,12 +366,12 @@ public class RobotContainer { // implements RobotConstants{
 
         // zero gyro
         driver.start().onTrue(new InstantCommand(() -> resetGyro()));
-        driver.a().onTrue(new InstantCommand(() -> printSpeakerDistanceAndAngle(aprilTagVision)));
-        driver.y()
-                .whileTrue(new DriveToPoseCommand(
-                        drivetrain,
-                        drivetrain::getCurrentPose,
-                        new Pose2d(14.78, 7.25, new Rotation2d(Units.degreesToRadians(-90)))));
+        // driver.a().onTrue(new InstantCommand(() -> printSpeakerDistanceAndAngle(aprilTagVision)));
+        // driver.y()
+        //         .whileTrue(new DriveToPoseCommand(
+        //                 drivetrain,
+        //                 drivetrain::getCurrentPose,
+        //                 new Pose2d(14.78, 7.25, new Rotation2d(Units.degreesToRadians(-90)))));
 
         /* COPILOT COMMANDS:
          * left trigger: full auto aim 4 bar + shooter
@@ -466,9 +464,9 @@ public class RobotContainer { // implements RobotConstants{
                         shooter, () -> FixedShotConstants.RPMHome, () -> FixedShotConstants.RPMHome));
         copilot.x().onFalse(new InstantCommand(shooter::stop));
 
-        copilot.axisGreaterThan(0, BiasConstants.joystickThreshold).and(() -> copilot.leftStick().getAsBoolean())
-                .onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
-        copilot.axisLessThan(0, -BiasConstants.joystickThreshold).and(() -> copilot.leftStick().getAsBoolean()).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
+        // copilot.axisGreaterThan(0, BiasConstants.joystickThreshold).and(() -> !copilot.leftStick().getAsBoolean())
+        //         .onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
+        // copilot.axisLessThan(0, -BiasConstants.joystickThreshold).and(() -> !copilot.leftStick().getAsBoolean()).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
 
         // aim command
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
@@ -544,10 +542,10 @@ public class RobotContainer { // implements RobotConstants{
         // climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
 
         //shoot grappler
-        driver.a().or(driver.povDown()).onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1))).onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
+        // driver.a().or(driver.povDown()).onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1))).onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
-        driver.povDown().whileTrue(new WinchCommand(climb, () -> false).alongWith(new WaitCommand(ClimbConstants.rumbleWait).andThen(new GrapplerCommand(climb, () -> driverRaw.getAButton()))))
-                        .onFalse(new WinchCommand(climb, () -> true).onlyIf(() -> climb.getServoOut()));
+        // driver.povDown().whileTrue(new WinchCommand(climb, () -> false).alongWith(new WaitCommand(ClimbConstants.rumbleWait).andThen(new GrapplerCommand(climb, () -> driverRaw.getAButton()))))
+        //                 .onFalse(new WinchCommand(climb, () -> true).onlyIf(() -> climb.getServoOut()));
 
         //retract winch
         // driver.x().whileTrue(new WaitCommand(0.5).andThen(new WinchCommand(climb, () -> true)));
@@ -567,11 +565,13 @@ public class RobotContainer { // implements RobotConstants{
         pull arm outward
         return arm to home */
         copilot.b()
-                .whileTrue(new ArmCommandAngles(arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder).alongWith(new ShooterCommand(shooter, () -> PickupSetpoints.pickupShooterRPM,() ->  PickupSetpoints.pickupShooterRPM))
-                        .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
-                                .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
-                                        .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak()).andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
-                                        .andThen(new GripperIndexCommand(arm).andThen(new ArmCommandAngles(arm, () -> PickupSetpoints.pullOutDifference, () -> PickupSetpoints.pullOutDifference).withTimeout(PickupSetpoints.pickupPullTimeout))))))));
+                .whileTrue((new ShooterCommand(shooter, () -> PickupSetpoints.pickupShooterRPM,() ->  PickupSetpoints.pickupShooterRPM))
+                        .alongWith(new ArmCommandAngles(arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder)
+                                .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
+                                        .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
+                                                .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak()).andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
+                                                .andThen(new GripperIndexCommand(arm))))))));
+                                // .andThen(new ArmCommandAngles(arm, () -> PickupSetpoints.pullOutElbow, () -> PickupSetpoints.pullOutShoulder).withTimeout(PickupSetpoints.pickupPullTimeout)));
 
         // AMP SETPOINT + MICROADJUST
         copilot.y()

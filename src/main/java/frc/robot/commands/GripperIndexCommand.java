@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.subsystems.arm.Arm;
 
 public class GripperIndexCommand extends Command {
@@ -27,7 +28,7 @@ public class GripperIndexCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        arm.setGripperPower(Constants.ArmConstants.indexPowerGripper);
+        arm.setGripperPower(PickupSetpoints.indexPowerGripper);
     }
 
     // Called once the command ends or is interrupted.
@@ -39,6 +40,6 @@ public class GripperIndexCommand extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(arm.getGripperPosition() - startPoint) > Constants.ArmConstants.indexDistGripper;
+        return Math.abs(arm.getGripperPosition() - startPoint) > PickupSetpoints.indexDistGripper;
     }
 }

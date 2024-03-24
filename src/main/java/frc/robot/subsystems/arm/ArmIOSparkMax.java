@@ -107,12 +107,12 @@ public class ArmIOSparkMax implements ArmIO {
                 .getConfigurator()
                 .apply(elbowconfig.withMotorOutput(new MotorOutputConfigs()
                         .withInverted(InvertedValue.Clockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Coast)));
+                        .withNeutralMode(NeutralModeValue.Brake)));
         elbowRight
                 .getConfigurator()
                 .apply(elbowconfig.withMotorOutput(new MotorOutputConfigs()
                         .withInverted(InvertedValue.CounterClockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Coast)));
+                        .withNeutralMode(NeutralModeValue.Brake)));
 
         gripper = new CANSparkMax(RobotMap.gripperID, MotorType.kBrushless);
 
@@ -200,7 +200,7 @@ public class ArmIOSparkMax implements ArmIO {
     // }
     public void setArmPosition(Translation2d position, boolean inBend) {
         this.inBend = inBend;
-        double distance = MathUtil.clamp(position.getNorm(), 0, ArmConstants.baseStageLength + ArmConstants.secondStageLength);
+        double distance = position.getNorm();//MathUtil.clamp(position.getNorm(), 0, ArmConstants.baseStageLength + ArmConstants.secondStageLength);
 
         double BaseAngleArmDiff = Math.acos(((distance * distance)
                         + (ArmConstants.baseStageLength * ArmConstants.baseStageLength)
@@ -249,8 +249,13 @@ public class ArmIOSparkMax implements ArmIO {
         position = MathUtil.clamp(position, -0.1, 2.5);
 
         SmartDashboard.putNumber("shoulder position set raw", position);
-        shoulderLeft.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
-        shoulderRight.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
+        if ((Math.abs(position - shoulderLeft.getPosition().getValueAsDouble()) + Math.abs(position - shoulderRight.getPosition().getValueAsDouble())) < 0.1 &&  Math.abs(position - (ArmConstants.shoulderOffset/Math.PI/2.0)) < 0.01) {
+            shoulderLeft.setControl(new DutyCycleOut(0));
+            shoulderRight.setControl(new DutyCycleOut(0));
+        } else {
+            shoulderLeft.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
+            shoulderRight.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
+        }
     }
 
     public double getShoulderLeftPosition() {
@@ -268,8 +273,13 @@ public class ArmIOSparkMax implements ArmIO {
         position /= (2d * Math.PI);
 
         SmartDashboard.putNumber("elbow position set raw", position);
-        elbowLeft.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
-        elbowRight.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
+        if ((Math.abs(position - elbowLeft.getPosition().getValueAsDouble()) + Math.abs(position - elbowRight.getPosition().getValueAsDouble())) < 0.14 && Math.abs(position - (ArmConstants.elbowOffset/Math.PI/2.0)) < 0.01) {
+            elbowLeft.setControl(new DutyCycleOut(0));
+            elbowRight.setControl(new DutyCycleOut(0));
+        } else {
+            elbowLeft.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
+            elbowRight.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
+        }
     }
 
     public double getElbowLeftPosition() {
