@@ -46,6 +46,7 @@ public class NoteVisionSubsystem extends SubsystemBase {
         var result = this.noteCamera.getLatestResult();
 
         if (result.hasTargets()) {
+            this.hasTarget = true;
             this.yawVal = result.getBestTarget().getYaw();
             this.pitchVal = result.getBestTarget().getPitch();
             this.skewValue = result.getBestTarget().getSkew();
@@ -57,6 +58,7 @@ public class NoteVisionSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("Area", this.areaVal);
             SmartDashboard.putBoolean("Has Target", hasTarget);
             SmartDashboard.putNumber("Distance To Target", getRange());
+
 
         } else {
             this.hasTarget = false;

@@ -16,7 +16,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers.PoseEstimate;
@@ -118,7 +117,6 @@ public class AprilTagVision extends SubsystemBase {
                 Pose3d robotPose = poseEstimates.pose();
                 // Correct the robot pose since camera is mounted on the back.
                 // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
-                robotPose = robotPose.plus(Constants.VisionConstants.ROBOT_TO_FRONT_CAMERA);
 
                 List<Pose3d> tagPoses = getTagPoses(poseEstimates);
                 double poseAmbiguity = poseEstimates.poseAmbiguity();

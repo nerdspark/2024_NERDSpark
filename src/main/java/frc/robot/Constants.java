@@ -5,6 +5,8 @@ import static edu.wpi.first.units.Units.Meters;
 import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -12,26 +14,24 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
-import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
     public static final boolean PracticeBot =
             false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
+
     public final class FourBarGains {
-        public static final double kP = 0.75; // 0.65; // 0.85
-        public static final double kI = 0.55; // 0; // 0.2
-        public static final double kD = 0.04; // 0.006; // 0.01
-        public static final double kIZone = 0.1;
+        public static final double kP = 0.95; // 0.65; // 0.85
+        public static final double kI = 0.001; // 0; // 0.2
+        public static final double kD = 0.10; // 0.006; // 0.01
+        public static final double kIZone = 0.2;
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
@@ -50,16 +50,16 @@ public final class Constants {
         public static final double fourBarLong = 1.6; // TODO T UNE
         // public static final double fourBarPodium = 1.95; //TODO tune
 
-        public static final double RPMLong = 5100.0;
+        public static final double RPMLong = 5200.0;
         // public static final double RPMPodium = 3000.0;
-        public static final double RPMPointBlank = 3000.0;
+        public static final double RPMPointBlank = 3500.0;
         public static final double RPMHome = 4300.0;
     }
 
     public final class FourBarConstants {
         public static final int currentLimit = 70;
-        public static final double closedLoopRampRate = 0.25;
-        public static final double openLoopRampRate = 0.15;
+        public static final double closedLoopRampRate = 0.1; //0.25, 0.1
+        public static final double openLoopRampRate = 0.1; //0.15, 0.1
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
@@ -97,6 +97,7 @@ public final class Constants {
             fourBarMap.put(4.45, 1.97);
             fourBarMap.put(5.0, 1.95);
             fourBarMap.put(5.53, 1.87);
+
             fourBarMap.put(6.44, FixedShotConstants.fourBarLong);
             // fourBarMap.put(4.75 + 0.2, 1.925d);
             // fourBarMap.put(4.85 + 0.2, 1.925d);
@@ -222,35 +223,36 @@ public final class Constants {
     }
 
     public final class AutoConstants {
-        public static final double redCenterRing2 = 2.5; // 2.5
-        public static final double redCenterRing3 = 2.5; // 2.4
-        public static final double redCenterRing4 = 1.9; // 1.8
+        public static final double redCenterRing2 = 1.95; // 2.5
+        public static final double redCenterRing3 = 1.95; // 2.5
+        public static final double redCenterRing4 = 1.95; // 1.9
 
-        public static final double blueCenterRing2 = 2.364908944; // 2.7
-        public static final double blueCenterRing3 = 2.344712991; // 2.45
-        public static final double blueCenterRing4 = 2.300281895; // 1.9
 
-        public static final double weirdSideRing2 = 2.429535992; // 3.5
-        public static final double weirdSideRing3 = 2.368948134; // 2.75
-        public static final double weirdSideRing4 = 2.300281895; // 1.9
+        public static final double blueCenterRing2 = 1.95; // 2.7
+        public static final double blueCenterRing3 = 1.95; // 2.45
+        public static final double blueCenterRing4 = 1.97; // 1.9
+
+        public static final double weirdSideRing2 = 1.87; // 3.5
+        public static final double weirdSideRing3 = 1.87; // 2.75
+        public static final double weirdSideRing4 = 2.148; // 1.9
 
         public static final double red_weirdSideRing1 = 3.2;
-        public static final double red_weirdSideRing2 = 3.5;
-        public static final double red_weirdSideRing3 = 2.6;
-        public static final double red_weirdSideRing4 = 1.9;
+        public static final double red_weirdSideRing2 = 1.87;
+        public static final double red_weirdSideRing3 = 1.87;
+        public static final double red_weirdSideRing4 = 2.148;
 
-        public static final double blueAmpSide1 = 2.364908944; // 2.7
-        public static final double blueAmpSide2 = 2.344712991; // 2.45
-        public static final double blueAmpSide3 = 2.344712991; // 2.45
-        public static final double blueAmpSide4 = 2.300281895; // 1.9
+        public static final double blueAmpSide1 = 2.0; // 2.7
+        public static final double blueAmpSide2 = 1.87; // 2.45
+        public static final double blueAmpSide3 = 1.87; // 2.45
+        public static final double blueAmpSide4 = 1.97; // 1.9
 
-        public static final double blueRECenterNote5 = 2.33663461; // 2.35
-        public static final double blueRECenterNote6 = 2.33663461; // 2.35
+        public static final double blueRECenterNote5 = 1.92; // 1.80
+        public static final double blueRECenterNote6 = 1.95; // 1.87
 
-        public static final double blueStarWars1 = 2.364908944; // 3.5
-        public static final double blueStarWars2 = 2.429535992; // 2.75
-        public static final double blueStarWars3 = 2.368948134;
-        public static final double blueStarWars4 = 2.300281895;
+        public static final double blueStarWars1 = 1.95; // 3.5
+        public static final double blueStarWars2 = 1.87; // 2.75
+        public static final double blueStarWars3 = 1.87;
+        public static final double blueStarWars4 = 2.148;
     }
 
     public final class RobotMap {
@@ -302,21 +304,21 @@ public final class Constants {
         /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
         public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
 
-        public static final double NOISY_DISTANCE_METERS = 3;
+        public static final double NOISY_DISTANCE_METERS = 6;
 
-        public static boolean USE_BACK_LEFT_CAMERA = false;
-        public static boolean USE_BACK_RIGHT_CAMERA = false;
+        public static boolean USE_BACK_LEFT_CAMERA = true;
+        public static boolean USE_BACK_RIGHT_CAMERA = true;
 
-        public static final String FRONT_CAMERA_NAME = "FrontCamera"; // LEFT
-        public static final String BACK_LEFT_CAMERA_NAME = "BlackCamera"; // RIGHT
-        public static final String BACK_RIGHT_CAMERA_NAME = "TEMP_NAME_CHANGE_THIS";
+        public static final String FRONT_CAMERA_NAME = "BackCamera"; // LEFT
+        public static final String BACK_LEFT_CAMERA_NAME = "BackLeft"; // RIGHT
+        public static final String BACK_RIGHT_CAMERA_NAME = "BackRight";
         public static final String NOTE_CAMERA_NAME = "NoteCamera";
 
         /**
          * Physical location of the left camera on the robot, relative to the center of the robot.
          */
         public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(12.6), Units.inchesToMeters(0), Units.inchesToMeters(0)),
+                new Translation3d(-Units.inchesToMeters(12.6), Units.inchesToMeters(0), Units.inchesToMeters(9)),
                 new Rotation3d(0, Math.toRadians(0), Math.toRadians(180)));
 
         // public static final Transform3d ROBOT_TO_FRONT_CAMERA = new Transform3d(
@@ -326,67 +328,30 @@ public final class Constants {
         /**
          * Physical location of the back camera on the robot, relative to the center of the robot.
          */
-        public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
-                new Translation3d(Units.inchesToMeters(-15), Units.inchesToMeters(-0.25), Units.inchesToMeters(6)),
-                new Rotation3d(0, -Math.toRadians(35), Math.toRadians(0)));
+        public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
+                new Translation3d(-Units.inchesToMeters(4), Units.inchesToMeters(-10.5), Units.inchesToMeters(8)),
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(-60)));
 
         // Physical location of the back right camera on the robot, relative to the center of the robot. CHANGE THIS
 
-        public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
-                new Translation3d(-Units.inchesToMeters(15.5), Units.inchesToMeters(0), Units.inchesToMeters(6.5)),
-                new Rotation3d(0, Math.toRadians(39), Math.toRadians(180)));
+        public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
+                new Translation3d(-Units.inchesToMeters(4), Units.inchesToMeters(10.5), Units.inchesToMeters(8)),
+                new Rotation3d(0, Math.toRadians(0), Math.toRadians(60)));
 
         // PLACEHOLDER
-        public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(12.5);
+        public static final double NOTE_CAMERA_HEIGHT_METERS = Units.inchesToMeters(13);
         public static final double NOTE_HEIGHT_METERS = Units.inchesToMeters(2);
-        public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(26);
-
-        // Unused for 2024
-
-        public static final double POSE_AMBIGUITY_SHIFTER = 0.2;
-        public static final double POSE_AMBIGUITY_MULTIPLIER = 4;
-        public static final double DISTANCE_WEIGHT = 7;
-        public static final int TAG_PRESENCE_WEIGHT = 10;
-
-        /**
-         * Standard deviations of model states. Increase these numbers to trust your
-         * model's state estimates less. This
-         * matrix is in the form [x, y, theta]ᵀ, with units in meters and radians, then
-         * meters.
-         */
-        public static final Matrix<N3, N1> VISION_MEASUREMENT_STANDARD_DEVIATIONS = Matrix.mat(Nat.N3(), Nat.N1())
-                .fill(
-                        // if these numbers are less than one, multiplying will do bad things
-                        1, // x
-                        1, // y
-                        1 * Math.PI // theta
-                        );
-
-        /**
-         * Standard deviations of the vision measurements. Increase these numbers to
-         * trust global measurements from vision
-         * less. This matrix is in the form [x, y, theta]ᵀ, with units in meters and
-         * radians.
-         */
-        public static final Matrix<N3, N1> STATE_STANDARD_DEVIATIONS = Matrix.mat(Nat.N3(), Nat.N1())
-                .fill(
-                        // if these numbers are less than one, multiplying will do bad things
-                        .1, // x
-                        .1, // y
-                        .1);
-
-        // Pose on the opposite side of the field. Use with `relativeTo` to flip a pose to the opposite alliance
-        public static final Pose2d FLIPPING_POSE = new Pose2d(
-                new Translation2d(FieldConstants.fieldLength, FieldConstants.fieldWidth), new Rotation2d(Math.PI));
+        public static final double NOTE_CAMERA_PITCH_RADIANS = Units.degreesToRadians(40);
+        // when fourbar up: 18 inches high, 26 deg
 
         // Vision Drive Constants
 
-        public static final double TRANSLATION_TOLERANCE_X = 0.1; // Changed from 0.05 3/26/23
-        public static final double TRANSLATION_TOLERANCE_Y = 0.1; // Changed from 0.05 3/26/23
+        public static final double TRANSLATION_TOLERANCE_X = 0.025; // Changed from 0.05 3/26/23
+        public static final double TRANSLATION_TOLERANCE_Y = 0.025; // Changed from 0.05 3/26/23
         public static final double ROTATION_TOLERANCE = 0.035;
 
-        public static final double MAX_VELOCITY = 2; // 3
-        public static final double MAX_ACCELARATION = 1; // 2
+        public static final double MAX_VELOCITY = 3; // 3 //2
+        public static final double MAX_ACCELARATION = 2; // 2 //1
         public static final double MAX_VELOCITY_ROTATION = 8; // 8
         public static final double MAX_ACCELARATION_ROTATION = 8; // 8
 
@@ -399,8 +364,6 @@ public final class Constants {
         public static final double kPThetaController = 1.2d;
         public static final double kIThetaController = 0d;
         public static final double kDThetaController = 0d;
-
-        // End Unused for 2024
     }
 
     public static class SpeakerConstants {
