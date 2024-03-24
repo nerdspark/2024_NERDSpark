@@ -92,7 +92,7 @@
   "reversed": false,
   "folder": "redWeirdSide",
   "previewStartingState": {
-    "rotation": -170.0,
+    "rotation": -175.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

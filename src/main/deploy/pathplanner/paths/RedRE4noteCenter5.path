@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.29,
-        "y": 7.24
+        "y": 7.44
       },
       "prevControl": null,
       "nextControl": {
         "x": 9.02830647940404,
-        "y": 7.116360128674015
+        "y": 7.316360128674015
       },
       "isLocked": false,
       "linkedName": null
@@ -49,11 +49,11 @@
     {
       "anchor": {
         "x": 8.29,
-        "y": 5.64
+        "y": 5.74
       },
       "prevControl": {
         "x": 9.431233924400136,
-        "y": 5.969041302244454
+        "y": 6.069041302244455
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,8 +62,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": 179.0,
+      "waypointRelativePos": 0.6000000000000001,
+      "rotationDegrees": 160.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.7999999999999998,
+      "rotationDegrees": 160.0,
       "rotateFast": false
     }
   ],
@@ -79,7 +84,7 @@
             {
               "type": "named",
               "data": {
-                "name": "blueRECenterNote5"
+                "name": "redRECenterNote5"
               }
             }
           ]

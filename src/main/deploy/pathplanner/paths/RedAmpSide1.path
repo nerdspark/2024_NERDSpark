@@ -33,29 +33,18 @@
     {
       "anchor": {
         "x": 8.22,
-        "y": 7.39
+        "y": 7.29
       },
       "prevControl": {
         "x": 9.465380318043874,
-        "y": 7.758312329176269
+        "y": 7.658312329176269
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.5,
-      "rotationDegrees": 165.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.3,
-      "rotationDegrees": 165.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -64,14 +53,7 @@
       "command": {
         "type": "sequential",
         "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "blueAmpSide1"
-              }
-            }
-          ]
+          "commands": []
         }
       }
     },
@@ -81,20 +63,13 @@
       "command": {
         "type": "sequential",
         "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntake"
-              }
-            }
-          ]
+          "commands": []
         }
       }
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.6,
+      "waypointRelativePos": 1.5,
       "command": {
         "type": "sequential",
         "data": {

@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.291,
-        "y": 5.64
+        "y": 5.74
       },
       "prevControl": null,
       "nextControl": {
         "x": 9.103428545420261,
-        "y": 5.866602121313243
+        "y": 5.966602121313244
       },
       "isLocked": false,
       "linkedName": null
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": 180.0,
+      "rotationDegrees": 160.0,
       "rotateFast": false
     }
   ],
@@ -47,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "blueRECenterNote6"
+                "name": "redRECenterNote6"
               }
             }
           ]
@@ -80,7 +80,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 177.0,
+    "rotation": 160.0,
     "rotateFast": false
   },
   "reversed": false,

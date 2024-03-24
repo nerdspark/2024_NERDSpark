@@ -203,7 +203,7 @@ public class RobotContainer { // implements RobotConstants{
         //                                 drivetrain.getState().speeds.vxMetersPerSecond,
         //                                 drivetrain.getState().speeds.vyMetersPerSecond))));
 
-        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 4700.0, () -> 4700.0));
+        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 5000.0, () -> 5000.0));
 
         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
@@ -236,11 +236,12 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
 
+
         // NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () ->
         // AutoConstants.weirdSideRing4));
 
-        NamedCommands.registerCommand(
-                "RfourBarToWSR1", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing1));
+        // NamedCommands.registerCommand(
+        //         "RfourBarToWSR1", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing1));
         NamedCommands.registerCommand(
                 "RfourBarToWSR2", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing2));
         NamedCommands.registerCommand(
@@ -263,12 +264,18 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
+
+        NamedCommands.registerCommand(
+                "redRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.redRECenterNote5));
+
+        NamedCommands.registerCommand(
+                "redRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.redRECenterNote6));
+
         NamedCommands.registerCommand(
                 "blueRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote5));
         NamedCommands.registerCommand(
                 "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
-    
-                
+
         NamedCommands.registerCommand(
                 "blueAmpSide1", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide1));
         NamedCommands.registerCommand(
@@ -277,7 +284,13 @@ public class RobotContainer { // implements RobotConstants{
                 "blueAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide3));
         NamedCommands.registerCommand(
                 "blueAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide4));
-    
+
+        NamedCommands.registerCommand(
+                "redAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide2));
+        NamedCommands.registerCommand(
+                "redAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide3));
+        NamedCommands.registerCommand(
+                "redAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide4));
     
     
         }

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.32,
-        "y": 7.39
+        "x": 8.22,
+        "y": 7.29
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.240014119995209,
-        "y": 7.123189407402762
+        "x": 9.14001411999521,
+        "y": 7.0231894074027625
       },
       "isLocked": false,
       "linkedName": null
@@ -49,11 +49,11 @@
     {
       "anchor": {
         "x": 8.31,
-        "y": 5.54
+        "y": 5.49
       },
       "prevControl": {
         "x": 9.308306907282683,
-        "y": 5.893919236228233
+        "y": 5.843919236228233
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,8 +62,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": 165.0,
+      "waypointRelativePos": 0.5499999999999999,
+      "rotationDegrees": 160.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.4,
+      "rotationDegrees": 160.0,
       "rotateFast": false
     }
   ],
@@ -79,7 +84,7 @@
             {
               "type": "named",
               "data": {
-                "name": "blueAmpSide2"
+                "name": "redAmpSide2"
               }
             }
           ]

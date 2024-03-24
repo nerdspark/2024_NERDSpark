@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.09,
-        "y": 3.39
+        "x": 15.77,
+        "y": 4.46
       },
       "prevControl": null,
       "nextControl": {
-        "x": 12.603625678596199,
-        "y": 1.43973265066971
+        "x": 14.723924939179357,
+        "y": 2.684387530525681
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.62,
-        "y": 0.78
+        "x": 8.52,
+        "y": 0.91
       },
       "prevControl": {
-        "x": 12.102628874821338,
-        "y": 1.217488423001853
+        "x": 10.462455012444405,
+        "y": 0.9085457642426432
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,19 +30,24 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": -135.0,
+      "waypointRelativePos": 0.3,
+      "rotationDegrees": -140.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 180.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [
     {
-      "name": "slowToShoot",
-      "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.4,
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.25,
       "constraints": {
-        "maxVelocity": 2.0,
-        "maxAcceleration": 2.0,
+        "maxVelocity": 1.5,
+        "maxAcceleration": 1.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0
       }
@@ -50,25 +55,8 @@
   ],
   "eventMarkers": [
     {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "RfourBarToWSR1"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "forcedIntake",
-      "waypointRelativePos": 0.4,
+      "name": "shootRing1",
+      "waypointRelativePos": 0.25,
       "command": {
         "type": "sequential",
         "data": {
@@ -84,25 +72,8 @@
       }
     },
     {
-      "name": "forcedIntake0",
-      "waypointRelativePos": 0.65,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntakeZero"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 0.7,
+      "name": "fourBarToIntake2",
+      "waypointRelativePos": 0.6,
       "command": {
         "type": "sequential",
         "data": {
@@ -118,8 +89,8 @@
       }
     },
     {
-      "name": "onlySoftIntake",
-      "waypointRelativePos": 0.75,
+      "name": "softIntake",
+      "waypointRelativePos": 0.65,
       "command": {
         "type": "sequential",
         "data": {
@@ -149,8 +120,8 @@
   "reversed": false,
   "folder": "redWeirdSide",
   "previewStartingState": {
-    "rotation": 180.0,
-    "velocity": 0
+    "rotation": -120.0,
+    "velocity": 0.0
   },
   "useDefaultConstraints": true
 }
