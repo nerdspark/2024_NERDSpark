@@ -134,18 +134,18 @@ public class RobotContainer { // implements RobotConstants{
         if (Constants.PracticeBot) {
             drivetrain = TunerConstantsSmidge.DriveTrain;
 
-            drivetrain.getModule(0).getDriveMotor().setInverted(false);
-            drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
+            drivetrain.getModule(0).getDriveMotor().setInverted(false);// fl
+            drivetrain.getModule(1).getDriveMotor().setInverted(false); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(true); // bL
 
-            drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
+            drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
-            drivetrain.getModule(0).getDriveMotor().setInverted(false);
+            drivetrain.getModule(0).getDriveMotor().setInverted(false);// fl
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(false); // bL
-            drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
+            drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
             arm = new Arm(new ArmIOSparkMax());
             scheduleArmCommands();
 
