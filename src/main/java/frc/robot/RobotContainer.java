@@ -429,8 +429,8 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // copilot shoot
-        // copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
-        // copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
+        copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // copilot spit
         // copilot.leftBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
@@ -463,9 +463,8 @@ public class RobotContainer { // implements RobotConstants{
                         shooter, () -> FixedShotConstants.RPMHome, () -> FixedShotConstants.RPMHome));
         copilot.x().onFalse(new InstantCommand(shooter::stop));
 
-        // copilot.axisGreaterThan(0, BiasConstants.joystickThreshold).and(() -> !copilot.leftStick().getAsBoolean())
-        //         .onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
-        // copilot.axisLessThan(0, -BiasConstants.joystickThreshold).and(() -> !copilot.leftStick().getAsBoolean()).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
+        copilot.leftStick().and(() -> copilot.getRightX() > 0.8).onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
+        copilot.leftStick().and(() -> copilot.getRightX() < -0.8).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
 
         // aim command
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
@@ -553,8 +552,8 @@ public class RobotContainer { // implements RobotConstants{
 
         driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
         driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0));
-        copilot.leftBumper().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0)); // TODO change buttons
-        copilot.rightBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
+        // copilot.leftBumper().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0)); // TODO change buttons
+        copilot.leftBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
 
 
         // PICKUP SEQUENCE

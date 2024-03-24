@@ -65,6 +65,8 @@ public class AutoAim {
 
         double RPM = Constants.ShooterConstants.shooterMap.get(
                 (distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD));
+        SmartDashboard.putNumber("distance to speaker", 
+                distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD);
         SmartDashboard.putNumber("Calculated RPM", RPM);
         return RPM;
     }
@@ -89,7 +91,7 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * ShooterConstants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(180.0 + 9.0)));
+                    .plus(new Rotation2d(Units.degreesToRadians(180.0 + 8.5)));
         } else {
             angle = Constants.SpeakerConstants.speakerLocRed
                     .getTranslation()
@@ -99,7 +101,7 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * ShooterConstants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(9.0)));
+                    .plus(new Rotation2d(Units.degreesToRadians(8.5)));
         }
         SmartDashboard.putNumber("target Angle", angle.getDegrees());
         return angle;

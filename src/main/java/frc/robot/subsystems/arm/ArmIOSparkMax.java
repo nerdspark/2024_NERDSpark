@@ -249,7 +249,7 @@ public class ArmIOSparkMax implements ArmIO {
         position = MathUtil.clamp(position, -0.1, 2.5);
 
         SmartDashboard.putNumber("shoulder position set raw", position);
-        if ((Math.abs(position - shoulderLeft.getPosition().getValueAsDouble()) + Math.abs(position - shoulderRight.getPosition().getValueAsDouble())) < 0.1 &&  Math.abs(position - (ArmConstants.shoulderOffset/Math.PI/2.0)) < 0.01) {
+        if ((Math.abs(position - shoulderLeft.getPosition().getValueAsDouble()) + Math.abs(position - shoulderRight.getPosition().getValueAsDouble())) < 0.4 &&  Math.abs(position - (ArmConstants.shoulderOffset/Math.PI/2.0)) < 0.01) {
             shoulderLeft.setControl(new DutyCycleOut(0));
             shoulderRight.setControl(new DutyCycleOut(0));
         } else {
@@ -273,13 +273,13 @@ public class ArmIOSparkMax implements ArmIO {
         position /= (2d * Math.PI);
 
         SmartDashboard.putNumber("elbow position set raw", position);
-        if ((Math.abs(position - elbowLeft.getPosition().getValueAsDouble()) + Math.abs(position - elbowRight.getPosition().getValueAsDouble())) < 0.14 && Math.abs(position - (ArmConstants.elbowOffset/Math.PI/2.0)) < 0.01) {
-            elbowLeft.setControl(new DutyCycleOut(0));
-            elbowRight.setControl(new DutyCycleOut(0));
-        } else {
+        // if ((Math.abs(position - elbowLeft.getPosition().getValueAsDouble()) + Math.abs(position - elbowRight.getPosition().getValueAsDouble())) < 0.14 && (Math.abs(position - (ArmConstants.elbowOffset/Math.PI/2.0)) < 0.01)) {
+        //     elbowLeft.setControl(new DutyCycleOut(0));
+        //     elbowRight.setControl(new DutyCycleOut(0));
+        // } else {
             elbowLeft.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
             elbowRight.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
-        }
+        // }
     }
 
     public double getElbowLeftPosition() {
