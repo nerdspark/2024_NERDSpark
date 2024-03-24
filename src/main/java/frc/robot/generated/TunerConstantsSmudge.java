@@ -137,7 +137,7 @@ public class TunerConstantsSmudge {
             kFrontRightEncoderOffset,
             Units.inchesToMeters(kFrontRightXPosInches),
             Units.inchesToMeters(kFrontRightYPosInches),
-            false);
+            kInvertRightSide);
     private static final SwerveModuleConstants BackLeft = ConstantCreator.createModuleConstants(
             kBackLeftSteerMotorId,
             kBackLeftDriveMotorId,

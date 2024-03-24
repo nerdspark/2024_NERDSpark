@@ -4,8 +4,11 @@
 
 package frc.robot.subsystems.climb;
 
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.wpilibj.Servo;
 import frc.robot.Constants.ClimbConstants;
 
@@ -14,11 +17,13 @@ public class ClimbIOSparkMax implements ClimbIO {
     private TalonFX climbMotor;
 
     private Servo grapplingServo;
+    private double servoSetpoint = ClimbConstants.servoInPos;
 
     public ClimbIOSparkMax() {
         grapplingServo = new Servo(ClimbConstants.servoPort);
         climbMotor = new TalonFX(ClimbConstants.winchPort);
         climbMotor.setPosition(0);
+        climbMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
     @Override
@@ -40,9 +45,15 @@ public class ClimbIOSparkMax implements ClimbIO {
 
     public void setServoPosition(double angle) {
         grapplingServo.setAngle(angle);
+        servoSetpoint = angle;
+    }
+
+    public boolean getServoOut() {
+        return servoSetpoint == ClimbConstants.servoOutPos;
+        // return Math.abs(grapplingServo.getAngle() - ClimbConstants.servoOutPos) < ClimbConstants.servoOutTolerance;
     }
 
     public void setClimbPosition(double position) {
-        climbMotor.setControl(new PositionVoltage(ClimbConstants.winchPos));
+        climbMotor.setControl(new PositionTorqueCurrentFOC(position));
     }
 }

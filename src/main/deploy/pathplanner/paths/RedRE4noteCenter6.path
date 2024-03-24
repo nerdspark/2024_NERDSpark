@@ -3,49 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 11.96,
-        "y": 4.66
+        "x": 8.291,
+        "y": 5.74
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.908821439924502,
-        "y": 4.187361085279584
+        "x": 9.103428545420261,
+        "y": 5.966602121313244
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 9.511,
-        "y": 3.5154875529205394
+        "x": 10.83,
+        "y": 6.440261534528023
       },
       "prevControl": {
-        "x": 10.533538655256605,
-        "y": 4.002337488915931
+        "x": 9.963917665242432,
+        "y": 6.139773270463138
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
-  "constraintZones": [
+  "rotationTargets": [
     {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.2,
-      "maxWaypointRelativePos": 0.5,
-      "constraints": {
-        "maxVelocity": 4.86,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0
-      }
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 160.0,
+      "rotateFast": false
     }
   ],
+  "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToHome",
-      "waypointRelativePos": 0.1,
+      "name": "fourBarToShoot",
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -53,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToHome"
+                "name": "redRECenterNote6"
               }
             }
           ]
@@ -61,8 +55,8 @@
       }
     },
     {
-      "name": "forceIntake",
-      "waypointRelativePos": 0.25,
+      "name": "forcedIntakeShoot",
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "sequential",
         "data": {
@@ -70,7 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntakeZero"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -79,20 +73,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.86,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 160.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redWeirdSide",
+  "folder": "redRE4noteCenter",
   "previewStartingState": {
-    "rotation": -175.0,
+    "rotation": -165.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

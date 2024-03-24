@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 11.96,
-        "y": 4.66
+        "x": 13.791,
+        "y": 5.54
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.908821439924502,
-        "y": 4.187361085279584
+        "x": 14.573680807146916,
+        "y": 5.6412359232645795
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 9.511,
-        "y": 3.5154875529205394
+        "x": 13.94,
+        "y": 6.75
       },
       "prevControl": {
-        "x": 10.533538655256605,
-        "y": 4.002337488915931
+        "x": 14.635144315705642,
+        "y": 6.221724615208108
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,23 +29,11 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.2,
-      "maxWaypointRelativePos": 0.5,
-      "constraints": {
-        "maxVelocity": 4.86,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0
-      }
-    }
-  ],
+  "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToHome",
-      "waypointRelativePos": 0.1,
+      "name": "forcedIntakeShoot",
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -53,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToHome"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -61,8 +49,8 @@
       }
     },
     {
-      "name": "forceIntake",
-      "waypointRelativePos": 0.25,
+      "name": "onlySoftIntake",
+      "waypointRelativePos": 0.65,
       "command": {
         "type": "sequential",
         "data": {
@@ -70,7 +58,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntakeZero"
+                "name": "onlySoftIntake"
               }
             }
           ]
@@ -79,20 +67,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 150.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redWeirdSide",
+  "folder": "redRE4noteCenter",
   "previewStartingState": {
-    "rotation": -175.0,
+    "rotation": 180.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -50,23 +50,6 @@
   ],
   "eventMarkers": [
     {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToWSR1"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "forcedIntake",
       "waypointRelativePos": 0.4,
       "command": {

@@ -9,15 +9,13 @@ import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.climb.Climb;
 import java.util.function.Supplier;
 
-public class ClimbCommand extends Command {
+public class GrapplerCommand extends Command {
     private final Climb Climb;
-    private final boolean isOut;
-    private final boolean winchOut;
+    private final boolean servoRelease;
     /** Creates a new ClimbCommand. */
-    public ClimbCommand(Climb Climb, Supplier<Boolean> isOut, Supplier<Boolean> winchOut) {
+    public GrapplerCommand(Climb Climb, Supplier<Boolean> servoRelease) {
         this.Climb = Climb;
-        this.isOut = isOut.get();
-        this.winchOut = winchOut.get();
+        this.servoRelease = servoRelease.get();
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -28,15 +26,10 @@ public class ClimbCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (isOut) {
-            Climb.setServoPosition(ClimbConstants.servoOutPosition);
+        if (servoRelease) {
+            Climb.setServoPosition(ClimbConstants.servoOutPos);
         } else {
-            Climb.setServoPosition(0);
-        }
-        if (winchOut) {
-            Climb.setClimbPosition(ClimbConstants.winchPos);
-        } else {
-            Climb.setClimbPosition(0);
+            Climb.setServoPosition(ClimbConstants.servoInPos);
         }
     }
 

@@ -3,41 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.6,
-        "y": 6.75
+        "x": 8.29,
+        "y": 7.44
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9036598410900086,
-        "y": 5.742699431823306
+        "x": 9.02830647940404,
+        "y": 7.316360128674015
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.721956907163909,
-        "y": 6.317334517410571
+        "x": 10.825,
+        "y": 6.597334945289213
       },
       "prevControl": {
-        "x": 2.518414717416106,
-        "y": 6.020984933000308
+        "x": 10.825,
+        "y": 6.657334945289213
       },
       "nextControl": {
-        "x": 5.080983374184638,
-        "y": 6.651969175119193
+        "x": 10.825,
+        "y": 6.5373349452892136
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.25,
-        "y": 7.24
+        "x": 10.16,
+        "y": 6.208066057750613
       },
       "prevControl": {
-        "x": 6.72196118595375,
-        "y": 6.893433111556562
+        "x": 10.640016259388423,
+        "y": 6.385627304698045
+      },
+      "nextControl": {
+        "x": 9.69788351299242,
+        "y": 6.0371260571502665
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.29,
+        "y": 5.74
+      },
+      "prevControl": {
+        "x": 9.431233924400136,
+        "y": 6.069041302244455
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,16 +62,55 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.35,
-      "rotationDegrees": 17.5,
+      "waypointRelativePos": 0.6000000000000001,
+      "rotationDegrees": 160.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.7999999999999998,
+      "rotationDegrees": 160.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
+      "name": "fourBarToShoot",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "redRECenterNote5"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "forcedIntakeShoot",
+      "waypointRelativePos": 0.8,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "forcedIntakeShoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.4,
+      "waypointRelativePos": 1.7000000000000002,
       "command": {
         "type": "sequential",
         "data": {
@@ -71,25 +126,8 @@
       }
     },
     {
-      "name": "forcedIntake",
-      "waypointRelativePos": 0.25,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "softIntake",
-      "waypointRelativePos": 1.45,
+      "waypointRelativePos": 2.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -98,23 +136,6 @@
               "type": "named",
               "data": {
                 "name": "onlySoftIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "fourbarhome",
-      "waypointRelativePos": 0.8,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToHome"
               }
             }
           ]
@@ -130,13 +151,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": -165.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "RE4noteCenter",
+  "folder": "redRE4noteCenter",
   "previewStartingState": {
-    "rotation": 30.0,
+    "rotation": 180.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

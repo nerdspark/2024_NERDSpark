@@ -31,7 +31,11 @@ public class Climb extends SubsystemBase {
     }
 
     public void setClimbPosition(double position) {
-        io.setClimbPosition(ClimbConstants.winchPos);
+        io.setClimbPosition(position);
+    }
+
+    public boolean getServoOut() {
+        return io.getServoOut();
     }
 
     @Override
