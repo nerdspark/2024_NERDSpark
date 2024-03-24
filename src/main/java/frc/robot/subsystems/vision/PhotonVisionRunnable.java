@@ -46,6 +46,7 @@ public class PhotonVisionRunnable implements Runnable {
     public void run() {
         // Get AprilTag data
 
+
         if (photonPoseEstimator != null && photonCamera != null && !RobotState.isAutonomous()) {
             var photonResults = photonCamera.getLatestResult();
 

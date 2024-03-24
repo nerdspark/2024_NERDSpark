@@ -26,7 +26,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
@@ -34,8 +38,13 @@ import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.RobotMap;
 import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
+import frc.robot.commands.ArmCommand;
+import frc.robot.commands.ArmCommandAngles;
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveToPoseCommand;
 import frc.robot.commands.FourBarCommand;
+import frc.robot.commands.GripperIndexCommand;
+import frc.robot.commands.GripperOutCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
@@ -45,6 +54,7 @@ import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIOSparkMax;
+import frc.robot.subsystems.climb.Climb;
 import frc.robot.subsystems.fourBar.FourBar;
 import frc.robot.subsystems.fourBar.FourBarIO;
 import frc.robot.subsystems.fourBar.FourBarIOSparkMax;
@@ -68,6 +78,7 @@ public class RobotContainer { // implements RobotConstants{
     private FourBar fourBar;
     private Shooter shooter;
     private Arm arm;
+    private Climb climb;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
@@ -118,15 +129,19 @@ public class RobotContainer { // implements RobotConstants{
 
             drivetrain.getModule(0).getDriveMotor().setInverted(false);
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
-            drivetrain.getModule(2).getDriveMotor().setInverted(true); // b
+            drivetrain.getModule(2).getDriveMotor().setInverted(true); // bL
+
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
             drivetrain.getModule(0).getDriveMotor().setInverted(false);
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
-            drivetrain.getModule(2).getDriveMotor().setInverted(false); // b
+            drivetrain.getModule(2).getDriveMotor().setInverted(false); // bL
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // b
+            arm = new Arm(new ArmIOSparkMax());
+            scheduleArmCommands();
+
         }
 
         drivetrain.setRobotIntake(intake);
@@ -152,10 +167,11 @@ public class RobotContainer { // implements RobotConstants{
         configureButtonBindings();
 
         // only schedule arm commands if using smudge
-        if (RobotIdentity.getIdentity() != RobotIdentity.SMIDGE_2024) {
-            arm = new Arm(new ArmIOSparkMax());
-            scheduleArmCommands();
-        }
+        // if(RobotIdentity.getIdentity() != RobotIdentity.SMIDGE_2024) {
+        //         arm = new Arm(new ArmIOSparkMax());
+        //         scheduleArmCommands();
+        // }
+
         // LightningShuffleboard.setDoubleSupplier("four bar", "distance from speaker", () -> drivetrain
         //         .getState()
         //         .Pose
@@ -187,7 +203,7 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
         }
         // drivetrain.registerTelemetry(logger::telemeterize);
-        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist, () ->
+        // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () ->
         // false));
         fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
     }
@@ -272,6 +288,7 @@ public class RobotContainer { // implements RobotConstants{
                 "blueRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote5));
         NamedCommands.registerCommand(
                 "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
+
 
     
                 
@@ -393,12 +410,12 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // copilot shoot
-        copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
-        copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        // copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
+        // copilot.rightBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // copilot spit
-        copilot.leftBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
-        copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        // copilot.leftBumper().whileTrue(new IntakeCommand(intake, () -> -0.4, IntakeMode.FORCEINTAKE));
+        // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // TEST COMMAND
         copilot.back()
@@ -496,47 +513,47 @@ public class RobotContainer { // implements RobotConstants{
     
 
     private void scheduleArmCommands() {
+        // // Climb commands
+        // climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
+
+        // driver.y().onTrue(new ClimbCommand(climb, () -> true, () -> false));
+        // driver.b().onTrue(new ClimbCommand(climb, () -> true, () -> true));
+
+        /* spin up flywheels / move arm to catching pos,
+        spin intake to transfer
+        index gripper
+        return arm to home */
+
+        driver.a().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
+        driver.b().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0));
+        copilot.leftBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
+
         // arm commands
-        // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
-        // copilot.getLeftX(), () -> false));
-        // copilot.b().whileTrue(new ArmCommand(arm, () -> ArmSetPoints.pickup, () -> ArmSetPoints.pickupWrist, () ->
-        // false));
-        // copilot.b().onFalse(new ArmCommand(
-        //         arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist + copilot.getLeftX(), () -> false));
-        //         copilot.y().whileTrue(new ArmCommand(
-        //                 arm,
-        //                 () -> ArmSetPoints.dropoff.plus(new Translation2d(
-        //                         (DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1)
-        //                                 * copilot.getLeftX()
-        //                                 * ArmSetPoints.dropoffMultiplier,
-        //                                 -copilot.getLeftY() * ArmSetPoints.dropoffMultiplierY)),
-        //                 () -> ArmSetPoints.dropoffWrist,
-        //                 () -> false));
-        // copilot.y().onFalse(new ArmCommand(arm, () -> ArmSetPoints.home, () -> ArmSetPoints.homeWrist +
-        // copilot.getLeftX(), () -> false));
+        // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> false));
+        copilot.b()
+                .whileTrue(new ArmCommandAngles(arm, () -> ArmConstants.elbowOffset - 0.35, () -> ArmConstants.shoulderOffset).alongWith(new ShooterCommand(shooter, () -> 400.0, () -> 400.0))
+                        .raceWith((new WaitCommand(Constants.ArmConstants.spinUpTimeout))
+                                .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE).alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak()).andThen(new WaitCommand(Constants.ArmConstants.intakeTimeout)
+                                .andThen(new GripperIndexCommand(arm)))))));
 
-        // copilot.povUp().onTrue(new ArmCommand(
-        //                         arm,
-        //                         () -> ClimbSetPoints.ready,
-        //                         () -> ClimbSetPoints.readyWrist + copilot.getRightX(),
-        //                         () -> false)
-        //                 // .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarOut))
-        //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
-        // copilot.povRight().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.forward, () ->
-        // ClimbSetPoints.forwardWrist, () -> false));
-        // copilot.povDown().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.down, () -> ClimbSetPoints.downWrist, () ->
-        // true)
-        //                 .alongWith(new InstantCommand(() -> arm.setGains(true))));
-
-        // copilot.povLeft().onTrue(new ArmCommand(arm, () -> ClimbSetPoints.pinch, () -> ClimbSetPoints.pinchWrist, ()
-        // -> false));
+        copilot.y()
+                .whileTrue(new ArmCommand(
+                        arm,
+                        () -> ArmSetPoints.amp.plus(new Translation2d(
+                                (DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1)
+                                        * copilot.getLeftX()
+                                        * ArmSetPoints.ampMultiplier,
+                                -copilot.getLeftY() * ArmSetPoints.ampMultiplierY)),
+                        () -> false));
+        copilot.rightStick()
+                .onTrue(new ArmCommandAngles(arm, () -> ArmSetPoints.trapArmAngle - ArmSetPoints.trapArmDifference, () -> ArmSetPoints.trapArmAngle)
+                        .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarClimb)));
 
         // // trap
         // copilot.rightStick().onTrue(new ArmCommand(
         //                         arm,
         //                         () -> ClimbSetPoints.trap.plus(
         //                                 new Translation2d(copilot.getLeftY() * ClimbSetPoints.trapMultiplier, 0)),
-        //                         () -> ClimbSetPoints.trapwrist,
         //                         () -> true)
         //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
 

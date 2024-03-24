@@ -6,24 +6,35 @@ package frc.robot.subsystems.arm;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.LightningShuffleboard;
 import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
-    /** Creates a new Arm. */
+    /** Creates a new Arm.  */
     private final ArmIO io;
 
     private final ArmIOInputsAutoLogged inputs = new ArmIOInputsAutoLogged();
 
     public Arm(ArmIO ArmIO) {
         this.io = ArmIO;
+
+        // LightningShuffleboard.setDoubleSupplier("shoulder", "shoulder left pose", io::getShoulderLeftPosition);
+        // LightningShuffleboard.setDoubleSupplier("shoulder", "shoulder right pose", io::getShoulderRightPosition);
+        // LightningShuffleboard.setDoubleSupplier("elbow", "elbow left pose", io::getElbowLeftPosition);
+        // LightningShuffleboard.setDoubleSupplier("elbow", "elbow right pose", io::getElbowRightPosition);
+        // LightningShuffleboard.setDoubleSupplier("arm", "gripper pose", io::getGripperPosition);
     }
 
     @Override
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Arm", inputs);
-        // SmartDashboard.putData("gyrea", null);
-        // This method will be called once per scheduler run
+
+        // io.callThisInPeriodic();
+
+        // io.setElbowPosition(LightningShuffleboard.getDouble("elbow", "set pose", 0));
+        // io.setShoulderPosition(LightningShuffleboard.getDouble("shoulder", "set pose", 0));
+
     }
 
     public void setGains(boolean climbing) {
@@ -34,8 +45,12 @@ public class Arm extends SubsystemBase {
         io.setArmVelocity(velocity);
     }
 
-    public void setArmPosition(Translation2d position, boolean inBend, double wrist) {
-        io.setArmPosition(position, inBend, wrist);
+    public void setArmPosition(Translation2d position, boolean inBend) {
+        io.setArmPosition(position, inBend);
+    }
+
+    public void setGripperPower(double power) {
+        io.setGripperPower(power);
     }
 
     public void resetEncoders() {
@@ -86,11 +101,7 @@ public class Arm extends SubsystemBase {
         return io.getElbowRightPosition();
     }
 
-    public void setWristPosition(double position) {
-        io.setWristPosition(position);
-    }
-
-    public double getWristPosition() {
-        return io.getWristPosition();
+    public double getGripperPosition() {
+        return io.getGripperPosition();
     }
 }

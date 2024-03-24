@@ -6,19 +6,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.subsystems.arm.Arm;
 import java.util.function.Supplier;
 
 public class ArmCommand extends Command {
     private Arm arm;
     private Supplier<Translation2d> position;
-    private Supplier<Double> wrist;
     private Supplier<Boolean> inBend;
     /** Creates a new ArmCommand. */
-    public ArmCommand(Arm arm, Supplier<Translation2d> position, Supplier<Double> wrist, Supplier<Boolean> inBend) {
+    public ArmCommand(Arm arm, Supplier<Translation2d> position, Supplier<Boolean> inBend) {
         this.arm = arm;
         this.position = position;
-        this.wrist = wrist;
         this.inBend = inBend;
         addRequirements(arm);
     }
@@ -33,13 +32,14 @@ public class ArmCommand extends Command {
     @Override
     public void execute() {
         arm.getArmPosition();
-        arm.setArmPosition(position.get(), inBend.get(), wrist.get());
-        // arm.setWristPosition(wrist.get());
+        arm.setArmPosition(position.get(), inBend.get());
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        arm.setArmPosition(ArmSetPoints.home, false);
+    }
 
     // Returns true when the command should end.
     @Override
