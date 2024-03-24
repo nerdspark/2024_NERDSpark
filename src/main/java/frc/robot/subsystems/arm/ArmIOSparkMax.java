@@ -29,7 +29,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.ArmGains;
-import frc.robot.Constants.ArmConstants.ArmSetPoints;
 import frc.robot.util.LightningShuffleboard;
 import frc.robot.Constants.RobotMap;
 
@@ -201,7 +200,7 @@ public class ArmIOSparkMax implements ArmIO {
     // }
     public void setArmPosition(Translation2d position, boolean inBend) {
         this.inBend = inBend;
-        double distance = MathUtil.clamp(position.getNorm(), ArmSetPoints.home.getNorm(), ArmConstants.baseStageLength + ArmConstants.secondStageLength);
+        double distance = MathUtil.clamp(position.getNorm(), 0, ArmConstants.baseStageLength + ArmConstants.secondStageLength);
 
         double BaseAngleArmDiff = Math.acos(((distance * distance)
                         + (ArmConstants.baseStageLength * ArmConstants.baseStageLength)

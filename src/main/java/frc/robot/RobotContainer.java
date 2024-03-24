@@ -30,8 +30,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.ArmConstants.ArmSetPoints;
+import frc.robot.Constants.ArmConstants.AmpSetpoints;
+import frc.robot.Constants.ArmConstants.PickupSetpoints;
+import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
 import frc.robot.Constants.FourBarConstants;
@@ -40,8 +43,10 @@ import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmCommandAngles;
+import frc.robot.commands.WinchCommand;
 import frc.robot.commands.DriveToPoseCommand;
 import frc.robot.commands.FourBarCommand;
+import frc.robot.commands.GrapplerCommand;
 import frc.robot.commands.GripperIndexCommand;
 import frc.robot.commands.GripperOutCommand;
 import frc.robot.commands.IntakeCommand;
@@ -68,6 +73,9 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
+
+import static edu.wpi.first.units.Units.Fahrenheit;
+
 import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
@@ -317,7 +325,7 @@ public class RobotContainer { // implements RobotConstants{
                         new IntakeCommand(intake, () -> ((1.0)), IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)),
                         new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome)
-                                .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))));
+                                .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.3)))));
         driver.leftTrigger()
                 .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
                         .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome))
@@ -512,49 +520,57 @@ public class RobotContainer { // implements RobotConstants{
     
 
     private void scheduleArmCommands() {
+
         // // Climb commands
         // climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
 
-        // driver.y().onTrue(new ClimbCommand(climb, () -> true, () -> false));
-        // driver.b().onTrue(new ClimbCommand(climb, () -> true, () -> true));
+        //shoot grappler
+        driver.a().or(driver.povDown()).onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1))).onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
-        /* spin up flywheels / move arm to catching pos,
+        driver.povDown().whileTrue(new WinchCommand(climb, () -> false).alongWith(new WaitCommand(ClimbConstants.rumbleWait).andThen(new GrapplerCommand(climb, () -> driverRaw.getAButton()))))
+                        .onFalse(new WinchCommand(climb, () -> true).onlyIf(() -> climb.getServoOut()));
+
+        //retract winch
+        // driver.x().whileTrue(new WaitCommand(0.5).andThen(new WinchCommand(climb, () -> true)));
+        // driver.x().onFalse(new WinchCommand(climb, () -> false));
+        
+
+        driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
+        driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0));
+        copilot.leftBumper().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0)); // TODO change buttons
+        copilot.rightBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
+
+
+        // PICKUP SEQUENCE
+        /* spin up flywheels/move arm to catching pos,
         spin intake to transfer
         index gripper
+        pull arm outward
         return arm to home */
-
-        driver.a().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
-        driver.b().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0));
-        copilot.leftBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
-
-        // arm commands
-        // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> false));
         copilot.b()
-                .whileTrue(new ArmCommandAngles(arm, () -> ArmConstants.elbowOffset - 0.38, () -> ArmConstants.shoulderOffset).alongWith(new ShooterCommand(shooter, () -> 400.0, () -> 400.0))
-                        .raceWith((new WaitCommand(Constants.ArmConstants.spinUpTimeout))
-                                .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE).alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak()).andThen(new WaitCommand(Constants.ArmConstants.intakeTimeout)
-                                .andThen(new GripperIndexCommand(arm)))))));
+                .whileTrue(new ArmCommandAngles(arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder).alongWith(new ShooterCommand(shooter, () -> PickupSetpoints.pickupShooterRPM,() ->  PickupSetpoints.pickupShooterRPM))
+                        .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
+                                .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
+                                        .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak()).andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
+                                        .andThen(new GripperIndexCommand(arm).andThen(new ArmCommandAngles(arm, () -> PickupSetpoints.pullOutDifference, () -> PickupSetpoints.pullOutDifference).withTimeout(PickupSetpoints.pickupPullTimeout))))))));
 
+        // AMP SETPOINT + MICROADJUST
         copilot.y()
                 .whileTrue(new ArmCommand(
                         arm,
-                        () -> ArmSetPoints.amp.plus(new Translation2d(
+                        () -> AmpSetpoints.amp.plus(new Translation2d(
                                 (DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1)
                                         * copilot.getLeftX()
-                                        * ArmSetPoints.ampMultiplier,
-                                -copilot.getLeftY() * ArmSetPoints.ampMultiplierY)),
+                                        * AmpSetpoints.ampMultiplierX,
+                                -copilot.getLeftY() * AmpSetpoints.ampMultiplierY)),
                         () -> false));
-        copilot.rightStick()
-                .onTrue(new ArmCommandAngles(arm, () -> ArmSetPoints.trapArmAngle - ArmSetPoints.trapArmDifference, () -> ArmSetPoints.trapArmAngle)
-                        .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarClimb)));
 
-        // // trap
-        // copilot.rightStick().onTrue(new ArmCommand(
-        //                         arm,
-        //                         () -> ClimbSetPoints.trap.plus(
-        //                                 new Translation2d(copilot.getLeftY() * ClimbSetPoints.trapMultiplier, 0)),
-        //                         () -> true)
-        //                 .alongWith(new InstantCommand(() -> arm.setGains(false))));
+        // TRAP COMMAND
+        copilot.rightStick()
+                .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.trapArmAngle - TrapSetpoints.trapArmDifference + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust), () -> TrapSetpoints.trapArmAngle + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust))
+                        .alongWith(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb)));
+
+
 
         // // reset buttons
         // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() ->
@@ -596,8 +612,8 @@ public class RobotContainer { // implements RobotConstants{
 
         if (target.get() != 0) {
             targetAngle = -target.get();
-        } else if (driverRaw.getPOV() != -1) {
-            targetAngle = -driverRaw.getPOV();
+        // } else if (driverRaw.getPOV() != -1) {
+        //     targetAngle = -driverRaw.getPOV();
         } else {//if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
             double speed = Math.copySign(Math.pow(Math.abs(driver.getLeftX()) > 0.05 ? Math.abs(driver.getLeftX()) : 0, 1.1), -driver.getLeftX()) * 5.0;
         //     targetAngle = currentAngle;
