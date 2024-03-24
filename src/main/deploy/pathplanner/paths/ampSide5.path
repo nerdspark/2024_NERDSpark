@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.21,
-        "y": 2.45
+        "y": 2.15
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.510253545362583,
-        "y": 3.5675743706565863
+        "y": 3.267574370656586
       },
       "isLocked": false,
       "linkedName": null
@@ -80,7 +80,7 @@
   "reversed": false,
   "folder": "ampSide",
   "previewStartingState": {
-    "rotation": -25.0,
+    "rotation": -30.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -258,23 +258,36 @@ public final class Constants {
         public static final double weirdSideRing3 = 1.87; // 2.75
         public static final double weirdSideRing4 = 2.148; // 1.9
 
-        public static final double red_weirdSideRing1 = 3.2;
-        public static final double red_weirdSideRing2 = 1.87;
+        public static final double red_weirdSideRing2 = 1.80;
         public static final double red_weirdSideRing3 = 1.87;
-        public static final double red_weirdSideRing4 = 2.148;
+        public static final double red_weirdSideRing4 = 1.93;
 
-        public static final double blueAmpSide1 = 2.0; // 2.7
-        public static final double blueAmpSide2 = 1.87; // 2.45
-        public static final double blueAmpSide3 = 1.87; // 2.45
-        public static final double blueAmpSide4 = 1.97; // 1.9
+        public static final double blueAmpSide1 = 2.98; // 2.7
+        public static final double blueAmpSide2 = 1.85; // 2.45
+        public static final double blueAmpSide3 = 1.915; // 2.45
+        public static final double blueAmpSide4 = 1.96; // 1.9
+
+        public static final double redAmpSide2 = 1.83; 
+        public static final double redAmpSide3 = 1.915; 
+        public static final double redAmpSide4 = 1.93; 
+
+
+        public static final double redRECenterNote5 = 1.85; // 1.80
+        public static final double redRECenterNote6 = 1.85; // 1.80
 
         public static final double blueRECenterNote5 = 1.92; // 1.80
         public static final double blueRECenterNote6 = 1.95; // 1.87
 
-        public static final double blueStarWars1 = 1.95; // 3.5
-        public static final double blueStarWars2 = 1.87; // 2.75
-        public static final double blueStarWars3 = 1.87;
-        public static final double blueStarWars4 = 2.148;
+        // public static final double blueStarWars1 = 1.95; // 3.5
+        // public static final double blueStarWars2 = 1.87; // 2.75
+        // public static final double blueStarWars3 = 1.87;
+        // public static final double blueStarWars4 = 1.93;
+
+
+        // public static final double redStarWars1 = 1.95; // 3.5
+        // public static final double redStarWars2 = 1.80; // 2.75
+        // public static final double redStarWars3 = 1.87;
+        // public static final double redStarWars4 = 1.93;
     }
 
     public final class RobotMap {

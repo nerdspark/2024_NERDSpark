@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.22,
-        "y": 7.39
+        "y": 7.19
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.466594987905087,
-        "y": 6.924896192236645
+        "y": 6.7248961922366455
       },
       "isLocked": false,
       "linkedName": null
@@ -49,11 +49,11 @@
     {
       "anchor": {
         "x": 8.23,
-        "y": 5.54
+        "y": 5.44
       },
       "prevControl": {
         "x": 7.309279156626027,
-        "y": 5.966602121313243
+        "y": 5.866602121313243
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,8 +62,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": 5.0,
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 4.0,
       "rotateFast": false
     }
   ],
@@ -88,7 +88,7 @@
     },
     {
       "name": "forcedIntakeShoot",
-      "waypointRelativePos": 0.6000000000000001,
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "sequential",
         "data": {

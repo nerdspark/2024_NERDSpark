@@ -3,25 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.45,
-        "y": 3.39
+        "x": 8.29,
+        "y": 7.44
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.936374321403801,
-        "y": 1.4397326506697117
+        "x": 9.02830647940404,
+        "y": 7.316360128674015
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.02,
-        "y": 0.71
+        "x": 10.825,
+        "y": 6.597334945289213
       },
       "prevControl": {
-        "x": 4.53737112517866,
-        "y": 1.1474884230018532
+        "x": 10.825,
+        "y": 6.657334945289213
+      },
+      "nextControl": {
+        "x": 10.825,
+        "y": 6.5373349452892136
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 10.16,
+        "y": 6.208066057750613
+      },
+      "prevControl": {
+        "x": 10.640016259388423,
+        "y": 6.385627304698045
+      },
+      "nextControl": {
+        "x": 9.69788351299242,
+        "y": 6.0371260571502665
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.29,
+        "y": 5.74
+      },
+      "prevControl": {
+        "x": 9.431233924400136,
+        "y": 6.069041302244455
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,28 +62,21 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": -55.0,
+      "waypointRelativePos": 0.6000000000000001,
+      "rotationDegrees": 160.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.7999999999999998,
+      "rotationDegrees": 160.0,
       "rotateFast": false
     }
   ],
-  "constraintZones": [
-    {
-      "name": "slowToShoot",
-      "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.4,
-      "constraints": {
-        "maxVelocity": 2.0,
-        "maxAcceleration": 2.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0
-      }
-    }
-  ],
+  "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "forcedIntake",
-      "waypointRelativePos": 0.4,
+      "name": "fourBarToShoot",
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -59,7 +84,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
+                "name": "redRECenterNote5"
               }
             }
           ]
@@ -67,8 +92,8 @@
       }
     },
     {
-      "name": "forcedIntake0",
-      "waypointRelativePos": 0.65,
+      "name": "forcedIntakeShoot",
+      "waypointRelativePos": 0.8,
       "command": {
         "type": "sequential",
         "data": {
@@ -76,7 +101,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntakeZero"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -85,7 +110,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 1.7000000000000002,
       "command": {
         "type": "sequential",
         "data": {
@@ -101,8 +126,8 @@
       }
     },
     {
-      "name": "onlySoftIntake",
-      "waypointRelativePos": 0.75,
+      "name": "softIntake",
+      "waypointRelativePos": 2.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -120,20 +145,20 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -165.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "blueWeirdSide",
+  "folder": "redRE4noteCenter",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 180.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
