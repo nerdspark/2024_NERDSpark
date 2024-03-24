@@ -162,7 +162,7 @@ public final class Constants {
         public static final double rampRateElbow = .1;
         public static final double indexPowerGripper = 0.55;
         public static final double outPowerGripper = 1.0;
-        public static final double indexDistGripper = 22.0;
+        public static final double indexDistGripper = 17.0;
 
         public static final double intakeTimeout = 0.25;
         public static final double spinUpTimeout = 0.7;
@@ -179,7 +179,7 @@ public final class Constants {
             public static final double shoulderV = 0.0;
             public static final double shoulderA = 0.0;
             public static final double elbowS = 0.0;
-            public static final double elbowG = 0.55;
+            public static final double elbowG = 0.32;
             public static final double elbowV = 0.0;
             public static final double elbowA = 0.0;
 
@@ -211,7 +211,7 @@ public final class Constants {
             public static final Translation2d amp = new Translation2d(0.0, 26.0); // dropoff - Y
             public static final double ampMultiplier = 8.5;
             public static final double ampMultiplierY = 5;
-            public static final double trapArmAngle = Units.degreesToRadians(110);
+            public static final double trapArmAngle = Units.degreesToRadians(105);
             public static final double trapArmDifference = Units.degreesToRadians(30);
             // public static final Translation2d trap = new Translation2d(
             //                 baseStageLength * Math.cos(Units.degreesToRadians(110.0)),

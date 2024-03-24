@@ -40,7 +40,6 @@ import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmCommandAngles;
-import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveToPoseCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.GripperIndexCommand;
@@ -531,7 +530,7 @@ public class RobotContainer { // implements RobotConstants{
         // arm commands
         // copilot.a().onTrue(new ArmCommand(arm, () -> ArmSetPoints.home, () -> false));
         copilot.b()
-                .whileTrue(new ArmCommandAngles(arm, () -> ArmConstants.elbowOffset - 0.35, () -> ArmConstants.shoulderOffset).alongWith(new ShooterCommand(shooter, () -> 400.0, () -> 400.0))
+                .whileTrue(new ArmCommandAngles(arm, () -> ArmConstants.elbowOffset - 0.38, () -> ArmConstants.shoulderOffset).alongWith(new ShooterCommand(shooter, () -> 400.0, () -> 400.0))
                         .raceWith((new WaitCommand(Constants.ArmConstants.spinUpTimeout))
                                 .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE).alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak()).andThen(new WaitCommand(Constants.ArmConstants.intakeTimeout)
                                 .andThen(new GripperIndexCommand(arm)))))));
