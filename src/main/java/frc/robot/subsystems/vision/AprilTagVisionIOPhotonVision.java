@@ -170,7 +170,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             } else {
                 distanceUsedForCalculatingStdDev = smallestDistance;
             }
-            if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+            // if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
                 poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
             if(distanceUsedForCalculatingStdDev < 6 && poseAmbiguity < 0.2) {
