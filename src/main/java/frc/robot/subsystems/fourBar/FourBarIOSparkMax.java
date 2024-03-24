@@ -55,6 +55,7 @@ public class FourBarIOSparkMax implements FourBarIO {
         FourBarEncoder1.setPositionConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder1.setVelocityConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder1.setPosition(FourBarConstants.resetPosition);
+
         FourBarEncoder2.setPositionConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder2.setVelocityConversionFactor(FourBarConstants.positionConversionFactor);
         FourBarEncoder2.setPosition(FourBarConstants.resetPosition);

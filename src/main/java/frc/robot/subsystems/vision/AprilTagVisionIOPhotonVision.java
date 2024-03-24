@@ -142,7 +142,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                     if (distance < smallestDistance) smallestDistance = distance;
                 }
 
-                if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+                // if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
                     poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
 
                 if (cameraPose.targetsUsed.get(i).getFiducialId() == speakerTagId) {
@@ -170,11 +170,12 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             } else {
                 distanceUsedForCalculatingStdDev = smallestDistance;
             }
-            if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
+            // if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
                 poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
-            inputs.poseEstimates.add(new PoseEstimate(
-                    cameraPose.estimatedPose.transformBy(estomator.getRobotToCameraTransform()),
+            if(distanceUsedForCalculatingStdDev < 6 && poseAmbiguity < 0.2) {
+                inputs.poseEstimates.add(new PoseEstimate(
+                    cameraPose.estimatedPose.transformBy(estomator.getRobotToCameraTransform().inverse()),
                     cameraPose.timestampSeconds,
                     distanceUsedForCalculatingStdDev,
                     tagIDsFrontCamera,
@@ -182,6 +183,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                     poseStrategyUsed,
                     distanceToSpeakerTag,
                     angleToSpeakerTag)); //
+            }
 
             // inputs.poseEstimates = poseEstimates;
         }

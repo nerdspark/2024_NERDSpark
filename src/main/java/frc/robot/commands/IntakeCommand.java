@@ -7,11 +7,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.intake.Intake;
 import java.util.function.Supplier;
 
-/** An example command that uses an example subsystem. */
+/** An example command that uses an example subsystem.  */
 public class IntakeCommand extends Command {
 
     public final Timer timer = new Timer();
@@ -76,14 +75,14 @@ public class IntakeCommand extends Command {
                     isIndexing = true;
                 }
 
-                if (isIndexing) {
+                // if (isIndexing) {
 
-                    if (Math.abs(Intake.getIntakePosition() - referencePosition) > Constants.indexDistance) {
-                        Intake.setIntakePower(0.1);
-                    } else {
-                        Intake.setIntakePower(0);
-                    }
-                }
+                //     if (Math.abs(Intake.getIntakePosition() - referencePosition) > Constants.indexDistance) {
+                //         Intake.setIntakePower(0.1);
+                //     } else {
+                //         Intake.setIntakePower(0);
+                //     }
+                // }
 
                 break;
 
@@ -103,7 +102,9 @@ public class IntakeCommand extends Command {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        Intake.setIntakePower(0.0);
+    }
 
     // Returns true when the command should end.
     @Override

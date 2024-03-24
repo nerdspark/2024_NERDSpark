@@ -4,31 +4,35 @@
 
 package frc.robot.subsystems.climb;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-// import frc.robot.Subsystems.climb.climbIO.climbIOInputs;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.wpilibj.Servo;
+import frc.robot.Constants.ClimbConstants;
 
 public class ClimbIOSparkMax implements ClimbIO {
     /** Creates a new ClimbIOSparkMax. */
-    private CANSparkMax climbMotor;
+    private TalonFX climbMotor;
 
-    private RelativeEncoder climbEncoder;
+    private Servo grapplingServo;
+    private double servoSetpoint = ClimbConstants.servoInPos;
 
     public ClimbIOSparkMax() {
-        climbMotor = new CANSparkMax(0, CANSparkMax.MotorType.kBrushless);
-
-        climbEncoder = climbMotor.getEncoder();
-
-        climbEncoder.setPosition(0);
+        grapplingServo = new Servo(ClimbConstants.servoPort);
+        climbMotor = new TalonFX(ClimbConstants.winchPort);
+        climbMotor.setPosition(0);
+        climbMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
     @Override
     @SuppressWarnings("static-access")
     public void updateInputs(ClimbIOInputs inputs) {
-        inputs.climbPosition = climbEncoder.getPosition();
-        inputs.climbVelocity = climbEncoder.getVelocity();
-        inputs.climbAppliedVolts = climbMotor.getAppliedOutput() * climbMotor.getBusVoltage();
-        inputs.climbCurrentAmps = new double[] {climbMotor.getOutputCurrent()};
+        inputs.climbPosition = climbMotor.getPosition().getValue();
+        inputs.climbVelocity = climbMotor.getVelocity().getValue();
+        inputs.climbAppliedVolts = climbMotor.getMotorVoltage().getValue();
+        inputs.climbCurrentAmps = new double[] {climbMotor.getStatorCurrent().getValue()};
     }
 
     public void setClimbMotorPower(double climbPower) {
@@ -36,6 +40,20 @@ public class ClimbIOSparkMax implements ClimbIO {
     }
 
     public double getClimbMotorPosition() {
-        return climbEncoder.getPosition();
+        return climbMotor.getPosition().getValue();
+    }
+
+    public void setServoPosition(double angle) {
+        grapplingServo.setAngle(angle);
+        servoSetpoint = angle;
+    }
+
+    public boolean getServoOut() {
+        return servoSetpoint == ClimbConstants.servoOutPos;
+        // return Math.abs(grapplingServo.getAngle() - ClimbConstants.servoOutPos) < ClimbConstants.servoOutTolerance;
+    }
+
+    public void setClimbPosition(double position) {
+        climbMotor.setControl(new PositionTorqueCurrentFOC(position));
     }
 }
