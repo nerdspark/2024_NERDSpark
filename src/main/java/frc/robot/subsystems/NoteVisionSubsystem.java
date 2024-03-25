@@ -59,7 +59,6 @@ public class NoteVisionSubsystem extends SubsystemBase {
             SmartDashboard.putBoolean("Has Target", hasTarget);
             SmartDashboard.putNumber("Distance To Target", getRange());
 
-
         } else {
             this.hasTarget = false;
         }

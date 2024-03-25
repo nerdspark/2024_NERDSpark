@@ -25,6 +25,7 @@ public interface ClimbIO {
     }
 
     default void setServoPosition(double angle) {}
+
     default boolean getServoOut() {
         return false;
     }

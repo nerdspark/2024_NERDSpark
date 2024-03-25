@@ -4,11 +4,14 @@
 
 package frc.robot.subsystems.climb;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
 import edu.wpi.first.wpilibj.Servo;
 import frc.robot.Constants.ClimbConstants;
 
@@ -17,13 +20,23 @@ public class ClimbIOSparkMax implements ClimbIO {
     private TalonFX climbMotor;
 
     private Servo grapplingServo;
-    private double servoSetpoint = ClimbConstants.servoInPos;
+    private boolean servoOut = false;
 
     public ClimbIOSparkMax() {
         grapplingServo = new Servo(ClimbConstants.servoPort);
-        climbMotor = new TalonFX(ClimbConstants.winchPort);
+        climbMotor = new TalonFX(ClimbConstants.winchPort, "canivore1");
         climbMotor.setPosition(0);
-        climbMotor.setNeutralMode(NeutralModeValue.Brake);
+        // climbMotor.setNeutralMode(NeutralModeValue.Brake);
+
+        TalonFXConfiguration climbConfig = new TalonFXConfiguration();
+        climbConfig.Slot0 = new Slot0Configs().withKP(1).withKS(1);
+        climbConfig.CurrentLimits =
+                new CurrentLimitsConfigs().withStatorCurrentLimit(60).withStatorCurrentLimitEnable(true);
+        climbConfig.MotorOutput = new MotorOutputConfigs()
+                .withNeutralMode(NeutralModeValue.Brake)
+                .withInverted(InvertedValue.Clockwise_Positive);
+
+        climbMotor.getConfigurator().apply(climbConfig);
     }
 
     @Override
@@ -45,11 +58,13 @@ public class ClimbIOSparkMax implements ClimbIO {
 
     public void setServoPosition(double angle) {
         grapplingServo.setAngle(angle);
-        servoSetpoint = angle;
+        if (angle == ClimbConstants.servoOutPos) {
+            servoOut = true;
+        }
     }
 
     public boolean getServoOut() {
-        return servoSetpoint == ClimbConstants.servoOutPos;
+        return servoOut;
         // return Math.abs(grapplingServo.getAngle() - ClimbConstants.servoOutPos) < ClimbConstants.servoOutTolerance;
     }
 

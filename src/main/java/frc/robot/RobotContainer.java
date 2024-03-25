@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
@@ -15,7 +14,6 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -34,7 +32,6 @@ import frc.robot.Constants.ArmConstants.AmpSetpoints;
 import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.BiasConstants;
 import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
@@ -44,16 +41,14 @@ import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmCommandAngles;
-import frc.robot.commands.WinchCommand;
-import frc.robot.commands.DriveToPoseCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.GrapplerCommand;
-import frc.robot.commands.GripperIndexCommand;
+import frc.robot.commands.GripperIndexCommandPID;
 import frc.robot.commands.GripperOutCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
-import frc.robot.config.RobotIdentity;
+import frc.robot.commands.WinchCommand;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -74,9 +69,6 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
-
-import static edu.wpi.first.units.Units.Fahrenheit;
-
 import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
@@ -99,8 +91,8 @@ public class RobotContainer { // implements RobotConstants{
     private final CommandSwerveDrivetrain drivetrain;
 
     private final XboxController driverRaw = new XboxController(0);
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); 
+    private final SwerveRequest.FieldCentric drive =
+            new SwerveRequest.FieldCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     //     private final Telemetry logger = new Telemetry(MaxSpeed);
@@ -112,8 +104,8 @@ public class RobotContainer { // implements RobotConstants{
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
-        // private NoteVisionSubsystem noteVisionSubsystem =
-        //         new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+    // private NoteVisionSubsystem noteVisionSubsystem =
+    //         new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     public RobotContainer() {
         switch (Constants.currentMode) {
@@ -135,7 +127,7 @@ public class RobotContainer { // implements RobotConstants{
         if (Constants.PracticeBot) {
             drivetrain = TunerConstantsSmidge.DriveTrain;
 
-            drivetrain.getModule(0).getDriveMotor().setInverted(false);// fl
+            drivetrain.getModule(0).getDriveMotor().setInverted(false); // fl
             drivetrain.getModule(1).getDriveMotor().setInverted(false); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(true); // bL
 
@@ -143,13 +135,12 @@ public class RobotContainer { // implements RobotConstants{
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
-            drivetrain.getModule(0).getDriveMotor().setInverted(false);// fl
+            drivetrain.getModule(0).getDriveMotor().setInverted(false); // fl
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(false); // bL
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
             arm = new Arm(new ArmIOSparkMax());
             scheduleArmCommands();
-
         }
 
         drivetrain.setRobotIntake(intake);
@@ -195,16 +186,11 @@ public class RobotContainer { // implements RobotConstants{
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(
-                        () -> drive.withVelocityX(
-                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-                                                * MaxSpeed)) 
-                                .withVelocityY(
-                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-                                                * MaxSpeed)) 
-                                .withRotationalRate(
-                                        calculateAutoTurn(() -> 0.0)) 
-                        ));
+                drivetrain.applyRequest(() -> drive.withVelocityX(
+                                xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                        .withVelocityY(
+                                yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
+                        .withRotationalRate(calculateAutoTurn(() -> 0.0))));
 
         // if (Utils.isSimulation()) {
         //     drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
@@ -264,7 +250,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
 
-
         // NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () ->
         // AutoConstants.weirdSideRing4));
 
@@ -292,7 +277,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
-
         NamedCommands.registerCommand(
                 "redRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.redRECenterNote5));
 
@@ -304,25 +288,15 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
 
+        NamedCommands.registerCommand("blueAmpSide1", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide1));
+        NamedCommands.registerCommand("blueAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide2));
+        NamedCommands.registerCommand("blueAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide3));
+        NamedCommands.registerCommand("blueAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide4));
 
-        NamedCommands.registerCommand(
-                "blueAmpSide1", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide1));
-        NamedCommands.registerCommand(
-                "blueAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide2));
-        NamedCommands.registerCommand(
-                "blueAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide3));
-        NamedCommands.registerCommand(
-                "blueAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide4));
-
-        NamedCommands.registerCommand(
-                "redAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide2));
-        NamedCommands.registerCommand(
-                "redAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide3));
-        NamedCommands.registerCommand(
-                "redAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide4));
-    
-    
-        }
+        NamedCommands.registerCommand("redAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide2));
+        NamedCommands.registerCommand("redAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide3));
+        NamedCommands.registerCommand("redAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide4));
+    }
 
     private void configureButtonBindings() {
         /* DRIVER BINDINGS:
@@ -337,7 +311,8 @@ public class RobotContainer { // implements RobotConstants{
                         new IntakeCommand(intake, () -> ((1.0)), IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)),
                         new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome)
-                                .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.3)))));
+                                .alongWith(
+                                        new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.3)))));
         driver.leftTrigger()
                 .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
                         .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome))
@@ -500,61 +475,64 @@ public class RobotContainer { // implements RobotConstants{
         //                                     * Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
         //                             .withRotationalRate(
         //                                     calculateAutoTurn(() -> noteVisionSubsystem.getYawVal())))));
-        }
+    }
 
-        // driver.rightTrigger()
-        //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
-        //                 .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
-        // }
+    // driver.rightTrigger()
+    //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
+    //                 .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
+    // }
 
-        // // vision-assisted following command
-        // driver.rightTrigger().whileTrue((
-        //     drivetrain.applyRequest(() -> drive
-        //         .withVelocityX(xLimiter.calculate(0.1 *MaxSpeed*
-        // Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
-        //         .withVelocityY(yLimiter.calculate(-0.1 *MaxSpeed*
-        // Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
-        //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
+    // // vision-assisted following command
+    // driver.rightTrigger().whileTrue((
+    //     drivetrain.applyRequest(() -> drive
+    //         .withVelocityX(xLimiter.calculate(0.1 *MaxSpeed*
+    // Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+    //         .withVelocityY(yLimiter.calculate(-0.1 *MaxSpeed*
+    // Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+    //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
-        // transfer spin up
-        // copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1650.0, () -> 1650.0));
-        // copilot.b().onFalse(new InstantCommand(shooter::stop));
+    // transfer spin up
+    // copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1650.0, () -> 1650.0));
+    // copilot.b().onFalse(new InstantCommand(shooter::stop));
 
-        // stop shoot
-        // copilot.leftBumper()
-        //         .whileTrue(new IntakeCommand(
-        //                 intake,
-        //                 () -> ((Math.sqrt(Math.pow(drivetrain.getState().speeds.vxMetersPerSecond, 2)
-        //                                         + Math.pow(drivetrain.getState().speeds.vyMetersPerSecond, 2))
-        //                                 < ShooterConstants.stillShotSpeed)
-        //                         ? 1.0
-        //                         : 0.0),
-        //                 IntakeMode.FORCEINTAKE));
-        // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
-
-    
+    // stop shoot
+    // copilot.leftBumper()
+    //         .whileTrue(new IntakeCommand(
+    //                 intake,
+    //                 () -> ((Math.sqrt(Math.pow(drivetrain.getState().speeds.vxMetersPerSecond, 2)
+    //                                         + Math.pow(drivetrain.getState().speeds.vyMetersPerSecond, 2))
+    //                                 < ShooterConstants.stillShotSpeed)
+    //                         ? 1.0
+    //                         : 0.0),
+    //                 IntakeMode.FORCEINTAKE));
+    // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
     private void scheduleArmCommands() {
 
         // // Climb commands
         // climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
 
-        //shoot grappler
-        // driver.a().or(driver.povDown()).onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1))).onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
+        // shoot grappler
+        driver.a()
+                .or(driver.povDown())
+                .onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))
+                .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
-        // driver.povDown().whileTrue(new WinchCommand(climb, () -> false).alongWith(new WaitCommand(ClimbConstants.rumbleWait).andThen(new GrapplerCommand(climb, () -> driverRaw.getAButton()))))
-        //                 .onFalse(new WinchCommand(climb, () -> true).onlyIf(() -> climb.getServoOut()));
+        driver.povDown()
+                .whileTrue(new WinchCommand(climb, () -> false)
+                        .alongWith(new WaitCommand(ClimbConstants.rumbleWait)
+                                .andThen(new GrapplerCommand(climb, () -> driverRaw.getAButton()))))
+                .onFalse(new WinchCommand(climb, () -> true).onlyIf(() -> climb.getServoOut()));
 
-        //retract winch
+        // retract winch
         // driver.x().whileTrue(new WaitCommand(0.5).andThen(new WinchCommand(climb, () -> true)));
         // driver.x().onFalse(new WinchCommand(climb, () -> false));
-        
 
         driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
-        driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0));
-        // copilot.leftBumper().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0)); // TODO change buttons
+        driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 3.0));
+        // copilot.leftBumper().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0)); // TODO change
+        // buttons
         copilot.leftBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
-
 
         // PICKUP SEQUENCE
         /* spin up flywheels/move arm to catching pos,
@@ -563,13 +541,20 @@ public class RobotContainer { // implements RobotConstants{
         pull arm outward
         return arm to home */
         copilot.b()
-                .whileTrue((new ShooterCommand(shooter, () -> PickupSetpoints.pickupShooterRPM,() ->  PickupSetpoints.pickupShooterRPM))
-                        .alongWith(new ArmCommandAngles(arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder)
+                .whileTrue((new ShooterCommand(
+                                shooter,
+                                () -> PickupSetpoints.pickupShooterRPM,
+                                () -> PickupSetpoints.pickupShooterRPM))
+                        .alongWith(new ArmCommandAngles(
+                                        arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder)
                                 .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
                                         .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
-                                                .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak()).andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
-                                                .andThen(new GripperIndexCommand(arm))))))));
-                                // .andThen(new ArmCommandAngles(arm, () -> PickupSetpoints.pullOutElbow, () -> PickupSetpoints.pullOutShoulder).withTimeout(PickupSetpoints.pickupPullTimeout)));
+                                                .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak())
+                                                        .andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
+                                                                .andThen(new GripperIndexCommandPID(arm)
+                                                                        .withTimeout(2.0))))))));
+        // .andThen(new ArmCommandAngles(arm, () -> PickupSetpoints.pullOutElbow, () ->
+        // PickupSetpoints.pullOutShoulder).withTimeout(PickupSetpoints.pickupPullTimeout)));
 
         // AMP SETPOINT + MICROADJUST
         copilot.y()
@@ -584,10 +569,14 @@ public class RobotContainer { // implements RobotConstants{
 
         // TRAP COMMAND
         copilot.rightStick()
-                .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.trapArmAngle - TrapSetpoints.trapArmDifference + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust), () -> TrapSetpoints.trapArmAngle + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust))
+                .onTrue(new ArmCommandAngles(
+                                arm,
+                                () -> TrapSetpoints.trapArmAngle
+                                        - TrapSetpoints.trapArmDifference
+                                        + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust),
+                                () -> TrapSetpoints.trapArmAngle
+                                        + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust))
                         .alongWith(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb)));
-
-
 
         // // reset buttons
         // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() ->
@@ -629,11 +618,14 @@ public class RobotContainer { // implements RobotConstants{
 
         if (target.get() != 0) {
             targetAngle = -target.get();
-        // } else if (driverRaw.getPOV() != -1) {
-        //     targetAngle = -driverRaw.getPOV();
-        } else {//if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
-            double speed = Math.copySign(Math.pow(Math.abs(driver.getLeftX()) > 0.05 ? Math.abs(driver.getLeftX()) : 0, 1.1), -driver.getLeftX()) * 5.0;
-        //     targetAngle = currentAngle;
+            // } else if (driverRaw.getPOV() != -1) {
+            //     targetAngle = -driverRaw.getPOV();
+        } else { // if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
+            double speed = Math.copySign(
+                            Math.pow(Math.abs(driver.getLeftX()) > 0.05 ? Math.abs(driver.getLeftX()) : 0, 1.1),
+                            -driver.getLeftX())
+                    * 5.0;
+            //     targetAngle = currentAngle;
             return zLimiter.calculate(speed);
             // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }

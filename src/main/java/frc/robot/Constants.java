@@ -2,13 +2,7 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.Meters;
 
-import java.util.function.Supplier;
-
 import com.revrobotics.CANSparkBase.IdleMode;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.Nat;
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -19,11 +13,7 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
-import edu.wpi.first.units.Unit;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 
@@ -31,7 +21,6 @@ public final class Constants {
 
     public static final boolean PracticeBot =
             false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
-
 
     public final class FourBarGains {
         public static final double kP = 0.95; // 0.65; // 0.85
@@ -54,7 +43,7 @@ public final class Constants {
         public static final double rumbleWait = 0.5;
 
         public static final int servoPort = 9;
-        public static final int winchPort = 10;
+        public static final int winchPort = 6;
     }
 
     public final class FixedShotConstants {
@@ -69,8 +58,8 @@ public final class Constants {
 
     public final class FourBarConstants {
         public static final int currentLimit = 70;
-        public static final double closedLoopRampRate = 0.1; //0.25, 0.1
-        public static final double openLoopRampRate = 0.1; //0.15, 0.1
+        public static final double closedLoopRampRate = 0.1; // 0.25, 0.1
+        public static final double openLoopRampRate = 0.1; // 0.15, 0.1
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
@@ -120,8 +109,6 @@ public final class Constants {
             // fourBarMap.put(4.89, 1.97);
             // fourBarMap.put(5.47, 1.91);
 
-
-
             // fourBarMap.put(4.75 + 0.2, 1.925d);
             // fourBarMap.put(4.85 + 0.2, 1.925d);
             // fourBarMap.put(4.90 + 0.2, 1.925);
@@ -165,8 +152,8 @@ public final class Constants {
         public static final double secondStageLength = 15.038; // inches
 
         public static final double virtual4BarGearRatio = 36.0 / 42.0;
-        public static final double shoulderRadPerRot = 1/(1.0 / 36.0 * 14.0 / 32.0);// * 2048;
-        public static final double elbowRadPerRot = 1/(1.0 / 12.0 * virtual4BarGearRatio);// * 2048;
+        public static final double shoulderRadPerRot = 1 / (1.0 / 36.0 * 14.0 / 32.0); // * 2048;
+        public static final double elbowRadPerRot = 1 / (1.0 / 12.0 * virtual4BarGearRatio); // * 2048;
 
         public static final double shoulderOffset = -0.07; // radians, fwd = 0
         public static final double elbowOffset = 2.68; // negative of measurement
@@ -183,7 +170,6 @@ public final class Constants {
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
         public static final double outPowerGripper = 1.0;
-
 
         public static class ArmGains {
             public static final double shoulderP = 90.0;
@@ -220,20 +206,20 @@ public final class Constants {
 
             // PICKUP SEQUENCE
 
-            public static final double pickupElbow = ArmConstants.elbowOffset - 0.285;
+            public static final double pickupElbow = ArmConstants.elbowOffset - 0.300;
             public static final double pickupShoulder = ArmConstants.shoulderOffset;
             public static final double pullOutDifference = 0.5;
             public static final double pullOutElbow = pickupElbow + pullOutDifference;
             public static final double pullOutShoulder = pickupShoulder + pullOutDifference;
-            
+
             public static final double intakeTimeout = 0.38;
             public static final double spinUpTimeout = 0.4;
             public static final double pickupPullTimeout = 0.5;
 
-            public static final double pickupShooterRPM = 650;
+            public static final double pickupShooterRPM = 600;
 
             public static final double indexPowerGripper = 0.40;
-            public static final double indexDistGripper = 12.0;
+            public static final double indexDistGripper = 40.0;
         }
 
         public static final class AmpSetpoints {
@@ -251,9 +237,6 @@ public final class Constants {
             public static final double copilotMicroadjust = Units.degreesToRadians(10);
 
             public static final double fourBarClimb = 0.8;
-
-
-            
         }
     }
 
@@ -261,7 +244,6 @@ public final class Constants {
         public static final double redCenterRing2 = 1.95; // 2.5
         public static final double redCenterRing3 = 1.95; // 2.5
         public static final double redCenterRing4 = 1.95; // 1.9
-
 
         public static final double blueCenterRing2 = 1.95; // 2.7
         public static final double blueCenterRing3 = 1.95; // 2.45
@@ -280,10 +262,9 @@ public final class Constants {
         public static final double blueAmpSide3 = 1.915; // 2.45
         public static final double blueAmpSide4 = 1.96; // 1.9
 
-        public static final double redAmpSide2 = 1.83; 
-        public static final double redAmpSide3 = 1.915; 
-        public static final double redAmpSide4 = 1.93; 
-
+        public static final double redAmpSide2 = 1.83;
+        public static final double redAmpSide3 = 1.915;
+        public static final double redAmpSide4 = 1.93;
 
         public static final double redRECenterNote5 = 1.85; // 1.80
         public static final double redRECenterNote6 = 1.85; // 1.80
@@ -295,7 +276,6 @@ public final class Constants {
         // public static final double blueStarWars2 = 1.87; // 2.75
         // public static final double blueStarWars3 = 1.87;
         // public static final double blueStarWars4 = 1.93;
-
 
         // public static final double redStarWars1 = 1.95; // 3.5
         // public static final double redStarWars2 = 1.80; // 2.75

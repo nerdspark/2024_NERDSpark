@@ -6,8 +6,6 @@ package frc.robot.subsystems.fourBar;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FourBarConstants;
-import frc.robot.util.LightningShuffleboard;
-
 import org.littletonrobotics.junction.Logger;
 
 public class FourBar extends SubsystemBase {
