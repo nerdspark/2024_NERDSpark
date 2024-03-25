@@ -32,8 +32,6 @@ import frc.robot.Constants.ArmConstants.AmpSetpoints;
 import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.BiasConstants;
-import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
 import frc.robot.Constants.FourBarConstants;
@@ -138,7 +136,7 @@ public class RobotContainer { // implements RobotConstants{
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
-            drivetrain.getModule(0).getDriveMotor().setInverted(false);  // fl
+            drivetrain.getModule(0).getDriveMotor().setInverted(false); // fl
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(false); // bL
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
@@ -313,12 +311,13 @@ public class RobotContainer { // implements RobotConstants{
         driver.leftTrigger()
                 .whileTrue(new SequentialCommandGroup(
                         new IntakeCommand(intake, () -> ((1.0)), IntakeMode.SOFTINTAKE)
-                                .deadlineWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)),
-                        new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome)
-                                .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.3)))));
+                                .deadlineWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut + 0.04)),
+                        new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome - 0.1)
+                                .alongWith(
+                                        new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.3)))));
         driver.leftTrigger()
                 .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
-                        .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome))
+                        .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome - 0.1))
                         .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0))));
 
         // driver shoot

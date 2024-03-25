@@ -20,7 +20,7 @@ import frc.robot.util.Alert;
 public final class Constants {
 
     public static final boolean PracticeBot =
-            false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+            true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
         public static final double kP = 0.95; // 0.65; // 0.85
@@ -58,8 +58,8 @@ public final class Constants {
 
     public final class FourBarConstants {
         public static final int currentLimit = 70;
-        public static final double closedLoopRampRate = 0.1; // 0.25, 0.1
-        public static final double openLoopRampRate = 0.1; // 0.15, 0.1
+        public static final double closedLoopRampRate = 0.05; // 0.25, 0.1
+        public static final double openLoopRampRate = 0.05; // 0.15, 0.1
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
