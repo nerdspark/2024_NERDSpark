@@ -27,14 +27,16 @@ public class ClimbIOSparkMax implements ClimbIO {
         climbMotor = new TalonFX(ClimbConstants.winchPort, "canivore1");
         climbMotor.setPosition(0);
         // climbMotor.setNeutralMode(NeutralModeValue.Brake);
+        // climbMotor.
 
         TalonFXConfiguration climbConfig = new TalonFXConfiguration();
-        climbConfig.Slot0 = new Slot0Configs().withKP(1).withKS(1);
+        climbConfig.Slot0 = new Slot0Configs().withKP(0.2).withKS(1);
         climbConfig.CurrentLimits =
                 new CurrentLimitsConfigs().withStatorCurrentLimit(60).withStatorCurrentLimitEnable(true);
         climbConfig.MotorOutput = new MotorOutputConfigs()
                 .withNeutralMode(NeutralModeValue.Brake)
                 .withInverted(InvertedValue.Clockwise_Positive);
+
 
         climbMotor.getConfigurator().apply(climbConfig);
     }
@@ -69,6 +71,11 @@ public class ClimbIOSparkMax implements ClimbIO {
     }
 
     public void setClimbPosition(double position) {
-        climbMotor.setControl(new PositionTorqueCurrentFOC(position));
+        if (!(position - climbMotor.getPosition().getValueAsDouble() < 1)) {
+            climbMotor.set(1);
+        } else {
+            climbMotor.set(0);
+        }
+        // climbMotor.setControl(new PositionTorqueCurrentFOC(position));
     }
 }

@@ -55,6 +55,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIOSparkMax;
 import frc.robot.subsystems.climb.Climb;
+import frc.robot.subsystems.climb.ClimbIOSparkMax;
 import frc.robot.subsystems.fourBar.FourBar;
 import frc.robot.subsystems.fourBar.FourBarIO;
 import frc.robot.subsystems.fourBar.FourBarIOSparkMax;
@@ -139,6 +140,7 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(false); // bL
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
+            climb = new Climb(new ClimbIOSparkMax());
             arm = new Arm(new ArmIOSparkMax());
             scheduleArmCommands();
         }
@@ -518,11 +520,13 @@ public class RobotContainer { // implements RobotConstants{
                 .onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))
                 .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
-        driver.povDown()
-                .whileTrue(new WinchCommand(climb, () -> false)
-                        .alongWith(new WaitCommand(ClimbConstants.rumbleWait)
-                                .andThen(new GrapplerCommand(climb, () -> driverRaw.getAButton()))))
-                .onFalse(new WinchCommand(climb, () -> true).onlyIf(() -> climb.getServoOut()));
+        driver.povDown().whileTrue(new GrapplerCommand(climb, () -> true)).whileFalse(new GrapplerCommand(climb, () -> false));
+        driver.a().whileTrue(new WinchCommand(climb, () -> true));
+
+                // .whileTrue(new WinchCommand(climb, () -> false)
+                //         .alongWith(new WaitCommand(ClimbConstants.rumbleWait)
+                //                 .andThen(new GrapplerCommand(climb, () -> driverRaw.getAButton()))))
+                // .onFalse(new WinchCommand(climb, () -> true).onlyIf(() -> climb.getServoOut()));
 
         // retract winch
         // driver.x().whileTrue(new WaitCommand(0.5).andThen(new WinchCommand(climb, () -> true)));
