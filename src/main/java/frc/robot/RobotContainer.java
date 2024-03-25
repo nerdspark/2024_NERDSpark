@@ -32,6 +32,7 @@ import frc.robot.Constants.ArmConstants.AmpSetpoints;
 import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.BiasConstants;
 import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
@@ -42,8 +43,8 @@ import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmCommandAngles;
 import frc.robot.commands.FourBarCommand;
-import frc.robot.commands.GrapplerCommand;
 import frc.robot.commands.GrapplerSpinCommand;
+import frc.robot.commands.GripperIndexCommand;
 import frc.robot.commands.GripperIndexCommandPID;
 import frc.robot.commands.GripperOutCommand;
 import frc.robot.commands.IntakeCommand;
@@ -130,14 +131,14 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain = TunerConstantsSmidge.DriveTrain;
 
             drivetrain.getModule(0).getDriveMotor().setInverted(false); // fl
-            drivetrain.getModule(1).getDriveMotor().setInverted(false); // FR
+            drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(true); // bL
 
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
-            drivetrain.getModule(0).getDriveMotor().setInverted(false); // fl
+            drivetrain.getModule(0).getDriveMotor().setInverted(false);  // fl
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(false); // bL
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
@@ -314,8 +315,7 @@ public class RobotContainer { // implements RobotConstants{
                         new IntakeCommand(intake, () -> ((1.0)), IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)),
                         new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome)
-                                .alongWith(
-                                        new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.3)))));
+                                .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.3)))));
         driver.leftTrigger()
                 .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
                         .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome))
@@ -415,10 +415,10 @@ public class RobotContainer { // implements RobotConstants{
         // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // TEST COMMAND
-        copilot.back()
-                .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
-                        .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4800.0)));
-        copilot.back().onFalse(new InstantCommand(shooter::stop));
+        // copilot.back()
+        //         .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
+        //                 .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4800.0)));
+        // copilot.back().onFalse(new InstantCommand(shooter::stop));
 
         // 4 bar + shooter FIXED shots
 
@@ -440,6 +440,12 @@ public class RobotContainer { // implements RobotConstants{
                 .whileTrue(new ShooterCommand(
                         shooter, () -> FixedShotConstants.RPMHome, () -> FixedShotConstants.RPMHome));
         copilot.x().onFalse(new InstantCommand(shooter::stop));
+
+        
+        copilot.back()
+                .whileTrue(new ShooterCommand(
+                        shooter, () -> 4000.0, () -> 4000.0));
+        copilot.back().onFalse(new InstantCommand(shooter::stop));
 
         copilot.leftStick().and(() -> copilot.getRightX() > 0.8).onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
         copilot.leftStick().and(() -> copilot.getRightX() < -0.8).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
