@@ -9,10 +9,10 @@ import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.climb.Climb;
 import java.util.function.Supplier;
 
-public class WinchCommand extends Command {
+public class GrapplerSpinCommand extends Command {
     private final Climb Climb;
     /** Creates a new ClimbCommand. */
-    public WinchCommand(Climb Climb) {
+    public GrapplerSpinCommand(Climb Climb) {
         this.Climb = Climb;
         // Use addRequirements() here to declare subsystem dependencies.
     }
@@ -24,14 +24,14 @@ public class WinchCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Climb.setClimbMotorPower(1);
+        Climb.setServo(1);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Climb.setClimbMotorPower(0);
-    }
+        Climb.setServo(0);
+}
 
     // Returns true when the command should end.
     @Override

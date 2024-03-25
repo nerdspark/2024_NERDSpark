@@ -21,11 +21,13 @@ public class ClimbIOSparkMax implements ClimbIO {
 
     private Servo grapplingServo;
     private boolean servoOut = false;
+    private double initialPose;
 
     public ClimbIOSparkMax() {
         grapplingServo = new Servo(ClimbConstants.servoPort);
         climbMotor = new TalonFX(ClimbConstants.winchPort, "canivore1");
         climbMotor.setPosition(0);
+        initialPose = grapplingServo.getPosition();
         // climbMotor.setNeutralMode(NeutralModeValue.Brake);
         // climbMotor.
 
@@ -64,18 +66,16 @@ public class ClimbIOSparkMax implements ClimbIO {
             servoOut = true;
         }
     }
-
+    public void setServo(double power) {
+        grapplingServo.set(power);
+    }
     public boolean getServoOut() {
-        return servoOut;
+        return Math.abs(grapplingServo.getPosition() - initialPose)> 0.1;
         // return Math.abs(grapplingServo.getAngle() - ClimbConstants.servoOutPos) < ClimbConstants.servoOutTolerance;
     }
 
     public void setClimbPosition(double position) {
-        if (!(position - climbMotor.getPosition().getValueAsDouble() < 1)) {
-            climbMotor.set(1);
-        } else {
-            climbMotor.set(0);
-        }
-        // climbMotor.setControl(new PositionTorqueCurrentFOC(position));
+
+        climbMotor.setControl(new PositionTorqueCurrentFOC(position));
     }
 }

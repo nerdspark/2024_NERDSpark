@@ -20,6 +20,9 @@ public class Climb extends SubsystemBase {
     public void setClimbMotorPower(double climbPower) {
         io.setClimbMotorPower(climbPower);
     }
+    public void setServo(double power){
+        io.setServo(power);
+    }
 
     public double getClimbMotorPosition() {
         return io.getClimbMotorPosition();

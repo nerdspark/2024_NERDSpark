@@ -43,6 +43,7 @@ import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmCommandAngles;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.GrapplerCommand;
+import frc.robot.commands.GrapplerSpinCommand;
 import frc.robot.commands.GripperIndexCommandPID;
 import frc.robot.commands.GripperOutCommand;
 import frc.robot.commands.IntakeCommand;
@@ -520,8 +521,8 @@ public class RobotContainer { // implements RobotConstants{
                 .onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))
                 .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
-        driver.povDown().whileTrue(new GrapplerCommand(climb, () -> true)).whileFalse(new GrapplerCommand(climb, () -> false));
-        driver.a().whileTrue(new WinchCommand(climb, () -> true));
+        driver.povDown().whileTrue(new WaitCommand(0.5).andThen(new GrapplerSpinCommand(climb)));
+        driver.a().whileTrue(new WinchCommand(climb).onlyIf(() -> climb.getServoOut()));
 
                 // .whileTrue(new WinchCommand(climb, () -> false)
                 //         .alongWith(new WaitCommand(ClimbConstants.rumbleWait)
