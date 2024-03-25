@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.02,
-        "y": 2.55
+        "y": 2.25
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.697905475051757,
-        "y": 1.697587212113926
+        "y": 1.3975872121139261
       },
       "isLocked": false,
       "linkedName": null
@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 8.02,
-        "y": 4.64
+        "y": 4.24
       },
       "prevControl": {
         "x": 5.969306795362308,
-        "y": 4.64
+        "y": 4.24
       },
       "nextControl": null,
       "isLocked": false,
@@ -80,7 +80,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToShooter"
+                "name": "fourBarToWSR3"
               }
             }
           ]
@@ -89,7 +89,7 @@
     },
     {
       "name": "forceIntake",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.8,
       "command": {
         "type": "sequential",
         "data": {
@@ -98,23 +98,6 @@
               "type": "named",
               "data": {
                 "name": "forcedIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "forceIntakeZero",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntakeZero"
               }
             }
           ]

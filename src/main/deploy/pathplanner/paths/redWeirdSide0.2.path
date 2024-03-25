@@ -28,7 +28,13 @@
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -151.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -74,13 +80,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -143.0,
+    "rotation": -151.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "redWeirdSide",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": -170.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

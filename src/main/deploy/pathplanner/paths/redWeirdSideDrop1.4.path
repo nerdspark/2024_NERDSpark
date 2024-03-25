@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.849777261899693,
-        "y": 2.79342669337692
+        "x": 13.767825917154726,
+        "y": 2.998305055239342
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.959045721559653,
-        "y": 2.2675722312633733
+        "x": 13.788313753340967,
+        "y": 2.342694297279593
       },
       "prevControl": {
-        "x": 13.883923655543429,
-        "y": 2.4792798718545415
+        "x": 13.652626811343831,
+        "y": 2.622548615148684
       },
       "nextControl": {
-        "x": 14.052680621294302,
-        "y": 2.00369205928392
+        "x": 13.897582213000925,
+        "y": 2.11732809923093
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 2.0
       },
       "prevControl": {
-        "x": 14.519046577316937,
-        "y": 1.98757180338473
+        "x": 14.12294841104959,
+        "y": 1.9458637349149184
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.45,
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "sequential",
         "data": {
@@ -72,7 +72,7 @@
     },
     {
       "name": "softIntake",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 1.15,
       "command": {
         "type": "sequential",
         "data": {

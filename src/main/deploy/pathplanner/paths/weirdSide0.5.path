@@ -4,23 +4,23 @@
     {
       "anchor": {
         "x": 8.02,
-        "y": 4.64
+        "y": 4.24
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.207814364431371,
-        "y": 4.882697720308735
+        "y": 4.482697720308735
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.749274022082313,
+        "x": 3.0,
         "y": 5.14
       },
       "prevControl": {
-        "x": 5.1629347189330215,
+        "x": 4.413660696850709,
         "y": 4.887316687036346
       },
       "nextControl": null,
@@ -28,7 +28,13 @@
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": -19.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [
     {
       "name": "New Constraints Zone",
@@ -53,7 +59,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToShooter"
+                "name": "fourBarToHome"
               }
             }
           ]
@@ -62,7 +68,7 @@
     },
     {
       "name": "forceIntake",
-      "waypointRelativePos": 0.8,
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "sequential",
         "data": {
@@ -86,7 +92,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -15.0,
+    "rotation": -19.0,
     "rotateFast": false
   },
   "reversed": false,

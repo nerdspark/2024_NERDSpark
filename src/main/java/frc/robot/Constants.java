@@ -262,18 +262,17 @@ public final class Constants {
         public static final double redCenterRing3 = 1.95; // 2.5
         public static final double redCenterRing4 = 1.95; // 1.9
 
+        public static final double blueCenterRing2 = 1.94; // 2.7
+        public static final double blueCenterRing3 = 1.90; // 2.45
+        public static final double blueCenterRing4 = 1.93; // 1.9
 
-        public static final double blueCenterRing2 = 1.95; // 2.7
-        public static final double blueCenterRing3 = 1.95; // 2.45
-        public static final double blueCenterRing4 = 1.97; // 1.9
-
-        public static final double weirdSideRing2 = 1.87; // 3.5
+        public static final double weirdSideRing2 = 1.80; // 3.5
         public static final double weirdSideRing3 = 1.87; // 2.75
-        public static final double weirdSideRing4 = 2.148; // 1.9
+        public static final double weirdSideRing4 = 2.075; // 1.9
 
-        public static final double red_weirdSideRing2 = 1.80;
-        public static final double red_weirdSideRing3 = 1.87;
-        public static final double red_weirdSideRing4 = 1.93;
+        public static final double red_weirdSideRing2 = 1.73;
+        public static final double red_weirdSideRing3 = 1.81;
+        public static final double red_weirdSideRing4 = 2.075;
 
         public static final double blueAmpSide1 = 2.98; // 2.7
         public static final double blueAmpSide2 = 1.85; // 2.45
@@ -284,12 +283,11 @@ public final class Constants {
         public static final double redAmpSide3 = 1.915; 
         public static final double redAmpSide4 = 1.93; 
 
-
         public static final double redRECenterNote5 = 1.85; // 1.80
         public static final double redRECenterNote6 = 1.85; // 1.80
 
         public static final double blueRECenterNote5 = 1.92; // 1.80
-        public static final double blueRECenterNote6 = 1.95; // 1.87
+        public static final double blueRECenterNote6 = 1.92; // 1.87
 
         // public static final double blueStarWars1 = 1.95; // 3.5
         // public static final double blueStarWars2 = 1.87; // 2.75
