@@ -206,25 +206,27 @@ public final class Constants {
 
             // PICKUP SEQUENCE
 
-            public static final double pickupElbow = ArmConstants.elbowOffset - 0.300;
+            public static final double pickupElbow = ArmConstants.elbowOffset - 0.35;
             public static final double pickupShoulder = ArmConstants.shoulderOffset;
             public static final double pullOutDifference = 0.5;
             public static final double pullOutElbow = pickupElbow + pullOutDifference;
             public static final double pullOutShoulder = pickupShoulder + pullOutDifference;
 
-            public static final double intakeTimeout = 0.38;
+            public static final double pickupFourBar = FourBarConstants.fourBarHome - 0.48;
+
+            public static final double intakeTimeout = 0.25;
             public static final double spinUpTimeout = 0.4;
             public static final double pickupPullTimeout = 0.5;
 
-            public static final double pickupShooterRPM = 600;
+            public static final double pickupShooterRPM = 500;
 
-            public static final double indexPowerGripper = 0.40;
-            public static final double indexDistGripper = 40.0;
+            public static final double indexPowerGripper = 0.2;
+            public static final double indexDistGripper = 12.0;
         }
 
         public static final class AmpSetpoints {
             // AMP DROPOFF
-            public static final Translation2d amp = new Translation2d(0.0, 26.0); // dropoff - Y
+            public static final Translation2d amp = new Translation2d(1.5, 24.0); // dropoff - Y
             public static final double ampMultiplierX = 8.5;
             public static final double ampMultiplierY = 5;
         }

@@ -202,7 +202,7 @@ public class RobotContainer { // implements RobotConstants{
         // drivetrain.registerTelemetry(logger::telemeterize);
         // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () ->
         // false));
-        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
+        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome + 0));
     }
 
     private void configureNamedCommands() {
@@ -552,18 +552,18 @@ public class RobotContainer { // implements RobotConstants{
         pull arm outward
         return arm to home */
         copilot.b()
-                .whileTrue((new ShooterCommand(
+                .whileTrue(new ShooterCommand(
                                 shooter,
                                 () -> PickupSetpoints.pickupShooterRPM,
-                                () -> PickupSetpoints.pickupShooterRPM))
+                                () -> PickupSetpoints.pickupShooterRPM)
+                                .alongWith((new FourBarCommand(fourBar, () -> PickupSetpoints.pickupFourBar))
                         .alongWith(new ArmCommandAngles(
-                                        arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder)
+                                        arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder))
                                 .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
                                         .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
                                                 .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak())
                                                         .andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
-                                                                .andThen(new GripperIndexCommandPID(arm)
-                                                                        .withTimeout(2.0))))))));
+                                                                .andThen(new GripperIndexCommand(arm))))))));
         // .andThen(new ArmCommandAngles(arm, () -> PickupSetpoints.pullOutElbow, () ->
         // PickupSetpoints.pullOutShoulder).withTimeout(PickupSetpoints.pickupPullTimeout)));
 
