@@ -241,7 +241,7 @@ public final class Constants {
 
             public static final double trapMicroadjust = Units.degreesToRadians(25);
 
-            public static final double climbElbow = 4.2;// untested
+            public static final double climbElbow = 3.9;// untested
             public static final double climbShoulder = 1.6;// untested
 
             public static final double pinchShoulder = ArmConstants.shoulderOffset + 0.4;//untested
