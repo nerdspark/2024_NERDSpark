@@ -1,12 +1,11 @@
-package frc.robot.subsystems.blikenLights;
+package frc.robot.subsystems.blikinLights;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.Constants.BlinkinLightsConstants;
 
 public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
-    
-    private Spark blinkenLights;
 
+    private Spark blinkenLights;
 
     public BlinkinLightsIOSparkMax() {
         blinkenLights = new Spark(BlinkinLightsConstants.lightChannel);
@@ -18,9 +17,5 @@ public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
 
     @Override
     @SuppressWarnings("static-access")
-    public void updateInputs(BlinkintLightsIOInputs inputs) {
-        
-    }
-
-    
+    public void updateInputs(BlinkintLightsIOInputs inputs) {}
 }
