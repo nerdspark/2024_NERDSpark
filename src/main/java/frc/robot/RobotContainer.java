@@ -35,6 +35,7 @@ import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.BiasConstants;
 import frc.robot.Constants.ClimbConstants;
+import frc.robot.Constants.BlinkinLightsConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
 import frc.robot.Constants.FourBarConstants;
@@ -58,6 +59,8 @@ import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIOSparkMax;
+import frc.robot.subsystems.blikinLights.BlinkinLights;
+import frc.robot.subsystems.blikinLights.BlinkinLightsIOSparkMax;
 import frc.robot.subsystems.climb.Climb;
 import frc.robot.subsystems.climb.ClimbIOSparkMax;
 import frc.robot.subsystems.fourBar.FourBar;
@@ -86,6 +89,7 @@ public class RobotContainer { // implements RobotConstants{
     private Climb climb;
     private AutoAim m_AutoAim;
     private boolean enableSlowMode = false;
+    private BlinkinLights lights;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
@@ -146,6 +150,7 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
             climb = new Climb(new ClimbIOSparkMax());
             arm = new Arm(new ArmIOSparkMax());
+            lights = new BlinkinLights(new BlinkinLightsIOSparkMax());
             scheduleArmCommands();
         }
 
@@ -302,6 +307,7 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("redAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide2));
         NamedCommands.registerCommand("redAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide3));
         NamedCommands.registerCommand("redAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide4));
+
     }
 
     private void configureButtonBindings() {
@@ -406,7 +412,25 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))));
+                                                
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
+
+        copilot.leftTrigger().whileTrue(new InstantCommand( 
+                () -> lights.setLightPattern( 
+                        drivetrain
+                                .getCurrentPose()
+                                .getTranslation()
+                                .getDistance(aprilTagVision.getVisionPose().getTranslation())
+                        < DrivetrainConstants.poseSyncTolerance ? 
+                
+                (fourBar.onTarget() ? BlinkinLightsConstants.readyToShootPattern: BlinkinLightsConstants.gettingReadyToShootPattern): 
+                                BlinkinLightsConstants.badVisionPattern
+        )));
+
+        lights.setDefaultCommand(new InstantCommand( () -> lights.setLightPattern(
+                intake.getBeamBreak() ? BlinkinLightsConstants.hasNotePattern: 
+                        BlinkinLightsConstants.doesNotHaveNotePattern
+        )));
 
         // copilot shoot
         copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
@@ -584,6 +608,7 @@ public class RobotContainer { // implements RobotConstants{
         copilot.rightStick()
                 .onTrue(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb));
 
+
         // copilot.rightStick().onTrue(new ArmCommandAngles(
         //                         arm,
         //                         () -> TrapSetpoints.trapArmAngle
@@ -617,6 +642,8 @@ public class RobotContainer { // implements RobotConstants{
     }
 
     private void configureDashboard() {
+
+        
         /**** Driver tab ****/
 
         // /**** Vision tab ****/

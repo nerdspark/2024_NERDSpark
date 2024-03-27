@@ -14,6 +14,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.actions.startUp;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 
@@ -432,6 +433,18 @@ public final class Constants {
         public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerRedY, new Rotation2d(Math.PI));
 
         public static final double autonAimDistanceThreshold = 2.0d;
+    }
+
+    public static class BlinkinLightsConstants {
+
+        public static final int lightChannel = 0;
+
+        public static final double hasNotePattern = 0.61; // Solid Red
+        public static final double doesNotHaveNotePattern = 0.93; // solid White
+        public static final double gettingReadyToShootPattern = 0.75; // solid green
+        public static final double readyToShootPattern = 0.15; // flashing green
+        public static final double badVisionPattern = -0.07; // strobe gold
+        
     }
 
     public static class ShooterConstants {
