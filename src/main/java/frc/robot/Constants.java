@@ -206,7 +206,7 @@ public final class Constants {
 
             // PICKUP SEQUENCE
 
-            public static final double pickupElbow = ArmConstants.elbowOffset - 0.35;
+            public static final double pickupElbow = ArmConstants.elbowOffset - 0.37;
             public static final double pickupShoulder = ArmConstants.shoulderOffset;
             public static final double pullOutDifference = 0.5;
             public static final double pullOutElbow = pickupElbow + pullOutDifference;
@@ -226,7 +226,7 @@ public final class Constants {
 
         public static final class AmpSetpoints {
             // AMP DROPOFF
-            public static final Translation2d amp = new Translation2d(1.5, 24.0); // dropoff - Y
+            public static final Translation2d amp = new Translation2d(1.5, 24.5); // dropoff - Y
             public static final double ampMultiplierX = 8.5;
             public static final double ampMultiplierY = 5;
         }
@@ -241,8 +241,8 @@ public final class Constants {
 
             public static final double trapMicroadjust = Units.degreesToRadians(25);
 
-            public static final double climbElbow = 3.9;// untested
-            public static final double climbShoulder = 1.6;// untested
+            public static final double climbElbow = 3.9;
+            public static final double climbShoulder = 1.6;
 
             public static final double pinchShoulder = ArmConstants.shoulderOffset + 0.4;//untested
 
@@ -331,7 +331,7 @@ public final class Constants {
 
     public static class BiasConstants {
         public static final double joystickThreshold = 0.8;
-        public static final double distanceBiasIncrement = 0.5;
+        public static final double distanceBiasIncrement = 0.15;
     }
 
     public static class VisionConstants {

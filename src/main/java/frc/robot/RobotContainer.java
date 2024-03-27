@@ -448,8 +448,8 @@ public class RobotContainer { // implements RobotConstants{
                         shooter, () -> 4000.0, () -> 4000.0));
         copilot.back().onFalse(new InstantCommand(shooter::stop));
 
-        copilot.leftStick().and(() -> copilot.getRightX() > 0.8).onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
-        copilot.leftStick().and(() -> copilot.getRightX() < -0.8).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
+        copilot.leftStick().and(() -> copilot.getRightY() > 0.8).onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
+        copilot.leftStick().and(() -> copilot.getRightY() < -0.8).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
 
         // aim command
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
