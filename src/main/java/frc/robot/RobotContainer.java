@@ -43,6 +43,7 @@ import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmCommandAngles;
 import frc.robot.commands.FourBarCommand;
+import frc.robot.commands.GrapplerCommand;
 import frc.robot.commands.GrapplerSpinCommand;
 import frc.robot.commands.GripperIndexCommand;
 import frc.robot.commands.GripperIndexCommandPID;
@@ -527,7 +528,7 @@ public class RobotContainer { // implements RobotConstants{
                 .onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))
                 .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
-        driver.povDown().whileTrue(new WaitCommand(0.5).andThen(new GrapplerSpinCommand(climb)));
+        driver.povDown().and(() -> driverRaw.getXButton()).and(() -> Math.abs(fourBar.getFourBarAngle() - FourBarConstants.fourBarHome) > 0.1).whileTrue(new WaitCommand(0.2).andThen(new GrapplerCommand(climb)));
         driver.a().whileTrue(new WinchCommand(climb).onlyIf(() -> climb.getServoOut()));
 
                 // .whileTrue(new WinchCommand(climb, () -> false)
@@ -580,15 +581,26 @@ public class RobotContainer { // implements RobotConstants{
 
         // TRAP COMMAND
         copilot.rightStick()
-                .onTrue(new ArmCommandAngles(
-                                arm,
-                                () -> TrapSetpoints.trapArmAngle
-                                        - TrapSetpoints.trapArmDifference
-                                        + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust),
-                                () -> TrapSetpoints.trapArmAngle
-                                        + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust))
-                        .alongWith(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb)));
+                .onTrue(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb));
 
+        // copilot.rightStick().onTrue(new ArmCommandAngles(
+        //                         arm,
+        //                         () -> TrapSetpoints.trapArmAngle
+        //                                 - TrapSetpoints.trapArmDifference
+        //                                 + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust),
+        //                         () -> TrapSetpoints.trapArmAngle
+        //                                 + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust)));
+
+        copilot.rightStick().onTrue(new ArmCommandAngles(
+                                arm,
+                                () -> TrapSetpoints.climbElbow,
+                                () -> TrapSetpoints.climbShoulder));
+
+        // copilot.leftStick().onTrue(new ArmCommandAngles(
+        //                         arm,
+        //                         () -> TrapSetpoints.pressElbow,
+        //                         () -> TrapSetpoints.pressShoulder
+        //                                 + (copilot.getLeftY() * TrapSetpoints.pressMicroadjust)));
         // // reset buttons
         // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() ->
         // arm.setGains(false))));

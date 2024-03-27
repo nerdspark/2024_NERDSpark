@@ -24,7 +24,11 @@ public class WinchCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Climb.setClimbMotorPower(1);
+        // if (Math.abs(Climb.getClimbMotorPosition()) < ClimbConstants.winchDist) {
+            Climb.setClimbMotorPower(1);
+        // } else {
+        //     Climb.setClimbMotorPower(0);
+        // }
     }
 
     // Called once the command ends or is interrupted.

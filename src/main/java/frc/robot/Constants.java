@@ -35,8 +35,8 @@ public final class Constants {
     }
 
     public final class ClimbConstants {
-        public static final double servoOutPos = 180.0;
-        public static final double servoInPos = 0.0;
+        public static final double servoOutPos = 360.0;
+        public static final double servoInPos = -0.0;
         // public static final double servoOutTolerance = 50.0;
         public static final double winchDist = 48 * 12;
 
@@ -233,12 +233,25 @@ public final class Constants {
 
         public static final class TrapSetpoints {
             // TRAP DROPOFF
-            public static final double trapArmAngle = Units.degreesToRadians(105);
-            public static final double trapArmDifference = Units.degreesToRadians(30);
 
-            public static final double copilotMicroadjust = Units.degreesToRadians(10);
+            public static final double winchAmpLimit = 25;
 
-            public static final double fourBarClimb = 0.8;
+            public static final double trapArmAngle = Units.degreesToRadians(112);
+            public static final double trapArmDifference = Units.degreesToRadians(28);
+
+            public static final double trapMicroadjust = Units.degreesToRadians(25);
+
+            public static final double climbElbow = 4.2;// untested
+            public static final double climbShoulder = 1.6;// untested
+
+            public static final double pinchShoulder = ArmConstants.shoulderOffset + 0.4;//untested
+
+            public static final double fourBarClimb = FourBarConstants.fourBarOut;
+
+            public static final double pressElbow = Units.degreesToRadians(-10);
+            public static final double pressShoulder = Units.degreesToRadians(115);
+            public static final double pressMicroadjust = Units.degreesToRadians(55);
+
         }
     }
 
