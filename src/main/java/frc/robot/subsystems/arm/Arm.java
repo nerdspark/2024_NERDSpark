@@ -6,7 +6,6 @@ package frc.robot.subsystems.arm;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.util.LightningShuffleboard;
 import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
@@ -59,6 +58,10 @@ public class Arm extends SubsystemBase {
 
     public Translation2d getArmPosition() {
         return io.getArmPosition();
+    }
+
+    public void setGripperPosition(double position) {
+        io.setGripperPosition(position);
     }
 
     public void setShoulderPosition(double position) {

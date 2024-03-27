@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.subsystems.arm.Arm;
 
-public class GripperIndexCommand extends Command {
+public class GripperIndexCommandPID extends Command {
     private final Arm arm;
     double startPoint = 0.0;
     // private final Supplier<double> power
     /** Creates a new GripperIndexCommand. */
-    public GripperIndexCommand(Arm arm) {
+    public GripperIndexCommandPID(Arm arm) {
         this.arm = arm;
         // Use addRequirements() here to declare subsystem dependencies.
     }
@@ -27,7 +27,7 @@ public class GripperIndexCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        arm.setGripperPower(PickupSetpoints.indexPowerGripper);
+        arm.setGripperPosition(startPoint + PickupSetpoints.indexDistGripper);
     }
 
     // Called once the command ends or is interrupted.
@@ -39,6 +39,6 @@ public class GripperIndexCommand extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(arm.getGripperPosition() - startPoint) > PickupSetpoints.indexDistGripper;
+        return false; // Math.abs(arm.getGripperPosition() - startPoint) > PickupSetpoints.indexDistGripper;
     }
 }

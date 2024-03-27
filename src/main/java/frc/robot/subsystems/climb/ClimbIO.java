@@ -25,6 +25,10 @@ public interface ClimbIO {
     }
 
     default void setServoPosition(double angle) {}
+    default void setServo(double power){}
+    default boolean getServoOut() {
+        return false;
+    }
 
     default void setClimbPosition(double position) {}
 }

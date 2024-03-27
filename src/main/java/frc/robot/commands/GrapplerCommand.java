@@ -5,40 +5,43 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ArmConstants.PickupSetpoints;
-import frc.robot.subsystems.arm.Arm;
+import frc.robot.Constants.ClimbConstants;
+import frc.robot.subsystems.climb.Climb;
+import java.util.function.Supplier;
 
-public class GripperIndexCommand extends Command {
-    private final Arm arm;
-    double startPoint = 0.0;
-    // private final Supplier<double> power
-    /** Creates a new GripperIndexCommand. */
-    public GripperIndexCommand(Arm arm) {
-        this.arm = arm;
+public class GrapplerCommand extends Command {
+    private final Climb Climb;
+    // private final boolean servoRelease;
+    /** Creates a new ClimbCommand. */
+    public GrapplerCommand(Climb Climb) {
+        this.Climb = Climb;
+        // this.servoRelease = servoRelease.get();
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {
-        startPoint = arm.getGripperPosition();
-    }
+    public void initialize() {}
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        arm.setGripperPower(PickupSetpoints.indexPowerGripper);
+        // if (servoRelease) {
+            Climb.setServoPosition(ClimbConstants.servoOutPos);
+        // } else {
+            // Climb.setServoPosition(ClimbConstants.servoInPos);
+        // }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        arm.setGripperPower(0);
+        Climb.setServoPosition(ClimbConstants.servoInPos);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(arm.getGripperPosition() - startPoint) > PickupSetpoints.indexDistGripper;
+        return false;
     }
 }

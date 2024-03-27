@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ArmConstants.ArmSetPoints;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.arm.Arm;
 import java.util.function.Supplier;
 
@@ -37,7 +37,8 @@ public class ArmCommandAngles extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        arm.setArmPosition(ArmSetPoints.home, false);
+        arm.setElbowPosition(ArmConstants.elbowOffset);
+        arm.setShoulderPosition(ArmConstants.shoulderOffset);
     }
 
     // Returns true when the command should end.

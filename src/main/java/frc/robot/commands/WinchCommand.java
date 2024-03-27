@@ -9,15 +9,11 @@ import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.climb.Climb;
 import java.util.function.Supplier;
 
-public class ClimbCommand extends Command {
+public class WinchCommand extends Command {
     private final Climb Climb;
-    private final boolean isOut;
-    private final boolean winchOut;
     /** Creates a new ClimbCommand. */
-    public ClimbCommand(Climb Climb, Supplier<Boolean> isOut, Supplier<Boolean> winchOut) {
+    public WinchCommand(Climb Climb) {
         this.Climb = Climb;
-        this.isOut = isOut.get();
-        this.winchOut = winchOut.get();
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -28,21 +24,18 @@ public class ClimbCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (isOut) {
-            Climb.setServoPosition(ClimbConstants.servoOutPosition);
-        } else {
-            Climb.setServoPosition(0);
-        }
-        if (winchOut) {
-            Climb.setClimbPosition(ClimbConstants.winchPos);
-        } else {
-            Climb.setClimbPosition(0);
-        }
+        // if (Math.abs(Climb.getClimbMotorPosition()) < ClimbConstants.winchDist) {
+            Climb.setClimbMotorPower(1);
+        // } else {
+        //     Climb.setClimbMotorPower(0);
+        // }
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        Climb.setClimbMotorPower(0);
+    }
 
     // Returns true when the command should end.
     @Override

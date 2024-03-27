@@ -36,10 +36,15 @@ public final class Constants {
     }
 
     public final class ClimbConstants {
-        public static final double servoOutPosition = 180.0;
+        public static final double servoOutPos = 360.0;
+        public static final double servoInPos = -0.0;
+        // public static final double servoOutTolerance = 50.0;
+        public static final double winchDist = 48 * 12;
+
+        public static final double rumbleWait = 0.5;
+
         public static final int servoPort = 9;
-        public static final double winchPos = 10;
-        public static final int winchPort = 10;
+        public static final int winchPort = 6;
     }
 
     public final class FixedShotConstants {
@@ -60,7 +65,6 @@ public final class Constants {
         public static final double resetPosition = Math.PI - 0.9948; // zero position from CAD
         public static final double fourBarOut = 0.52;
         public static final double fourBarHome = 2.148;
-        public static final double fourBarClimb = 0.8;
         public static final double fourBarTolerance = 0.015;
         public static final double fourBarHotel = .88;
         public static final IdleMode fourBarIdleMode = IdleMode.kBrake;
@@ -82,19 +86,30 @@ public final class Constants {
             fourBarMap.put(1.96, 0.56);
             fourBarMap.put(2.14, 0.62);
             fourBarMap.put(2.35, 0.67);
-            fourBarMap.put(3.19, fourBarHotel);
-            fourBarMap.put(3.1999999999, fourBarHotel);
+            fourBarMap.put(3.09, fourBarHotel);
+            fourBarMap.put(3.0999999999, fourBarHotel);
 
-            fourBarMap.put(3.2, fourBarHome);
-
+            fourBarMap.put(3.1, fourBarHome);
             fourBarMap.put(3.3, fourBarHome);
-            fourBarMap.put(3.31, fourBarHome - 0.1); // 4barhome un-backlash
-            fourBarMap.put(4.08, 1.98);
-            fourBarMap.put(4.45, 1.97);
-            fourBarMap.put(5.0, 1.95);
-            fourBarMap.put(5.53, 1.87);
+            fourBarMap.put(3.3001, fourBarHome - 0.05); // 4barhome un-backlash
+            fourBarMap.put(3.5, 2.08);
+            fourBarMap.put(3.75, 2.06);
+            fourBarMap.put(4.08, 2.04);
+            fourBarMap.put(4.45, 2.00);
+            fourBarMap.put(5.0, 1.98);
+            fourBarMap.put(5.25, 1.93);
+            fourBarMap.put(5.53, 1.85);
+            fourBarMap.put(5.75, 1.81);
+            fourBarMap.put(6.00, 1.75);
+            fourBarMap.put(6.35, 1.66);
+            fourBarMap.put(6.8, FixedShotConstants.fourBarLong);
+            fourBarMap.put(15.1, FixedShotConstants.fourBarLong);
 
-            fourBarMap.put(6.44, FixedShotConstants.fourBarLong);
+            // 3.24.24 shoot tune
+            // fourBarMap.put(4.30, 2.02);
+            // fourBarMap.put(4.89, 1.97);
+            // fourBarMap.put(5.47, 1.91);
+
             // fourBarMap.put(4.75 + 0.2, 1.925d);
             // fourBarMap.put(4.85 + 0.2, 1.925d);
             // fourBarMap.put(4.90 + 0.2, 1.925);
@@ -102,7 +117,6 @@ public final class Constants {
             // fourBarMap.put(5.10 + 0.2, 1.9);
             // fourBarMap.put(5.30 + 0.2, 1.79);
             // fourBarMap.put(5.40 + 0.15, 1.5);
-            fourBarMap.put(15.1, FixedShotConstants.fourBarLong);
 
             /* OLD POSITIONS W/O NEW CONVERSION FACTOR */
             // fourBarMap.put(49.5, 8.0);
@@ -156,26 +170,21 @@ public final class Constants {
         public static final int currentLimitElbow = 60;
         public static final double rampRateShoulder = 0.1;
         public static final double rampRateElbow = .1;
-        public static final double indexPowerGripper = 0.55;
         public static final double outPowerGripper = 1.0;
-        public static final double indexDistGripper = 17.0;
-
-        public static final double intakeTimeout = 0.25;
-        public static final double spinUpTimeout = 0.7;
 
         public static class ArmGains {
             public static final double shoulderP = 90.0;
             public static final double shoulderI = 0.0;
             public static final double shoulderD = 5.0;
-            public static final double elbowP = 30.0;
+            public static final double elbowP = 50.0;
             public static final double elbowI = 0.0;
-            public static final double elbowD = 2.0;
+            public static final double elbowD = 3.5;
             public static final double shoulderS = 0.0;
             public static final double shoulderG = 0.1;
             public static final double shoulderV = 0.0;
             public static final double shoulderA = 0.0;
             public static final double elbowS = 0.0;
-            public static final double elbowG = 0.32;
+            public static final double elbowG = 1.05;
             public static final double elbowV = 0.0;
             public static final double elbowA = 0.0;
 
@@ -194,27 +203,62 @@ public final class Constants {
             // elbowA);
         }
 
-        public static final class ArmSetPoints {
-            public static final Translation2d home = new Translation2d(
-                            baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
-                    .plus(new Translation2d(
-                            secondStageLength * Math.cos(elbowOffset), secondStageLength * Math.sin(elbowOffset))); // A
-            // public static final Translation2d pickup = new Translation2d(6, 9);
-            //         baseStageLength * Math.cos(shoulderOffset), baseStageLength * Math.sin(shoulderOffset))
-            // .plus(new Translation2d(
-            //         secondStageLength * Math.cos(elbowOffset - Units.degreesToRadians(2.5)),
-            //         secondStageLength * Math.sin(elbowOffset - Units.degreesToRadians(2.5)))); // B
-            public static final Translation2d amp = new Translation2d(0.0, 26.0); // dropoff - Y
-            public static final double ampMultiplier = 8.5;
+        public static final class PickupSetpoints {
+
+            // PICKUP SEQUENCE
+
+            public static final double pickupElbow = ArmConstants.elbowOffset - 0.37;
+            public static final double pickupShoulder = ArmConstants.shoulderOffset;
+            public static final double pullOutDifference = 0.5;
+            public static final double pullOutElbow = pickupElbow + pullOutDifference;
+            public static final double pullOutShoulder = pickupShoulder + pullOutDifference;
+
+            public static final double pickupFourBar = FourBarConstants.fourBarHome - 0.48;
+
+            public static final double intakeTimeout = 0.25;
+            public static final double spinUpTimeout = 0.4;
+            public static final double pickupPullTimeout = 0.5;
+
+            public static final double pickupShooterRPM = 500;
+
+            public static final double indexPowerGripper = 0.2;
+            public static final double indexDistGripper = 12.0;
+        }
+
+        public static final class AmpSetpoints {
+            // AMP DROPOFF
+            public static final Translation2d amp = new Translation2d(1.5, 24.5); // dropoff - Y
+            public static final double ampMultiplierX = 8.5;
             public static final double ampMultiplierY = 5;
-            public static final double trapArmAngle = Units.degreesToRadians(105);
-            public static final double trapArmDifference = Units.degreesToRadians(30);
-            // public static final Translation2d trap = new Translation2d(
-            //                 baseStageLength * Math.cos(Units.degreesToRadians(110.0)),
-            //                 baseStageLength * Math.sin(Units.degreesToRadians(110.0)))
-            //         .plus(new Translation2d(
-            //                 secondStageLength * Math.cos(Units.degreesToRadians(110.0)),
-            //                 secondStageLength * Math.sin(Units.degreesToRadians(110.0))));
+        }
+
+        public static final class TrapSetpoints {
+            // TRAP DROPOFF
+
+            public static final double winchAmpLimit = 25;
+
+            public static final double trapArmAngle = Units.degreesToRadians(112);
+            public static final double trapArmDifference = Units.degreesToRadians(28);
+
+            public static final double trapMicroadjust = Units.degreesToRadians(25);
+
+            public static final double climbElbow = 3.9;
+            public static final double climbShoulder = 1.6;
+
+            public static final double pinchShoulder = ArmConstants.shoulderOffset + 0.4;//untested
+
+            public static final double fourBarClimb = FourBarConstants.fourBarOut;
+
+            public static final double pressElbow = Units.degreesToRadians(-10);
+            public static final double pressShoulder = Units.degreesToRadians(115);
+            public static final double pressMicroadjust = Units.degreesToRadians(55);
+
+        }
+
+        public static final class BlockSetpoints {
+            public static final double elbow = 85;
+            public static final double shoulder = 110;
+            public static final double microadjust = 10;
         }
     }
 
@@ -231,23 +275,34 @@ public final class Constants {
         public static final double weirdSideRing3 = 1.87; // 2.75
         public static final double weirdSideRing4 = 2.148; // 1.9
 
-        public static final double red_weirdSideRing1 = 3.2;
-        public static final double red_weirdSideRing2 = 1.87;
+        public static final double red_weirdSideRing2 = 1.80;
         public static final double red_weirdSideRing3 = 1.87;
-        public static final double red_weirdSideRing4 = 2.148;
+        public static final double red_weirdSideRing4 = 1.93;
 
-        public static final double blueAmpSide1 = 2.0; // 2.7
-        public static final double blueAmpSide2 = 1.87; // 2.45
-        public static final double blueAmpSide3 = 1.87; // 2.45
-        public static final double blueAmpSide4 = 1.97; // 1.9
+        public static final double blueAmpSide1 = 2.98; // 2.7
+        public static final double blueAmpSide2 = 1.85; // 2.45
+        public static final double blueAmpSide3 = 1.915; // 2.45
+        public static final double blueAmpSide4 = 1.96; // 1.9
+
+        public static final double redAmpSide2 = 1.83;
+        public static final double redAmpSide3 = 1.915;
+        public static final double redAmpSide4 = 1.93;
+
+        public static final double redRECenterNote5 = 1.85; // 1.80
+        public static final double redRECenterNote6 = 1.85; // 1.80
 
         public static final double blueRECenterNote5 = 1.92; // 1.80
         public static final double blueRECenterNote6 = 1.95; // 1.87
 
-        public static final double blueStarWars1 = 1.95; // 3.5
-        public static final double blueStarWars2 = 1.87; // 2.75
-        public static final double blueStarWars3 = 1.87;
-        public static final double blueStarWars4 = 2.148;
+        // public static final double blueStarWars1 = 1.95; // 3.5
+        // public static final double blueStarWars2 = 1.87; // 2.75
+        // public static final double blueStarWars3 = 1.87;
+        // public static final double blueStarWars4 = 1.93;
+
+        // public static final double redStarWars1 = 1.95; // 3.5
+        // public static final double redStarWars2 = 1.80; // 2.75
+        // public static final double redStarWars3 = 1.87;
+        // public static final double redStarWars4 = 1.93;
     }
 
     public final class RobotMap {
@@ -279,6 +334,11 @@ public final class Constants {
         public static final double poseSyncTolerance =
                 0.5; // the tolerance at which vision pose and estimated pose have to be in for driver station to report
         // happy
+    }
+
+    public static class BiasConstants {
+        public static final double joystickThreshold = 0.8;
+        public static final double distanceBiasIncrement = 0.15;
     }
 
     public static class VisionConstants {
@@ -392,11 +452,11 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = 0.0; // ft
+        public static final double CONSTANT_DISTANCE_ADD = -0.0; // m
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
-        public static final double shootMoveMultiplier = 0.12; // theoretically speed of shot in m/s
+        public static final double shootMoveMultiplier = 0.08; // theoretically speed of shot in m/s
         public static final double stillShotSpeed = 0.3;
 
         public static final double shooterTolerance = 100;
@@ -404,15 +464,15 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(15.1, FixedShotConstants.RPMLong);
-            shooterMap.put(6.44, FixedShotConstants.RPMLong);
-            shooterMap.put(5.9436, 4900.0);
-            shooterMap.put(5.334, 4800.0);
-            shooterMap.put(4.7752, 4800.0);
-            shooterMap.put(4.1402, 4700.0);
-            shooterMap.put(3.429, 4500.0);
-            shooterMap.put(2.7178, 4200.0);
-            shooterMap.put(0.762, 3500.0);
+            shooterMap.put(15.1, 5200.0);
+            shooterMap.put(6.44, 5200.0);
+            shooterMap.put(5.9436, 5100.0);
+            shooterMap.put(5.334, 5000.0);
+            shooterMap.put(4.7752, 4900.0);
+            shooterMap.put(4.1402, 4800.0);
+            shooterMap.put(3.429, 4600.0);
+            shooterMap.put(2.7178, 4400.0);
+            shooterMap.put(0.762, 4200.0);
         }
     }
 

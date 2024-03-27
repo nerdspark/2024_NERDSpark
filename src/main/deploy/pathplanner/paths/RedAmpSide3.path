@@ -3,25 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.09,
-        "y": 3.39
+        "x": 8.31,
+        "y": 5.49
       },
       "prevControl": null,
       "nextControl": {
-        "x": 12.603625678596199,
-        "y": 1.43973265066971
+        "x": 9.34245330092642,
+        "y": 5.8712363511432235
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.62,
-        "y": 0.78
+        "x": 11.734,
+        "y": 6.091968319361906
       },
       "prevControl": {
-        "x": 12.102628874821338,
-        "y": 1.217488423001853
+        "x": 11.240992787518191,
+        "y": 6.686115568762929
+      },
+      "nextControl": {
+        "x": 12.19281197202317,
+        "y": 5.539031436760246
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 11.73,
+        "y": 4.528063490478756
+      },
+      "prevControl": {
+        "x": 12.197091809542828,
+        "y": 5.1017229036935365
+      },
+      "nextControl": {
+        "x": 11.263845283802825,
+        "y": 3.955554969674869
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.33,
+        "y": 3.8
+      },
+      "prevControl": {
+        "x": 9.622453728805063,
+        "y": 3.8044040772639756
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,28 +62,21 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": -135.0,
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": 165.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.5,
+      "rotationDegrees": 165.0,
       "rotateFast": false
     }
   ],
-  "constraintZones": [
-    {
-      "name": "slowToShoot",
-      "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.4,
-      "constraints": {
-        "maxVelocity": 2.0,
-        "maxAcceleration": 2.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0
-      }
-    }
-  ],
+  "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 0.05,
+      "name": "fourBarToShoot",
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -59,7 +84,7 @@
             {
               "type": "named",
               "data": {
-                "name": "RfourBarToWSR1"
+                "name": "redAmpSide3"
               }
             }
           ]
@@ -68,7 +93,7 @@
     },
     {
       "name": "forcedIntake",
-      "waypointRelativePos": 0.4,
+      "waypointRelativePos": 0.8,
       "command": {
         "type": "sequential",
         "data": {
@@ -84,25 +109,8 @@
       }
     },
     {
-      "name": "forcedIntake0",
-      "waypointRelativePos": 0.65,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntakeZero"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 2.05,
       "command": {
         "type": "sequential",
         "data": {
@@ -118,8 +126,8 @@
       }
     },
     {
-      "name": "onlySoftIntake",
-      "waypointRelativePos": 0.75,
+      "name": "softIntake",
+      "waypointRelativePos": 2.1999999999999997,
       "command": {
         "type": "sequential",
         "data": {
@@ -137,7 +145,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -147,10 +155,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redWeirdSide",
+  "folder": "RedAmpSide",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": -165.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
