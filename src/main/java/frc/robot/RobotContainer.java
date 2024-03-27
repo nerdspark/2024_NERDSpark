@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.AmpSetpoints;
+import frc.robot.Constants.ArmConstants.BlockSetpoints;
 import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
@@ -601,9 +602,13 @@ public class RobotContainer { // implements RobotConstants{
         //                         () -> TrapSetpoints.pressElbow,
         //                         () -> TrapSetpoints.pressShoulder
         //                                 + (copilot.getLeftY() * TrapSetpoints.pressMicroadjust)));
-        // // reset buttons
-        // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() ->
-        // arm.setGains(false))));
+
+        copilot.povLeft().whileTrue(new ArmCommandAngles(
+                                arm,
+                                () -> BlockSetpoints.elbow
+                                        + (copilot.getRightY() * BlockSetpoints.microadjust),
+                                () -> BlockSetpoints.shoulder
+                                        + (copilot.getRightY() * BlockSetpoints.microadjust)));
     }
 
     //     @Override

@@ -253,6 +253,12 @@ public final class Constants {
             public static final double pressMicroadjust = Units.degreesToRadians(55);
 
         }
+
+        public static final class BlockSetpoints {
+            public static final double elbow = 85;
+            public static final double shoulder = 110;
+            public static final double microadjust = 10;
+        }
     }
 
     public final class AutoConstants {
