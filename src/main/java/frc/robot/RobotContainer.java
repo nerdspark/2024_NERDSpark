@@ -541,10 +541,10 @@ public class RobotContainer { // implements RobotConstants{
         // driver.x().whileTrue(new WaitCommand(0.5).andThen(new WinchCommand(climb, () -> true)));
         // driver.x().onFalse(new WinchCommand(climb, () -> false));
 
-        driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
-        driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 3.0));
-        // copilot.leftBumper().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0)); // TODO change
-        // buttons
+        driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); 
+        driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 4.0));
+        copilot.povUp().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/4.0)); 
+        copilot.povDown().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper/4.0)); 
         copilot.leftBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
 
         // PICKUP SEQUENCE
