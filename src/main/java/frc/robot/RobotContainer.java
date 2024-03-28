@@ -646,10 +646,10 @@ public class RobotContainer { // implements RobotConstants{
         /**** Driver tab ****/
 
         // /**** Vision tab ****/
-        // final var visionTab = Shuffleboard.getTab("Vision");
+        final var visionTab = Shuffleboard.getTab("Vision");
 
         // Pose estimation
-        // drivetrain.addDashboardWidgets(visionTab);
+        drivetrain.addDashboardWidgets(visionTab);
 
         // final var driverTab = Shuffleboard.getTab("Driver");
         // visionTab.addBoolean(

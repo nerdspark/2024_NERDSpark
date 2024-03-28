@@ -206,7 +206,7 @@ public final class Constants {
 
             // PICKUP SEQUENCE
 
-            public static final double pickupElbow = ArmConstants.elbowOffset - 0.37;
+            public static final double pickupElbow = ArmConstants.elbowOffset - 0.44;
             public static final double pickupShoulder = ArmConstants.shoulderOffset;
             public static final double pullOutDifference = 0.5;
             public static final double pullOutElbow = pickupElbow + pullOutDifference;
@@ -214,14 +214,14 @@ public final class Constants {
 
             public static final double pickupFourBar = FourBarConstants.fourBarHome - 0.48;
 
-            public static final double intakeTimeout = 0.25;
+            public static final double intakeTimeout = 0.30;
             public static final double spinUpTimeout = 0.4;
             public static final double pickupPullTimeout = 0.5;
 
             public static final double pickupShooterRPM = 500;
 
             public static final double indexPowerGripper = 0.2;
-            public static final double indexDistGripper = 12.0;
+            public static final double indexDistGripper = 10.0;
         }
 
         public static final class AmpSetpoints {
@@ -234,7 +234,7 @@ public final class Constants {
         public static final class TrapSetpoints {
             // TRAP DROPOFF
 
-            public static final double winchAmpLimit = 25;
+            public static final double winchAmpLimit = 50;
 
             public static final double trapArmAngle = Units.degreesToRadians(110);
             public static final double trapArmDifference = Units.degreesToRadians(70);
@@ -460,7 +460,7 @@ public final class Constants {
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
-        public static final double shootMoveMultiplier = 0.08; // theoretically speed of shot in m/s
+        public static final double shootMoveMultiplier = 0.11; // theoretically speed of shot in m/s
         public static final double stillShotSpeed = 0.3;
 
         public static final double shooterTolerance = 100;
