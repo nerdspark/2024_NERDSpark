@@ -61,6 +61,8 @@ public interface ArmIO {
         return 0.0;
     }
 
+    default void setGripperPosition(double position) {}
+
     default double getShoulderRightPosition() {
         return 0.0;
     }
@@ -95,8 +97,5 @@ public interface ArmIO {
         return 0.0;
     }
 
-
-    default void callThisInPeriodic() {
-        
-    }
+    default void callThisInPeriodic() {}
 }

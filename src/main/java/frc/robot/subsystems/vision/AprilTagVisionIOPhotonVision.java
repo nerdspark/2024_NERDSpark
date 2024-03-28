@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.Constants;
 import frc.robot.util.VisionHelpers.PoseEstimate;
 import java.util.ArrayList;
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 /** This class represents the implementation of AprilTagVisionIO using Limelight camera. */
 public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
@@ -143,7 +142,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                 }
 
                 // if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
-                    poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
+                poseAmbiguity += cameraPose.targetsUsed.get(i).getPoseAmbiguity();
 
                 if (cameraPose.targetsUsed.get(i).getFiducialId() == speakerTagId) {
 
@@ -171,18 +170,19 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                 distanceUsedForCalculatingStdDev = smallestDistance;
             }
             // if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
-                poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
+            poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
-            if(distanceUsedForCalculatingStdDev < 6 && poseAmbiguity < 0.2) {
+            if (distanceUsedForCalculatingStdDev < 6 && poseAmbiguity < 0.2) {
                 inputs.poseEstimates.add(new PoseEstimate(
-                    cameraPose.estimatedPose.transformBy(estomator.getRobotToCameraTransform().inverse()),
-                    cameraPose.timestampSeconds,
-                    distanceUsedForCalculatingStdDev,
-                    tagIDsFrontCamera,
-                    poseAmbiguity,
-                    poseStrategyUsed,
-                    distanceToSpeakerTag,
-                    angleToSpeakerTag)); //
+                        cameraPose.estimatedPose.transformBy(
+                                estomator.getRobotToCameraTransform().inverse()),
+                        cameraPose.timestampSeconds,
+                        distanceUsedForCalculatingStdDev,
+                        tagIDsFrontCamera,
+                        poseAmbiguity,
+                        poseStrategyUsed,
+                        distanceToSpeakerTag,
+                        angleToSpeakerTag)); //
             }
 
             // inputs.poseEstimates = poseEstimates;

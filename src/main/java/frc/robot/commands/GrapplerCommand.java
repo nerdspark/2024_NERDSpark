@@ -11,11 +11,11 @@ import java.util.function.Supplier;
 
 public class GrapplerCommand extends Command {
     private final Climb Climb;
-    private final boolean servoRelease;
+    // private final boolean servoRelease;
     /** Creates a new ClimbCommand. */
-    public GrapplerCommand(Climb Climb, Supplier<Boolean> servoRelease) {
+    public GrapplerCommand(Climb Climb) {
         this.Climb = Climb;
-        this.servoRelease = servoRelease.get();
+        // this.servoRelease = servoRelease.get();
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -26,16 +26,18 @@ public class GrapplerCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (servoRelease) {
+        // if (servoRelease) {
             Climb.setServoPosition(ClimbConstants.servoOutPos);
-        } else {
-            Climb.setServoPosition(ClimbConstants.servoInPos);
-        }
+        // } else {
+            // Climb.setServoPosition(ClimbConstants.servoInPos);
+        // }
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        Climb.setServoPosition(ClimbConstants.servoInPos);
+    }
 
     // Returns true when the command should end.
     @Override

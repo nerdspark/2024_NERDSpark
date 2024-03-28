@@ -5,7 +5,6 @@
 package frc.robot.subsystems.climb;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ClimbConstants;
 import org.littletonrobotics.junction.Logger;
 
 public class Climb extends SubsystemBase {
@@ -20,6 +19,9 @@ public class Climb extends SubsystemBase {
 
     public void setClimbMotorPower(double climbPower) {
         io.setClimbMotorPower(climbPower);
+    }
+    public void setServo(double power){
+        io.setServo(power);
     }
 
     public double getClimbMotorPosition() {

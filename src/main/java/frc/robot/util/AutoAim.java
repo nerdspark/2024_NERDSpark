@@ -65,8 +65,8 @@ public class AutoAim {
 
         double RPM = Constants.ShooterConstants.shooterMap.get(
                 (distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD));
-        SmartDashboard.putNumber("distance to speaker", 
-                distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD);
+        SmartDashboard.putNumber(
+                "distance to speaker", distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD);
         SmartDashboard.putNumber("Calculated RPM", RPM);
         return RPM;
     }

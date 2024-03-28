@@ -10,27 +10,24 @@ import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.PositionDutyCycle;
-import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.controls.compound.Diff_DutyCycleOut_Velocity;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.ArmGains;
-import frc.robot.util.LightningShuffleboard;
 import frc.robot.Constants.RobotMap;
+import frc.robot.util.LightningShuffleboard;
 
 public class ArmIOSparkMax implements ArmIO {
     private TalonFX shoulderRight;
@@ -40,6 +37,7 @@ public class ArmIOSparkMax implements ArmIO {
     private CANSparkMax gripper;
 
     private RelativeEncoder gripperEncoder;
+    private SparkPIDController gripperController;
 
     // private PIDController shoulderLeftController;
     // private PIDController shoulderRightController;
@@ -55,7 +53,6 @@ public class ArmIOSparkMax implements ArmIO {
     // private ArmFeedforward elbowRightFeedforward;
     private ArmGains armGains = new ArmGains();
 
-
     public ArmIOSparkMax() {
 
         shoulderLeft = new TalonFX(RobotMap.shoulderLeftID, "canivore1");
@@ -66,12 +63,13 @@ public class ArmIOSparkMax implements ArmIO {
         TalonFXConfiguration shoulderconfig = new TalonFXConfiguration();
         TalonFXConfiguration elbowconfig = new TalonFXConfiguration();
 
-        shoulderconfig.CurrentLimits =
-                new CurrentLimitsConfigs().withStatorCurrentLimit(ArmConstants.currentLimitShoulder).withStatorCurrentLimitEnable(true);
+        shoulderconfig.CurrentLimits = new CurrentLimitsConfigs()
+                .withStatorCurrentLimit(ArmConstants.currentLimitShoulder)
+                .withStatorCurrentLimitEnable(true);
         shoulderconfig.Feedback = new FeedbackConfigs()
-                .withFeedbackRotorOffset(0.0)//ArmConstants.shoulderOffset)
+                .withFeedbackRotorOffset(0.0) // ArmConstants.shoulderOffset)
                 .withSensorToMechanismRatio(ArmConstants.shoulderRadPerRot);
-        shoulderconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.3 );
+        shoulderconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.3);
         shoulderconfig.Slot0 = new Slot0Configs()
                 .withKP(armGains.shoulderP)
                 .withKI(armGains.shoulderI)
@@ -83,17 +81,18 @@ public class ArmIOSparkMax implements ArmIO {
                 .getConfigurator()
                 .apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs()
                         .withInverted(InvertedValue.Clockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Coast)));
+                        .withNeutralMode(NeutralModeValue.Brake)));
         shoulderRight
                 .getConfigurator()
                 .apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs()
                         .withInverted(InvertedValue.CounterClockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Coast)));
+                        .withNeutralMode(NeutralModeValue.Brake)));
 
-        elbowconfig.CurrentLimits =
-                new CurrentLimitsConfigs().withStatorCurrentLimit(ArmConstants.currentLimitElbow).withStatorCurrentLimitEnable(true);
+        elbowconfig.CurrentLimits = new CurrentLimitsConfigs()
+                .withStatorCurrentLimit(ArmConstants.currentLimitElbow)
+                .withStatorCurrentLimitEnable(true);
         elbowconfig.Feedback = new FeedbackConfigs()
-                .withFeedbackRotorOffset(0.0)//ArmConstants.elbowOffset)
+                .withFeedbackRotorOffset(0.0) // ArmConstants.elbowOffset)
                 .withSensorToMechanismRatio(ArmConstants.elbowRadPerRot);
         elbowconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.1);
         elbowconfig.Slot0 = new Slot0Configs()
@@ -128,6 +127,8 @@ public class ArmIOSparkMax implements ArmIO {
         gripper.setInverted(true);
 
         gripperEncoder = gripper.getEncoder();
+        gripperController = gripper.getPIDController();
+        gripperController.setP(0.5);
 
         inBend = false;
         resetEncoders();
@@ -200,7 +201,8 @@ public class ArmIOSparkMax implements ArmIO {
     // }
     public void setArmPosition(Translation2d position, boolean inBend) {
         this.inBend = inBend;
-        double distance = position.getNorm();//MathUtil.clamp(position.getNorm(), 0, ArmConstants.baseStageLength + ArmConstants.secondStageLength);
+        double distance = position.getNorm(); // MathUtil.clamp(position.getNorm(), 0, ArmConstants.baseStageLength +
+        // ArmConstants.secondStageLength);
 
         double BaseAngleArmDiff = Math.acos(((distance * distance)
                         + (ArmConstants.baseStageLength * ArmConstants.baseStageLength)
@@ -223,10 +225,10 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public void resetEncoders() {
-        elbowLeft.setPosition(ArmConstants.elbowOffset / (2.0*Math.PI));
-        elbowRight.setPosition(ArmConstants.elbowOffset / (2.0*Math.PI));
-        shoulderLeft.setPosition(ArmConstants.shoulderOffset / (2.0*Math.PI));
-        shoulderRight.setPosition(ArmConstants.shoulderOffset / (2.0*Math.PI));
+        elbowLeft.setPosition(ArmConstants.elbowOffset / (2.0 * Math.PI));
+        elbowRight.setPosition(ArmConstants.elbowOffset / (2.0 * Math.PI));
+        shoulderLeft.setPosition(ArmConstants.shoulderOffset / (2.0 * Math.PI));
+        shoulderRight.setPosition(ArmConstants.shoulderOffset / (2.0 * Math.PI));
 
         gripperEncoder.setPosition(0);
     }
@@ -249,22 +251,30 @@ public class ArmIOSparkMax implements ArmIO {
         position = MathUtil.clamp(position, -0.1, 2.5);
 
         SmartDashboard.putNumber("shoulder position set raw", position);
-        if ((Math.abs(position - shoulderLeft.getPosition().getValueAsDouble()) + Math.abs(position - shoulderRight.getPosition().getValueAsDouble())) < 0.4 &&  Math.abs(position - (ArmConstants.shoulderOffset/Math.PI/2.0)) < 0.01) {
+        if ((Math.abs(position - shoulderLeft.getPosition().getValueAsDouble())
+                                + Math.abs(
+                                        position - shoulderRight.getPosition().getValueAsDouble()))
+                        < 0.1
+                && Math.abs(position - (ArmConstants.shoulderOffset / Math.PI / 2.0)) < 0.01) {
             shoulderLeft.setControl(new DutyCycleOut(0));
             shoulderRight.setControl(new DutyCycleOut(0));
         } else {
-            shoulderLeft.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
-            shoulderRight.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
+            shoulderLeft.setControl(
+                    new PositionVoltage(position).withFeedForward(position).withPosition(position));
+            shoulderRight.setControl(
+                    new PositionVoltage(position).withFeedForward(position).withPosition(position));
         }
     }
 
     public double getShoulderLeftPosition() {
-        SmartDashboard.putNumber("shoulder l position raw", shoulderLeft.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber(
+                "shoulder l position raw", shoulderLeft.getPosition().getValueAsDouble());
         return shoulderLeft.getPosition().getValueAsDouble() * (2d * Math.PI);
     }
 
     public double getShoulderRightPosition() {
-        SmartDashboard.putNumber("shoulder r position raw", shoulderRight.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber(
+                "shoulder r position raw", shoulderRight.getPosition().getValueAsDouble());
         return shoulderRight.getPosition().getValueAsDouble() * (2d * Math.PI);
     }
 
@@ -273,12 +283,16 @@ public class ArmIOSparkMax implements ArmIO {
         position /= (2d * Math.PI);
 
         SmartDashboard.putNumber("elbow position set raw", position);
-        // if ((Math.abs(position - elbowLeft.getPosition().getValueAsDouble()) + Math.abs(position - elbowRight.getPosition().getValueAsDouble())) < 0.14 && (Math.abs(position - (ArmConstants.elbowOffset/Math.PI/2.0)) < 0.01)) {
+        // if ((Math.abs(position - elbowLeft.getPosition().getValueAsDouble()) + Math.abs(position -
+        // elbowRight.getPosition().getValueAsDouble())) < 0.14 && (Math.abs(position -
+        // (ArmConstants.elbowOffset/Math.PI/2.0)) < 0.01)) {
         //     elbowLeft.setControl(new DutyCycleOut(0));
         //     elbowRight.setControl(new DutyCycleOut(0));
         // } else {
-            elbowLeft.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
-            elbowRight.setControl(new PositionVoltage(position).withFeedForward(position).withPosition(position));
+        elbowLeft.setControl(
+                new PositionVoltage(position).withFeedForward(position).withPosition(position));
+        elbowRight.setControl(
+                new PositionVoltage(position).withFeedForward(position).withPosition(position));
         // }
     }
 
@@ -316,7 +330,6 @@ public class ArmIOSparkMax implements ArmIO {
         // shoulCon.kD = LightningShuffleboard.getDouble("shoulder", "kD", ArmGains.shoulderD);
         // shoulCon.kG = LightningShuffleboard.getDouble("shoulder", "kG", ArmGains.shoulderG);
 
-
         // Slot0Configs elbowCon = new Slot0Configs();
 
         // elbowCon.kP = LightningShuffleboard.getDouble("elbow", "kP", ArmGains.elbowP);
@@ -325,23 +338,31 @@ public class ArmIOSparkMax implements ArmIO {
         // elbowCon.kG = LightningShuffleboard.getDouble("elbow", "kG", ArmGains.elbowG);
 
         // if(LightningShuffleboard.getBool("shoulder", "refresh", false)) {
-            // elbowLeft.getConfigurator().apply(elbowCon);
-            // elbowRight.getConfigurator().apply(elbowCon);
-            // shoulderLeft.getConfigurator().apply(shoulCon);
-            // shoulderRight.getConfigurator().apply(shoulCon);
+        // elbowLeft.getConfigurator().apply(elbowCon);
+        // elbowRight.getConfigurator().apply(elbowCon);
+        // shoulderLeft.getConfigurator().apply(shoulCon);
+        // shoulderRight.getConfigurator().apply(shoulCon);
 
-            // LightningShuffleboard.setBool("shoulder", "refresh", false);
+        // LightningShuffleboard.setBool("shoulder", "refresh", false);
         // }
 
-        LightningShuffleboard.setDouble("shoulder", "left out", shoulderLeft.getMotorVoltage().getValueAsDouble());
-        LightningShuffleboard.setDouble("shoulder", "right out", shoulderRight.getMotorVoltage().getValueAsDouble());
+        LightningShuffleboard.setDouble(
+                "shoulder", "left out", shoulderLeft.getMotorVoltage().getValueAsDouble());
+        LightningShuffleboard.setDouble(
+                "shoulder", "right out", shoulderRight.getMotorVoltage().getValueAsDouble());
 
-        LightningShuffleboard.setDouble("elbow", "left out", elbowLeft.getMotorVoltage().getValueAsDouble());
-        LightningShuffleboard.setDouble("elbow", "right out", elbowRight.getMotorVoltage().getValueAsDouble());
+        LightningShuffleboard.setDouble(
+                "elbow", "left out", elbowLeft.getMotorVoltage().getValueAsDouble());
+        LightningShuffleboard.setDouble(
+                "elbow", "right out", elbowRight.getMotorVoltage().getValueAsDouble());
     }
 
     public void setGripperPower(double power) {
         gripper.set(power);
+    }
+
+    public void setGripperPosition(double position) {
+        gripperController.setReference(position, ControlType.kPosition);
     }
 
     public double getGripperPosition() {

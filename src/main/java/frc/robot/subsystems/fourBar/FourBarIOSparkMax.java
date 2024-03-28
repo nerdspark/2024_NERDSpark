@@ -4,14 +4,11 @@
 
 package frc.robot.subsystems.fourBar;
 
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.ControlType;
-
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.FourBarGains;
@@ -20,6 +17,7 @@ import frc.robot.Constants.RobotMap;
 public class FourBarIOSparkMax implements FourBarIO {
     /** Creates a new FourBarIOSparkMax. */
     private CANSparkMax FourBarMotor1;
+    private double angle;
 
     private CANSparkMax FourBarMotor2;
     private RelativeEncoder FourBarEncoder1;
@@ -98,6 +96,7 @@ public class FourBarIOSparkMax implements FourBarIO {
 
     public void setFourBarAngle(double angle) {
         angle = MathUtil.clamp(angle, FourBarConstants.fourBarOut, FourBarConstants.fourBarHome);
+        this.angle = angle;
 
         // double G = FourBarFeedforward1.calculate(FourBarEncoder1.getPosition(), FourBarEncoder1.getVelocity());
         // double PID = FourBarPIDController.calculate(FourBarEncoder1.getPosition(), angle);
@@ -127,7 +126,7 @@ public class FourBarIOSparkMax implements FourBarIO {
     //     FourBarFeedforward1 = new ArmFeedforward(FourBarGains.kS, kG, FourBarGains.kV, FourBarGains.kA);
     // }
 
-    // public boolean onTarget() {
-    //     return FourBarPIDController.atSetpoint();
-    // }
+    public boolean onTarget() {
+        return Math.abs(((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()))/2 - (angle)) < FourBarConstants.fourBarTolerance;
+    }
 }

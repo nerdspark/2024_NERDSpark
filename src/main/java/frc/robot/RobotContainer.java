@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
@@ -15,7 +14,6 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -31,11 +29,10 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.AmpSetpoints;
+import frc.robot.Constants.ArmConstants.BlockSetpoints;
 import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.BiasConstants;
-import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
 import frc.robot.Constants.FourBarConstants;
@@ -44,8 +41,7 @@ import frc.robot.actions.activeIntaking;
 import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmCommandAngles;
-import frc.robot.commands.WinchCommand;
-import frc.robot.commands.DriveToPoseCommand;
+import frc.robot.commands.BlinkinCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.GrapplerCommand;
 import frc.robot.commands.GripperIndexCommand;
@@ -53,13 +49,16 @@ import frc.robot.commands.GripperOutCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
-import frc.robot.config.RobotIdentity;
+import frc.robot.commands.WinchCommand;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.generated.TunerConstantsSmudge;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIOSparkMax;
+import frc.robot.subsystems.blikinLights.BlinkinLights;
+import frc.robot.subsystems.blikinLights.BlinkinLightsIOSparkMax;
 import frc.robot.subsystems.climb.Climb;
+import frc.robot.subsystems.climb.ClimbIOSparkMax;
 import frc.robot.subsystems.fourBar.FourBar;
 import frc.robot.subsystems.fourBar.FourBarIO;
 import frc.robot.subsystems.fourBar.FourBarIOSparkMax;
@@ -74,9 +73,6 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.JoystickMap;
-
-import static edu.wpi.first.units.Units.Fahrenheit;
-
 import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
@@ -89,6 +85,7 @@ public class RobotContainer { // implements RobotConstants{
     private Climb climb;
     private AutoAim m_AutoAim;
     private boolean enableSlowMode = false;
+    private BlinkinLights lights;
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
@@ -99,8 +96,8 @@ public class RobotContainer { // implements RobotConstants{
     private final CommandSwerveDrivetrain drivetrain;
 
     private final XboxController driverRaw = new XboxController(0);
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); 
+    private final SwerveRequest.FieldCentric drive =
+            new SwerveRequest.FieldCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     //     private final Telemetry logger = new Telemetry(MaxSpeed);
@@ -112,8 +109,8 @@ public class RobotContainer { // implements RobotConstants{
     private double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
-        // private NoteVisionSubsystem noteVisionSubsystem =
-        //         new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
+    // private NoteVisionSubsystem noteVisionSubsystem =
+    //         new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
     public RobotContainer() {
         switch (Constants.currentMode) {
@@ -135,21 +132,22 @@ public class RobotContainer { // implements RobotConstants{
         if (Constants.PracticeBot) {
             drivetrain = TunerConstantsSmidge.DriveTrain;
 
-            drivetrain.getModule(0).getDriveMotor().setInverted(false);// fl
-            drivetrain.getModule(1).getDriveMotor().setInverted(false); // FR
+            drivetrain.getModule(0).getDriveMotor().setInverted(false); // fl
+            drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(true); // bL
 
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
-            drivetrain.getModule(0).getDriveMotor().setInverted(false);// fl
+            drivetrain.getModule(0).getDriveMotor().setInverted(false); // fl
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(false); // bL
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
+            climb = new Climb(new ClimbIOSparkMax());
             arm = new Arm(new ArmIOSparkMax());
+            lights = new BlinkinLights(new BlinkinLightsIOSparkMax());
             scheduleArmCommands();
-
         }
 
         drivetrain.setRobotIntake(intake);
@@ -195,16 +193,11 @@ public class RobotContainer { // implements RobotConstants{
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(
-                        () -> drive.withVelocityX(
-                                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY())
-                                                * MaxSpeed)) 
-                                .withVelocityY(
-                                        yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX())
-                                                * MaxSpeed)) 
-                                .withRotationalRate(
-                                        calculateAutoTurn(() -> 0.0)) 
-                        ));
+                drivetrain.applyRequest(() -> drive.withVelocityX(
+                                xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                        .withVelocityY(
+                                yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
+                        .withRotationalRate(calculateAutoTurn(() -> 0.0))));
 
         // if (Utils.isSimulation()) {
         //     drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
@@ -212,7 +205,7 @@ public class RobotContainer { // implements RobotConstants{
         // drivetrain.registerTelemetry(logger::telemeterize);
         // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () ->
         // false));
-        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
+        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome + 0));
     }
 
     private void configureNamedCommands() {
@@ -264,7 +257,13 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
 
+      
+      
+        // NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () ->
+        // AutoConstants.weirdSideRing4));
 
+        // NamedCommands.registerCommand(
+        //         "RfourBarToWSR1", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing1));
         NamedCommands.registerCommand(
                 "RfourBarToWSR2", new FourBarCommand(fourBar, () -> AutoConstants.red_weirdSideRing2));
         NamedCommands.registerCommand(
@@ -293,7 +292,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("backToSafety", new backToSafety(intake, fourBar));
         NamedCommands.registerCommand("intakingRings", new activeIntaking(intake, fourBar));
 
-
         NamedCommands.registerCommand(
                 "redRECenterNote5", new FourBarCommand(fourBar, () -> AutoConstants.redRECenterNote5));
 
@@ -305,25 +303,15 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand(
                 "blueRECenterNote6", new FourBarCommand(fourBar, () -> AutoConstants.blueRECenterNote6));
 
+        NamedCommands.registerCommand("blueAmpSide1", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide1));
+        NamedCommands.registerCommand("blueAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide2));
+        NamedCommands.registerCommand("blueAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide3));
+        NamedCommands.registerCommand("blueAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide4));
 
-        NamedCommands.registerCommand(
-                "blueAmpSide1", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide1));
-        NamedCommands.registerCommand(
-                "blueAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide2));
-        NamedCommands.registerCommand(
-                "blueAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide3));
-        NamedCommands.registerCommand(
-                "blueAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.blueAmpSide4));
-
-        NamedCommands.registerCommand(
-                "redAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide2));
-        NamedCommands.registerCommand(
-                "redAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide3));
-        NamedCommands.registerCommand(
-                "redAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide4));
-    
-    
-        }
+        NamedCommands.registerCommand("redAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide2));
+        NamedCommands.registerCommand("redAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide3));
+        NamedCommands.registerCommand("redAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide4));
+    }
 
     private void configureButtonBindings() {
         /* DRIVER BINDINGS:
@@ -338,10 +326,10 @@ public class RobotContainer { // implements RobotConstants{
                         new IntakeCommand(intake, () -> ((1.0)), IntakeMode.SOFTINTAKE)
                                 .deadlineWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)),
                         new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome)
-                                .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.3)))));
+                                .alongWith(
+                                        new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.3)))));
         driver.leftTrigger()
                 .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
-                        .alongWith(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome))
                         .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0))));
 
         // driver shoot
@@ -427,7 +415,29 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))));
+
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
+
+        // copilot.leftTrigger().whileTrue(new BlinkinCommand(lights, () -> (
+        //
+        // drivetrain.getCurrentPose().getTranslation().getDistance(aprilTagVision.getVisionPose().getTranslation())
+        //                 < DrivetrainConstants.poseSyncTolerance ?
+
+        //         (fourBar.onTarget() ? BlinkinLightsConstants.readyToShootPattern:
+        // BlinkinLightsConstants.notReadyToShootPattern):
+        //                         BlinkinLightsConstants.badVisionPattern
+        // )));
+
+        lights.setDefaultCommand(new BlinkinCommand(
+                lights,
+                () -> copilot.leftTrigger().getAsBoolean(),
+                () -> intake.getBeamBreak(),
+                () -> fourBar.onTarget(),
+                () -> (drivetrain
+                                .getCurrentPose()
+                                .getTranslation()
+                                .getDistance(aprilTagVision.getVisionPose().getTranslation())
+                        < DrivetrainConstants.poseSyncTolerance)));
 
         // copilot shoot
         copilot.rightBumper().whileTrue(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE));
@@ -438,10 +448,10 @@ public class RobotContainer { // implements RobotConstants{
         // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // TEST COMMAND
-        copilot.back()
-                .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
-                        .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4800.0)));
-        copilot.back().onFalse(new InstantCommand(shooter::stop));
+        // copilot.back()
+        //         .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
+        //                 .alongWith(new ShooterCommand(shooter, () -> 4500.0, () -> 4800.0)));
+        // copilot.back().onFalse(new InstantCommand(shooter::stop));
 
         // 4 bar + shooter FIXED shots
 
@@ -464,8 +474,11 @@ public class RobotContainer { // implements RobotConstants{
                         shooter, () -> FixedShotConstants.RPMHome, () -> FixedShotConstants.RPMHome));
         copilot.x().onFalse(new InstantCommand(shooter::stop));
 
-        copilot.leftStick().and(() -> copilot.getRightX() > 0.8).onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
-        copilot.leftStick().and(() -> copilot.getRightX() < -0.8).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
+        copilot.back().whileTrue(new ShooterCommand(shooter, () -> 4000.0, () -> 4000.0));
+        copilot.back().onFalse(new InstantCommand(shooter::stop));
+
+        copilot.povLeft().and(() -> copilot.getRightY() > 0.8).onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
+        copilot.povLeft().and(() -> copilot.getRightY() < -0.8).onTrue(new InstantCommand(() -> m_AutoAim.incDist()));
 
         // aim command
         // TODO: update these positions to non-magic numbers, and for our new position conversion factor
@@ -501,61 +514,69 @@ public class RobotContainer { // implements RobotConstants{
         //                                     * Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
         //                             .withRotationalRate(
         //                                     calculateAutoTurn(() -> noteVisionSubsystem.getYawVal())))));
-        }
+    }
 
-        // driver.rightTrigger()
-        //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
-        //                 .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
-        // }
+    // driver.rightTrigger()
+    //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE)
+    //                 .alongWith(new FourBarCommand(fourBar, () -> Constants.fourBarHome)));
+    // }
 
-        // // vision-assisted following command
-        // driver.rightTrigger().whileTrue((
-        //     drivetrain.applyRequest(() -> drive
-        //         .withVelocityX(xLimiter.calculate(0.1 *MaxSpeed*
-        // Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
-        //         .withVelocityY(yLimiter.calculate(-0.1 *MaxSpeed*
-        // Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
-        //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
+    // // vision-assisted following command
+    // driver.rightTrigger().whileTrue((
+    //     drivetrain.applyRequest(() -> drive
+    //         .withVelocityX(xLimiter.calculate(0.1 *MaxSpeed*
+    // Math.cos(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+    //         .withVelocityY(yLimiter.calculate(-0.1 *MaxSpeed*
+    // Math.sin(Units.degreesToRadians(noteVisionSubsystem.getYawVal()))))
+    //         .withRotationalRate(zLimiter.calculate(calculateAutoTurn(() -> noteVisionSubsystem.getYawVal()))))));
 
-        // transfer spin up
-        // copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1650.0, () -> 1650.0));
-        // copilot.b().onFalse(new InstantCommand(shooter::stop));
+    // transfer spin up
+    // copilot.b().whileTrue(new ShooterCommand(shooter, () -> 1650.0, () -> 1650.0));
+    // copilot.b().onFalse(new InstantCommand(shooter::stop));
 
-        // stop shoot
-        // copilot.leftBumper()
-        //         .whileTrue(new IntakeCommand(
-        //                 intake,
-        //                 () -> ((Math.sqrt(Math.pow(drivetrain.getState().speeds.vxMetersPerSecond, 2)
-        //                                         + Math.pow(drivetrain.getState().speeds.vyMetersPerSecond, 2))
-        //                                 < ShooterConstants.stillShotSpeed)
-        //                         ? 1.0
-        //                         : 0.0),
-        //                 IntakeMode.FORCEINTAKE));
-        // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
-
-    
+    // stop shoot
+    // copilot.leftBumper()
+    //         .whileTrue(new IntakeCommand(
+    //                 intake,
+    //                 () -> ((Math.sqrt(Math.pow(drivetrain.getState().speeds.vxMetersPerSecond, 2)
+    //                                         + Math.pow(drivetrain.getState().speeds.vyMetersPerSecond, 2))
+    //                                 < ShooterConstants.stillShotSpeed)
+    //                         ? 1.0
+    //                         : 0.0),
+    //                 IntakeMode.FORCEINTAKE));
+    // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
     private void scheduleArmCommands() {
 
         // // Climb commands
         // climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
 
-        //shoot grappler
-        // driver.a().or(driver.povDown()).onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1))).onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
+        // shoot grappler
+        driver.a()
+                .or(driver.povDown())
+                .onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))
+                .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
-        // driver.povDown().whileTrue(new WinchCommand(climb, () -> false).alongWith(new WaitCommand(ClimbConstants.rumbleWait).andThen(new GrapplerCommand(climb, () -> driverRaw.getAButton()))))
-        //                 .onFalse(new WinchCommand(climb, () -> true).onlyIf(() -> climb.getServoOut()));
+        driver.povDown()
+                .and(() -> driverRaw.getXButton())
+                .and(() -> Math.abs(fourBar.getFourBarAngle() - FourBarConstants.fourBarHome) > 0.1)
+                .whileTrue(new WaitCommand(0.2).andThen(new GrapplerCommand(climb)));
+        driver.a().whileTrue(new WinchCommand(climb).onlyIf(() -> climb.getServoOut()));
 
-        //retract winch
+        // .whileTrue(new WinchCommand(climb, () -> false)
+        //         .alongWith(new WaitCommand(ClimbConstants.rumbleWait)
+        //                 .andThen(new GrapplerCommand(climb, () -> driverRaw.getAButton()))))
+        // .onFalse(new WinchCommand(climb, () -> true).onlyIf(() -> climb.getServoOut()));
+
+        // retract winch
         // driver.x().whileTrue(new WaitCommand(0.5).andThen(new WinchCommand(climb, () -> true)));
         // driver.x().onFalse(new WinchCommand(climb, () -> false));
-        
 
-        driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper)); // TODO change buttons
-        driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0));
-        // copilot.leftBumper().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper/3.0)); // TODO change buttons
+        driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
+        driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 4.0));
+        copilot.povUp().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 4.0));
+        copilot.povDown().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper / 4.0));
         copilot.leftBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
-
 
         // PICKUP SEQUENCE
         /* spin up flywheels/move arm to catching pos,
@@ -564,13 +585,18 @@ public class RobotContainer { // implements RobotConstants{
         pull arm outward
         return arm to home */
         copilot.b()
-                .whileTrue((new ShooterCommand(shooter, () -> PickupSetpoints.pickupShooterRPM,() ->  PickupSetpoints.pickupShooterRPM))
-                        .alongWith(new ArmCommandAngles(arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder)
+                .whileTrue(new ShooterCommand(
+                                shooter, () -> PickupSetpoints.pickupShooterRPM, () -> PickupSetpoints.pickupShooterRPM)
+                        .alongWith((new FourBarCommand(fourBar, () -> PickupSetpoints.pickupFourBar))
+                                .alongWith(new ArmCommandAngles(
+                                        arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder))
                                 .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
                                         .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
-                                                .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak()).andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
-                                                .andThen(new GripperIndexCommand(arm))))))));
-                                // .andThen(new ArmCommandAngles(arm, () -> PickupSetpoints.pullOutElbow, () -> PickupSetpoints.pullOutShoulder).withTimeout(PickupSetpoints.pickupPullTimeout)));
+                                                .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak())
+                                                        .andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
+                                                                .andThen(new GripperIndexCommand(arm))))))));
+        // .andThen(new ArmCommandAngles(arm, () -> PickupSetpoints.pullOutElbow, () ->
+        // PickupSetpoints.pullOutShoulder).withTimeout(PickupSetpoints.pickupPullTimeout)));
 
         // AMP SETPOINT + MICROADJUST
         copilot.y()
@@ -584,15 +610,30 @@ public class RobotContainer { // implements RobotConstants{
                         () -> false));
 
         // TRAP COMMAND
-        copilot.rightStick()
-                .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.trapArmAngle - TrapSetpoints.trapArmDifference + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust), () -> TrapSetpoints.trapArmAngle + (copilot.getLeftY() * TrapSetpoints.copilotMicroadjust))
-                        .alongWith(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb)));
+        copilot.rightStick().onTrue(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb));
 
+        copilot.rightStick().onTrue(new ArmCommandAngles(
+                                arm,
+                                () -> TrapSetpoints.trapArmAngle
+                                        - TrapSetpoints.trapArmDifference
+                                        + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust),
+                                () -> TrapSetpoints.trapArmAngle
+                                        + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust)));
 
+        // copilot.rightStick()
+        //         .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.climbElbow, () -> TrapSetpoints.climbShoulder));
 
-        // // reset buttons
-        // copilot.start().whileTrue(new InstantCommand(() -> arm.resetEncoders()).alongWith(new InstantCommand(() ->
-        // arm.setGains(false))));
+        copilot.leftStick().onTrue(new ArmCommandAngles(
+                                arm,
+                                () -> TrapSetpoints.pressElbow,
+                                () -> TrapSetpoints.pressShoulder
+                                        + (copilot.getLeftY() * TrapSetpoints.pressMicroadjust)));
+
+        copilot.povRight()
+                .whileTrue(new ArmCommandAngles(
+                        arm,
+                        () -> BlockSetpoints.elbow + (copilot.getRightY() * BlockSetpoints.microadjust),
+                        () -> BlockSetpoints.shoulder + (copilot.getRightY() * BlockSetpoints.microadjust)));
     }
 
     //     @Override
@@ -601,27 +642,28 @@ public class RobotContainer { // implements RobotConstants{
     }
 
     private void configureDashboard() {
+
         /**** Driver tab ****/
 
         // /**** Vision tab ****/
-        final var visionTab = Shuffleboard.getTab("Vision");
+        // final var visionTab = Shuffleboard.getTab("Vision");
 
         // Pose estimation
-        drivetrain.addDashboardWidgets(visionTab);
+        // drivetrain.addDashboardWidgets(visionTab);
 
         // final var driverTab = Shuffleboard.getTab("Driver");
-        visionTab.addBoolean(
-                "SHOOT",
-                () -> /*shooter.onTarget() &&*/
-                        fourBar.onTarget()); // fourbar and shooter within tolerance of target values
-        visionTab.addBoolean(
-                "SYNCED",
-                () -> drivetrain
-                                .getCurrentPose()
-                                .getTranslation()
-                                .getDistance(aprilTagVision.getVisionPose().getTranslation())
-                        < DrivetrainConstants.poseSyncTolerance); // vision pose within tolerance of estimated pose
-        visionTab.addBoolean("COLLECTED", intake::getBeamBreak); // collector beambreak triggered
+        // visionTab.addBoolean(
+        //         "SHOOT",
+        //         () -> /*shooter.onTarget() &&*/
+        //                 fourBar.onTarget()); // fourbar and shooter within tolerance of target values
+        // visionTab.addBoolean(
+        //         "SYNCED",
+        //         () -> drivetrain
+        //                         .getCurrentPose()
+        //                         .getTranslation()
+        //                         .getDistance(aprilTagVision.getVisionPose().getTranslation())
+        //                 < DrivetrainConstants.poseSyncTolerance); // vision pose within tolerance of estimated pose
+        // visionTab.addBoolean("COLLECTED", intake::getBeamBreak); // collector beambreak triggered
     }
 
     //     @Override
@@ -630,11 +672,14 @@ public class RobotContainer { // implements RobotConstants{
 
         if (target.get() != 0) {
             targetAngle = -target.get();
-        // } else if (driverRaw.getPOV() != -1) {
-        //     targetAngle = -driverRaw.getPOV();
-        } else {//if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
-            double speed = Math.copySign(Math.pow(Math.abs(driver.getLeftX()) > 0.05 ? Math.abs(driver.getLeftX()) : 0, 1.1), -driver.getLeftX()) * 5.0;
-        //     targetAngle = currentAngle;
+            // } else if (driverRaw.getPOV() != -1) {
+            //     targetAngle = -driverRaw.getPOV();
+        } else { // if (Math.abs(driver.getLeftX()) >= 0.1 || Math.abs(driver.getLeftY()) >= 0.1) {
+            double speed = Math.copySign(
+                            Math.pow(Math.abs(driver.getLeftX()) > 0.05 ? Math.abs(driver.getLeftX()) : 0, 1.1),
+                            -driver.getLeftX())
+                    * 5.0;
+            //     targetAngle = currentAngle;
             return zLimiter.calculate(speed);
             // targetAngle = (180.0 / Math.PI) * (Math.atan2(-driver.getLeftX(), -driver.getLeftY()));
         }
