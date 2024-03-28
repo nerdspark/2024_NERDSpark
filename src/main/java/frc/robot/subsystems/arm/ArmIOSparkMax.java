@@ -81,12 +81,12 @@ public class ArmIOSparkMax implements ArmIO {
                 .getConfigurator()
                 .apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs()
                         .withInverted(InvertedValue.Clockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Coast)));
+                        .withNeutralMode(NeutralModeValue.Brake)));
         shoulderRight
                 .getConfigurator()
                 .apply(shoulderconfig.withMotorOutput(new MotorOutputConfigs()
                         .withInverted(InvertedValue.CounterClockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Coast)));
+                        .withNeutralMode(NeutralModeValue.Brake)));
 
         elbowconfig.CurrentLimits = new CurrentLimitsConfigs()
                 .withStatorCurrentLimit(ArmConstants.currentLimitElbow)

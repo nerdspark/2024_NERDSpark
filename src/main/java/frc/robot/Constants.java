@@ -236,22 +236,21 @@ public final class Constants {
 
             public static final double winchAmpLimit = 25;
 
-            public static final double trapArmAngle = Units.degreesToRadians(112);
-            public static final double trapArmDifference = Units.degreesToRadians(28);
+            public static final double trapArmAngle = Units.degreesToRadians(110);
+            public static final double trapArmDifference = Units.degreesToRadians(70);
 
             public static final double trapMicroadjust = Units.degreesToRadians(25);
 
             public static final double climbElbow = 3.9;
             public static final double climbShoulder = 1.6;
 
-            public static final double pinchShoulder = ArmConstants.shoulderOffset + 0.4;//untested
+            public static final double pinchShoulder = ArmConstants.shoulderOffset + 0.4; // untested
 
             public static final double fourBarClimb = FourBarConstants.fourBarOut;
 
             public static final double pressElbow = Units.degreesToRadians(-10);
-            public static final double pressShoulder = Units.degreesToRadians(115);
+            public static final double pressShoulder = Units.degreesToRadians(95);
             public static final double pressMicroadjust = Units.degreesToRadians(55);
-
         }
 
         public static final class BlockSetpoints {
@@ -432,6 +431,19 @@ public final class Constants {
         public static final Pose2d speakerLocRed = new Pose2d(speakerRedX, speakerRedY, new Rotation2d(Math.PI));
 
         public static final double autonAimDistanceThreshold = 2.0d;
+    }
+
+    public static class BlinkinLightsConstants {
+
+        public static final int lightChannel = 0;
+
+        public static final double doesNotHaveNotePattern = 0.61; // solid red
+        public static final double hasNotePattern = 0.93; // Solid white
+
+        public static final double notReadyToShootPattern = 0.77; // solid green
+        public static final double readyToShootPattern = 0.35; // flashing color [gr] // (0.15 flash green)
+
+        public static final double badVisionPattern = 0.67; // solid gold
     }
 
     public static class ShooterConstants {

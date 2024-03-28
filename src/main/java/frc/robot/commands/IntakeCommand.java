@@ -89,8 +89,11 @@ public class IntakeCommand extends Command {
             case SOFTINTAKE:
                 if (!Intake.getBeamBreak()) {
                     Intake.setIntakePower(power.get());
+
+                    // lights.setLightPattern(BlinkinLightsConstants.doesNotHaveNotePattern);
                 } else {
                     Intake.setIntakePower(0);
+                    // lights.setLightPattern(BlinkinLightsConstants.hasNotePattern);
                 }
 
                 break;
