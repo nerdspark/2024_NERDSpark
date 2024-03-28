@@ -100,9 +100,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redWeirdSideDrop",
+  "folder": "RedWeirdSideDrop",
   "previewStartingState": {
-    "rotation": -143.0,
+    "rotation": -138.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -52,7 +52,7 @@
     },
     {
       "waypointRelativePos": 1.85,
-      "rotationDegrees": -143.0,
+      "rotationDegrees": -151.0,
       "rotateFast": false
     }
   ],
@@ -106,7 +106,7 @@
     },
     {
       "name": "fourBarToShootRing1",
-      "waypointRelativePos": 1.25,
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -114,7 +114,7 @@
             {
               "type": "named",
               "data": {
-                "name": "RfourBarToWSR2"
+                "name": "RfourBarToBWSDR2"
               }
             }
           ]
@@ -147,11 +147,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -143.0,
+    "rotation": -151.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redWeirdSideDrop",
+  "folder": "RedWeirdSideDrop",
   "previewStartingState": {
     "rotation": 180.0,
     "velocity": 0.0

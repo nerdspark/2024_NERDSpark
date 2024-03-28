@@ -289,6 +289,10 @@ public final class Constants {
         public static final double blueRECenterNote5 = 1.92; // 1.80
         public static final double blueRECenterNote6 = 1.92; // 1.87
 
+        public static final double blueWeirdSideDropring2 = 1.80;
+
+        public static final double redWeirdSideDropRing2 = 1.73;
+
         // public static final double blueStarWars1 = 1.95; // 3.5
         // public static final double blueStarWars2 = 1.87; // 2.75
         // public static final double blueStarWars3 = 1.87;
