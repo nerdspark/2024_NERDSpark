@@ -14,7 +14,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
-import frc.robot.actions.startUp;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 
@@ -237,22 +236,21 @@ public final class Constants {
 
             public static final double winchAmpLimit = 25;
 
-            public static final double trapArmAngle = Units.degreesToRadians(112);
-            public static final double trapArmDifference = Units.degreesToRadians(28);
+            public static final double trapArmAngle = Units.degreesToRadians(110);
+            public static final double trapArmDifference = Units.degreesToRadians(70);
 
             public static final double trapMicroadjust = Units.degreesToRadians(25);
 
             public static final double climbElbow = 3.9;
             public static final double climbShoulder = 1.6;
 
-            public static final double pinchShoulder = ArmConstants.shoulderOffset + 0.4;//untested
+            public static final double pinchShoulder = ArmConstants.shoulderOffset + 0.4; // untested
 
             public static final double fourBarClimb = FourBarConstants.fourBarOut;
 
             public static final double pressElbow = Units.degreesToRadians(-10);
-            public static final double pressShoulder = Units.degreesToRadians(115);
+            public static final double pressShoulder = Units.degreesToRadians(95);
             public static final double pressMicroadjust = Units.degreesToRadians(55);
-
         }
 
         public static final class BlockSetpoints {
@@ -439,12 +437,13 @@ public final class Constants {
 
         public static final int lightChannel = 0;
 
-        public static final double hasNotePattern = 0.61; // Solid Red
-        public static final double doesNotHaveNotePattern = 0.93; // solid White
-        public static final double gettingReadyToShootPattern = 0.75; // solid green
-        public static final double readyToShootPattern = 0.15; // flashing green
-        public static final double badVisionPattern = -0.07; // strobe gold
-        
+        public static final double doesNotHaveNotePattern = 0.61; // solid red
+        public static final double hasNotePattern = 0.93; // Solid white
+
+        public static final double notReadyToShootPattern = 0.77; // solid green
+        public static final double readyToShootPattern = 0.35; // flashing color [gr] // (0.15 flash green)
+
+        public static final double badVisionPattern = 0.67; // solid gold
     }
 
     public static class ShooterConstants {

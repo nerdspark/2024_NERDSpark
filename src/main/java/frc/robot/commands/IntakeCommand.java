@@ -7,8 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.BlinkinLightsConstants;
-import frc.robot.subsystems.blikinLights.BlinkinLights;
 import frc.robot.subsystems.intake.Intake;
 import java.util.function.Supplier;
 
@@ -19,7 +17,6 @@ public class IntakeCommand extends Command {
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake Intake;
-    private final BlinkinLights lights;
 
     private Supplier<Double> power;
 
@@ -34,16 +31,13 @@ public class IntakeCommand extends Command {
     private boolean isIndexing = false;
     private double referencePosition = 0;
 
-    public IntakeCommand(Intake Intake, Supplier<Double> power, IntakeMode mode, BlinkinLights lights) {
+    public IntakeCommand(Intake Intake, Supplier<Double> power, IntakeMode mode) {
         this.Intake = Intake;
         this.power = power;
         this.mode = mode;
-        this.lights = lights;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Intake);
     }
-
-    
 
     // Called when the command is initially scheduled.
     @Override
