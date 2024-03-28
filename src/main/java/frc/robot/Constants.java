@@ -236,8 +236,8 @@ public final class Constants {
 
             public static final double winchAmpLimit = 50;
 
-            public static final double trapArmAngle = Units.degreesToRadians(110);
-            public static final double trapArmDifference = Units.degreesToRadians(70);
+            public static final double trapArmAngle = Units.degreesToRadians(105);
+            public static final double trapArmDifference = Units.degreesToRadians(29);
 
             public static final double trapMicroadjust = Units.degreesToRadians(25);
 
