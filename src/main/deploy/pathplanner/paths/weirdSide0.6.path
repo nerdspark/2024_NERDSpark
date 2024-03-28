@@ -90,7 +90,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "blueWeirdSide",
+  "folder": "BlueWeirdSide",
   "previewStartingState": {
     "rotation": -15.0,
     "velocity": 0

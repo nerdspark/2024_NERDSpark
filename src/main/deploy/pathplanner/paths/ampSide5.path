@@ -78,7 +78,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "ampSide",
+  "folder": "BlueAmpSide",
   "previewStartingState": {
     "rotation": -30.0,
     "velocity": 0

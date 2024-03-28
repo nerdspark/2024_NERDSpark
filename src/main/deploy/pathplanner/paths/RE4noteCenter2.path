@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "forcedIntakeShoot",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -78,7 +78,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "RE4noteCenter",
+  "folder": "BlueRE4noteCenter",
   "previewStartingState": {
     "rotation": -35.0,
     "velocity": 0

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3198214769363403,
-      "y": 5.401586532592773
+      "x": 1.421,
+      "y": 2.0
     },
-    "rotation": 1.7322388861529245e-23
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -26,45 +26,33 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
+                      "type": "path",
                       "data": {
-                        "waitTime": 0.5
+                        "pathName": "blueWeirdSideDrop1.1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ChoreoBlueCenter1Comp.1"
+                        "pathName": "blueWeirdSideDrop1.2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ChoreoBlueCenter2Comp.1"
+                        "pathName": "blueWeirdSideDrop1.3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ChoreoBlueCenter3Comp.1"
+                        "pathName": "blueWeirdSideDrop1.4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ChoreoBlueCenter4Comp2.1"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ChoreoBlueCenter6Comp2.1"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ChoreoBlueCenter7Comp.1"
+                        "pathName": "blueWeirdSideDrop1.5"
                       }
                     }
                   ]
@@ -77,5 +65,5 @@
     }
   },
   "folder": null,
-  "choreoAuto": true
+  "choreoAuto": false
 }

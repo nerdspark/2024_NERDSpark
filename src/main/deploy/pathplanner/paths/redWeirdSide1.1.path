@@ -20,8 +20,8 @@
         "y": 0.91
       },
       "prevControl": {
-        "x": 10.462455012444405,
-        "y": 0.9085457642426432
+        "x": 10.421479340068506,
+        "y": 1.2363511432225165
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,13 +30,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.3,
-      "rotationDegrees": -140.0,
+      "waypointRelativePos": 0.25,
+      "rotationDegrees": -145.0,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 0.8,
-      "rotationDegrees": 180.0,
+      "rotationDegrees": -170.0,
       "rotateFast": false
     }
   ],
@@ -56,7 +56,7 @@
   "eventMarkers": [
     {
       "name": "shootRing1",
-      "waypointRelativePos": 0.25,
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "sequential",
         "data": {
@@ -114,11 +114,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": -170.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redWeirdSide",
+  "folder": "RedWeirdSide",
   "previewStartingState": {
     "rotation": -120.0,
     "velocity": 0.0

@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 8.52,
-        "y": 4.21
+        "y": 4.31
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.939475502753083,
-        "y": 4.229325320379784
+        "x": 10.619528423202182,
+        "y": 4.398307194632555
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 11.961,
-        "y": 4.664594287670188
+        "x": 13.392215587073617,
+        "y": 5.088064346236042
       },
       "prevControl": {
-        "x": 10.967728703871364,
-        "y": 4.109473723556163
+        "x": 12.224408924457816,
+        "y": 4.862698148187378
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,7 +53,7 @@
             {
               "type": "named",
               "data": {
-                "name": "RfourBarToWSR4"
+                "name": "fourBarToHome"
               }
             }
           ]
@@ -90,7 +90,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redWeirdSide",
+  "folder": "RedWeirdSide",
   "previewStartingState": {
     "rotation": 180.0,
     "velocity": 0

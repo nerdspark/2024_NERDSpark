@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": -40.0,
+      "rotationDegrees": -43.0,
       "rotateFast": false
     }
   ],
@@ -47,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToShooter"
+                "name": "fourBarToWSR2"
               }
             }
           ]
@@ -80,13 +80,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -40.0,
+    "rotation": -43.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "blueWeirdSide",
+  "folder": "BlueWeirdSide",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": -20.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 8.02,
-        "y": 2.55
+        "y": 2.25
       },
       "prevControl": {
         "x": 7.367541091286216,
-        "y": 2.3649743393199714
+        "y": 2.0649743393199715
       },
       "nextControl": null,
       "isLocked": false,
@@ -37,23 +37,6 @@
   ],
   "constraintZones": [],
   "eventMarkers": [
-    {
-      "name": "forceIntakeZero",
-      "waypointRelativePos": 0.1,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntakeZero"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "fourBarToIntake",
       "waypointRelativePos": 0.3,
@@ -101,7 +84,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "blueWeirdSide",
+  "folder": "BlueWeirdSide",
   "previewStartingState": {
     "rotation": -35.0,
     "velocity": 0

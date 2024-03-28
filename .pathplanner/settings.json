@@ -4,15 +4,17 @@
   "holonomicMode": true,
   "pathFolders": [
     "4noteCenter",
+    "BlueAmpSide",
+    "BlueRE4noteCenter",
+    "BlueWeirdSide",
+    "BlueWeirdSideDrop",
     "RedAmpSide",
-    "RE4noteCenter",
+    "RedCenter",
+    "RedWeirdSide",
+    "RedWeirdSideDrop",
     "TestPaths",
-    "ampSide",
-    "blueCenter",
-    "blueWeirdSide",
-    "redCenter",
-    "redRE4noteCenter",
-    "redWeirdSide"
+    "BlueCenter",
+    "redRE4noteCenter"
   ],
   "autoFolders": [
     "Development",
