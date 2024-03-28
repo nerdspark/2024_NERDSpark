@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.25,
-        "y": 7.24
+        "y": 7.44
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.496594987905087,
-        "y": 6.774896192236645
+        "y": 6.9748961922366455
       },
       "isLocked": false,
       "linkedName": null
@@ -63,7 +63,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.7,
-      "rotationDegrees": 1.0,
+      "rotationDegrees": 3.0,
       "rotateFast": false
     }
   ],
@@ -150,7 +150,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "BlueRE4noteCenter",
+  "folder": "Blue6NoteCenter",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

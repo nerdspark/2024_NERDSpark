@@ -60,7 +60,18 @@
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 0.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.5500000000000003,
+      "rotationDegrees": -15.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [
     {
       "name": "New Constraints Zone",
@@ -94,7 +105,7 @@
     },
     {
       "name": "forceIntake",
-      "waypointRelativePos": 0.5499999999999999,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
