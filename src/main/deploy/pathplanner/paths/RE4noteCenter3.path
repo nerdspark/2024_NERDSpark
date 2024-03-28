@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.6,
-        "y": 6.75
+        "x": 2.7,
+        "y": 6.85
       },
       "prevControl": {
-        "x": 2.1909959079704637,
-        "y": 6.555236146652601
+        "x": 2.290995907970464,
+        "y": 6.655236146652601
       },
       "nextControl": null,
       "isLocked": false,
@@ -78,7 +78,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "BlueRE4noteCenter",
+  "folder": "Blue6NoteCenter",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

@@ -5,7 +5,8 @@
   "pathFolders": [
     "4noteCenter",
     "BlueAmpSide",
-    "BlueRE4noteCenter",
+    "BlueCenter",
+    "Blue6NoteCenter",
     "BlueWeirdSide",
     "BlueWeirdSideDrop",
     "RedAmpSide",
@@ -13,7 +14,6 @@
     "RedWeirdSide",
     "RedWeirdSideDrop",
     "TestPaths",
-    "BlueCenter",
     "redRE4noteCenter"
   ],
   "autoFolders": [
