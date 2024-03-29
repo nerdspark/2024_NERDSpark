@@ -172,7 +172,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             // if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
             poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
-            if (distanceUsedForCalculatingStdDev < 6 && poseAmbiguity < 0.2) {
+            if (distanceUsedForCalculatingStdDev < 8 ) {
                 inputs.poseEstimates.add(new PoseEstimate(
                         cameraPose.estimatedPose.transformBy(
                                 estomator.getRobotToCameraTransform().inverse()),
