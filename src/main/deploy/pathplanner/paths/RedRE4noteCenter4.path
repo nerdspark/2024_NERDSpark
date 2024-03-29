@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 13.84,
-        "y": 6.85
+        "x": 13.79,
+        "y": 7.05
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.7721690712118,
-        "y": 6.512944419613034
+        "x": 14.7221690712118,
+        "y": 6.712944419613034
       },
       "isLocked": false,
       "linkedName": null
@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 8.29,
-        "y": 7.44
+        "y": 7.64
       },
       "prevControl": {
         "x": 9.164892053978987,
-        "y": 7.234408783929046
+        "y": 7.434408783929046
       },
       "nextControl": null,
       "isLocked": false,
@@ -136,7 +136,7 @@
   "reversed": false,
   "folder": "redRE4noteCenter",
   "previewStartingState": {
-    "rotation": 150.0,
+    "rotation": 145.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
