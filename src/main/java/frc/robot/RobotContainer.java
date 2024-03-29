@@ -106,7 +106,7 @@ public class RobotContainer { // implements RobotConstants{
             new PIDController(DrivetrainConstants.gyroP, DrivetrainConstants.gyroI, DrivetrainConstants.gyroD);
     private double targetAngle = 0;
     private final Pigeon2 gyro = new Pigeon2(RobotMap.pigeonID, "canivore1");
-    private double gyroOffset = gyro.getAngle();
+    private double gyroOffset = (getAutonomousCommand().getName() == "redWeirdSideAuto") ? gyro.getAngle() +  60 : (getAutonomousCommand().getName() == "blueWeirdSideAuto") ? gyro.getAngle() - 60 : gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
     // private NoteVisionSubsystem noteVisionSubsystem =
@@ -702,10 +702,10 @@ public class RobotContainer { // implements RobotConstants{
         gyroPid.setIZone(DrivetrainConstants.IZone);
         gyroOffset = gyro.getAngle();
         targetAngle = 0;
-        drivetrain.seedFieldRelative(
-                (DriverStation.getAlliance().get() == Alliance.Red)
-                        ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
-                        : new Pose2d());
+        drivetrain.seedFieldRelative(new Pose2d());
+                // (DriverStation.getAlliance().get() == Alliance.Red)
+                //         ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
+                //         : new Pose2d());
     }
 
     public void printSpeakerDistanceAndAngle(AprilTagVision aprilTagVision) {
