@@ -145,26 +145,26 @@ public class ArmIOSparkMax implements ArmIO {
     @Override
     public void updateInputs(ArmIOInputs inputs) {
         inputs.shoulderLeftPosition = shoulderLeft.getPosition().getValueAsDouble();
-        inputs.shoulderLeftVelocity = shoulderLeft.getVelocity().getValueAsDouble();
-        inputs.shoulderLeftAppliedVolts = shoulderLeft.getMotorVoltage().getValueAsDouble();
+        // inputs.shoulderLeftVelocity = shoulderLeft.getVelocity().getValueAsDouble();
+        // inputs.shoulderLeftAppliedVolts = shoulderLeft.getMotorVoltage().getValueAsDouble();
         // shoulderLeft.getAppliedOutput() * shoulderLeft.getBusVoltage();
         inputs.shoulderLeftCurrentAmps =
                 new double[] {shoulderLeft.getStatorCurrent().getValueAsDouble()};
 
         inputs.elbowLeftPosition = elbowLeft.getPosition().getValueAsDouble();
-        inputs.elbowLeftVelocity = elbowLeft.getVelocity().getValueAsDouble();
-        inputs.elbowLeftAppliedVolts = elbowLeft.getMotorVoltage().getValueAsDouble();
+        // inputs.elbowLeftVelocity = elbowLeft.getVelocity().getValueAsDouble();
+        // inputs.elbowLeftAppliedVolts = elbowLeft.getMotorVoltage().getValueAsDouble();
         inputs.elbowLeftCurrentAmps = new double[] {elbowLeft.getStatorCurrent().getValueAsDouble()};
 
         inputs.shoulderRightPosition = (shoulderRight.getPosition().getValueAsDouble());
-        inputs.shoulderRightVelocity = (shoulderRight.getVelocity()).getValueAsDouble();
-        inputs.shoulderRightAppliedVolts = shoulderRight.getMotorVoltage().getValueAsDouble();
+        // inputs.shoulderRightVelocity = (shoulderRight.getVelocity()).getValueAsDouble();
+        // inputs.shoulderRightAppliedVolts = shoulderRight.getMotorVoltage().getValueAsDouble();
         inputs.shoulderRightCurrentAmps =
                 new double[] {shoulderRight.getStatorCurrent().getValueAsDouble()};
 
         inputs.elbowRightPosition = elbowRight.getPosition().getValueAsDouble();
-        inputs.elbowRightVelocity = elbowRight.getVelocity().getValueAsDouble();
-        inputs.elbowRightAppliedVolts = elbowRight.getMotorVoltage().getValueAsDouble();
+        // inputs.elbowRightVelocity = elbowRight.getVelocity().getValueAsDouble();
+        // inputs.elbowRightAppliedVolts = elbowRight.getMotorVoltage().getValueAsDouble();
         inputs.elbowRightCurrentAmps =
                 new double[] {elbowRight.getStatorCurrent().getValueAsDouble()};
 
@@ -172,8 +172,8 @@ public class ArmIOSparkMax implements ArmIO {
         inputs.armY = getArmPosition().getY();
 
         inputs.gripperPosition = getGripperPosition();
-        inputs.gripperVelocity = gripperEncoder.getVelocity();
-        inputs.gripperAppliedVolts = gripper.getAppliedOutput() * gripper.getBusVoltage();
+        // inputs.gripperVelocity = gripperEncoder.getVelocity();
+        // inputs.gripperAppliedVolts = gripper.getAppliedOutput() * gripper.getBusVoltage();
         inputs.gripperCurrentAmps = new double[] {gripper.getOutputCurrent()};
     }
 

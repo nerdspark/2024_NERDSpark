@@ -16,9 +16,9 @@ public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
         // led.setLength();
         // led.setRGB();
         lights = new Spark(BlinkinLightsConstants.lightChannel);
-        lights.setSafetyEnabled(false);
-        lights.setExpiration(1000);
-        lights.feed();
+        // lights.setSafetyEnabled(false);
+        // lights.setExpiration(1000);
+        // lights.feed();
         // lights.check();
         // lights.getExpiration();
         // lights.isSafetyEnabled();

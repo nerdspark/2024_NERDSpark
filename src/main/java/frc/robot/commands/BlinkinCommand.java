@@ -37,16 +37,16 @@ public class BlinkinCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        color = !beambreakGood.get()
-                ? BlinkinLightsConstants.doesNotHaveNotePattern
-                : (!aiming.get()
-                        ? BlinkinLightsConstants.hasNotePattern
-                        : (!visionGood.get()
-                                ? BlinkinLightsConstants.badVisionPattern
-                                : (aimGood.get()
-                                        ? BlinkinLightsConstants.readyToShootPattern
-                                        : BlinkinLightsConstants.notReadyToShootPattern)));
-        lights.setLightPattern(color);
+        // color = !beambreakGood.get()
+        //         ? BlinkinLightsConstants.doesNotHaveNotePattern
+        //         : (!aiming.get()
+        //                 ? BlinkinLightsConstants.hasNotePattern
+        //                 : (!visionGood.get()
+        //                         ? BlinkinLightsConstants.badVisionPattern
+        //                         : (aimGood.get()
+        //                                 ? BlinkinLightsConstants.readyToShootPattern
+        //                                 : BlinkinLightsConstants.notReadyToShootPattern)));
+        // lights.setLightPattern(color);
     }
 
     // Called once the command ends or is interrupted.
