@@ -49,6 +49,7 @@ import frc.robot.commands.GripperOutCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.UnwindCommand;
 import frc.robot.commands.WinchCommand;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.generated.TunerConstantsSmudge;
@@ -554,6 +555,7 @@ public class RobotContainer { // implements RobotConstants{
         // shoot grappler
         driver.a()
                 .or(driver.povDown())
+                .or(driver.y())
                 .onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))
                 .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
@@ -562,6 +564,7 @@ public class RobotContainer { // implements RobotConstants{
                 .and(() -> Math.abs(fourBar.getFourBarAngle() - FourBarConstants.fourBarHome) > 0.1)
                 .whileTrue(new WaitCommand(0.2).andThen(new GrapplerCommand(climb)));
         driver.a().whileTrue(new WinchCommand(climb).onlyIf(() -> climb.getServoOut()));
+        driver.y().whileTrue(new UnwindCommand(climb));
 
         // .whileTrue(new WinchCommand(climb, () -> false)
         //         .alongWith(new WaitCommand(ClimbConstants.rumbleWait)
@@ -572,8 +575,8 @@ public class RobotContainer { // implements RobotConstants{
         // driver.x().whileTrue(new WaitCommand(0.5).andThen(new WinchCommand(climb, () -> true)));
         // driver.x().onFalse(new WinchCommand(climb, () -> false));
 
-        driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
-        driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 4.0));
+        // driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
+        // driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 4.0));
         copilot.povUp().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 4.0));
         copilot.povDown().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper / 4.0));
         copilot.leftBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
