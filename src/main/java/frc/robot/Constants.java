@@ -467,7 +467,10 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(15.1, 5200.0);
+            shooterMap.put(15.1, 5900.0);
+            shooterMap.put(8.0, 5900.0);
+            shooterMap.put(7.5, 5700.0);
+            shooterMap.put(7.0, 5450.0);
             shooterMap.put(6.44, 5200.0);
             shooterMap.put(5.9436, 5100.0);
             shooterMap.put(5.334, 5000.0);
