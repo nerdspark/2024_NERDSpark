@@ -472,11 +472,11 @@ public final class Constants {
             shooterMap.put(7.5, 5750.0);
             shooterMap.put(7.0, 5700.0);
             shooterMap.put(6.44, 5600.0);
-            shooterMap.put(5.9436, 5600.0);
-            shooterMap.put(5.334, 5250.0);
-            shooterMap.put(4.7752, 5000.0);
-            shooterMap.put(4.1402, 4650.0);
-            shooterMap.put(3.429, 4550.0);
+            shooterMap.put(5.9436, 5500.0);
+            shooterMap.put(5.334, 5150.0);
+            shooterMap.put(4.7752, 4800.0);
+            shooterMap.put(4.1402, 4600.0);
+            shooterMap.put(3.429, 4500.0);
             shooterMap.put(2.7178, 4400.0);
             shooterMap.put(0.762, 4200.0);
         }

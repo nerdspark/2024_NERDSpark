@@ -556,13 +556,14 @@ public class RobotContainer { // implements RobotConstants{
         driver.a()
                 .or(driver.povDown())
                 .or(driver.y())
+                .or(driver.x())
                 .onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))
                 .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
-        driver.povDown()
-                .and(() -> driverRaw.getXButton())
+        driver.x()
+                .and(() -> driverRaw.getPOV() != -1)
                 .and(() -> Math.abs(fourBar.getFourBarAngle() - FourBarConstants.fourBarHome) > 0.1)
-                .whileTrue(new WaitCommand(0.2).andThen(new GrapplerCommand(climb)));
+                .whileTrue(new GrapplerCommand(climb));
         driver.a().whileTrue(new WinchCommand(climb).onlyIf(() -> climb.getServoOut()));
         driver.y().whileTrue(new UnwindCommand(climb));
 
