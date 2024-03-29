@@ -278,9 +278,9 @@ public final class Constants {
         public static final double red_weirdSideRing4 = 2.075;
 
         public static final double blueAmpSide1 = 2.98; // 2.7
-        public static final double blueAmpSide2 = 1.85; // 2.45
-        public static final double blueAmpSide3 = 1.915; // 2.45
-        public static final double blueAmpSide4 = 1.96; // 1.9
+        public static final double blueAmpSide2 = 1.87; // 2.45
+        public static final double blueAmpSide3 = 1.93; // 2.45
+        public static final double blueAmpSide4 = 1.99; // 1.9
 
         public static final double redAmpSide2 = 1.83; 
         public static final double redAmpSide3 = 1.915; 
