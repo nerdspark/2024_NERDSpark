@@ -106,7 +106,7 @@ public class RobotContainer { // implements RobotConstants{
             new PIDController(DrivetrainConstants.gyroP, DrivetrainConstants.gyroI, DrivetrainConstants.gyroD);
     private double targetAngle = 0;
     private final Pigeon2 gyro = new Pigeon2(RobotMap.pigeonID, "canivore1");
-    private double gyroOffset = gyro.getAngle();//(getAutonomousCommand().getName() == "redWeirdSideAuto") ? gyro.getAngle() +  60 : (getAutonomousCommand().getName() == "blueWeirdSideAuto") ? gyro.getAngle() - 60 : gyro.getAngle();
+    public double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
     // private NoteVisionSubsystem noteVisionSubsystem =
