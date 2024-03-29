@@ -50,7 +50,7 @@ public final class Constants {
         public static final double fourBarLong = 1.6; // TODO T UNE
         // public static final double fourBarPodium = 1.95; //TODO tune
 
-        public static final double RPMLong = 5200.0;
+        public static final double RPMLong = 5500.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
         public static final double RPMHome = 4300.0;
@@ -467,16 +467,16 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(15.1, 5900.0);
-            shooterMap.put(8.0, 5900.0);
-            shooterMap.put(7.5, 5700.0);
-            shooterMap.put(7.0, 5450.0);
-            shooterMap.put(6.44, 5200.0);
-            shooterMap.put(5.9436, 5100.0);
-            shooterMap.put(5.334, 5000.0);
-            shooterMap.put(4.7752, 4900.0);
-            shooterMap.put(4.1402, 4800.0);
-            shooterMap.put(3.429, 4600.0);
+            shooterMap.put(15.1, 5800.0);
+            shooterMap.put(8.0, 5800.0);
+            shooterMap.put(7.5, 5750.0);
+            shooterMap.put(7.0, 5700.0);
+            shooterMap.put(6.44, 5600.0);
+            shooterMap.put(5.9436, 5600.0);
+            shooterMap.put(5.334, 5250.0);
+            shooterMap.put(4.7752, 5000.0);
+            shooterMap.put(4.1402, 4650.0);
+            shooterMap.put(3.429, 4550.0);
             shooterMap.put(2.7178, 4400.0);
             shooterMap.put(0.762, 4200.0);
         }
