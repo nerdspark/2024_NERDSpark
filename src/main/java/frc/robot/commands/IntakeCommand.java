@@ -50,7 +50,7 @@ public class IntakeCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putBoolean("gotNote", Intake.getBeamBreak());
+        // SmartDashboard.putBoolean("gotNote", Intake.getBeamBreak());
 
         switch (mode) {
             case FORCEINTAKE:

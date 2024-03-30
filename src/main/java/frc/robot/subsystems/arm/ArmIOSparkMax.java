@@ -51,7 +51,6 @@ public class ArmIOSparkMax implements ArmIO {
     // private ArmFeedforward shoulderRightFeedforward;
     // private ArmFeedforward elbowLeftFeedforward;
     // private ArmFeedforward elbowRightFeedforward;
-    private ArmGains armGains = new ArmGains();
 
     public ArmIOSparkMax() {
 
@@ -71,10 +70,10 @@ public class ArmIOSparkMax implements ArmIO {
                 .withSensorToMechanismRatio(ArmConstants.shoulderRadPerRot);
         shoulderconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.3);
         shoulderconfig.Slot0 = new Slot0Configs()
-                .withKP(armGains.shoulderP)
-                .withKI(armGains.shoulderI)
-                .withKD(armGains.shoulderD)
-                .withKG(armGains.shoulderG)
+                .withKP(ArmGains.shoulderP)
+                .withKI(ArmGains.shoulderI)
+                .withKD(ArmGains.shoulderD)
+                .withKG(ArmGains.shoulderG)
                 .withGravityType(GravityTypeValue.Arm_Cosine);
 
         shoulderLeft
@@ -96,10 +95,10 @@ public class ArmIOSparkMax implements ArmIO {
                 .withSensorToMechanismRatio(ArmConstants.elbowRadPerRot);
         elbowconfig.ClosedLoopRamps = new ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.1);
         elbowconfig.Slot0 = new Slot0Configs()
-                .withKP(armGains.elbowP)
-                .withKI(armGains.elbowI)
-                .withKD(armGains.elbowD)
-                .withKG(armGains.elbowG)
+                .withKP(ArmGains.elbowP)
+                .withKI(ArmGains.elbowI)
+                .withKD(ArmGains.elbowD)
+                .withKG(ArmGains.elbowG)
                 .withGravityType(GravityTypeValue.Arm_Cosine);
 
         elbowLeft
@@ -217,11 +216,11 @@ public class ArmIOSparkMax implements ArmIO {
         double elbowPosition = position.getAngle().getRadians() + (SecondAngleArmDiff * (inBend ? -1 : 1));
         setShoulderPosition(shoulderPosition);
         setElbowPosition(elbowPosition);
-        SmartDashboard.putNumber("shouldertarget", shoulderPosition);
-        SmartDashboard.putNumber("elbowtarget", elbowPosition);
-        SmartDashboard.putNumber("shoulderPosition error", shoulderPosition - getShoulderLeftPosition());
-        SmartDashboard.putNumber("elbow R Position error", elbowPosition - getElbowRightPosition());
-        SmartDashboard.putNumber("elbow L Position error", elbowPosition - getElbowLeftPosition());
+        // SmartDashboard.putNumber("shouldertarget", shoulderPosition);
+        // SmartDashboard.putNumber("elbowtarget", elbowPosition);
+        // SmartDashboard.putNumber("shoulderPosition error", shoulderPosition - getShoulderLeftPosition());
+        // SmartDashboard.putNumber("elbow R Position error", elbowPosition - getElbowRightPosition());
+        // SmartDashboard.putNumber("elbow L Position error", elbowPosition - getElbowLeftPosition());
     }
 
     public void resetEncoders() {
@@ -240,8 +239,8 @@ public class ArmIOSparkMax implements ArmIO {
         Translation2d jointToEndPos = new Translation2d(
                 Math.cos(getElbowLeftPosition()) * ArmConstants.secondStageLength,
                 Math.sin(getElbowLeftPosition()) * ArmConstants.secondStageLength);
-        SmartDashboard.putNumber("arm x position", jointPos.plus(jointToEndPos).getX());
-        SmartDashboard.putNumber("arm y position", jointPos.plus(jointToEndPos).getY());
+        // SmartDashboard.putNumber("arm x position", jointPos.plus(jointToEndPos).getX());
+        // SmartDashboard.putNumber("arm y position", jointPos.plus(jointToEndPos).getY());
         return jointPos.plus(jointToEndPos);
     }
 
@@ -250,7 +249,7 @@ public class ArmIOSparkMax implements ArmIO {
 
         position = MathUtil.clamp(position, -0.1, 2.5);
 
-        SmartDashboard.putNumber("shoulder position set raw", position);
+        // SmartDashboard.putNumber("shoulder position set raw", position);
         if ((Math.abs(position - shoulderLeft.getPosition().getValueAsDouble())
                                 + Math.abs(
                                         position - shoulderRight.getPosition().getValueAsDouble()))
@@ -267,14 +266,12 @@ public class ArmIOSparkMax implements ArmIO {
     }
 
     public double getShoulderLeftPosition() {
-        SmartDashboard.putNumber(
-                "shoulder l position raw", shoulderLeft.getPosition().getValueAsDouble());
+        // SmartDashboard.putNumber("shoulder l position raw", shoulderLeft.getPosition().getValueAsDouble());
         return shoulderLeft.getPosition().getValueAsDouble() * (2d * Math.PI);
     }
 
     public double getShoulderRightPosition() {
-        SmartDashboard.putNumber(
-                "shoulder r position raw", shoulderRight.getPosition().getValueAsDouble());
+        // SmartDashboard.putNumber("shoulder r position raw", shoulderRight.getPosition().getValueAsDouble());
         return shoulderRight.getPosition().getValueAsDouble() * (2d * Math.PI);
     }
 
@@ -282,7 +279,7 @@ public class ArmIOSparkMax implements ArmIO {
         // position -= getShoulderLeftPosition() * (1.0 - ArmConstants.virtual4BarGearRatio);
         position /= (2d * Math.PI);
 
-        SmartDashboard.putNumber("elbow position set raw", position);
+        // SmartDashboard.putNumber("elbow position set raw", position);
         // if ((Math.abs(position - elbowLeft.getPosition().getValueAsDouble()) + Math.abs(position -
         // elbowRight.getPosition().getValueAsDouble())) < 0.14 && (Math.abs(position -
         // (ArmConstants.elbowOffset/Math.PI/2.0)) < 0.01)) {
@@ -300,7 +297,7 @@ public class ArmIOSparkMax implements ArmIO {
         double elbowPose = elbowLeft.getPosition().getValueAsDouble() * (2d * Math.PI);
         // elbowPose += getShoulderLeftPosition() * (1.0 - ArmConstants.virtual4BarGearRatio);
         // SmartDashboard.putNumber("elbow l position", elbowPose);
-        SmartDashboard.putNumber("elbow l position raw", elbowLeft.getPosition().getValueAsDouble());
+        // SmartDashboard.putNumber("elbow l position raw", elbowLeft.getPosition().getValueAsDouble());
         // SmartDashboard.putNumber("elbow adjustment factor", shoulderLeft.getPosition()*24.0/42.0);
         // SmartDashboard.putNumber("elbow to shoulder", elbowPose - shoulderLeft.getPosition());
         return elbowPose;
@@ -311,8 +308,7 @@ public class ArmIOSparkMax implements ArmIO {
         double elbowPose = elbowRight.getPosition().getValueAsDouble() * (2d * Math.PI);
         // elbowPose += getShoulderRightPosition() * (1.0 - ArmConstants.virtual4BarGearRatio);
         // SmartDashboard.putNumber("elbow r position", elbowPose);
-        SmartDashboard.putNumber(
-                "elbow r position raw", elbowRight.getPosition().getValueAsDouble());
+        // SmartDashboard.putNumber("elbow r position raw", elbowRight.getPosition().getValueAsDouble());
         // SmartDashboard.putNumber("elbow adjustment factor", shoulderLeft.getPosition()*24.0/42.0);
         // SmartDashboard.putNumber("elbow to shoulder", elbowPose - shoulderLeft.getPosition());
         return elbowPose;
@@ -346,15 +342,15 @@ public class ArmIOSparkMax implements ArmIO {
         // LightningShuffleboard.setBool("shoulder", "refresh", false);
         // }
 
-        LightningShuffleboard.setDouble(
-                "shoulder", "left out", shoulderLeft.getMotorVoltage().getValueAsDouble());
-        LightningShuffleboard.setDouble(
-                "shoulder", "right out", shoulderRight.getMotorVoltage().getValueAsDouble());
+        // LightningShuffleboard.setDouble(
+        //         "shoulder", "left out", shoulderLeft.getMotorVoltage().getValueAsDouble());
+        // LightningShuffleboard.setDouble(
+        //         "shoulder", "right out", shoulderRight.getMotorVoltage().getValueAsDouble());
 
-        LightningShuffleboard.setDouble(
-                "elbow", "left out", elbowLeft.getMotorVoltage().getValueAsDouble());
-        LightningShuffleboard.setDouble(
-                "elbow", "right out", elbowRight.getMotorVoltage().getValueAsDouble());
+        // LightningShuffleboard.setDouble(
+        //         "elbow", "left out", elbowLeft.getMotorVoltage().getValueAsDouble());
+        // LightningShuffleboard.setDouble(
+        //         "elbow", "right out", elbowRight.getMotorVoltage().getValueAsDouble());
     }
 
     public void setGripperPower(double power) {

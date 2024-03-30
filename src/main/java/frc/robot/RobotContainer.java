@@ -399,19 +399,19 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftTrigger()
                 .whileTrue(new ShooterCommand(
                                 shooter,
-                                () -> m_AutoAim.calculateShooterRPM(
+                                () -> AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)),
-                                () -> m_AutoAim.calculateShooterRPM(
+                                () -> AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))
                         .alongWith(new FourBarCommand(
                                 fourBar,
-                                () -> m_AutoAim.calculateFourBarPosition(
+                                () -> AutoAim.calculateFourBarPosition(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
@@ -594,7 +594,8 @@ public class RobotContainer { // implements RobotConstants{
                         .alongWith((new FourBarCommand(fourBar, () -> PickupSetpoints.pickupFourBar))
                                 .alongWith(new ArmCommandAngles(
                                         arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder))
-                                .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
+                                .raceWith(
+                                        (new WaitCommand(PickupSetpoints.spinUpTimeout))
                                         .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
                                                 .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak())
                                                         .andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
@@ -693,7 +694,7 @@ public class RobotContainer { // implements RobotConstants{
         error = error > 180.0 ? error - 360.0 : error;
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
-        SmartDashboard.putNumber("angle error deg", error);
+        // SmartDashboard.putNumber("angle error deg", error);
         return Math.min(
                 Math.max(
                         zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle) * MaxAngularRate),
