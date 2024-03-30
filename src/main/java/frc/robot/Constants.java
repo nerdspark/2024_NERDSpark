@@ -286,8 +286,8 @@ public final class Constants {
         public static final double redAmpSide3 = 1.915; 
         public static final double redAmpSide4 = 1.93; 
 
-        public static final double redRECenterNote5 = 1.87; // 1.80
-        public static final double redRECenterNote6 = 1.88; // 1.80
+        public static final double redRECenterNote5 = 1.89; // 1.80
+        public static final double redRECenterNote6 = 1.89; // 1.80
 
         public static final double blueRECenterNote5 = 1.91; // 1.80
         public static final double blueRECenterNote6 = 1.91; // 1.87
