@@ -31,7 +31,7 @@ public class ArmCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        arm.getArmPosition();
+        // arm.getArmPosition();
         arm.setArmPosition(position.get(), inBend.get());
     }
 

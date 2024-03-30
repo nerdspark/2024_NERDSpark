@@ -139,11 +139,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     }
 
     public ChassisSpeeds getCurrentRobotChassisSpeeds() {
-        SignalLogger.writeDoubleArray("Odometry", new double[] {
-            this.getState().Pose.getX(),
-            this.getState().Pose.getY(),
-            this.getState().Pose.getRotation().getDegrees()
-        });
+        // SignalLogger.writeDoubleArray("Odometry", new double[] {
+        //     this.getState().Pose.getX(),
+        //     this.getState().Pose.getY(),
+        //     this.getState().Pose.getRotation().getDegrees()
+        // });
         return m_kinematics.toChassisSpeeds(getState().ModuleStates);
     }
 
