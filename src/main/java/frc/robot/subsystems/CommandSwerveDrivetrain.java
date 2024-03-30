@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
 
-import com.ctre.phoenix6.SignalLogger;
+// import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -139,11 +139,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     }
 
     public ChassisSpeeds getCurrentRobotChassisSpeeds() {
-        SignalLogger.writeDoubleArray("Odometry", new double[] {
-            this.getState().Pose.getX(),
-            this.getState().Pose.getY(),
-            this.getState().Pose.getRotation().getDegrees()
-        });
+        // SignalLogger.writeDoubleArray("Odometry", new double[] {
+        //     this.getState().Pose.getX(),
+        //     this.getState().Pose.getY(),
+        //     this.getState().Pose.getRotation().getDegrees()
+        // });
         return m_kinematics.toChassisSpeeds(getState().ModuleStates);
     }
 
