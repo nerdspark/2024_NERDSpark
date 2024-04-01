@@ -50,7 +50,7 @@ public final class Constants {
         public static final double fourBarLong = 1.6; // TODO T UNE
         // public static final double fourBarPodium = 1.95; //TODO tune
 
-        public static final double RPMLong = 5200.0;
+        public static final double RPMLong = 4200.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
         public static final double RPMHome = 4300.0;
@@ -114,7 +114,7 @@ public final class Constants {
             // fourBarMap.put(4.90 + 0.2, 1.925);
             // fourBarMap.put(5.00 + 0.2, 1.85);
             // fourBarMap.put(5.10 + 0.2, 1.9);
-            // fourBarMap.put(5.30 + 0.2, 1.79);
+            // fourBarMap.put(5.30 + 0.2, 1.79);s
             // fourBarMap.put(5.40 + 0.15, 1.5);
 
             /* OLD POSITIONS W/O NEW CONVERSION FACTOR */
@@ -236,8 +236,8 @@ public final class Constants {
 
             public static final double winchAmpLimit = 50;
 
-            public static final double trapArmAngle = Units.degreesToRadians(110);
-            public static final double trapArmDifference = Units.degreesToRadians(70);
+            public static final double trapArmAngle = Units.degreesToRadians(105);
+            public static final double trapArmDifference = Units.degreesToRadians(29);
 
             public static final double trapMicroadjust = Units.degreesToRadians(25);
 
@@ -269,8 +269,8 @@ public final class Constants {
         public static final double blueCenterRing3 = 1.95; // 2.45
         public static final double blueCenterRing4 = 1.95; // 1.9
 
-        public static final double weirdSideRing2 = 1.72; // 3.5
-        public static final double weirdSideRing3 = 1.91; // 2.75
+        public static final double weirdSideRing2 = 1.74; // 3.5
+        public static final double weirdSideRing3 = 1.94; // 2.75
         public static final double weirdSideRing4 = 2.075; // 1.9
 
         public static final double red_weirdSideRing2 = 1.73;
@@ -278,19 +278,19 @@ public final class Constants {
         public static final double red_weirdSideRing4 = 2.075;
 
         public static final double blueAmpSide1 = 2.98; // 2.7
-        public static final double blueAmpSide2 = 1.85; // 2.45
-        public static final double blueAmpSide3 = 1.915; // 2.45
-        public static final double blueAmpSide4 = 1.96; // 1.9
+        public static final double blueAmpSide2 = 1.87; // 2.45
+        public static final double blueAmpSide3 = 1.93; // 2.45
+        public static final double blueAmpSide4 = 2.01; // 1.9
 
         public static final double redAmpSide2 = 1.83; 
         public static final double redAmpSide3 = 1.915; 
         public static final double redAmpSide4 = 1.93; 
 
-        public static final double redRECenterNote5 = 1.85; // 1.80
-        public static final double redRECenterNote6 = 1.85; // 1.80
+        public static final double redRECenterNote5 = 1.89; // 1.80
+        public static final double redRECenterNote6 = 1.89; // 1.80
 
-        public static final double blueRECenterNote5 = 1.89; // 1.80
-        public static final double blueRECenterNote6 = 1.89; // 1.87
+        public static final double blueRECenterNote5 = 1.91; // 1.80
+        public static final double blueRECenterNote6 = 1.91; // 1.87
 
         public static final double blueWeirdSideDropring2 = 1.70;
 
@@ -467,8 +467,12 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter Position
-            shooterMap.put(15.1, 5200.0);
-            shooterMap.put(6.44, 5200.0);
+            shooterMap.put(15.1, 5600.0);
+            shooterMap.put(9.0, 5600.0);
+            shooterMap.put(8.0, 5600.0);
+            shooterMap.put(7.5, 5600.0);
+            shooterMap.put(7.0, 5600.0);
+            shooterMap.put(6.44, 5400.0);
             shooterMap.put(5.9436, 5100.0);
             shooterMap.put(5.334, 5000.0);
             shooterMap.put(4.7752, 4900.0);

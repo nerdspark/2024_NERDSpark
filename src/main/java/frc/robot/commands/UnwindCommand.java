@@ -5,40 +5,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.subsystems.arm.Arm;
+import frc.robot.Constants.ClimbConstants;
+import frc.robot.subsystems.climb.Climb;
 import java.util.function.Supplier;
 
-public class ArmCommandAngles extends Command {
-    private Arm arm;
-    private Supplier<Double> elbow, shoulder;
-    /** Creates a new ArmCommand. */
-    public ArmCommandAngles(Arm arm, Supplier<Double> elbow, Supplier<Double> shoulder) {
-        this.arm = arm;
-        this.shoulder = shoulder;
-        this.elbow = elbow;
-        addRequirements(arm);
+public class UnwindCommand extends Command {
+    private final Climb Climb;
+    /** Creates a new ClimbCommand. */
+    public UnwindCommand(Climb Climb) {
+        this.Climb = Climb;
+        // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {
-        // arm.resetEncoders();
-    }
+    public void initialize() {}
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        // arm.getArmPosition();
-        arm.setElbowPosition(elbow.get());
-        arm.setShoulderPosition(shoulder.get());
+        // if (Math.abs(Climb.getClimbMotorPosition()) < ClimbConstants.winchDist) {
+            Climb.setClimbMotorPower(-1);
+        // } else {
+        //     Climb.setClimbMotorPower(0);
+        // }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        arm.setElbowPosition(ArmConstants.elbowOffset);
-        arm.setShoulderPosition(ArmConstants.shoulderOffset);
+        Climb.setClimbMotorPower(0);
     }
 
     // Returns true when the command should end.

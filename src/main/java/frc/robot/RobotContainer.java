@@ -49,6 +49,7 @@ import frc.robot.commands.GripperOutCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand.IntakeMode;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.UnwindCommand;
 import frc.robot.commands.WinchCommand;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.generated.TunerConstantsSmudge;
@@ -106,7 +107,7 @@ public class RobotContainer { // implements RobotConstants{
             new PIDController(DrivetrainConstants.gyroP, DrivetrainConstants.gyroI, DrivetrainConstants.gyroD);
     private double targetAngle = 0;
     private final Pigeon2 gyro = new Pigeon2(RobotMap.pigeonID, "canivore1");
-    private double gyroOffset = gyro.getAngle();
+    public double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
     private PoseEstimatorSubsystem poseEstimatorSubSystem;
     // private NoteVisionSubsystem noteVisionSubsystem =
@@ -205,7 +206,7 @@ public class RobotContainer { // implements RobotConstants{
         // drivetrain.registerTelemetry(logger::telemeterize);
         // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () ->
         // false));
-        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome + 0));
+        fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome));
     }
 
     private void configureNamedCommands() {
@@ -398,19 +399,19 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftTrigger()
                 .whileTrue(new ShooterCommand(
                                 shooter,
-                                () -> m_AutoAim.calculateShooterRPM(
+                                () -> AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)),
-                                () -> m_AutoAim.calculateShooterRPM(
+                                () -> AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))
                         .alongWith(new FourBarCommand(
                                 fourBar,
-                                () -> m_AutoAim.calculateFourBarPosition(
+                                () -> AutoAim.calculateFourBarPosition(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
@@ -554,14 +555,17 @@ public class RobotContainer { // implements RobotConstants{
         // shoot grappler
         driver.a()
                 .or(driver.povDown())
+                .or(driver.y())
+                .or(driver.x())
                 .onTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))
                 .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0)));
 
-        driver.povDown()
-                .and(() -> driverRaw.getXButton())
+        driver.x()
+                .and(() -> driverRaw.getPOV() != -1)
                 .and(() -> Math.abs(fourBar.getFourBarAngle() - FourBarConstants.fourBarHome) > 0.1)
-                .whileTrue(new WaitCommand(0.2).andThen(new GrapplerCommand(climb)));
+                .whileTrue(new GrapplerCommand(climb));
         driver.a().whileTrue(new WinchCommand(climb).onlyIf(() -> climb.getServoOut()));
+        driver.y().whileTrue(new UnwindCommand(climb));
 
         // .whileTrue(new WinchCommand(climb, () -> false)
         //         .alongWith(new WaitCommand(ClimbConstants.rumbleWait)
@@ -572,8 +576,8 @@ public class RobotContainer { // implements RobotConstants{
         // driver.x().whileTrue(new WaitCommand(0.5).andThen(new WinchCommand(climb, () -> true)));
         // driver.x().onFalse(new WinchCommand(climb, () -> false));
 
-        driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
-        driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 4.0));
+        // driver.b().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
+        // driver.y().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 4.0));
         copilot.povUp().whileTrue(new GripperOutCommand(arm, -ArmConstants.outPowerGripper / 4.0));
         copilot.povDown().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper / 4.0));
         copilot.leftBumper().whileTrue(new GripperOutCommand(arm, ArmConstants.outPowerGripper));
@@ -590,7 +594,8 @@ public class RobotContainer { // implements RobotConstants{
                         .alongWith((new FourBarCommand(fourBar, () -> PickupSetpoints.pickupFourBar))
                                 .alongWith(new ArmCommandAngles(
                                         arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder))
-                                .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
+                                .raceWith(
+                                        (new WaitCommand(PickupSetpoints.spinUpTimeout))
                                         .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
                                                 .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak())
                                                         .andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
@@ -689,7 +694,7 @@ public class RobotContainer { // implements RobotConstants{
         error = error > 180.0 ? error - 360.0 : error;
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
-        SmartDashboard.putNumber("angle error deg", error);
+        // SmartDashboard.putNumber("angle error deg", error);
         return Math.min(
                 Math.max(
                         zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle) * MaxAngularRate),
@@ -702,10 +707,10 @@ public class RobotContainer { // implements RobotConstants{
         gyroPid.setIZone(DrivetrainConstants.IZone);
         gyroOffset = gyro.getAngle();
         targetAngle = 0;
-        drivetrain.seedFieldRelative(
-                (DriverStation.getAlliance().get() == Alliance.Red)
-                        ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
-                        : new Pose2d());
+        drivetrain.seedFieldRelative(new Pose2d());
+                // (DriverStation.getAlliance().get() == Alliance.Red)
+                //         ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
+                //         : new Pose2d());
     }
 
     public void printSpeakerDistanceAndAngle(AprilTagVision aprilTagVision) {

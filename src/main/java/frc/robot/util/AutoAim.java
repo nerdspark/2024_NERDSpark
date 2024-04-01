@@ -40,7 +40,7 @@ public class AutoAim {
 
         double angle = FourBarConstants.fourBarMap.get(
                 distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD);
-        SmartDashboard.putNumber("Calculated 4Bar", angle);
+        // SmartDashboard.putNumber("Calculated 4Bar", angle);
         return angle;
     }
 
@@ -65,9 +65,8 @@ public class AutoAim {
 
         double RPM = Constants.ShooterConstants.shooterMap.get(
                 (distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD));
-        SmartDashboard.putNumber(
-                "distance to speaker", distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD);
-        SmartDashboard.putNumber("Calculated RPM", RPM);
+        // SmartDashboard.putNumber("distance to speaker", distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD);
+        // SmartDashboard.putNumber("Calculated RPM", RPM);
         return RPM;
     }
 
@@ -103,7 +102,7 @@ public class AutoAim {
                     .times(-1.0)
                     .plus(new Rotation2d(Units.degreesToRadians(8.5)));
         }
-        SmartDashboard.putNumber("target Angle", angle.getDegrees());
+        // SmartDashboard.putNumber("target Angle", angle.getDegrees());
         return angle;
         // // ALTERNATE LOGIC
         // return speakerPose

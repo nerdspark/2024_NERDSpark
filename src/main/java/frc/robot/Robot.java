@@ -64,7 +64,7 @@ public class Robot extends LoggedRobot {
         switch (Constants.getMode()) {
             case REAL:
                 // Running on a real robot, log to a USB stick ("/U/logs")
-                Logger.addDataReceiver(new WPILOGWriter());
+                // Logger.addDataReceiver(new WPILOGWriter("/home/lvuser/"));
                 Logger.addDataReceiver(new NT4Publisher());
                 break;
 
@@ -91,6 +91,7 @@ public class Robot extends LoggedRobot {
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our autonomous chooser on the dashboard.
         robotContainer = new RobotContainer(); // RobotConstants.getRobotContainer(RobotIdentity.getIdentity());
+        // robotContainer.resetGyro();
     }
 
     /** This function is called periodically during all modes. */
@@ -147,7 +148,13 @@ public class Robot extends LoggedRobot {
         // this line or comment it out.
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
+            if (autonomousCommand.getName() == "redWeirdSideAuto") {
+                robotContainer.gyroOffset += 60;
+            } else if (autonomousCommand.getName() == "blueWeirdSideAuto") {
+                robotContainer.gyroOffset -= 60;
+            }
         }
+        //(getAutonomousCommand().getName() == "redWeirdSideAuto") ? gyro.getAngle() +  60 : (getAutonomousCommand().getName() == "blueWeirdSideAuto") ? gyro.getAngle() - 60 : gyro.getAngle();
 
         // SignalLogger.setPath("/media/sda1/");
         // SignalLogger.start();

@@ -13,11 +13,6 @@ public interface IntakeIO {
         public double intakeVelocity1 = 0.0;
         public double intakeAppliedVolts1 = 0.0;
         public double[] intakeCurrentAmps1 = new double[] {};
-
-        public double intakePosition2 = 0.0;
-        public double intakeVelocity2 = 0.0;
-        public double intakeAppliedVolts2 = 0.0;
-        public double[] intakeCurrentAmps2 = new double[] {};
     }
 
     /** Updates the set of loggable inputs. */
