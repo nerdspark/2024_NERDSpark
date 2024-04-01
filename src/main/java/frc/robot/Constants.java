@@ -50,7 +50,7 @@ public final class Constants {
         public static final double fourBarLong = 1.6; // TODO T UNE
         // public static final double fourBarPodium = 1.95; //TODO tune
 
-        public static final double RPMLong = 4200.0;
+        public static final double RPMLong = 5600.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
         public static final double RPMHome = 4300.0;
@@ -114,7 +114,7 @@ public final class Constants {
             // fourBarMap.put(4.90 + 0.2, 1.925);
             // fourBarMap.put(5.00 + 0.2, 1.85);
             // fourBarMap.put(5.10 + 0.2, 1.9);
-            // fourBarMap.put(5.30 + 0.2, 1.79);s
+            // fourBarMap.put(5.30 + 0.2, 1.79);
             // fourBarMap.put(5.40 + 0.15, 1.5);
 
             /* OLD POSITIONS W/O NEW CONVERSION FACTOR */
