@@ -80,7 +80,7 @@ public class IntakeIOSparkMax implements IntakeIO {
     }
 
     public double getIntakePosition() {
-        
+
         return intakeEncoder.getPosition();
     }
 }

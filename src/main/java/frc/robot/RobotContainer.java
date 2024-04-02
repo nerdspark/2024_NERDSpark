@@ -207,6 +207,7 @@ public class RobotContainer { // implements RobotConstants{
         // arm.setDefaultCommand(new ArmCommand(arm, () -> ArmSetPoints.home, () ->
         // false));
         fourBar.setDefaultCommand(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarHome + 0));
+        intake.setDefaultCommand(new FixNoteCommand(intake, () -> 0.2));
     }
 
     private void configureNamedCommands() {
