@@ -5,9 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.climb.Climb;
-import java.util.function.Supplier;
 
 public class WinchCommand extends Command {
     private final Climb Climb;
@@ -25,7 +23,7 @@ public class WinchCommand extends Command {
     @Override
     public void execute() {
         // if (Math.abs(Climb.getClimbMotorPosition()) < ClimbConstants.winchDist) {
-            Climb.setClimbMotorPower(1);
+        Climb.setClimbMotorPower(1);
         // } else {
         //     Climb.setClimbMotorPower(0);
         // }

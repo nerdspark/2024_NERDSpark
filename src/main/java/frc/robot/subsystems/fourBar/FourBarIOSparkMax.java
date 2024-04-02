@@ -17,6 +17,7 @@ import frc.robot.Constants.RobotMap;
 public class FourBarIOSparkMax implements FourBarIO {
     /** Creates a new FourBarIOSparkMax. */
     private CANSparkMax FourBarMotor1;
+
     private double angle;
 
     private CANSparkMax FourBarMotor2;
@@ -127,6 +128,7 @@ public class FourBarIOSparkMax implements FourBarIO {
     // }
 
     public boolean onTarget() {
-        return Math.abs(((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()))/2 - (angle)) < FourBarConstants.fourBarTolerance;
+        return Math.abs(((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition())) / 2 - (angle))
+                < FourBarConstants.fourBarTolerance;
     }
 }

@@ -33,6 +33,10 @@ public interface IntakeIO {
         return false;
     }
 
+    default boolean getSmallBeamBreak() {
+        return false;
+    }
+
     default double getIntakePosition() {
         return 0;
     }

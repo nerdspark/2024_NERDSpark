@@ -17,6 +17,8 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.RobotMap;
 
 /**
@@ -29,6 +31,8 @@ public class IntakeIOSparkMax implements IntakeIO {
     private RelativeEncoder intakeEncoder;
 
     private AnalogInput beamBreak;
+
+    private DigitalInput smallBeamBreak;
 
     public IntakeIOSparkMax() {
         intakeMotor = new CANSparkMax(RobotMap.intakeMotorId, CANSparkMax.MotorType.kBrushless);
@@ -45,6 +49,8 @@ public class IntakeIOSparkMax implements IntakeIO {
         intakeEncoder.setPosition(0);
 
         beamBreak = new AnalogInput(0);
+
+        smallBeamBreak = new DigitalInput(1);
     }
 
     @Override
@@ -68,7 +74,13 @@ public class IntakeIOSparkMax implements IntakeIO {
         return beamBreak.getVoltage() < 4;
     }
 
+    public boolean getSmallBeamBreak() {
+        SmartDashboard.putBoolean("smallBeamBreak", smallBeamBreak.get());
+        return smallBeamBreak.get();
+    }
+
     public double getIntakePosition() {
+        
         return intakeEncoder.getPosition();
     }
 }

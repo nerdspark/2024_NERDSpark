@@ -42,6 +42,7 @@ import frc.robot.actions.backToSafety;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.ArmCommandAngles;
 import frc.robot.commands.BlinkinCommand;
+import frc.robot.commands.FixNoteCommand;
 import frc.robot.commands.FourBarCommand;
 import frc.robot.commands.GrapplerCommand;
 import frc.robot.commands.GripperIndexCommand;
@@ -257,8 +258,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
 
-      
-      
         // NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () ->
         // AutoConstants.weirdSideRing4));
 
@@ -417,6 +416,8 @@ public class RobotContainer { // implements RobotConstants{
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))));
 
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
+
+        copilot.a().onTrue(new FixNoteCommand(intake, () -> 0.2));
 
         // copilot.leftTrigger().whileTrue(new BlinkinCommand(lights, () -> (
         //
@@ -612,22 +613,23 @@ public class RobotContainer { // implements RobotConstants{
         // TRAP COMMAND
         copilot.rightStick().onTrue(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb));
 
-        copilot.rightStick().onTrue(new ArmCommandAngles(
-                                arm,
-                                () -> TrapSetpoints.trapArmAngle
-                                        - TrapSetpoints.trapArmDifference
-                                        + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust),
-                                () -> TrapSetpoints.trapArmAngle
-                                        + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust)));
+        copilot.rightStick()
+                .onTrue(new ArmCommandAngles(
+                        arm,
+                        () -> TrapSetpoints.trapArmAngle
+                                - TrapSetpoints.trapArmDifference
+                                + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust),
+                        () -> TrapSetpoints.trapArmAngle + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust)));
 
         // copilot.rightStick()
-        //         .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.climbElbow, () -> TrapSetpoints.climbShoulder));
+        //         .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.climbElbow, () ->
+        // TrapSetpoints.climbShoulder));
 
-        copilot.leftStick().onTrue(new ArmCommandAngles(
-                                arm,
-                                () -> TrapSetpoints.pressElbow,
-                                () -> TrapSetpoints.pressShoulder
-                                        + (copilot.getLeftY() * TrapSetpoints.pressMicroadjust)));
+        copilot.leftStick()
+                .onTrue(new ArmCommandAngles(
+                        arm,
+                        () -> TrapSetpoints.pressElbow,
+                        () -> TrapSetpoints.pressShoulder + (copilot.getLeftY() * TrapSetpoints.pressMicroadjust)));
 
         copilot.povRight()
                 .whileTrue(new ArmCommandAngles(

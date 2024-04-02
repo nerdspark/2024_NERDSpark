@@ -57,6 +57,10 @@ public class Intake extends SubsystemBase {
         return io.getBeamBreak();
     }
 
+    public boolean getSmallBeamBreak() {
+        return io.getSmallBeamBreak();
+    }
+
     public double getIntakePosition() {
         return io.getIntakePosition();
     }
