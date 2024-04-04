@@ -556,10 +556,10 @@ public class RobotContainer { // implements RobotConstants{
                 // new ShooterCommand(shooter, () -> FixedShotConstants.RPMFeed, () -> FixedShotConstants.RPMFeed).alongWith
                 (drivetrain.applyRequest(() -> drive.withRotationalRate(
                         calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-                                        () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, -1.5), new Rotation2d())),
+                                        () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, -2.5), new Rotation2d())),
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond)).plus(new Rotation2d().fromDegrees(-15))
+                                                drivetrain.getState().speeds.vyMetersPerSecond)).plus(new Rotation2d().fromDegrees(10))
                                 .getDegrees()))
                 .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                 .withVelocityY(
