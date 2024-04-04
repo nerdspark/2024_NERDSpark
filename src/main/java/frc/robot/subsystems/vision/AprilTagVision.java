@@ -106,8 +106,8 @@ public class AprilTagVision extends SubsystemBase {
             sendResultsToPoseEstimator(visionUpdates);
         }
 
-        SmartDashboard.putBoolean("Pose updated?", timer.getFPGATimestamp() - timestamp < 2);
-        SmartDashboard.putNumber("System Time", timer.getFPGATimestamp());
+        SmartDashboard.putBoolean("Pose updated?", timer.get() - timestamp < 2);
+        SmartDashboard.putNumber("System Time", timer.get());
         SmartDashboard.putNumber("Pose update timestamp", timestamp);
     }
 
