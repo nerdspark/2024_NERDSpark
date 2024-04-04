@@ -453,7 +453,10 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond)))));
+                                                drivetrain.getState().speeds.vyMetersPerSecond)))))
+                        .and(() -> fourBar.onTarget())
+                                .whileTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1.0)))
+                                .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.0)));
 
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
