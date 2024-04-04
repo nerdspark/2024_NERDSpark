@@ -13,8 +13,8 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.Servo;
-import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
+import frc.robot.Constants.ClimbConstants;
 
 public class ClimbIOSparkMax implements ClimbIO {
     /** Creates a new ClimbIOSparkMax. */
@@ -34,12 +34,12 @@ public class ClimbIOSparkMax implements ClimbIO {
 
         TalonFXConfiguration climbConfig = new TalonFXConfiguration();
         climbConfig.Slot0 = new Slot0Configs().withKP(0.2).withKS(1);
-        climbConfig.CurrentLimits =
-                new CurrentLimitsConfigs().withStatorCurrentLimit(TrapSetpoints.winchAmpLimit).withStatorCurrentLimitEnable(true);
+        climbConfig.CurrentLimits = new CurrentLimitsConfigs()
+                .withStatorCurrentLimit(TrapSetpoints.winchAmpLimit)
+                .withStatorCurrentLimitEnable(true);
         climbConfig.MotorOutput = new MotorOutputConfigs()
                 .withNeutralMode(NeutralModeValue.Brake)
                 .withInverted(InvertedValue.Clockwise_Positive);
-
 
         climbMotor.getConfigurator().apply(climbConfig);
     }
@@ -68,20 +68,19 @@ public class ClimbIOSparkMax implements ClimbIO {
     public void setServoPosition(double angle) {
         grapplingServo.setAngle(angle);
         // if (angle == ClimbConstants.servoOutPos) {
-            servoOut = true;
+        servoOut = true;
         // }
     }
 
     public void setServo(double power) {
         // if (power == 0) {
-            // grapplingServo.setDisabled();
-            // grapplingServo.setSpeed(power);
+        // grapplingServo.setDisabled();
+        // grapplingServo.setSpeed(power);
         // } else {
-            grapplingServo.set(power);
-            servoOut = true;
+        grapplingServo.set(power);
+        servoOut = true;
         // }
     }
-
 
     public boolean getServoOut() {
         return servoOut;

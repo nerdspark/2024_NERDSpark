@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.FourBarGains;
 import frc.robot.Constants.RobotMap;
@@ -17,6 +16,7 @@ import frc.robot.Constants.RobotMap;
 public class FourBarIOSparkMax implements FourBarIO {
     /** Creates a new FourBarIOSparkMax. */
     private CANSparkMax FourBarMotor1;
+
     private double angle;
 
     private CANSparkMax FourBarMotor2;
@@ -127,6 +127,7 @@ public class FourBarIOSparkMax implements FourBarIO {
     // }
 
     public boolean onTarget() {
-        return Math.abs(((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()))/2 - (angle)) < FourBarConstants.fourBarTolerance;
+        return Math.abs(((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition())) / 2 - (angle))
+                < FourBarConstants.fourBarTolerance;
     }
 }

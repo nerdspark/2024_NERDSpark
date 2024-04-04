@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.climb.Climb;
-import java.util.function.Supplier;
 
 public class GrapplerCommand extends Command {
     private final Climb Climb;
@@ -27,9 +26,9 @@ public class GrapplerCommand extends Command {
     @Override
     public void execute() {
         // if (servoRelease) {
-            Climb.setServoPosition(ClimbConstants.servoOutPos);
+        Climb.setServoPosition(ClimbConstants.servoOutPos);
         // } else {
-            // Climb.setServoPosition(ClimbConstants.servoInPos);
+        // Climb.setServoPosition(ClimbConstants.servoInPos);
         // }
     }
 

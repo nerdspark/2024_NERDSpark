@@ -1,8 +1,6 @@
 package frc.robot.subsystems.blikinLights;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.BlinkinLightsConstants;
 
 public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
@@ -26,10 +24,9 @@ public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
         // lights.checkMotors();
     }
 
-
     public void setLightPattern(double patternValue) {
         // if (!lights.isAlive()) {
-            // lights.feed();
+        // lights.feed();
         // }
         lights.set(patternValue);
     }

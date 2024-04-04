@@ -23,11 +23,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.ArmGains;
 import frc.robot.Constants.RobotMap;
-import frc.robot.util.LightningShuffleboard;
 
 public class ArmIOSparkMax implements ArmIO {
     private TalonFX shoulderRight;
