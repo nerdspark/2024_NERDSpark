@@ -21,7 +21,7 @@ public class IntakeCommand extends Command {
 
     public enum IntakeMode {
         FORCEINTAKE,
-        FORCEINTAKESHOOT,
+        SHOOT,
         FULLINTAKE,
         SOFTINTAKE
     }
@@ -54,11 +54,14 @@ public class IntakeCommand extends Command {
         switch (mode) {
             case FORCEINTAKE:
                 Intake.setIntakePower(power.get());
-
                 break;
 
-            case FORCEINTAKESHOOT:
-                Intake.setIntakePower(power.get());
+            case SHOOT:
+                if (Intake.getBeamBreak()) {
+                    Intake.setIntakePower(power.get());
+                } else {
+                    Intake.setIntakePower(0);
+                }
 
                 break;
 
@@ -89,10 +92,8 @@ public class IntakeCommand extends Command {
                 if (!Intake.getBeamBreak()) {
                     Intake.setIntakePower(power.get());
 
-                    // lights.setLightPattern(BlinkinLightsConstants.doesNotHaveNotePattern);
                 } else {
                     Intake.setIntakePower(0);
-                    // lights.setLightPattern(BlinkinLightsConstants.hasNotePattern);
                 }
 
                 break;
@@ -113,10 +114,10 @@ public class IntakeCommand extends Command {
     public boolean isFinished() {
         switch (mode) {
             case FORCEINTAKE:
-                return timer.hasElapsed(0.5);
+                return false;
 
-            case FORCEINTAKESHOOT:
-                return timer.hasElapsed(0.5);
+            case SHOOT:
+                return !Intake.getBeamBreak();
 
             case SOFTINTAKE:
                 return Intake.getBeamBreak();

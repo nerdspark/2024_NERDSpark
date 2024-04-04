@@ -12,6 +12,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -78,8 +79,6 @@ import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.JoystickMap;
-
-import java.util.Timer;
 import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
@@ -93,8 +92,6 @@ public class RobotContainer { // implements RobotConstants{
     private AutoAim m_AutoAim;
     private boolean enableSlowMode = false;
     private BlinkinLights lights;
-
-    public Timer timer = new Timer();
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
@@ -233,7 +230,9 @@ public class RobotContainer { // implements RobotConstants{
         //                                 drivetrain.getState().speeds.vxMetersPerSecond,
         //                                 drivetrain.getState().speeds.vyMetersPerSecond))));
 
-        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 5000.0, () -> 5000.0));
+        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 5100.0, () -> 5100.0));
+
+        NamedCommands.registerCommand("weirdShooter", new ShooterCommand(shooter, () -> 5300.0, () -> 5300.0));
 
         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
@@ -288,7 +287,7 @@ public class RobotContainer { // implements RobotConstants{
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
         NamedCommands.registerCommand(
-                "forcedIntakeShoot", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKESHOOT));
+                "forcedIntakeShoot", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.SHOOT));
 
         NamedCommands.registerCommand(
                 "forcedIntakeZero", new IntakeCommand(intake, () -> 0.0, IntakeCommand.IntakeMode.FORCEINTAKE));
@@ -367,7 +366,7 @@ public class RobotContainer { // implements RobotConstants{
                                 new Rotation2d().fromDegrees(DriverStation.getAlliance().get() == Alliance.Red ? DriveToShotConstants.longshotAngleRed : DriveToShotConstants.longshotAngleBlue)), () -> new Rotation2d().fromDegrees(gyro.getAngle() - gyroOffset))
                         .andThen(new WaitCommand(DriveToShotConstants.stopWait)))
                         .andThen(new WaitUntilCommand(() -> fourBar.onTarget()))
-                        .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKESHOOT)))
+                        .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.SHOOT)))
                 .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong).alongWith(new ShooterCommand(shooter, () -> DriveToShotConstants.longshotRPM, () -> DriveToShotConstants.longshotRPM))));
 
         // side drivetoshot
@@ -378,7 +377,7 @@ public class RobotContainer { // implements RobotConstants{
                                 new Rotation2d().fromDegrees(DriverStation.getAlliance().get() == Alliance.Red ? DriveToShotConstants.sideshotAngleRed : DriveToShotConstants.sideshotAngleBlue)), () -> new Rotation2d().fromDegrees(gyro.getAngle() - gyroOffset))
                         .andThen(new WaitCommand(DriveToShotConstants.stopWait)))
                         .andThen(new WaitUntilCommand(() -> fourBar.onTarget()))
-                        .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKESHOOT)))
+                        .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.SHOOT)))
                 .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarSide).alongWith(new ShooterCommand(shooter, () -> DriveToShotConstants.sideshotRPM, () -> DriveToShotConstants.sideshotRPM))));
 
         // feed drivetoshot
@@ -389,7 +388,7 @@ public class RobotContainer { // implements RobotConstants{
                                 new Rotation2d().fromDegrees(DriverStation.getAlliance().get() == Alliance.Red ? DriveToShotConstants.feedshotAngleRed : DriveToShotConstants.feedshotAngleBlue)), () -> new Rotation2d().fromDegrees(gyro.getAngle() - gyroOffset))
                         .andThen(new WaitCommand(DriveToShotConstants.feedStopWait)))
                         .andThen(new WaitUntilCommand(() -> fourBar.onTarget()))
-                        .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKESHOOT)))
+                        .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.SHOOT)))
                 .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarFeed).alongWith(new ShooterCommand(shooter, () -> DriveToShotConstants.feedshotRPM, () -> DriveToShotConstants.feedshotRPM))));
 
         // zero gyro
