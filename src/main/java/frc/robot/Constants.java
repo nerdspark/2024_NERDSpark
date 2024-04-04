@@ -273,7 +273,7 @@ public final class Constants {
         public static final double weirdSideRing3 = 1.94; // 2.75
         public static final double weirdSideRing4 = 2.075; // 1.9
 
-        public static final double red_weirdSideRing2 = 1.73;
+        public static final double red_weirdSideRing2 = 1.60;
         public static final double red_weirdSideRing3 = 1.81;
         public static final double red_weirdSideRing4 = 2.075;
 
@@ -282,9 +282,9 @@ public final class Constants {
         public static final double blueAmpSide3 = 1.93; // 2.45
         public static final double blueAmpSide4 = 2.01; // 1.9
 
-        public static final double redAmpSide2 = 1.83; 
-        public static final double redAmpSide3 = 1.915; 
-        public static final double redAmpSide4 = 1.93; 
+        public static final double redAmpSide2 = 1.83;
+        public static final double redAmpSide3 = 1.915;
+        public static final double redAmpSide4 = 1.93;
 
         public static final double redRECenterNote5 = 1.89; // 1.80
         public static final double redRECenterNote6 = 1.89; // 1.80

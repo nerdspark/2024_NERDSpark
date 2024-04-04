@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.BiasConstants;
 import frc.robot.Constants.FourBarConstants;
@@ -65,7 +64,8 @@ public class AutoAim {
 
         double RPM = Constants.ShooterConstants.shooterMap.get(
                 (distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD));
-        // SmartDashboard.putNumber("distance to speaker", distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD);
+        // SmartDashboard.putNumber("distance to speaker", distanceToSpeaker3 + distanceOffset +
+        // ShooterConstants.CONSTANT_DISTANCE_ADD);
         // SmartDashboard.putNumber("Calculated RPM", RPM);
         return RPM;
     }

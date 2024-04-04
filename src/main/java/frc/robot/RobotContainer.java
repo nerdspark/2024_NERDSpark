@@ -12,7 +12,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -225,7 +224,9 @@ public class RobotContainer { // implements RobotConstants{
         //                                 drivetrain.getState().speeds.vxMetersPerSecond,
         //                                 drivetrain.getState().speeds.vyMetersPerSecond))));
 
-        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 5000.0, () -> 5000.0));
+        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 5100.0, () -> 5100.0));
+
+        NamedCommands.registerCommand("weirdShooter", new ShooterCommand(shooter, () -> 5300.0, () -> 5300.0));
 
         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
@@ -258,8 +259,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
 
-      
-      
         // NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () ->
         // AutoConstants.weirdSideRing4));
 
@@ -282,7 +281,7 @@ public class RobotContainer { // implements RobotConstants{
                 "forcedIntake", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKE));
 
         NamedCommands.registerCommand(
-                "forcedIntakeShoot", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.FORCEINTAKESHOOT));
+                "forcedIntakeShoot", new IntakeCommand(intake, () -> 1.0, IntakeCommand.IntakeMode.SHOOT));
 
         NamedCommands.registerCommand(
                 "forcedIntakeZero", new IntakeCommand(intake, () -> 0.0, IntakeCommand.IntakeMode.FORCEINTAKE));
@@ -594,8 +593,7 @@ public class RobotContainer { // implements RobotConstants{
                         .alongWith((new FourBarCommand(fourBar, () -> PickupSetpoints.pickupFourBar))
                                 .alongWith(new ArmCommandAngles(
                                         arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder))
-                                .raceWith(
-                                        (new WaitCommand(PickupSetpoints.spinUpTimeout))
+                                .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
                                         .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
                                                 .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak())
                                                         .andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
@@ -617,22 +615,23 @@ public class RobotContainer { // implements RobotConstants{
         // TRAP COMMAND
         copilot.rightStick().onTrue(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb));
 
-        copilot.rightStick().onTrue(new ArmCommandAngles(
-                                arm,
-                                () -> TrapSetpoints.trapArmAngle
-                                        - TrapSetpoints.trapArmDifference
-                                        + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust),
-                                () -> TrapSetpoints.trapArmAngle
-                                        + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust)));
+        copilot.rightStick()
+                .onTrue(new ArmCommandAngles(
+                        arm,
+                        () -> TrapSetpoints.trapArmAngle
+                                - TrapSetpoints.trapArmDifference
+                                + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust),
+                        () -> TrapSetpoints.trapArmAngle + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust)));
 
         // copilot.rightStick()
-        //         .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.climbElbow, () -> TrapSetpoints.climbShoulder));
+        //         .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.climbElbow, () ->
+        // TrapSetpoints.climbShoulder));
 
-        copilot.leftStick().onTrue(new ArmCommandAngles(
-                                arm,
-                                () -> TrapSetpoints.pressElbow,
-                                () -> TrapSetpoints.pressShoulder
-                                        + (copilot.getLeftY() * TrapSetpoints.pressMicroadjust)));
+        copilot.leftStick()
+                .onTrue(new ArmCommandAngles(
+                        arm,
+                        () -> TrapSetpoints.pressElbow,
+                        () -> TrapSetpoints.pressShoulder + (copilot.getLeftY() * TrapSetpoints.pressMicroadjust)));
 
         copilot.povRight()
                 .whileTrue(new ArmCommandAngles(
@@ -708,9 +707,9 @@ public class RobotContainer { // implements RobotConstants{
         gyroOffset = gyro.getAngle();
         targetAngle = 0;
         drivetrain.seedFieldRelative(new Pose2d());
-                // (DriverStation.getAlliance().get() == Alliance.Red)
-                //         ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
-                //         : new Pose2d());
+        // (DriverStation.getAlliance().get() == Alliance.Red)
+        //         ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
+        //         : new Pose2d());
     }
 
     public void printSpeakerDistanceAndAngle(AprilTagVision aprilTagVision) {
