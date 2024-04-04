@@ -22,6 +22,8 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
     private static PhotonVisionRunnable backRightEstimator;
     private static Notifier allNotifier;
 
+    double prevCameraTimeStamp = 0;
+    double currentCameraTimeStamp = 0;
     // private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
     /**
@@ -44,7 +46,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                         Constants.VisionConstants.BACK_RIGHT_CAMERA_NAME,
                         Constants.VisionConstants.ROBOT_TO_BACK_RIGHT_CAMERA);
             }
-
+            
             allNotifier = new Notifier(() -> {
                 if (Constants.VisionConstants.USE_FRONT_CAMERA) {
                     frontEstimator.run();
@@ -172,7 +174,9 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             // if ((poseStrategyUsed != PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR))
             poseAmbiguity /= cameraPose.targetsUsed.size(); // Calculates the average tag pose ambiguity
 
-            if (distanceUsedForCalculatingStdDev < 8) {
+            currentCameraTimeStamp = cameraPose.timestampSeconds;
+
+            if (distanceUsedForCalculatingStdDev < 8 && currentCameraTimeStamp > prevCameraTimeStamp) {
                 inputs.poseEstimates.add(new PoseEstimate(
                         cameraPose.estimatedPose.transformBy(
                                 estomator.getRobotToCameraTransform().inverse()),
@@ -183,6 +187,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                         poseStrategyUsed,
                         distanceToSpeakerTag,
                         angleToSpeakerTag)); //
+                prevCameraTimeStamp = currentCameraTimeStamp;
             }
 
             // inputs.poseEstimates = poseEstimates;

@@ -78,6 +78,8 @@ import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.JoystickMap;
+
+import java.util.Timer;
 import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
@@ -91,6 +93,8 @@ public class RobotContainer { // implements RobotConstants{
     private AutoAim m_AutoAim;
     private boolean enableSlowMode = false;
     private BlinkinLights lights;
+
+    public Timer timer = new Timer();
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
