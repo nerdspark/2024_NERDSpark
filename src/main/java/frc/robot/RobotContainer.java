@@ -389,37 +389,15 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> DriveToShotConstants.longshotRPM))));
 
         // side drivetoshot
-        driver.povRight()
-                .or(driver.povLeft())
-                .whileTrue((new WaitCommand(DriveToShotConstants.aimingWait)
-                                .alongWith(new DriveToPoseCommand(
-                                                drivetrain,
-                                                () -> drivetrain.getState().Pose,
-                                                () -> new Pose2d(
-                                                        DriverStation.getAlliance()
-                                                                                .get()
-                                                                        == Alliance.Red
-                                                                ? FieldConstants.fieldLength
-                                                                        - DriveToShotConstants.sideshotX
-                                                                : DriveToShotConstants.sideshotX,
-                                                        DriveToShotConstants.sideshotY,
-                                                        new Rotation2d()
-                                                                .fromDegrees(
-                                                                        DriverStation.getAlliance()
-                                                                                                .get()
-                                                                                        == Alliance.Red
-                                                                                ? DriveToShotConstants.sideshotAngleRed
-                                                                                : DriveToShotConstants
-                                                                                        .sideshotAngleBlue)),
-                                                () -> new Rotation2d().fromDegrees(gyro.getAngle() - gyroOffset))
-                                        .andThen(new WaitCommand(DriveToShotConstants.stopWait)))
-                                .andThen(new WaitUntilCommand(() -> fourBar.onTarget()))
-                                .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.SHOOT)))
-                        .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarSide)
-                                .alongWith(new ShooterCommand(
-                                        shooter,
-                                        () -> DriveToShotConstants.sideshotRPM,
-                                        () -> DriveToShotConstants.sideshotRPM))));
+        driver.povRight().or(driver.povLeft()).whileTrue((new WaitCommand(DriveToShotConstants.aimingWait).alongWith(new DriveToPoseCommand(drivetrain, () -> drivetrain.getState().Pose, 
+                        () -> new Pose2d(
+                                DriverStation.getAlliance().get() == Alliance.Red ? FieldConstants.fieldLength - DriveToShotConstants.sideshotX : DriveToShotConstants.sideshotX, 
+                                DriveToShotConstants.sideshotY, 
+                                new Rotation2d().fromDegrees(DriverStation.getAlliance().get() == Alliance.Red ? DriveToShotConstants.sideshotAngleRed : DriveToShotConstants.sideshotAngleBlue)), () -> new Rotation2d().fromDegrees(gyro.getAngle() - gyroOffset))
+                        .andThen(new WaitCommand(DriveToShotConstants.stopWait)))
+                        .andThen(new WaitUntilCommand(() -> fourBar.onTarget()))
+                        .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.SHOOT)))
+                .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarSide).alongWith(new ShooterCommand(shooter, () -> DriveToShotConstants.longshotRPM, () -> DriveToShotConstants.longshotRPM))));
 
         // feed drivetoshot
         driver.povDown()
@@ -515,7 +493,10 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond)))));
+                                                drivetrain.getState().speeds.vyMetersPerSecond)))))
+                        .and(() -> fourBar.onTarget())
+                                .whileTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1.0)))
+                                .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.0)));
 
         copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
