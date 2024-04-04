@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
 import frc.robot.util.FieldConstants;
@@ -114,6 +115,7 @@ public class AprilTagVision extends SubsystemBase {
                     continue;
                 }
                 double timestamp = poseEstimates.timestampSeconds();
+                SmartDashboard.putNumber("timestamp", poseEstimates.timestampSeconds());
                 Pose3d robotPose = poseEstimates.pose();
                 // Correct the robot pose since camera is mounted on the back.
                 // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
