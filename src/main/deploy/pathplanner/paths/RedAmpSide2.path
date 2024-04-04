@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.22,
-        "y": 7.29
+        "y": 7.34
       },
       "prevControl": null,
       "nextControl": {
         "x": 9.14001411999521,
-        "y": 7.0231894074027625
+        "y": 7.073189407402762
       },
       "isLocked": false,
       "linkedName": null
@@ -49,11 +49,11 @@
     {
       "anchor": {
         "x": 8.31,
-        "y": 5.49
+        "y": 5.69
       },
       "prevControl": {
         "x": 9.308306907282683,
-        "y": 5.843919236228233
+        "y": 6.043919236228233
       },
       "nextControl": null,
       "isLocked": false,
@@ -74,23 +74,6 @@
   ],
   "constraintZones": [],
   "eventMarkers": [
-    {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "redAmpSide2"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "forcedIntakeShoot",
       "waypointRelativePos": 0.6000000000000001,
