@@ -22,6 +22,7 @@ public class FixNoteCommand extends Command {
         this.power = power;
 
         // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(Intake);
     }
 
     // Called when the command is initially scheduled.

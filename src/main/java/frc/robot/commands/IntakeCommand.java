@@ -71,7 +71,7 @@ public class IntakeCommand extends Command {
 
                 } else if (!isIndexing) {
 
-                    referencePosition = Intake.getIntakePosition();
+                    // referencePosition = Intake.getIntakePosition();
                     isIndexing = true;
                 }
 
