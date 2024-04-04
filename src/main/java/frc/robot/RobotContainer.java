@@ -378,7 +378,7 @@ public class RobotContainer { // implements RobotConstants{
                         .andThen(new WaitCommand(DriveToShotConstants.stopWait)))
                         .andThen(new WaitUntilCommand(() -> fourBar.onTarget()))
                         .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.SHOOT)))
-                .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarSide).alongWith(new ShooterCommand(shooter, () -> DriveToShotConstants.sideshotRPM, () -> DriveToShotConstants.sideshotRPM))));
+                .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarSide).alongWith(new ShooterCommand(shooter, () -> DriveToShotConstants.longshotRPM, () -> DriveToShotConstants.longshotRPM))));
 
         // feed drivetoshot
         driver.povDown().whileTrue((new WaitCommand(DriveToShotConstants.feedAimingWait).alongWith(new DriveToPoseCommand(drivetrain, () -> drivetrain.getState().Pose, 
