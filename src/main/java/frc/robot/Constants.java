@@ -15,7 +15,9 @@ import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.config.RobotIdentity;
+import frc.robot.subsystems.drive.DriveConstants;
 import frc.robot.util.Alert;
+import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
@@ -30,7 +32,7 @@ public final class Constants {
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
-        public static final double kG = 0.035;
+        public static final double kG = 0.045;
         public static final double kA = 0.0;
     }
 
@@ -47,13 +49,43 @@ public final class Constants {
     }
 
     public final class FixedShotConstants {
-        public static final double fourBarLong = 1.6; // TODO T UNE
-        // public static final double fourBarPodium = 1.95; //TODO tune
+        public static final double fourBarLong = 1.6; 
+        public static final double fourBarSide = 1.6; 
+        public static final double fourBarFeed = FourBarConstants.fourBarHome; 
+        // public static final double fourBarPodium = 1.95; 
 
-        public static final double RPMLong = 4200.0;
+        public static final double RPMLong = 3800.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
         public static final double RPMHome = 4300.0;
+    }
+
+    public final class DriveToShotConstants {
+        public static final double stopWait = 1.5; //sec
+        public static final double aimingWait = 2.0; //sec
+
+        public static final double longshotX = 6.8;// long way
+        public static final double longshotY = 6.4;// short way
+        public static final double longshotRPM = 5400.0;
+        public static final double longshotAngleRed = 13; // deg
+        public static final double longshotAngleSpin = 3;
+        public static final double longshotAngleBlue = 180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
+
+        public static final double sideshotX = 5.4;// long way
+        public static final double sideshotY = 0.8;// short way
+        public static final double sideshotRPM = 5400.0;
+        public static final double sideshotAngleRed = -35; // deg
+        public static final double sideshotAngleBlue = 180 - sideshotAngleRed - (longshotAngleSpin * 2); // deg
+
+        public static final double feedshotX = 9.8;// long way
+        public static final double feedshotY = 1.9;// short way
+        public static final double feedshotRPM = 3800.0;
+        public static final double feedshotAngleRed = -25; // deg
+        public static final double feedshotAngleSpin = 9;
+        public static final double feedshotAngleBlue = 180 - feedshotAngleRed - (feedshotAngleSpin * 2); // deg
+        
+        public static final double feedStopWait = 0.5; //sec
+        public static final double feedAimingWait = 1.0; //sec
     }
 
     public final class FourBarConstants {
@@ -114,7 +146,7 @@ public final class Constants {
             // fourBarMap.put(4.90 + 0.2, 1.925);
             // fourBarMap.put(5.00 + 0.2, 1.85);
             // fourBarMap.put(5.10 + 0.2, 1.9);
-            // fourBarMap.put(5.30 + 0.2, 1.79);s
+            // fourBarMap.put(5.30 + 0.2, 1.79);
             // fourBarMap.put(5.40 + 0.15, 1.5);
 
             /* OLD POSITIONS W/O NEW CONVERSION FACTOR */
@@ -226,7 +258,7 @@ public final class Constants {
 
         public static final class AmpSetpoints {
             // AMP DROPOFF
-            public static final Translation2d amp = new Translation2d(1.5, 24.5); // dropoff - Y
+            public static final Translation2d amp = new Translation2d(1.5, 26.5); // dropoff - Y
             public static final double ampMultiplierX = 8.5;
             public static final double ampMultiplierY = 5;
         }
@@ -328,7 +360,7 @@ public final class Constants {
 
     public final class DrivetrainConstants {
         public static final double gyroP = 0.023;
-        public static final double gyroI = 0.0;
+        public static final double gyroI = 0.01;
         public static final double gyroD = 0.0018;
         public static final double IZone = 10.0;
 
@@ -403,24 +435,26 @@ public final class Constants {
 
         // Vision Drive Constants
 
-        public static final double TRANSLATION_TOLERANCE_X = 0.025; // Changed from 0.05 3/26/23
-        public static final double TRANSLATION_TOLERANCE_Y = 0.025; // Changed from 0.05 3/26/23
-        public static final double ROTATION_TOLERANCE = 0.035;
+        public static final double TRANSLATION_TOLERANCE_X = 0.04; // Changed from 0.05 3/26/23
+        public static final double TRANSLATION_TOLERANCE_Y = 0.08; // Changed from 0.05 3/26/23
+        public static final double ROTATION_TOLERANCE = 0.5;///deg
 
-        public static final double MAX_VELOCITY = 3; // 3 //2
-        public static final double MAX_ACCELARATION = 2; // 2 //1
-        public static final double MAX_VELOCITY_ROTATION = 8; // 8
-        public static final double MAX_ACCELARATION_ROTATION = 8; // 8
+        public static final double MAX_VELOCITY = 5; // 3 //2
+        public static final double MAX_ACCELARATION = 1000; // 2 //1
+        public static final double MAX_VELOCITY_ROTATION = 6000; // 8
+        public static final double MAX_ACCELARATION_ROTATION = 2500; // 8
 
         public static final double kPXController = 2.5d;
-        public static final double kIXController = 0d;
+        public static final double kIXController = 0.0d;
         public static final double kDXController = 0d;
         public static final double kPYController = 2.5d;
-        public static final double kIYController = 0d;
+        public static final double kIYController = 0.0d;
         public static final double kDYController = 0d;
-        public static final double kPThetaController = 1.2d;
-        public static final double kIThetaController = 0d;
-        public static final double kDThetaController = 0d;
+        public static final double kIzoneX = 1.0d;
+        public static final double kIzoneY = 1.0d;
+        public static final double kPThetaController = DrivetrainConstants.gyroP;
+        public static final double kIThetaController = DrivetrainConstants.gyroI;
+        public static final double kDThetaController = DrivetrainConstants.gyroD;
     }
 
     public static class SpeakerConstants {
