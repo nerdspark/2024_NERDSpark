@@ -52,10 +52,11 @@ public final class Constants {
         public static final double fourBarFeed = FourBarConstants.fourBarHome;
         // public static final double fourBarPodium = 1.95;
 
-        public static final double RPMLong = 3800.0;
+        public static final double RPMLong = 3200.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
-        public static final double RPMHome = 4300.0;
+        public static final double RPMHome = 4150.0;
+        // public static final double RPMFeed = 3800.0;
     }
 
     public final class DriveToShotConstants {
@@ -77,7 +78,7 @@ public final class Constants {
         public static final double feedshotX = 9.8; // long way
         public static final double feedshotY = 1.9; // short way
         public static final double feedshotRPM = 3800.0;
-        public static final double feedshotAngleRed = -25; // deg
+        public static final double feedshotAngleRed = -45; // deg
         public static final double feedshotAngleSpin = 9;
         public static final double feedshotAngleBlue = 180 - feedshotAngleRed - (feedshotAngleSpin * 2); // deg
 
@@ -278,8 +279,8 @@ public final class Constants {
             public static final double fourBarClimb = FourBarConstants.fourBarOut;
 
             public static final double pressElbow = Units.degreesToRadians(-10);
-            public static final double pressShoulder = Units.degreesToRadians(95);
-            public static final double pressMicroadjust = Units.degreesToRadians(55);
+            public static final double pressShoulder = Units.degreesToRadians(115);
+            public static final double pressMicroadjust = Units.degreesToRadians(75);
         }
 
         public static final class BlockSetpoints {
@@ -432,20 +433,20 @@ public final class Constants {
 
         // Vision Drive Constants
 
-        public static final double TRANSLATION_TOLERANCE_X = 0.04; // Changed from 0.05 3/26/23
-        public static final double TRANSLATION_TOLERANCE_Y = 0.08; // Changed from 0.05 3/26/23
-        public static final double ROTATION_TOLERANCE = 0.5; // /deg
+        public static final double TRANSLATION_TOLERANCE_X = 0.1; // Changed from 0.05 3/26/23
+        public static final double TRANSLATION_TOLERANCE_Y = 0.25; // Changed from 0.05 3/26/23
+        public static final double ROTATION_TOLERANCE = 1.0; // /deg
 
-        public static final double MAX_VELOCITY = 5; // 3 //2
-        public static final double MAX_ACCELARATION = 1000; // 2 //1
+        public static final double MAX_VELOCITY = 4; // 3 //2
+        public static final double MAX_ACCELARATION = 10; // 2 //1
         public static final double MAX_VELOCITY_ROTATION = 6000; // 8
         public static final double MAX_ACCELARATION_ROTATION = 2500; // 8
 
         public static final double kPXController = 2.5d;
-        public static final double kIXController = 0.0d;
+        public static final double kIXController = 0.1d;
         public static final double kDXController = 0d;
         public static final double kPYController = 2.5d;
-        public static final double kIYController = 0.0d;
+        public static final double kIYController = 0.1d;
         public static final double kDYController = 0d;
         public static final double kIzoneX = 1.0d;
         public static final double kIzoneY = 1.0d;

@@ -90,7 +90,7 @@ public class DriveToPoseCommand extends Command {
         var robotPose = currentPoseProvider.get();
 
         omegaController.reset(
-                robotPose.getRotation().getDegrees(),
+                robotAngle.get().getDegrees(),
                 drivetrainSubsystem.getCurrentRobotChassisSpeeds().omegaRadiansPerSecond * 180.0 / Math.PI);
         xController.reset(robotPose.getX(), -drivetrainSubsystem.getCurrentRobotChassisSpeeds().vxMetersPerSecond);
         yController.reset(robotPose.getY(), -drivetrainSubsystem.getCurrentRobotChassisSpeeds().vyMetersPerSecond);
@@ -103,7 +103,7 @@ public class DriveToPoseCommand extends Command {
         SmartDashboard.putNumber(
                 "FieldVelocityY", drivetrainSubsystem.getCurrentRobotChassisSpeeds().vyMetersPerSecond);
 
-        omegaController.setGoal(-targetPoseSupplier.get().getRotation().getDegrees() + 180.0);
+        omegaController.setGoal(targetPoseSupplier.get().getRotation().getDegrees());
         xController.setGoal(targetPoseSupplier.get().getX());
         yController.setGoal(targetPoseSupplier.get().getY());
     }
@@ -118,7 +118,7 @@ public class DriveToPoseCommand extends Command {
         SmartDashboard.putNumber("DriveToPoseCommand robotPose.X", robotPose.getX());
         SmartDashboard.putNumber("DriveToPoseCommand robotPose.Y", robotPose.getY());
         SmartDashboard.putNumber(
-                "DriveToPoseCommand robotPose.Angle", robotPose.getRotation().getDegrees());
+                "DriveToPoseCommand robotAngle", robotAngle.get().getDegrees());
 
         SmartDashboard.putNumber(
                 "DriveToPoseCommand goalPose.X", targetPoseSupplier.get().getX());
@@ -138,7 +138,7 @@ public class DriveToPoseCommand extends Command {
             ySpeed = 0;
         }
 
-        var omegaSpeed = omegaController.calculate(robotPose.getRotation().getDegrees());
+        var omegaSpeed = omegaController.calculate(robotAngle.get().getDegrees());
         if (omegaController.atGoal()) {
             omegaSpeed = 0;
         }

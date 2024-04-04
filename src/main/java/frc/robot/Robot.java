@@ -151,10 +151,10 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
             SmartDashboard.putString("autonomousCommandName", autonomousCommand.getName());
-            if (autonomousCommand.getName() == "redWeirdSideAuto") {
+            if (autonomousCommand.getName() == "RedWeirdSideAuto") {
                 SmartDashboard.putNumber("60Offset", 60);
                 robotContainer.gyroOffset += 60;
-            } else if (autonomousCommand.getName() == "blueWeirdSideAuto") {
+            } else if (autonomousCommand.getName() == "BlueWeirdSideAuto") {
                 robotContainer.gyroOffset -= 60;
                 SmartDashboard.putNumber("60Offset", -60);
             } else {
