@@ -126,13 +126,10 @@ public class AprilTagVision extends SubsystemBase {
                 if (shouldSkipPoseEstimate(poseEstimates)) {
                     continue;
                 }
-                timestamp = poseEstimates.timestampSeconds();
-                double robotTime = 135 - DriverStation.getMatchTime();
 
-               
-               
-                
-                
+                double timestamp = poseEstimates.timestampSeconds();
+                SmartDashboard.putNumber("timestamp", poseEstimates.timestampSeconds());
+
                 Pose3d robotPose = poseEstimates.pose();
                 // Correct the robot pose since camera is mounted on the back.
                 // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
