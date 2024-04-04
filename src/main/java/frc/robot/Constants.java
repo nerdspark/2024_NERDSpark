@@ -284,8 +284,8 @@ public final class Constants {
         }
 
         public static final class BlockSetpoints {
-            public static final double elbow = 85;
-            public static final double shoulder = 110;
+            public static final double elbow = Units.degreesToRadians(80);
+            public static final double shoulder = Units.degreesToRadians(105);
             public static final double microadjust = 10;
         }
     }

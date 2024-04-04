@@ -229,9 +229,9 @@ public class RobotContainer { // implements RobotConstants{
         //                                 drivetrain.getState().speeds.vxMetersPerSecond,
         //                                 drivetrain.getState().speeds.vyMetersPerSecond))));
 
-        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 5100.0, () -> 5100.0));
+        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 5300.0, () -> 5300.0));
 
-        NamedCommands.registerCommand("weirdShooter", new ShooterCommand(shooter, () -> 5300.0, () -> 5300.0));
+        NamedCommands.registerCommand("weirdShooter", new ShooterCommand(shooter, () -> 5500.0, () -> 5500.0));
 
         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
@@ -556,7 +556,7 @@ public class RobotContainer { // implements RobotConstants{
                 // new ShooterCommand(shooter, () -> FixedShotConstants.RPMFeed, () -> FixedShotConstants.RPMFeed).alongWith
                 (drivetrain.applyRequest(() -> drive.withRotationalRate(
                         calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-                                        () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, -2.5), new Rotation2d())),
+                                        () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, -1.0), new Rotation2d())),
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)).plus(new Rotation2d().fromDegrees(10))
