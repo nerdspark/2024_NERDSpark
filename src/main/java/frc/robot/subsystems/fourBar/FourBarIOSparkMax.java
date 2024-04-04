@@ -102,8 +102,13 @@ public class FourBarIOSparkMax implements FourBarIO {
         // double PID = FourBarPIDController.calculate(FourBarEncoder1.getPosition(), angle);
 
         // FourBarMotor1.set(PID + G);
-        fourbarPIDController1.setReference(angle, ControlType.kPosition);
-        fourbarPIDController2.setReference(angle, ControlType.kPosition);
+        if (angle == FourBarConstants.fourBarHome && ((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()) / 2)  > FourBarConstants.fourBarHome - 0.03) {
+            FourBarMotor1.set(0);
+            FourBarMotor2.set(0);
+        } else {
+            fourbarPIDController1.setReference(angle, ControlType.kPosition);
+            fourbarPIDController2.setReference(angle, ControlType.kPosition);
+        }
         // SmartDashboard.putNumber("fourbar1Applied", FourBarMotor1.getAppliedOutput());
         // SmartDashboard.putNumber("fourbar2Applied", FourBarMotor2.getAppliedOutput());
         // SmartDashboard.putNumber("fourbar1Vel", FourBarEncoder1.getVelocity());

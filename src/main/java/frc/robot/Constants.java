@@ -87,7 +87,7 @@ public final class Constants {
     }
 
     public final class FourBarConstants {
-        public static final int currentLimit = 70;
+        public static final int currentLimit = 60;
         public static final double closedLoopRampRate = 0.1; // 0.25, 0.1
         public static final double openLoopRampRate = 0.1; // 0.15, 0.1
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
@@ -116,9 +116,9 @@ public final class Constants {
             fourBarMap.put(2.14, 0.62);
             fourBarMap.put(2.35, 0.67);
             fourBarMap.put(3.09, fourBarHotel);
-            fourBarMap.put(3.1499999999, fourBarHotel);
+            fourBarMap.put(3.1199999999, fourBarHotel);
 
-            fourBarMap.put(3.15, fourBarHome);
+            fourBarMap.put(3.12, fourBarHome);
             fourBarMap.put(3.3, fourBarHome);
             fourBarMap.put(3.3001, fourBarHome - 0.05); // 4barhome un-backlash
             fourBarMap.put(3.5, 2.08);
@@ -250,7 +250,7 @@ public final class Constants {
 
             public static final double pickupShooterRPM = 500;
 
-            public static final double indexPowerGripper = 0.2;
+            public static final double indexPowerGripper = 0.25;
             public static final double indexDistGripper = 10.0;
         }
 

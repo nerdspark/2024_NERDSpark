@@ -559,7 +559,7 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, 2.0), new Rotation2d())),
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond)).plus(new Rotation2d().fromDegrees(10))
+                                                drivetrain.getState().speeds.vyMetersPerSecond)).plus(new Rotation2d().fromDegrees(-10))
                                 .getDegrees()))
                 .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                 .withVelocityY(
@@ -782,7 +782,7 @@ public class RobotContainer { // implements RobotConstants{
         error = error > 180.0 ? error - 360.0 : error;
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
-        // SmartDashboard.putNumber("angle error deg", error);
+        SmartDashboard.putNumber("angle error deg", error);
         return Math.min(
                 Math.max(
                         zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle) * MaxAngularRate),
