@@ -34,7 +34,6 @@ public class ShooterCommand extends Command {
     public void execute() {
         shooter.setSpeed(speed1.get(), speed2.get());
         SmartDashboard.putBoolean("Shooter Correct", shooter.onTarget());
-
     }
 
     // Called once the command ends or is interrupted.

@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -14,12 +13,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.drive.DriveConstants.DrivetrainConfig;
-
 import java.util.function.Supplier;
 
 /** An example command that uses an example subsystem. */
@@ -48,7 +44,6 @@ public class DriveToPoseCommand extends Command {
             VisionConstants.kIThetaController,
             VisionConstants.kDThetaController,
             OMEGA_CONSTRATINTS);
-        
 
     private final SwerveRequest.ApplyChassisSpeeds driveToPoseRequest = new SwerveRequest.ApplyChassisSpeeds();
 
@@ -61,7 +56,7 @@ public class DriveToPoseCommand extends Command {
             CommandSwerveDrivetrain drivetrainSubsystem,
             Supplier<Pose2d> poseProvider,
             Supplier<Pose2d> goalPoseSupplier,
-             Supplier<Rotation2d> robotAngle) {
+            Supplier<Rotation2d> robotAngle) {
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.currentPoseProvider = poseProvider;
         this.targetPoseSupplier = goalPoseSupplier;
@@ -78,7 +73,11 @@ public class DriveToPoseCommand extends Command {
     }
 
     /** Drives to the specified pose when passed a target pose */
-    public DriveToPoseCommand(CommandSwerveDrivetrain drivetrainSubsystem, Supplier<Pose2d> poseProvider, Pose2d pose, Supplier<Rotation2d> robotAngle) {
+    public DriveToPoseCommand(
+            CommandSwerveDrivetrain drivetrainSubsystem,
+            Supplier<Pose2d> poseProvider,
+            Pose2d pose,
+            Supplier<Rotation2d> robotAngle) {
         this(drivetrainSubsystem, poseProvider, () -> pose, robotAngle);
     }
 
@@ -97,7 +96,8 @@ public class DriveToPoseCommand extends Command {
         yController.reset(robotPose.getY(), -drivetrainSubsystem.getCurrentRobotChassisSpeeds().vyMetersPerSecond);
 
         SmartDashboard.putNumber(
-                "YawVelocity", drivetrainSubsystem.getCurrentRobotChassisSpeeds().omegaRadiansPerSecond * 180.0 / Math.PI);
+                "YawVelocity",
+                drivetrainSubsystem.getCurrentRobotChassisSpeeds().omegaRadiansPerSecond * 180.0 / Math.PI);
         SmartDashboard.putNumber(
                 "FieldVelocityX", drivetrainSubsystem.getCurrentRobotChassisSpeeds().vxMetersPerSecond);
         SmartDashboard.putNumber(
@@ -152,7 +152,10 @@ public class DriveToPoseCommand extends Command {
         chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
                 -xSpeed,
                 -ySpeed,
-                MathUtil.clamp(omegaSpeed * 1.5 * Math.PI, -DrivetrainConstants.autoTurnCeiling, DrivetrainConstants.autoTurnCeiling),
+                MathUtil.clamp(
+                        omegaSpeed * 1.5 * Math.PI,
+                        -DrivetrainConstants.autoTurnCeiling,
+                        DrivetrainConstants.autoTurnCeiling),
                 robotAngle.get());
 
         // drivetrainSubsystem.applyRequest(() -> driveToPoseRequest.withSpeeds(chassisSpeeds));

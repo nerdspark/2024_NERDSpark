@@ -46,7 +46,7 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
                         Constants.VisionConstants.BACK_RIGHT_CAMERA_NAME,
                         Constants.VisionConstants.ROBOT_TO_BACK_RIGHT_CAMERA);
             }
-            
+
             allNotifier = new Notifier(() -> {
                 if (Constants.VisionConstants.USE_FRONT_CAMERA) {
                     frontEstimator.run();

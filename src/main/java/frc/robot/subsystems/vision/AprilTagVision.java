@@ -13,7 +13,6 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,8 +21,6 @@ import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers.PoseEstimate;
 import frc.robot.util.VisionHelpers.TimestampedVisionUpdate;
-
-import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -109,9 +106,9 @@ public class AprilTagVision extends SubsystemBase {
             sendResultsToPoseEstimator(visionUpdates);
         }
 
-                SmartDashboard.putBoolean("Pose updated?", timer.getFPGATimestamp() - timestamp < 2);
-                SmartDashboard.putNumber("System Time", timer.getFPGATimestamp());
-                SmartDashboard.putNumber("Pose update timestamp",  timestamp);
+        SmartDashboard.putBoolean("Pose updated?", timer.getFPGATimestamp() - timestamp < 2);
+        SmartDashboard.putNumber("System Time", timer.getFPGATimestamp());
+        SmartDashboard.putNumber("Pose update timestamp", timestamp);
     }
 
     /**
@@ -133,9 +130,6 @@ public class AprilTagVision extends SubsystemBase {
                 Pose3d robotPose = poseEstimates.pose();
                 // Correct the robot pose since camera is mounted on the back.
                 // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));
-
- 
-                
 
                 List<Pose3d> tagPoses = getTagPoses(poseEstimates);
                 double poseAmbiguity = poseEstimates.poseAmbiguity();

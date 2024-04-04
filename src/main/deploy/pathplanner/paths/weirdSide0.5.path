@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.385375611378803,
-        "y": 4.528063490478756
+        "x": 6.399034168836297,
+        "y": 4.596356277766231
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 5.0
+        "x": 3.2712245110699967,
+        "y": 5.24
       },
       "prevControl": {
-        "x": 5.5112279340991375,
-        "y": 4.764649065053703
+        "x": 4.766836552665674,
+        "y": 4.924161656746104
       },
       "nextControl": null,
       "isLocked": false,
@@ -68,7 +68,7 @@
     },
     {
       "name": "forceIntake",
-      "waypointRelativePos": 0.8,
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "sequential",
         "data": {

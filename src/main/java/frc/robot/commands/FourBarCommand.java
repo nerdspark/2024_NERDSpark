@@ -38,7 +38,6 @@ public class FourBarCommand extends Command {
 
         FourBar.setFourBarAngle(angle.get());
         SmartDashboard.putBoolean("fourBarCorrect", FourBar.onTarget());
-
     }
 
     // Called once the command ends or is interrupted.

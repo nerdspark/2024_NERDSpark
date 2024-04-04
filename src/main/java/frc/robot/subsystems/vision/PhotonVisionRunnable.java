@@ -48,17 +48,13 @@ public class PhotonVisionRunnable implements Runnable {
     public void run() {
         // Get AprilTag data
 
-        if(photonCamera.getName().equalsIgnoreCase("backcamera")) {
+        if (photonCamera.getName().equalsIgnoreCase("backcamera")) {
             SmartDashboard.putBoolean("Back", photonCamera.isConnected());
-        }
-
-        else if(photonCamera.getName().equalsIgnoreCase("backleft")) {
+        } else if (photonCamera.getName().equalsIgnoreCase("backleft")) {
             SmartDashboard.putBoolean("Back Left", photonCamera.isConnected());
-        }
-        else if(photonCamera.getName().equalsIgnoreCase("backright")) {
+        } else if (photonCamera.getName().equalsIgnoreCase("backright")) {
             SmartDashboard.putBoolean("Back Right", photonCamera.isConnected());
-        }
-        else {
+        } else {
             SmartDashboard.putBoolean("Something's wrong", false);
         }
 

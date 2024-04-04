@@ -15,9 +15,7 @@ import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.config.RobotIdentity;
-import frc.robot.subsystems.drive.DriveConstants;
 import frc.robot.util.Alert;
-import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
@@ -49,10 +47,10 @@ public final class Constants {
     }
 
     public final class FixedShotConstants {
-        public static final double fourBarLong = 1.6; 
-        public static final double fourBarSide = 1.6; 
-        public static final double fourBarFeed = FourBarConstants.fourBarHome; 
-        // public static final double fourBarPodium = 1.95; 
+        public static final double fourBarLong = 1.6;
+        public static final double fourBarSide = 1.6;
+        public static final double fourBarFeed = FourBarConstants.fourBarHome;
+        // public static final double fourBarPodium = 1.95;
 
         public static final double RPMLong = 3800.0;
         // public static final double RPMPodium = 3000.0;
@@ -61,31 +59,31 @@ public final class Constants {
     }
 
     public final class DriveToShotConstants {
-        public static final double stopWait = 1.5; //sec
-        public static final double aimingWait = 2.0; //sec
+        public static final double stopWait = 1.5; // sec
+        public static final double aimingWait = 2.0; // sec
 
-        public static final double longshotX = 6.8;// long way
-        public static final double longshotY = 6.4;// short way
+        public static final double longshotX = 6.8; // long way
+        public static final double longshotY = 6.4; // short way
         public static final double longshotRPM = 5400.0;
         public static final double longshotAngleRed = 13; // deg
         public static final double longshotAngleSpin = 3;
         public static final double longshotAngleBlue = 180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
 
-        public static final double sideshotX = 5.4;// long way
-        public static final double sideshotY = 0.8;// short way
+        public static final double sideshotX = 5.4; // long way
+        public static final double sideshotY = 0.8; // short way
         public static final double sideshotRPM = 5400.0;
         public static final double sideshotAngleRed = -35; // deg
         public static final double sideshotAngleBlue = 180 - sideshotAngleRed - (longshotAngleSpin * 2); // deg
 
-        public static final double feedshotX = 9.8;// long way
-        public static final double feedshotY = 1.9;// short way
+        public static final double feedshotX = 9.8; // long way
+        public static final double feedshotY = 1.9; // short way
         public static final double feedshotRPM = 3800.0;
         public static final double feedshotAngleRed = -25; // deg
         public static final double feedshotAngleSpin = 9;
         public static final double feedshotAngleBlue = 180 - feedshotAngleRed - (feedshotAngleSpin * 2); // deg
-        
-        public static final double feedStopWait = 0.5; //sec
-        public static final double feedAimingWait = 1.0; //sec
+
+        public static final double feedStopWait = 0.5; // sec
+        public static final double feedAimingWait = 1.0; // sec
     }
 
     public final class FourBarConstants {
@@ -301,8 +299,8 @@ public final class Constants {
         public static final double blueCenterRing3 = 1.95; // 2.45
         public static final double blueCenterRing4 = 1.95; // 1.9
 
-        public static final double weirdSideRing2 = 1.74; // 3.5
-        public static final double weirdSideRing3 = 1.94; // 2.75
+        public static final double weirdSideRing2 = 1.60; // 3.5
+        public static final double weirdSideRing3 = 1.90; // 2.75
         public static final double weirdSideRing4 = 2.075; // 1.9
 
         public static final double red_weirdSideRing2 = 1.60;
@@ -322,7 +320,7 @@ public final class Constants {
         public static final double redRECenterNote6 = 1.89; // 1.80
 
         public static final double blueRECenterNote5 = 1.91; // 1.80
-        public static final double blueRECenterNote6 = 1.91; // 1.87
+        public static final double blueRECenterNote6 = 1.89; // 1.87
 
         public static final double blueWeirdSideDropring2 = 1.70;
 
@@ -437,7 +435,7 @@ public final class Constants {
 
         public static final double TRANSLATION_TOLERANCE_X = 0.04; // Changed from 0.05 3/26/23
         public static final double TRANSLATION_TOLERANCE_Y = 0.08; // Changed from 0.05 3/26/23
-        public static final double ROTATION_TOLERANCE = 0.5;///deg
+        public static final double ROTATION_TOLERANCE = 0.5; // /deg
 
         public static final double MAX_VELOCITY = 5; // 3 //2
         public static final double MAX_ACCELARATION = 1000; // 2 //1
