@@ -5,9 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.climb.Climb;
-import java.util.function.Supplier;
 
 public class GrapplerSpinCommand extends Command {
     private final Climb Climb;

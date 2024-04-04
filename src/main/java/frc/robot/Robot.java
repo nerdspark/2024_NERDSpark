@@ -154,7 +154,8 @@ public class Robot extends LoggedRobot {
             //     robotContainer.gyroOffset -= 60;
             // }
         }
-        //(getAutonomousCommand().getName() == "redWeirdSideAuto") ? gyro.getAngle() +  60 : (getAutonomousCommand().getName() == "blueWeirdSideAuto") ? gyro.getAngle() - 60 : gyro.getAngle();
+        // (getAutonomousCommand().getName() == "redWeirdSideAuto") ? gyro.getAngle() +  60 :
+        // (getAutonomousCommand().getName() == "blueWeirdSideAuto") ? gyro.getAngle() - 60 : gyro.getAngle();
 
         // SignalLogger.setPath("/media/sda1/");
         // SignalLogger.start();

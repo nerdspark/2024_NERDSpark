@@ -12,7 +12,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -79,6 +78,8 @@ import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.JoystickMap;
+
+import java.util.Timer;
 import java.util.function.Supplier;
 
 public class RobotContainer { // implements RobotConstants{
@@ -92,6 +93,8 @@ public class RobotContainer { // implements RobotConstants{
     private AutoAim m_AutoAim;
     private boolean enableSlowMode = false;
     private BlinkinLights lights;
+
+    public Timer timer = new Timer();
 
     private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
@@ -263,8 +266,6 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
 
-      
-      
         // NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () ->
         // AutoConstants.weirdSideRing4));
 
@@ -632,8 +633,7 @@ public class RobotContainer { // implements RobotConstants{
                         .alongWith((new FourBarCommand(fourBar, () -> PickupSetpoints.pickupFourBar))
                                 .alongWith(new ArmCommandAngles(
                                         arm, () -> PickupSetpoints.pickupElbow, () -> PickupSetpoints.pickupShoulder))
-                                .raceWith(
-                                        (new WaitCommand(PickupSetpoints.spinUpTimeout))
+                                .raceWith((new WaitCommand(PickupSetpoints.spinUpTimeout))
                                         .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)
                                                 .alongWith(new WaitUntilCommand(() -> !intake.getBeamBreak())
                                                         .andThen(new WaitCommand(PickupSetpoints.intakeTimeout)
@@ -655,22 +655,23 @@ public class RobotContainer { // implements RobotConstants{
         // TRAP COMMAND
         copilot.rightStick().onTrue(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb));
 
-        copilot.rightStick().onTrue(new ArmCommandAngles(
-                                arm,
-                                () -> TrapSetpoints.trapArmAngle
-                                        - TrapSetpoints.trapArmDifference
-                                        + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust),
-                                () -> TrapSetpoints.trapArmAngle
-                                        + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust)));
+        copilot.rightStick()
+                .onTrue(new ArmCommandAngles(
+                        arm,
+                        () -> TrapSetpoints.trapArmAngle
+                                - TrapSetpoints.trapArmDifference
+                                + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust),
+                        () -> TrapSetpoints.trapArmAngle + (copilot.getLeftY() * TrapSetpoints.trapMicroadjust)));
 
         // copilot.rightStick()
-        //         .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.climbElbow, () -> TrapSetpoints.climbShoulder));
+        //         .onTrue(new ArmCommandAngles(arm, () -> TrapSetpoints.climbElbow, () ->
+        // TrapSetpoints.climbShoulder));
 
-        copilot.leftStick().onTrue(new ArmCommandAngles(
-                                arm,
-                                () -> TrapSetpoints.pressElbow,
-                                () -> TrapSetpoints.pressShoulder
-                                        + (copilot.getLeftY() * TrapSetpoints.pressMicroadjust)));
+        copilot.leftStick()
+                .onTrue(new ArmCommandAngles(
+                        arm,
+                        () -> TrapSetpoints.pressElbow,
+                        () -> TrapSetpoints.pressShoulder + (copilot.getLeftY() * TrapSetpoints.pressMicroadjust)));
 
         copilot.povRight()
                 .whileTrue(new ArmCommandAngles(
@@ -746,9 +747,9 @@ public class RobotContainer { // implements RobotConstants{
         gyroOffset = gyro.getAngle();
         targetAngle = 0;
         drivetrain.seedFieldRelative(new Pose2d());
-                // (DriverStation.getAlliance().get() == Alliance.Red)
-                //         ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
-                //         : new Pose2d());
+        // (DriverStation.getAlliance().get() == Alliance.Red)
+        //         ? (new Pose2d(13, 5, new Rotation2d(Math.PI)))
+        //         : new Pose2d());
     }
 
     public void printSpeakerDistanceAndAngle(AprilTagVision aprilTagVision) {
