@@ -31,29 +31,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": 165.0,
+      "rotationDegrees": 168.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
-    {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "redRECenterNote6"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "forcedIntakeShoot",
       "waypointRelativePos": 0.85,
@@ -80,11 +63,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 165.0,
+    "rotation": 168.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redRE4noteCenter",
+  "folder": "RedRE4noteCenter",
   "previewStartingState": {
     "rotation": -165.0,
     "velocity": 0

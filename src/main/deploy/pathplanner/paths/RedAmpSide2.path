@@ -120,6 +120,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "redAmpSide3"
+              }
             }
           ]
         }

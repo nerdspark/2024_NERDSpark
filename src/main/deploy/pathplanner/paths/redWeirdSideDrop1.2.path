@@ -83,6 +83,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
+              }
             }
           ]
         }

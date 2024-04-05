@@ -50,23 +50,6 @@
   ],
   "eventMarkers": [
     {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToHome"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "forceIntake",
       "waypointRelativePos": 0.85,
       "command": {

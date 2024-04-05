@@ -66,23 +66,6 @@
   ],
   "eventMarkers": [
     {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "blueAmpSide4"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "forcedIntake",
       "waypointRelativePos": 0.5,
       "command": {
@@ -92,7 +75,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -127,6 +110,12 @@
               "type": "named",
               "data": {
                 "name": "onlySoftIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToShooter"
               }
             }
           ]

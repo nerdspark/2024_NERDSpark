@@ -113,20 +113,10 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
-        }
-      }
-    },
-    {
-      "name": "forceIntake0",
-      "waypointRelativePos": 0.5,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": []
         }
       }
     },
@@ -182,23 +172,6 @@
       }
     },
     {
-      "name": "forcedIntakeZero",
-      "waypointRelativePos": 2.15,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntakeZero"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "fourBarToIntake",
       "waypointRelativePos": 2.0,
       "command": {
@@ -217,7 +190,7 @@
     },
     {
       "name": "softIntake",
-      "waypointRelativePos": 2.5,
+      "waypointRelativePos": 2.1999999999999997,
       "command": {
         "type": "sequential",
         "data": {
@@ -226,6 +199,12 @@
               "type": "named",
               "data": {
                 "name": "onlySoftIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToBCR3"
               }
             }
           ]

@@ -115,6 +115,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide3"
+              }
             }
           ]
         }

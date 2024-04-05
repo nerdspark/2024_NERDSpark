@@ -8,8 +8,10 @@
       },
       "prevControl": null,
       "nextControl": {
+
         "x": 6.496594987905087,
         "y": 7.074896192236645
+
       },
       "isLocked": false,
       "linkedName": null
@@ -36,12 +38,12 @@
         "y": 6.3036759599530745
       },
       "prevControl": {
-        "x": 6.043911674941434,
-        "y": 6.447090813256771
+        "x": 6.028670998259158,
+        "y": 6.402261422149248
       },
       "nextControl": {
-        "x": 6.669197347594968,
-        "y": 6.189620242164137
+        "x": 6.795132335103647,
+        "y": 6.194407500293117
       },
       "isLocked": false,
       "linkedName": null
@@ -52,8 +54,10 @@
         "y": 5.94
       },
       "prevControl": {
+
         "x": 7.147617714038845,
         "y": 6.116042773396089
+
       },
       "nextControl": null,
       "isLocked": false,
@@ -74,23 +78,6 @@
   ],
   "constraintZones": [],
   "eventMarkers": [
-    {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "blueRECenterNote5"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "forcedIntakeShoot",
       "waypointRelativePos": 0.8,
@@ -136,6 +123,12 @@
               "type": "named",
               "data": {
                 "name": "onlySoftIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "blueRECenterNote6"
               }
             }
           ]
