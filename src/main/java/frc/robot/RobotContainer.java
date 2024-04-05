@@ -92,8 +92,8 @@ public class RobotContainer { // implements RobotConstants{
     private boolean enableSlowMode = false;
     private BlinkinLights lights;
 
-    private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
-    private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
+    private SlewRateLimiter xLimiter = new SlewRateLimiter(13);
+    private SlewRateLimiter yLimiter = new SlewRateLimiter(13);
     private SlewRateLimiter zLimiter = new SlewRateLimiter(25);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
