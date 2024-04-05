@@ -553,7 +553,7 @@ public class RobotContainer { // implements RobotConstants{
         copilot.x().onFalse(new InstantCommand(shooter::stop));
 
         copilot.back().whileTrue(
-                // new ShooterCommand(shooter, () -> FixedShotConstants.RPMFeed, () -> FixedShotConstants.RPMFeed).alongWith
+                new ShooterCommand(shooter, () -> FixedShotConstants.RPMFeed, () -> FixedShotConstants.RPMFeed).alongWith
                 (drivetrain.applyRequest(() -> drive.withRotationalRate(
                         calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
                                         () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, 2.0), new Rotation2d())),
