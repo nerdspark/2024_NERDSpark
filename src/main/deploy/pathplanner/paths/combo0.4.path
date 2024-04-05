@@ -87,23 +87,6 @@
   ],
   "eventMarkers": [
     {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0.1,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToBCR3"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "forceIntake",
       "waypointRelativePos": 0.95,
       "command": {
@@ -121,25 +104,8 @@
       }
     },
     {
-      "name": "forceIntakeZero",
-      "waypointRelativePos": 1.35,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntakeZero"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 2.3000000000000003,
+      "waypointRelativePos": 2.1999999999999997,
       "command": {
         "type": "sequential",
         "data": {
@@ -156,7 +122,7 @@
     },
     {
       "name": "intakingwhatever",
-      "waypointRelativePos": 2.45,
+      "waypointRelativePos": 2.25,
       "command": {
         "type": "sequential",
         "data": {
@@ -165,6 +131,12 @@
               "type": "named",
               "data": {
                 "name": "onlySoftIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToBCR4"
               }
             }
           ]

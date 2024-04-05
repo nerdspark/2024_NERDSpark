@@ -70,23 +70,6 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "blueAmpSide3"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "forcedIntake",
       "waypointRelativePos": 0.8,
       "command": {
@@ -96,7 +79,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -131,6 +114,12 @@
               "type": "named",
               "data": {
                 "name": "onlySoftIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide4"
               }
             }
           ]

@@ -77,6 +77,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "RfourBarToWSR3"
+              }
             }
           ]
         }

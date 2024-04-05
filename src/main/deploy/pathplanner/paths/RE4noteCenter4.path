@@ -99,6 +99,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "blueRECenterNote5"
+              }
             }
           ]
         }

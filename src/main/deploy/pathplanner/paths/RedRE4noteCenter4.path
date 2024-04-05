@@ -99,6 +99,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "redRECenterNote5"
+              }
             }
           ]
         }
@@ -134,7 +140,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redRE4noteCenter",
+  "folder": "RedRE4noteCenter",
   "previewStartingState": {
     "rotation": 145.0,
     "velocity": 0

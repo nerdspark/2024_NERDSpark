@@ -38,23 +38,6 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToHome",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToHome"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "shootRing3",
       "waypointRelativePos": 0.95,
       "command": {
