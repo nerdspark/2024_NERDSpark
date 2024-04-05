@@ -250,8 +250,8 @@ public final class Constants {
 
             public static final double pickupShooterRPM = 500;
 
-            public static final double indexPowerGripper = 0.25;
-            public static final double indexDistGripper = 10.0;
+            public static final double indexPowerGripper = 0.30;
+            public static final double indexDistGripper = 8.3;
         }
 
         public static final class AmpSetpoints {
