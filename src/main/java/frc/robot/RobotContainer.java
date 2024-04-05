@@ -92,8 +92,8 @@ public class RobotContainer { // implements RobotConstants{
     private boolean enableSlowMode = false;
     private BlinkinLights lights;
 
-    private SlewRateLimiter xLimiter = new SlewRateLimiter(8);
-    private SlewRateLimiter yLimiter = new SlewRateLimiter(8);
+    private SlewRateLimiter xLimiter = new SlewRateLimiter(13);
+    private SlewRateLimiter yLimiter = new SlewRateLimiter(13);
     private SlewRateLimiter zLimiter = new SlewRateLimiter(25);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final CommandXboxController driver = new CommandXboxController(0); // My joystick
@@ -229,9 +229,9 @@ public class RobotContainer { // implements RobotConstants{
         //                                 drivetrain.getState().speeds.vxMetersPerSecond,
         //                                 drivetrain.getState().speeds.vyMetersPerSecond))));
 
-        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 5100.0, () -> 5100.0));
+        NamedCommands.registerCommand("shootSpeed", new ShooterCommand(shooter, () -> 5300.0, () -> 5300.0));
 
-        NamedCommands.registerCommand("weirdShooter", new ShooterCommand(shooter, () -> 5300.0, () -> 5300.0));
+        NamedCommands.registerCommand("weirdShooter", new ShooterCommand(shooter, () -> 5500.0, () -> 5500.0));
 
         NamedCommands.registerCommand("shootOff", new ShooterCommand(shooter, () -> 0.0, () -> 0.0));
 
@@ -556,10 +556,10 @@ public class RobotContainer { // implements RobotConstants{
                 // new ShooterCommand(shooter, () -> FixedShotConstants.RPMFeed, () -> FixedShotConstants.RPMFeed).alongWith
                 (drivetrain.applyRequest(() -> drive.withRotationalRate(
                         calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-                                        () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, -1.5), new Rotation2d())),
+                                        () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, 2.0), new Rotation2d())),
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond)).plus(new Rotation2d().fromDegrees(-15))
+                                                drivetrain.getState().speeds.vyMetersPerSecond)).plus(new Rotation2d().fromDegrees(-10))
                                 .getDegrees()))
                 .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                 .withVelocityY(
@@ -782,7 +782,7 @@ public class RobotContainer { // implements RobotConstants{
         error = error > 180.0 ? error - 360.0 : error;
         error = error < -180.0 ? error + 360.0 : error;
         targetAngle = currentAngle + error;
-        // SmartDashboard.putNumber("angle error deg", error);
+        SmartDashboard.putNumber("angle error deg", error);
         return Math.min(
                 Math.max(
                         zLimiter.calculate(gyroPid.calculate(currentAngle, targetAngle) * MaxAngularRate),

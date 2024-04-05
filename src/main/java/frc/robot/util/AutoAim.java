@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.BiasConstants;
 import frc.robot.Constants.FourBarConstants;
@@ -39,7 +40,7 @@ public class AutoAim {
 
         double angle = FourBarConstants.fourBarMap.get(
                 distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD);
-        // SmartDashboard.putNumber("Calculated 4Bar", angle);
+        SmartDashboard.putNumber("Calculated 4Bar", angle);
         return angle;
     }
 
@@ -64,9 +65,9 @@ public class AutoAim {
 
         double RPM = Constants.ShooterConstants.shooterMap.get(
                 (distanceToSpeaker3 + distanceOffset + ShooterConstants.CONSTANT_DISTANCE_ADD));
-        // SmartDashboard.putNumber("distance to speaker", distanceToSpeaker3 + distanceOffset +
-        // ShooterConstants.CONSTANT_DISTANCE_ADD);
-        // SmartDashboard.putNumber("Calculated RPM", RPM);
+        SmartDashboard.putNumber("distance to speaker", distanceToSpeaker3 + distanceOffset +
+        ShooterConstants.CONSTANT_DISTANCE_ADD);
+        SmartDashboard.putNumber("Calculated RPM", RPM);
         return RPM;
     }
 
@@ -90,7 +91,7 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * ShooterConstants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(180.0 + 8.5)));
+                    .plus(new Rotation2d(Units.degreesToRadians(180.0 + 1.5)));
         } else {
             angle = Constants.SpeakerConstants.speakerLocRed
                     .getTranslation()
@@ -100,9 +101,10 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * ShooterConstants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(8.5)));
+                    .plus(new Rotation2d(Units.degreesToRadians(1.5)));
         }
-        // SmartDashboard.putNumber("target Angle", angle.getDegrees());
+
+        SmartDashboard.putNumber("target Angle", angle.getDegrees());
         return angle;
         // // ALTERNATE LOGIC
         // return speakerPose

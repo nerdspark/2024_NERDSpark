@@ -66,7 +66,7 @@ public class Robot extends LoggedRobot {
         switch (Constants.getMode()) {
             case REAL:
                 // Running on a real robot, log to a USB stick ("/U/logs")
-                // Logger.addDataReceiver(new WPILOGWriter("/home/lvuser/"));
+                Logger.addDataReceiver(new WPILOGWriter("/home/lvuser/"));
                 Logger.addDataReceiver(new NT4Publisher());
                 break;
 
@@ -151,10 +151,10 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
             SmartDashboard.putString("autonomousCommandName", autonomousCommand.getName());
-            if (autonomousCommand.getName() == "RedWeirdSideAuto") {
+            if (autonomousCommand.getName().equalsIgnoreCase("RedWeirdSideAuto")) {
                 SmartDashboard.putNumber("60Offset", 60);
                 robotContainer.gyroOffset += 60;
-            } else if (autonomousCommand.getName() == "BlueWeirdSideAuto") {
+            } else if (autonomousCommand.getName().equalsIgnoreCase("BlueWeirdSideAuto")) {
                 robotContainer.gyroOffset -= 60;
                 SmartDashboard.putNumber("60Offset", -60);
             } else {

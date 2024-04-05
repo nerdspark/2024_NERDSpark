@@ -55,7 +55,7 @@ public final class Constants {
         public static final double RPMLong = 3200.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
-        public static final double RPMHome = 4150.0;
+        public static final double RPMHome = 3800.0;
         // public static final double RPMFeed = 3800.0;
     }
 
@@ -87,7 +87,7 @@ public final class Constants {
     }
 
     public final class FourBarConstants {
-        public static final int currentLimit = 70;
+        public static final int currentLimit = 60;
         public static final double closedLoopRampRate = 0.1; // 0.25, 0.1
         public static final double openLoopRampRate = 0.1; // 0.15, 0.1
         public static final double positionConversionFactor = 2.0 * Math.PI * 1 / (56d / 18d * 25d);
@@ -116,9 +116,9 @@ public final class Constants {
             fourBarMap.put(2.14, 0.62);
             fourBarMap.put(2.35, 0.67);
             fourBarMap.put(3.09, fourBarHotel);
-            fourBarMap.put(3.0999999999, fourBarHotel);
+            fourBarMap.put(3.1199999999, fourBarHotel);
 
-            fourBarMap.put(3.1, fourBarHome);
+            fourBarMap.put(3.12, fourBarHome);
             fourBarMap.put(3.3, fourBarHome);
             fourBarMap.put(3.3001, fourBarHome - 0.05); // 4barhome un-backlash
             fourBarMap.put(3.5, 2.08);
@@ -250,8 +250,8 @@ public final class Constants {
 
             public static final double pickupShooterRPM = 500;
 
-            public static final double indexPowerGripper = 0.2;
-            public static final double indexDistGripper = 10.0;
+            public static final double indexPowerGripper = 0.30;
+            public static final double indexDistGripper = 8.3;
         }
 
         public static final class AmpSetpoints {
@@ -284,9 +284,9 @@ public final class Constants {
         }
 
         public static final class BlockSetpoints {
-            public static final double elbow = 85;
-            public static final double shoulder = 110;
-            public static final double microadjust = 10;
+            public static final double elbow = Units.degreesToRadians(80);
+            public static final double shoulder = Units.degreesToRadians(105);
+            public static final double microadjust = Units.degreesToRadians(10);
         }
     }
 
@@ -312,9 +312,9 @@ public final class Constants {
         public static final double blueAmpSide3 = 1.93; // 2.45
         public static final double blueAmpSide4 = 2.01; // 1.9
 
-        public static final double redAmpSide2 = 1.83;
-        public static final double redAmpSide3 = 1.915;
-        public static final double redAmpSide4 = 1.93;
+        public static final double redAmpSide2 = 1.87;
+        public static final double redAmpSide3 = 1.93;
+        public static final double redAmpSide4 = 2.01;
 
         public static final double redRECenterNote5 = 1.87; // 1.80
         public static final double redRECenterNote6 = 1.89; // 1.80
@@ -358,7 +358,7 @@ public final class Constants {
 
     public final class DrivetrainConstants {
         public static final double gyroP = 0.023;
-        public static final double gyroI = 0.01;
+        public static final double gyroI = 0.0;
         public static final double gyroD = 0.0018;
         public static final double IZone = 10.0;
 
@@ -504,12 +504,12 @@ public final class Constants {
             shooterMap.put(8.0, 5600.0);
             shooterMap.put(7.5, 5600.0);
             shooterMap.put(7.0, 5600.0);
-            shooterMap.put(6.44, 5400.0);
-            shooterMap.put(5.9436, 5100.0);
-            shooterMap.put(5.334, 5000.0);
-            shooterMap.put(4.7752, 4900.0);
-            shooterMap.put(4.1402, 4800.0);
-            shooterMap.put(3.429, 4600.0);
+            shooterMap.put(6.44, 5500.0);
+            shooterMap.put(5.9436, 5300.0);
+            shooterMap.put(5.334, 5100.0);
+            shooterMap.put(4.7752, 5000.0);
+            shooterMap.put(4.1402, 4900.0);
+            shooterMap.put(3.429, 4700.0);
             shooterMap.put(2.7178, 4400.0);
             shooterMap.put(0.762, 4200.0);
         }

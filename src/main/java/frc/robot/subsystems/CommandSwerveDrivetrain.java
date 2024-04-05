@@ -55,7 +55,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
     // private Translation2d targetPoseSpeaker =
     // AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
-    private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+    // private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
 
     // static {
     //     if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
@@ -190,11 +190,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     @Override
     public void periodic() {
 
-        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
-            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
-        } else {
-            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
-        }
+        // if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+        //     targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+        // } else {
+        //     targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
+        // }
 
         /* Periodically try to apply the operator perspective */
         /* If we haven't applied the operator perspective before, then we should apply it regardless of DS state */

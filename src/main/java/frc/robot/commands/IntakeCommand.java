@@ -49,6 +49,7 @@ public class IntakeCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+
         // SmartDashboard.putBoolean("gotNote", Intake.getBeamBreak());
 
         switch (mode) {
@@ -57,11 +58,11 @@ public class IntakeCommand extends Command {
                 break;
 
             case SHOOT:
-                if (Intake.getBeamBreak()) {
+                // if (Intake.getBeamBreak()) {
                     Intake.setIntakePower(power.get());
-                } else {
-                    Intake.setIntakePower(0);
-                }
+                // } else {
+                    // Intake.setIntakePower(0);
+                // }
 
                 break;
 
@@ -89,12 +90,12 @@ public class IntakeCommand extends Command {
                 break;
 
             case SOFTINTAKE:
-                if (!Intake.getBeamBreak()) {
+                // if (!Intake.getBeamBreak()) {
                     Intake.setIntakePower(power.get());
 
-                } else {
-                    Intake.setIntakePower(0);
-                }
+                // } else {
+                //     Intake.setIntakePower(0);
+                // }
 
                 break;
 
@@ -117,7 +118,7 @@ public class IntakeCommand extends Command {
                 return false;
 
             case SHOOT:
-                return !Intake.getBeamBreak();
+                return timer.get() < 0.5 ? false : !Intake.getBeamBreak();
 
             case SOFTINTAKE:
                 return Intake.getBeamBreak();
