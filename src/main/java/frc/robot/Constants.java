@@ -52,7 +52,8 @@ public final class Constants {
         public static final double fourBarFeed = FourBarConstants.fourBarHome;
         // public static final double fourBarPodium = 1.95;
 
-        public static final double RPMLong = 3200.0;
+        public static final double RPMLongFeed = 3200.0;
+        public static final double RPMLongRicochet = 5000.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
         public static final double RPMHome = 4500.0;
@@ -70,8 +71,8 @@ public final class Constants {
         public static final double longshotAngleSpin = 3;
         public static final double longshotAngleBlue = 180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
 
-        public static final double sideshotX = 5.4;// long way
-        public static final double sideshotY = 0.8;// short way
+        public static final double sideshotX = 5.4; // long way
+        public static final double sideshotY = 0.8; // short way
         public static final double sideshotAngleRed = -35; // deg
         public static final double sideshotAngleBlue = 180 - sideshotAngleRed - (longshotAngleSpin * 2); // deg
 
