@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.22,
-        "y": 7.39
+        "x": 8.23,
+        "y": 5.69
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.466594987905087,
-        "y": 6.924896192236645
+        "x": 6.690795709382394,
+        "y": 6.288594049872185
       },
       "isLocked": false,
       "linkedName": null
@@ -21,39 +21,23 @@
       },
       "prevControl": {
         "x": 5.7229355746903074,
-        "y": 6.657334945289213
+        "y": 6.5373349452892136
       },
       "nextControl": {
         "x": 5.7229355746903074,
-        "y": 6.5373349452892136
+        "y": 6.657334945289213
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.385375611378803,
-        "y": 6.283188123766833
+        "x": 8.22,
+        "y": 7.39
       },
       "prevControl": {
-        "x": 6.0076899178043455,
-        "y": 6.413925479234915
-      },
-      "nextControl": {
-        "x": 6.740498105273668,
-        "y": 6.16026110664938
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.23,
-        "y": 5.69
-      },
-      "prevControl": {
-        "x": 7.170742665184752,
-        "y": 6.023675532074432
+        "x": 7.071036279839781,
+        "y": 6.971077125052112
       },
       "nextControl": null,
       "isLocked": false,
@@ -67,7 +51,7 @@
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.5,
+      "waypointRelativePos": 1.25,
       "rotationDegrees": 6.0,
       "rotateFast": false
     }
@@ -93,7 +77,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.7,
+      "waypointRelativePos": 1.35,
       "command": {
         "type": "sequential",
         "data": {
@@ -110,7 +94,7 @@
     },
     {
       "name": "softIntake",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 1.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -124,7 +108,7 @@
             {
               "type": "named",
               "data": {
-                "name": "blueAmpSide2"
+                "name": "blueAmpSide3"
               }
             }
           ]
@@ -134,19 +118,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -15.0,
+    "rotation": 15.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "BlueAmpSide",
+  "folder": "Blue_DIFORDER_Amp",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": -15.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
