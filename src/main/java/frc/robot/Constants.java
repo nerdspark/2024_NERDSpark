@@ -40,7 +40,7 @@ public final class Constants {
         // public static final double servoOutTolerance = 50.0;
         public static final double winchDist = 48 * 12;
 
-        public static final double rumbleWait = 0.5;
+        public static final double rumbleWait = 0.2;
 
         public static final int servoPort = 9;
         public static final int winchPort = 6;
