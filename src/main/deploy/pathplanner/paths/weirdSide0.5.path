@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.407814364431372,
-        "y": 4.482697720308735
+        "x": 6.399034168836297,
+        "y": 4.596356277766231
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.0,
-        "y": 5.14
+        "x": 3.47,
+        "y": 5.24
       },
       "prevControl": {
-        "x": 4.413660696850709,
-        "y": 4.887316687036346
+        "x": 4.965612041595676,
+        "y": 4.924161656746104
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,23 +49,6 @@
     }
   ],
   "eventMarkers": [
-    {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToHome"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "forceIntake",
       "waypointRelativePos": 0.8,

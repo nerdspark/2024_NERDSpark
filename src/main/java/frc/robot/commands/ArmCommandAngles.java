@@ -29,7 +29,7 @@ public class ArmCommandAngles extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        arm.getArmPosition();
+        // arm.getArmPosition();
         arm.setElbowPosition(elbow.get());
         arm.setShoulderPosition(shoulder.get());
     }

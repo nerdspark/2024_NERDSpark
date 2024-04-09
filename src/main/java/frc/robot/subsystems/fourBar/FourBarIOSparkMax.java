@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.FourBarGains;
 import frc.robot.Constants.RobotMap;
@@ -17,6 +16,7 @@ import frc.robot.Constants.RobotMap;
 public class FourBarIOSparkMax implements FourBarIO {
     /** Creates a new FourBarIOSparkMax. */
     private CANSparkMax FourBarMotor1;
+
     private double angle;
 
     private CANSparkMax FourBarMotor2;
@@ -102,14 +102,21 @@ public class FourBarIOSparkMax implements FourBarIO {
         // double PID = FourBarPIDController.calculate(FourBarEncoder1.getPosition(), angle);
 
         // FourBarMotor1.set(PID + G);
-        fourbarPIDController1.setReference(angle, ControlType.kPosition);
-        fourbarPIDController2.setReference(angle, ControlType.kPosition);
-        SmartDashboard.putNumber("fourbar1Applied", FourBarMotor1.getAppliedOutput());
-        SmartDashboard.putNumber("fourbar2Applied", FourBarMotor2.getAppliedOutput());
-        SmartDashboard.putNumber("fourbar1Vel", FourBarEncoder1.getVelocity());
-        SmartDashboard.putNumber("fourbar2Vel", FourBarEncoder2.getVelocity());
-        SmartDashboard.putNumber("fourbar1error", angle - FourBarEncoder1.getPosition());
-        SmartDashboard.putNumber("fourbar2error", angle - FourBarEncoder2.getPosition());
+        if (angle == FourBarConstants.fourBarHome
+                && ((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()) / 2)
+                        > FourBarConstants.fourBarHome - 0.03) {
+            FourBarMotor1.set(0);
+            FourBarMotor2.set(0);
+        } else {
+            fourbarPIDController1.setReference(angle, ControlType.kPosition);
+            fourbarPIDController2.setReference(angle, ControlType.kPosition);
+        }
+        // SmartDashboard.putNumber("fourbar1Applied", FourBarMotor1.getAppliedOutput());
+        // SmartDashboard.putNumber("fourbar2Applied", FourBarMotor2.getAppliedOutput());
+        // SmartDashboard.putNumber("fourbar1Vel", FourBarEncoder1.getVelocity());
+        // SmartDashboard.putNumber("fourbar2Vel", FourBarEncoder2.getVelocity());
+        // SmartDashboard.putNumber("fourbar1error", angle - FourBarEncoder1.getPosition());
+        // SmartDashboard.putNumber("fourbar2error", angle - FourBarEncoder2.getPosition());
 
         // LightningShuffleboard.setDouble("four bar", "error", angle - FourBarEncoder1.getPosition());
         // LightningShuffleboard.setDouble("four bar", "PID", PID);
@@ -127,6 +134,7 @@ public class FourBarIOSparkMax implements FourBarIO {
     // }
 
     public boolean onTarget() {
-        return Math.abs(((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition()))/2 - (angle)) < FourBarConstants.fourBarTolerance;
+        return Math.abs(((FourBarEncoder1.getPosition() + FourBarEncoder2.getPosition())) / 2 - (angle))
+                < FourBarConstants.fourBarTolerance;
     }
 }

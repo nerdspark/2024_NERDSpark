@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 8.22,
-        "y": 2.25
+        "y": 2.35
       },
       "prevControl": {
         "x": 7.567541091286217,
-        "y": 2.0649743393199715
+        "y": 2.1649743393199716
       },
       "nextControl": null,
       "isLocked": false,
@@ -65,6 +65,12 @@
               "type": "named",
               "data": {
                 "name": "onlySoftIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToWSR3"
               }
             }
           ]

@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
 import java.util.function.Supplier;
@@ -22,7 +21,7 @@ public class IntakeCommand extends Command {
 
     public enum IntakeMode {
         FORCEINTAKE,
-        FORCEINTAKESHOOT,
+        SHOOT,
         FULLINTAKE,
         SOFTINTAKE
     }
@@ -50,16 +49,20 @@ public class IntakeCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putBoolean("gotNote", Intake.getBeamBreak());
+
+        // SmartDashboard.putBoolean("gotNote", Intake.getBeamBreak());
 
         switch (mode) {
             case FORCEINTAKE:
                 Intake.setIntakePower(power.get());
-
                 break;
 
-            case FORCEINTAKESHOOT:
+            case SHOOT:
+                // if (Intake.getBeamBreak()) {
                 Intake.setIntakePower(power.get());
+                // } else {
+                // Intake.setIntakePower(0);
+                // }
 
                 break;
 
@@ -87,14 +90,12 @@ public class IntakeCommand extends Command {
                 break;
 
             case SOFTINTAKE:
-                if (!Intake.getBeamBreak()) {
-                    Intake.setIntakePower(power.get());
+                // if (!Intake.getBeamBreak()) {
+                Intake.setIntakePower(power.get());
 
-                    // lights.setLightPattern(BlinkinLightsConstants.doesNotHaveNotePattern);
-                } else {
-                    Intake.setIntakePower(0);
-                    // lights.setLightPattern(BlinkinLightsConstants.hasNotePattern);
-                }
+                // } else {
+                //     Intake.setIntakePower(0);
+                // }
 
                 break;
 
@@ -114,10 +115,10 @@ public class IntakeCommand extends Command {
     public boolean isFinished() {
         switch (mode) {
             case FORCEINTAKE:
-                return timer.hasElapsed(0.5);
+                return false;
 
-            case FORCEINTAKESHOOT:
-                return timer.hasElapsed(0.5);
+            case SHOOT:
+                return timer.get() < 0.5 ? false : !Intake.getBeamBreak();
 
             case SOFTINTAKE:
                 return Intake.getBeamBreak();

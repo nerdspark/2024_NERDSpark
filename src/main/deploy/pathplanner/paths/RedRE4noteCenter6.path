@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.291,
-        "y": 5.94
+        "y": 6.04
       },
       "prevControl": null,
       "nextControl": {
         "x": 9.103428545420261,
-        "y": 6.114651204446918
+        "y": 6.214651204446918
       },
       "isLocked": false,
       "linkedName": null
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 10.83,
-        "y": 6.440261534528023
+        "y": 6.64
       },
       "prevControl": {
         "x": 9.902454156683705,
-        "y": 6.228553893936855
+        "y": 6.4282923594088315
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,29 +31,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": 165.0,
+      "rotationDegrees": 168.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
-    {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "redRECenterNote6"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "forcedIntakeShoot",
       "waypointRelativePos": 0.85,
@@ -80,11 +63,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 165.0,
+    "rotation": 168.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "redRE4noteCenter",
+  "folder": "RedRE4noteCenter",
   "previewStartingState": {
     "rotation": -165.0,
     "velocity": 0

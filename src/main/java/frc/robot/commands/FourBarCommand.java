@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.fourBar.FourBar;
 import java.util.function.Supplier;
@@ -36,6 +37,7 @@ public class FourBarCommand extends Command {
     public void execute() {
 
         FourBar.setFourBarAngle(angle.get());
+        SmartDashboard.putBoolean("fourBarCorrect", FourBar.onTarget());
     }
 
     // Called once the command ends or is interrupted.

@@ -15,6 +15,7 @@ package frc.robot;
 
 // import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.pathfinding.Pathfinding;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.util.LocalADStarAK;
@@ -64,7 +65,7 @@ public class Robot extends LoggedRobot {
         switch (Constants.getMode()) {
             case REAL:
                 // Running on a real robot, log to a USB stick ("/U/logs")
-                // Logger.addDataReceiver(new WPILOGWriter("/home/lvuser/"));
+                Logger.addDataReceiver(new WPILOGWriter("/home/lvuser/"));
                 Logger.addDataReceiver(new NT4Publisher());
                 break;
 
@@ -148,13 +149,19 @@ public class Robot extends LoggedRobot {
         // this line or comment it out.
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
-            if (autonomousCommand.getName() == "redWeirdSideAuto") {
+            SmartDashboard.putString("autonomousCommandName", autonomousCommand.getName());
+            if (autonomousCommand.getName().equalsIgnoreCase("RedWeirdSideAuto")) {
+                SmartDashboard.putNumber("60Offset", 60);
                 robotContainer.gyroOffset += 60;
-            } else if (autonomousCommand.getName() == "blueWeirdSideAuto") {
+            } else if (autonomousCommand.getName().equalsIgnoreCase("BlueWeirdSideAuto")) {
                 robotContainer.gyroOffset -= 60;
+                SmartDashboard.putNumber("60Offset", -60);
+            } else {
+                SmartDashboard.putNumber("60Offset", 0);
             }
         }
-        //(getAutonomousCommand().getName() == "redWeirdSideAuto") ? gyro.getAngle() +  60 : (getAutonomousCommand().getName() == "blueWeirdSideAuto") ? gyro.getAngle() - 60 : gyro.getAngle();
+        // (getAutonomousCommand().getName() == "redWeirdSideAuto") ? gyro.getAngle() +  60 :
+        // (getAutonomousCommand().getName() == "blueWeirdSideAuto") ? gyro.getAngle() - 60 : gyro.getAngle();
 
         // SignalLogger.setPath("/media/sda1/");
         // SignalLogger.start();

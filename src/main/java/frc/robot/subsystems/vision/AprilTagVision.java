@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.vision.AprilTagVisionIO.AprilTagVisionIOInputs;
 import frc.robot.util.FieldConstants;
@@ -35,11 +36,15 @@ public class AprilTagVision extends SubsystemBase {
     // Time interval for logging tag poses
     private static final double targetLogTimeSecs = 0.1;
 
+    Timer timer = new Timer();
+
     // Margin around the field border
     private static final double fieldBorderMargin = 0.5;
 
     // Margin for the z-axis
     private static final double zMargin = 0.75;
+
+    private double timestamp = 0;
 
     // Path for logging vision data
     private static final String VISION_PATH = "AprilTagVision/Inst";
@@ -70,6 +75,7 @@ public class AprilTagVision extends SubsystemBase {
 
     public AprilTagVision(AprilTagVisionIO... io) {
         // System.out.println("[Init] Creating AprilTagVision");
+        timer.start();
         this.io = io;
         inputs = new AprilTagVisionIOInputs[io.length];
         for (int i = 0; i < io.length; i++) {
@@ -99,6 +105,10 @@ public class AprilTagVision extends SubsystemBase {
         if (!RobotState.isAutonomous()) {
             sendResultsToPoseEstimator(visionUpdates);
         }
+
+        SmartDashboard.putBoolean("Pose updated?", timer.get() - timestamp < 2);
+        SmartDashboard.putNumber("System Time", timer.get());
+        SmartDashboard.putNumber("Pose update timestamp", timestamp);
     }
 
     /**
@@ -113,7 +123,10 @@ public class AprilTagVision extends SubsystemBase {
                 if (shouldSkipPoseEstimate(poseEstimates)) {
                     continue;
                 }
+
                 double timestamp = poseEstimates.timestampSeconds();
+                SmartDashboard.putNumber("timestamp", poseEstimates.timestampSeconds());
+
                 Pose3d robotPose = poseEstimates.pose();
                 // Correct the robot pose since camera is mounted on the back.
                 // robotPose = robotPose.plus(new Transform3d(new Translation3d(), new Rotation3d(0, 0, Math.PI)));

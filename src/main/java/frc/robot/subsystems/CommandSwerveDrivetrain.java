@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
 
-// import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -15,7 +14,6 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -29,7 +27,6 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.vision.AprilTagVision;
-import frc.robot.util.FieldConstants;
 import frc.robot.util.VisionHelpers.TimestampedVisionUpdate;
 import java.util.List;
 import java.util.function.Supplier;
@@ -56,7 +53,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     // private Pose2d targetPoseSpeaker = AllianceFlipUtil.apply(speakerConstants.speakerLocBlue);
     // private Translation2d targetPoseSpeaker =
     // AllianceFlipUtil.apply(FieldConstants.Speaker.centerSpeakerOpening.getTranslation());
-    private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+    // private Translation2d targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
 
     // static {
     //     if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
@@ -191,11 +188,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     @Override
     public void periodic() {
 
-        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
-            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
-        } else {
-            targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
-        }
+        // if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+        //     targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();
+        // } else {
+        //     targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpeningRed.getTranslation();
+        // }
 
         /* Periodically try to apply the operator perspective */
         /* If we haven't applied the operator perspective before, then we should apply it regardless of DS state */

@@ -50,7 +50,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 0.35,
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "sequential",
         "data": {
@@ -76,6 +76,12 @@
               "type": "named",
               "data": {
                 "name": "onlySoftIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "RfourBarToWSR3"
               }
             }
           ]

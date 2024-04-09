@@ -1,13 +1,11 @@
 package frc.robot.subsystems.blikinLights;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.PWM;
 import frc.robot.Constants.BlinkinLightsConstants;
 
 public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
 
-    private Spark lights;
+    private PWM lights;
     // private AddressableLED led;
 
     public BlinkinLightsIOSparkMax() {
@@ -15,7 +13,10 @@ public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
         // led.start();
         // led.setLength();
         // led.setRGB();
-        lights = new Spark(BlinkinLightsConstants.lightChannel);
+        lights = new PWM(BlinkinLightsConstants.lightChannel);
+
+        lights.setPulseTimeMicroseconds(2125);
+        lights.setSpeed(0.67); // TODO debug value to see if this works
         // lights.setSafetyEnabled(false);
         // lights.setExpiration(1000);
         // lights.feed();
@@ -26,12 +27,11 @@ public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
         // lights.checkMotors();
     }
 
-
     public void setLightPattern(double patternValue) {
         // if (!lights.isAlive()) {
-            // lights.feed();
+        // lights.feed();
         // }
-        lights.set(patternValue);
+        lights.setSpeed(patternValue);
     }
 
     @Override

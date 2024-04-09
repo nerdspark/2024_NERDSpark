@@ -31,29 +31,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": -44.0,
+      "rotationDegrees": -42.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
-    {
-      "name": "fourBarToShooter",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToWSR2"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "forceIntakeSHoot",
       "waypointRelativePos": 0.95,
@@ -80,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -44.0,
+    "rotation": -42.0,
     "rotateFast": false
   },
   "reversed": false,

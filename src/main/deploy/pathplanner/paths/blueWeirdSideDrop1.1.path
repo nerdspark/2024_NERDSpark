@@ -52,7 +52,7 @@
     },
     {
       "waypointRelativePos": 1.85,
-      "rotationDegrees": -46.0,
+      "rotationDegrees": -44.0,
       "rotateFast": false
     }
   ],
@@ -99,18 +99,7 @@
               "data": {
                 "name": "onlySoftIntake"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "fourBarToShootRing1",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
+            },
             {
               "type": "named",
               "data": {
@@ -147,7 +136,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -46.0,
+    "rotation": -44.0,
     "rotateFast": false
   },
   "reversed": false,

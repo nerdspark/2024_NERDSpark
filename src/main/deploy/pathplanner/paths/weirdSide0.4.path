@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.22,
-        "y": 2.25
+        "y": 2.35
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.897905475051758,
-        "y": 1.3975872121139261
+        "y": 1.4975872121139262
       },
       "isLocked": false,
       "linkedName": null
@@ -47,12 +47,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.95,
-      "rotationDegrees": -45.0,
+      "rotationDegrees": -42.0,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 0.6,
-      "rotationDegrees": -45.0,
+      "rotationDegrees": -42.0,
       "rotateFast": false
     }
   ],
@@ -70,23 +70,6 @@
     }
   ],
   "eventMarkers": [
-    {
-      "name": "fourBarToShoot",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToWSR3"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "forceIntake",
       "waypointRelativePos": 0.8,
@@ -132,6 +115,12 @@
               "type": "named",
               "data": {
                 "name": "onlySoftIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
               }
             }
           ]

@@ -31,12 +31,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.1,
-      "rotationDegrees": -70.0,
+      "rotationDegrees": -63.0,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 0.15,
-      "rotationDegrees": -70.0,
+      "rotationDegrees": -63.0,
       "rotateFast": false
     },
     {
@@ -49,10 +49,10 @@
     {
       "name": "New Constraints Zone",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.1,
+      "maxWaypointRelativePos": 0.15,
       "constraints": {
-        "maxVelocity": 1.5,
-        "maxAcceleration": 1.5,
+        "maxVelocity": 2.5,
+        "maxAcceleration": 2.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0
       }
@@ -105,6 +105,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToWSR2"
+              }
             }
           ]
         }
@@ -113,7 +119,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

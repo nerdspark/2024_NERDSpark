@@ -32,23 +32,6 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToShooter",
-      "waypointRelativePos": 0.1,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToBCR4"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "forcedIntakeShooter",
       "waypointRelativePos": 0.9,
       "command": {

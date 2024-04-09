@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.shooter.Shooter;
 import java.util.function.Supplier;
@@ -32,12 +33,13 @@ public class ShooterCommand extends Command {
     @Override
     public void execute() {
         shooter.setSpeed(speed1.get(), speed2.get());
+        SmartDashboard.putBoolean("Shooter Correct", shooter.onTarget());
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        shooter.setSpeed(0, 0);
+        shooter.stop();
     }
 
     // Returns true when the command should end.
