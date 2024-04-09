@@ -314,6 +314,11 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("redAmpSide2", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide2));
         NamedCommands.registerCommand("redAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide3));
         NamedCommands.registerCommand("redAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide4));
+
+        NamedCommands.registerCommand("Vision ON",
+                new InstantCommand(() -> aprilTagVision.setEnableVisionUpdates(true)));
+        NamedCommands.registerCommand("Vision OFF",
+                new InstantCommand(() -> aprilTagVision.setEnableVisionUpdates(false)));
     }
 
     private void configureButtonBindings() {
