@@ -3,43 +3,73 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3464015540130732,
-        "y": 5.433911508392412
+        "x": 1.45,
+        "y": 7.38
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8722639580510483,
-        "y": 4.976216453026026
+        "x": 2.0236594132147796,
+        "y": 7.509756295846201
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.583152022769052,
-        "y": 4.421139470985942
+        "x": 2.827321393700773,
+        "y": 7.6900195418914015
       },
       "prevControl": {
-        "x": 2.037813233396337,
-        "y": 4.810667177680737
+        "x": 2.2060598746070825,
+        "y": 7.639646986289209
+      },
+      "nextControl": {
+        "x": 3.5853713325917327,
+        "y": 7.751483050450129
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.23,
+        "y": 5.69
+      },
+      "prevControl": {
+        "x": 5.823067228082201,
+        "y": 6.727333169630711
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.25,
-      "rotationDegrees": -35.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToIntake",
+      "name": "fourBarToShoot",
       "waypointRelativePos": 0.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "forcedIntake",
+      "waypointRelativePos": 1.3,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "fourBarToIntake",
+      "waypointRelativePos": 1.6,
       "command": {
         "type": "sequential",
         "data": {
@@ -55,25 +85,8 @@
       }
     },
     {
-      "name": "forceIntake",
-      "waypointRelativePos": 0.25,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "softIntake",
-      "waypointRelativePos": 0.8,
+      "waypointRelativePos": 1.75,
       "command": {
         "type": "sequential",
         "data": {
@@ -83,6 +96,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide2"
+              }
             }
           ]
         }
@@ -90,18 +109,18 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.1,
+    "maxVelocity": 4.86,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -35.0,
+    "rotation": -15.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Blue6NoteCenter",
+  "folder": "Blue_DIFORDER_Amp",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

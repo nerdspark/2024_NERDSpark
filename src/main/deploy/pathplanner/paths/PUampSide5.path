@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.02,
-        "y": 0.91
+        "x": 3.76,
+        "y": 7.52
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.601832585041208,
-        "y": 1.4438705880970484
+        "x": 4.6043474509751885,
+        "y": 7.156322531172378
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.10534392361786,
-        "y": 1.9184239554718743
+        "x": 5.72,
+        "y": 6.6
       },
       "prevControl": {
-        "x": 5.514348015647395,
-        "y": 1.7139219094571063
+        "x": 4.7408440660111735,
+        "y": 7.088074223654385
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,15 +30,37 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -42.0,
+      "waypointRelativePos": 0.25,
+      "rotationDegrees": 90.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": 6.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "forceIntakeSHoot",
+      "name": "fbtointake",
+      "waypointRelativePos": 0.5,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "softintake",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
@@ -57,20 +79,20 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -42.0,
+    "rotation": 6.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "BlueWeirdSide",
+  "folder": "BlueAmpSide",
   "previewStartingState": {
-    "rotation": -20.0,
+    "rotation": 180.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

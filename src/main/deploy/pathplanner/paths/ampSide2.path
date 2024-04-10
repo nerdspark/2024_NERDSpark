@@ -62,8 +62,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": 4.0,
+      "waypointRelativePos": 0.6000000000000001,
+      "rotationDegrees": 6.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.5,
+      "rotationDegrees": 6.0,
       "rotateFast": false
     }
   ],
@@ -119,7 +124,7 @@
             {
               "type": "named",
               "data": {
-                "name": "blueAmpSide3"
+                "name": "blueAmpSide2"
               }
             }
           ]

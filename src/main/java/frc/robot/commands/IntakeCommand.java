@@ -59,9 +59,9 @@ public class IntakeCommand extends Command {
 
             case SHOOT:
                 // if (Intake.getBeamBreak()) {
-                    Intake.setIntakePower(power.get());
+                Intake.setIntakePower(power.get());
                 // } else {
-                    // Intake.setIntakePower(0);
+                // Intake.setIntakePower(0);
                 // }
 
                 break;
@@ -91,7 +91,7 @@ public class IntakeCommand extends Command {
 
             case SOFTINTAKE:
                 // if (!Intake.getBeamBreak()) {
-                    Intake.setIntakePower(power.get());
+                Intake.setIntakePower(power.get());
 
                 // } else {
                 //     Intake.setIntakePower(0);

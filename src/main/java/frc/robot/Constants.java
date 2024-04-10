@@ -40,7 +40,7 @@ public final class Constants {
         // public static final double servoOutTolerance = 50.0;
         public static final double winchDist = 48 * 12;
 
-        public static final double rumbleWait = 0.5;
+        public static final double rumbleWait = 0.2;
 
         public static final int servoPort = 9;
         public static final int winchPort = 6;
@@ -52,11 +52,12 @@ public final class Constants {
         public static final double fourBarFeed = FourBarConstants.fourBarHome;
         // public static final double fourBarPodium = 1.95;
 
-        public static final double RPMLong = 3200.0;
+        public static final double RPMLongFeed = 3200.0;
+        public static final double RPMLongRicochet = 5000.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
-        public static final double RPMHome = 3800.0;
-        // public static final double RPMFeed = 3800.0;
+        public static final double RPMHome = 4500.0;
+        public static final double RPMFeed = 3800.0;
     }
 
     public final class DriveToShotConstants {
@@ -70,8 +71,8 @@ public final class Constants {
         public static final double longshotAngleSpin = 3;
         public static final double longshotAngleBlue = 180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
 
-        public static final double sideshotX = 5.4;// long way
-        public static final double sideshotY = 0.8;// short way
+        public static final double sideshotX = 5.4; // long way
+        public static final double sideshotY = 0.8; // short way
         public static final double sideshotAngleRed = -35; // deg
         public static final double sideshotAngleBlue = 180 - sideshotAngleRed - (longshotAngleSpin * 2); // deg
 
@@ -312,9 +313,9 @@ public final class Constants {
         public static final double blueAmpSide3 = 1.93; // 2.45
         public static final double blueAmpSide4 = 2.01; // 1.9
 
-        public static final double redAmpSide2 = 1.87;
-        public static final double redAmpSide3 = 1.93;
-        public static final double redAmpSide4 = 2.01;
+        public static final double redAmpSide2 = 1.79;
+        public static final double redAmpSide3 = 1.95;
+        public static final double redAmpSide4 = 1.97;
 
         public static final double redRECenterNote5 = 1.87; // 1.80
         public static final double redRECenterNote6 = 1.89; // 1.80

@@ -28,25 +28,25 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ampSide1"
+                        "pathName": "Blue_Amp_DIFFORDER1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ampSide2"
+                        "pathName": "Blue_Amp_DIFFORDER2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide3"
+                        "pathName": "Blue_Amp_DIFFORDER3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide4"
+                        "pathName": "Blue_Amp_DIFFORDER4"
                       }
                     }
                   ]

@@ -28,7 +28,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ampSide1"
+                        "pathName": "Copy of ampSide1"
                       }
                     },
                     {
@@ -40,13 +40,19 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide3"
+                        "pathName": "PUampSide3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide4"
+                        "pathName": "PUampSide4"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "PUampSide5"
                       }
                     }
                   ]

@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3464015540130732,
-        "y": 5.433911508392412
+        "x": 5.72,
+        "y": 6.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8722639580510483,
-        "y": 4.976216453026026
+        "x": 6.651796676514969,
+        "y": 6.6493351038958615
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.583152022769052,
-        "y": 4.421139470985942
+        "x": 7.14903434557463,
+        "y": 7.331818179075788
       },
       "prevControl": {
-        "x": 2.037813233396337,
-        "y": 4.810667177680737
+        "x": 7.298005454775095,
+        "y": 6.64016660064505
+      },
+      "nextControl": {
+        "x": 7.012537730538646,
+        "y": 7.965552463171434
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.76,
+        "y": 7.517063585196054
+      },
+      "prevControl": {
+        "x": 4.9592202606732965,
+        "y": 7.653560200232039
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,16 +46,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.25,
-      "rotationDegrees": -35.0,
+      "waypointRelativePos": 1.05,
+      "rotationDegrees": 180.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 0.0,
+      "name": "fbtointake",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -55,25 +71,8 @@
       }
     },
     {
-      "name": "forceIntake",
-      "waypointRelativePos": 0.25,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "softIntake",
-      "waypointRelativePos": 0.8,
+      "name": "softintake",
+      "waypointRelativePos": 1.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -83,6 +82,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide2"
+              }
             }
           ]
         }
@@ -90,20 +95,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.1,
+    "maxVelocity": 4.86,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -35.0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Blue6NoteCenter",
+  "folder": "BlueAmpSide",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 6.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
