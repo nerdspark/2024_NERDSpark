@@ -133,7 +133,7 @@
     },
     {
       "name": "vision on",
-      "waypointRelativePos": 0.5499999999999999,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -150,7 +150,7 @@
     },
     {
       "name": "vision off",
-      "waypointRelativePos": 1.75,
+      "waypointRelativePos": 1.45,
       "command": {
         "type": "parallel",
         "data": {
