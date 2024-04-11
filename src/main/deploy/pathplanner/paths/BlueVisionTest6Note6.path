@@ -55,8 +55,8 @@
       }
     },
     {
-      "name": "Vision ON",
-      "waypointRelativePos": 0.6,
+      "name": "VIsion ON",
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
         "data": {

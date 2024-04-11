@@ -10,6 +10,7 @@ package frc.robot.subsystems.vision;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.RobotState;
 import frc.robot.Constants;
 import frc.robot.util.VisionHelpers.PoseEstimate;
 import java.util.ArrayList;
@@ -79,10 +80,10 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
             if (Constants.VisionConstants.USE_FRONT_CAMERA) {
                 updatePoseEstimates(frontEstimator, inputs);
             }
-            if (Constants.VisionConstants.USE_BACK_LEFT_CAMERA) {
+            if (Constants.VisionConstants.USE_BACK_LEFT_CAMERA && !RobotState.isAutonomous()) {
                 updatePoseEstimates(backLeftEstimator, inputs);
             }
-            if (Constants.VisionConstants.USE_BACK_RIGHT_CAMERA) {
+            if (Constants.VisionConstants.USE_BACK_RIGHT_CAMERA && !RobotState.isAutonomous()) {
                 updatePoseEstimates(backRightEstimator, inputs);
             }
         }
