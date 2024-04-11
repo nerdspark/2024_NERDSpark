@@ -50,7 +50,7 @@ public class IntakeIOSparkMax implements IntakeIO {
 
         beamBreak = new AnalogInput(0);
 
-        smallBeamBreak = new DigitalInput(9); //TODO set channel
+        smallBeamBreak = new DigitalInput(0); // TODO set channel
     }
 
     @Override
@@ -76,8 +76,8 @@ public class IntakeIOSparkMax implements IntakeIO {
     }
 
     public boolean getSmallBeamBreak() {
-        SmartDashboard.putBoolean("smallBeamBreak", smallBeamBreak.get());
-        return smallBeamBreak.get();
+        SmartDashboard.putBoolean("smallBeamBreak", !smallBeamBreak.get());
+        return !smallBeamBreak.get();
     }
 
     public double getIntakePosition() {
