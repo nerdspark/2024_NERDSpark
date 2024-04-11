@@ -24,9 +24,9 @@ public final class Constants {
 
     public final class FourBarGains {
         public static final double kP = 0.95; // 0.65; // 0.85
-        public static final double kI = 0.001; // 0; // 0.2
+        public static final double kI = 0.002; // 0; // 0.2
         public static final double kD = 0.10; // 0.006; // 0.01
-        public static final double kIZone = 0.2;
+        public static final double kIZone = 0.1;
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
@@ -127,12 +127,18 @@ public final class Constants {
             fourBarMap.put(4.08, 2.04);
             fourBarMap.put(4.45, 2.00);
             fourBarMap.put(5.0, 1.98);
-            fourBarMap.put(5.25, 1.93);
-            fourBarMap.put(5.53, 1.85);
-            fourBarMap.put(5.75, 1.81);
-            fourBarMap.put(6.00, 1.75);
-            fourBarMap.put(6.35, 1.66);
-            fourBarMap.put(6.8, FixedShotConstants.fourBarLong);
+
+            fourBarMap.put(5.25, 1.97);
+            fourBarMap.put(5.53, 1.94);
+            fourBarMap.put(5.75, 1.89);
+            fourBarMap.put(6.00, 1.85);
+            fourBarMap.put(6.20, 1.81);
+            fourBarMap.put(6.35, 1.78);
+            fourBarMap.put(6.55, 1.73);
+            fourBarMap.put(6.8, 1.70);
+            fourBarMap.put(7.0, 1.65);
+            fourBarMap.put(7.2, 1.62);
+            fourBarMap.put(7.4, FixedShotConstants.fourBarLong);
             fourBarMap.put(15.1, FixedShotConstants.fourBarLong);
 
             // 3.24.24 shoot tune
@@ -358,12 +364,12 @@ public final class Constants {
     }
 
     public final class DrivetrainConstants {
-        public static final double gyroP = 0.023;
-        public static final double gyroI = 0.0;
-        public static final double gyroD = 0.0018;
-        public static final double IZone = 10.0;
+        public static final double gyroP = 0.033;
+        public static final double gyroI = 0.03;
+        public static final double gyroD = 0.0041;
+        public static final double IZone = 5.0;
 
-        public static final double autoTurnCeiling = 6.0;
+        public static final double autoTurnCeiling = 5.0;
         public static final double poseSyncTolerance =
                 0.5; // the tolerance at which vision pose and estimated pose have to be in for driver station to report
         // happy
@@ -488,7 +494,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = -0.0; // m
+        public static final double CONSTANT_DISTANCE_ADD = -Units.feetToMeters(0.0); // m
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
@@ -499,20 +505,38 @@ public final class Constants {
 
         static {
             // Key: Distance
-            // Value: Shooter Position
-            shooterMap.put(15.1, 5600.0);
-            shooterMap.put(9.0, 5600.0);
-            shooterMap.put(8.0, 5600.0);
-            shooterMap.put(7.5, 5600.0);
-            shooterMap.put(7.0, 5600.0);
+            // Value: Shooter RPM
+            shooterMap.put(15.1, 5850.0);
+            shooterMap.put(9.0, 5800.0);
+            shooterMap.put(8.0, 5750.0);
+            shooterMap.put(7.8, 5700.0);
+            shooterMap.put(7.5, 5650.0);
+            shooterMap.put(7.0, 5550.0);
+            shooterMap.put(6.75, 5500.0);
             shooterMap.put(6.44, 5500.0);
-            shooterMap.put(5.9436, 5300.0);
+            shooterMap.put(5.9436, 5450.0);
             shooterMap.put(5.334, 5100.0);
             shooterMap.put(4.7752, 5000.0);
             shooterMap.put(4.1402, 4900.0);
             shooterMap.put(3.429, 4700.0);
             shooterMap.put(2.7178, 4400.0);
             shooterMap.put(0.762, 4200.0);
+        }
+
+        public static InterpolatingDoubleTreeMap spinMap = new InterpolatingDoubleTreeMap();
+        static {
+            //key: rpm
+            //value: angle curve deg
+            spinMap.put(0.0, 8.0);
+            spinMap.put(1000.0, 8.0);
+            spinMap.put(2000.0, 8.0);
+            spinMap.put(3000.0, 8.0);
+            spinMap.put(4000.0, 7.0);
+            spinMap.put(4250.0, 5.0);
+            spinMap.put(4500.0, 4.0);
+            spinMap.put(4750.0, 2.0);
+            spinMap.put(5000.0, 1.0);
+            spinMap.put(6000.0, 1.0);
         }
     }
 

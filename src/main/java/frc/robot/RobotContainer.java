@@ -13,6 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -350,12 +351,13 @@ public class RobotContainer { // implements RobotConstants{
 
         // autoaim robot
         driver.leftBumper().whileTrue(drivetrain.applyRequest(() -> drive.withRotationalRate(
-                        calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-                                        () -> drivetrain.getState().Pose,
-                                        () -> new Translation2d(
-                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond))
-                                .getDegrees()))
+                        calculateAutoTurn(DriverStation.getAlliance().get().equals(Alliance.Red) ? () -> 270.0 : () -> 90.0))
+                                // () -> AutoAim.calculateAngleToSpeaker(
+                                //         () -> drivetrain.getState().Pose,
+                                //         () -> new Translation2d(
+                                //                 drivetrain.getState().speeds.vxMetersPerSecond,
+                                //                 drivetrain.getState().speeds.vyMetersPerSecond))
+                                // .getDegrees()))
                 .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                 .withVelocityY(
                         yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))));
@@ -498,19 +500,23 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond)))
-                        .alongWith(new FourBarCommand(
-                                fourBar,
-                                () -> AutoAim.calculateFourBarPosition(
-                                        () -> drivetrain.getState().Pose,
-                                        () -> new Translation2d(
-                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond)))))
-                .and(() -> fourBar.onTarget())
-                .whileTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1.0)))
-                .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.0)));
+                                                drivetrain.getState().speeds.vyMetersPerSecond))))
+                .onFalse(new InstantCommand(() -> shooter.stop()))
+                
+                        .and(driver.leftTrigger().negate())
+                                .whileTrue(new FourBarCommand(
+                                        fourBar,
+                                        () -> AutoAim.calculateFourBarPosition(
+                                                () -> drivetrain.getState().Pose,
+                                                () -> new Translation2d(
+                                                        drivetrain.getState().speeds.vxMetersPerSecond,
+                                                        drivetrain.getState().speeds.vyMetersPerSecond))).onlyIf(driver.leftTrigger().negate()))
 
-        copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
+                                .and(() -> fourBar.onTarget())
+                                        .whileTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1.0)))
+                                        .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.0)));
+
+        // copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
         // copilot.leftTrigger().whileTrue(new BlinkinCommand(lights, () -> (
         //
@@ -549,16 +555,16 @@ public class RobotContainer { // implements RobotConstants{
 
         // 4 bar + shooter FIXED shots
 
-        copilot.a()
-                .whileTrue(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut)
+        copilot.a().and(driver.leftTrigger().negate())
+                .whileTrue(new FourBarCommand(fourBar, () -> FourBarConstants.fourBarOut).onlyIf(driver.leftTrigger().negate())
                         .alongWith(new ShooterCommand(
                                 shooter,
                                 () -> FixedShotConstants.RPMPointBlank,
                                 () -> FixedShotConstants.RPMPointBlank)));
         copilot.a().onFalse(new InstantCommand(shooter::stop));
 
-        copilot.start()
-                .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
+        copilot.start().and(driver.leftTrigger().negate())
+                .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong).onlyIf(driver.leftTrigger().negate())
                         .alongWith(new ShooterCommand(
                                 shooter, () -> FixedShotConstants.RPMLongFeed, () -> FixedShotConstants.RPMLongFeed)));
         copilot.start().onFalse(new InstantCommand(shooter::stop));
@@ -569,24 +575,23 @@ public class RobotContainer { // implements RobotConstants{
         copilot.x().onFalse(new InstantCommand(shooter::stop));
 
         copilot.back()
-                .whileTrue(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
-                        .alongWith(new ShooterCommand(
-                                shooter,
-                                () -> FixedShotConstants.RPMLongRicochet,
-                                () -> FixedShotConstants.RPMLongRicochet)));
-        // new ShooterCommand(shooter, () -> FixedShotConstants.RPMFeed, () -> FixedShotConstants.RPMFeed).alongWith
-        // (drivetrain.applyRequest(() -> drive.withRotationalRate(
-        //         calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-        //                         () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, 2.0), new
-        // Rotation2d())),
-        //                         () -> new Translation2d(
-        //                                 drivetrain.getState().speeds.vxMetersPerSecond,
-        //                                 drivetrain.getState().speeds.vyMetersPerSecond)).plus(new
-        // Rotation2d().fromDegrees(-10))
-        //                 .getDegrees()))
-        // .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-        // .withVelocityY(
-        //         yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))));
+                .whileTrue(//new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
+                        // .alongWith(new ShooterCommand(
+                        //         shooter,
+                        //         () -> FixedShotConstants.RPMLongRicochet,
+                        //         () -> FixedShotConstants.RPMLongRicochet)));
+        new ShooterCommand(shooter, () -> FixedShotConstants.RPMFeed, () -> FixedShotConstants.RPMFeed).alongWith
+        (drivetrain.applyRequest(() -> drive.withRotationalRate(
+                calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
+                                () -> drivetrain.getState().Pose.plus(new Transform2d(new Translation2d(0, 2.0), new
+        Rotation2d())),
+                                () -> new Translation2d(
+                                        drivetrain.getState().speeds.vxMetersPerSecond,
+                                        drivetrain.getState().speeds.vyMetersPerSecond))
+                        .getDegrees()))
+        .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+        .withVelocityY(
+                yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed)))));
         copilot.back().onFalse(new InstantCommand(shooter::stop));
 
         copilot.povLeft().and(() -> copilot.getRightY() > 0.8).onTrue(new InstantCommand(() -> m_AutoAim.decDist()));

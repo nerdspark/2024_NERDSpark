@@ -71,6 +71,10 @@ public class AutoAim {
         return RPM;
     }
 
+    public static Rotation2d calculateShooterSpin(Supplier<Double> RPM) {
+        return new Rotation2d(Units.degreesToRadians(ShooterConstants.spinMap.get(RPM.get())));
+    }
+
     public static Rotation2d calculateAngleToSpeaker(Supplier<Pose2d> poseSupplier, Supplier<Translation2d> speeds) {
         Pose2d speakerPose;
         Rotation2d angle;
@@ -91,7 +95,8 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * ShooterConstants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(180.0 + 1.5)));
+                    .plus(new Rotation2d(Units.degreesToRadians(180.0)))
+                    .plus(calculateShooterSpin(() -> calculateShooterRPM(poseSupplier, speeds)));
         } else {
             angle = Constants.SpeakerConstants.speakerLocRed
                     .getTranslation()
@@ -101,22 +106,11 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * ShooterConstants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(1.5)));
+                    .plus(calculateShooterSpin(() -> calculateShooterRPM(poseSupplier, speeds)));
         }
 
         SmartDashboard.putNumber("target Angle", angle.getDegrees());
         return angle;
-        // // ALTERNATE LOGIC
-        // return speakerPose
-        //         .getTranslation()
-        //         .minus(poseSupplier.get().getTranslation())
-        //         .getAngle();
-
-        // double robotAimAngle = Math.atan2(
-        //         speakerPose.getY() - poseSupplier.get().getY(),
-        //         speakerPose.getX() - poseSupplier.get().getX()); // Robot Angle
-
-        // return new Rotation2d(robotAimAngle);
     }
 
     public void incDist() {
