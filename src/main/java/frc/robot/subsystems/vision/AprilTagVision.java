@@ -49,7 +49,7 @@ public class AprilTagVision extends SubsystemBase {
     // Path for logging vision data
     private static final String VISION_PATH = "AprilTagVision/Inst";
 
-    private boolean enableVisionUpdates = true;
+    private boolean enableVisionUpdates = false;
 
     private Consumer<List<TimestampedVisionUpdate>> visionConsumer = x -> {};
     private Supplier<Pose2d> poseSupplier;
@@ -96,15 +96,18 @@ public class AprilTagVision extends SubsystemBase {
 
         speakerTagDistance = 0.0;
         speakerTagAngle = 0.0;
+        if(!RobotState.isAutonomous()) {
+            enableVisionUpdates = true;
+        }
 
         for (int i = 0; i < io.length; i++) {
             io[i].updateInputs(inputs[i]);
             Logger.processInputs(VISION_PATH + Integer.toString(i), inputs[i]);
         }
         List<TimestampedVisionUpdate> visionUpdates = processPoseEstimates();
-        if (!RobotState.isAutonomous()) {
-            sendResultsToPoseEstimator(visionUpdates);
-        }
+        // if (!RobotState.isAutonomous()) {
+        sendResultsToPoseEstimator(visionUpdates);
+        // }
 
         SmartDashboard.putBoolean("Pose updated?", timer.get() - timestamp < 2);
         SmartDashboard.putNumber("System Time", timer.get());

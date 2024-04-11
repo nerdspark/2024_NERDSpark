@@ -86,6 +86,12 @@
               "data": {
                 "name": "forcedIntakeShoot"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
+              }
             }
           ]
         }
@@ -132,8 +138,8 @@
       }
     },
     {
-      "name": "Vision ON",
-      "waypointRelativePos": 0.35,
+      "name": "VIsion on",
+      "waypointRelativePos": 0,
       "command": {
         "type": "sequential",
         "data": {
@@ -142,23 +148,6 @@
               "type": "named",
               "data": {
                 "name": "Vision ON"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Vision OFF",
-      "waypointRelativePos": 1.85,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Vision OFF"
               }
             }
           ]
