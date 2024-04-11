@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.291,
-        "y": 6.04
+        "x": 12.87,
+        "y": 7.66
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.103428545420261,
-        "y": 6.214651204446918
+        "x": 12.020749939121679,
+        "y": 7.249530849945268
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 10.83,
-        "y": 6.64
+        "x": 10.821,
+        "y": 6.6
       },
       "prevControl": {
-        "x": 9.902454156683705,
-        "y": 6.4282923594088315
+        "x": 11.50733465793934,
+        "y": 6.904652488082846
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,16 +30,21 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 168.0,
+      "waypointRelativePos": 0.25,
+      "rotationDegrees": 90.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": 167.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "forcedIntakeShoot",
-      "waypointRelativePos": 0.85,
+      "name": "shoot",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -53,40 +58,23 @@
           ]
         }
       }
-    },
-    {
-      "name": "vision on",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Vision ON"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 168.0,
+    "rotation": 167.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "RedRE4noteCenter",
+  "folder": "RedAmpSide",
   "previewStartingState": {
-    "rotation": -165.0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

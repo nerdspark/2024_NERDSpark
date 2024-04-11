@@ -3,49 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.52,
-        "y": 4.31
+        "x": 8.311,
+        "y": 5.69
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.120991076003621,
-        "y": 4.084160373110175
+        "x": 9.137574939063999,
+        "y": 5.969041302244454
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.392215587073617,
-        "y": 5.19
+        "x": 10.821,
+        "y": 6.6
       },
       "prevControl": {
-        "x": 12.135628300984102,
-        "y": 5.047088673863557
+        "x": 9.922941992869948,
+        "y": 6.262700287580591
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
-  "constraintZones": [
+  "rotationTargets": [
     {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.2,
-      "maxWaypointRelativePos": 0.5,
-      "constraints": {
-        "maxVelocity": 4.86,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0
-      }
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 167.0,
+      "rotateFast": false
     }
   ],
+  "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "forceIntake",
-      "waypointRelativePos": 0.8,
+      "name": "forcedIntakeShoot",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -53,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -61,16 +55,16 @@
       }
     },
     {
-      "name": "vision on",
-      "waypointRelativePos": 0,
+      "name": "fbToShoot",
+      "waypointRelativePos": 0.2,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
-                "name": "Vision ON"
+                "name": "RedAmpSide2"
               }
             }
           ]
@@ -79,20 +73,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.86,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -175.0,
+    "rotation": 167.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "RedWeirdSide",
+  "folder": "RedAmpSide",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": -165.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
