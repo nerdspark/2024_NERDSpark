@@ -72,7 +72,7 @@ public class AutoAim {
     }
 
     public static Rotation2d calculateShooterSpin(Supplier<Double> RPM) {
-        return new Rotation2d(Units.degreesToRadians(ShooterConstants.spinMap.get(RPM.get())));
+        return new Rotation2d(Units.degreesToRadians(ShooterConstants.spinMap.get(Math.abs(RPM.get()))));
     }
 
     public static Rotation2d calculateAngleToSpeaker(Supplier<Pose2d> poseSupplier, Supplier<Translation2d> speeds) {
@@ -95,8 +95,8 @@ public class AutoAim {
                             .plus(speeds.get().times(distanceToSpeaker * ShooterConstants.shootMoveMultiplier)))
                     .getAngle()
                     .times(-1.0)
-                    .plus(new Rotation2d(Units.degreesToRadians(180.0)))
-                    .plus(calculateShooterSpin(() -> calculateShooterRPM(poseSupplier, speeds)));
+                    .plus(new Rotation2d(Units.degreesToRadians(180.0)));
+                    // .minus(new Rotation2d().fromDegrees(ShooterConstants.spinMap.get(calculateShooterRPM(poseSupplier, speeds))));
         } else {
             angle = Constants.SpeakerConstants.speakerLocRed
                     .getTranslation()
@@ -105,8 +105,8 @@ public class AutoAim {
                             .getTranslation()
                             .plus(speeds.get().times(distanceToSpeaker * ShooterConstants.shootMoveMultiplier)))
                     .getAngle()
-                    .times(-1.0)
-                    .plus(calculateShooterSpin(() -> calculateShooterRPM(poseSupplier, speeds)));
+                    .times(-1.0);
+                    // .minus(new Rotation2d().fromDegrees(ShooterConstants.spinMap.get(calculateShooterRPM(poseSupplier, speeds))));
         }
 
         SmartDashboard.putNumber("target Angle", angle.getDegrees());

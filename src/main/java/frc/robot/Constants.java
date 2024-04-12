@@ -53,11 +53,11 @@ public final class Constants {
         // public static final double fourBarPodium = 1.95;
 
         public static final double RPMLongFeed = 3200.0;
-        public static final double RPMLongRicochet = 5000.0;
+        public static final double RPMLongRicochet = 5800.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
         public static final double RPMHome = 4500.0;
-        public static final double RPMFeed = 3800.0;
+        public static final double RPMFeed = 4200.0;
     }
 
     public final class DriveToShotConstants {
@@ -78,7 +78,7 @@ public final class Constants {
 
         public static final double feedshotX = 9.8; // long way
         public static final double feedshotY = 1.9; // short way
-        public static final double feedshotRPM = 3800.0;
+        // public static final double feedshotRPM = 4200.0;
         public static final double feedshotAngleRed = -45; // deg
         public static final double feedshotAngleSpin = 9;
         public static final double feedshotAngleBlue = 180 - feedshotAngleRed - (feedshotAngleSpin * 2); // deg
@@ -502,6 +502,7 @@ public final class Constants {
         public static final double stillShotSpeed = 0.3;
 
         public static final double shooterTolerance = 100;
+        public static final double gyroAngleAimTolerance = 2; //deg
 
         static {
             // Key: Distance
@@ -527,14 +528,15 @@ public final class Constants {
         static {
             //key: rpm
             //value: angle curve deg
-            spinMap.put(0.0, 8.0);
-            spinMap.put(1000.0, 8.0);
-            spinMap.put(2000.0, 8.0);
-            spinMap.put(3000.0, 8.0);
-            spinMap.put(4000.0, 7.0);
-            spinMap.put(4250.0, 5.0);
-            spinMap.put(4500.0, 4.0);
-            spinMap.put(4750.0, 2.0);
+            spinMap.put(0.0, 22.0);
+            spinMap.put(1000.0, 22.0);
+            spinMap.put(2000.0, 22.0);
+            spinMap.put(3000.0, 20.0);
+            spinMap.put(3500.0, 18.0);
+            spinMap.put(4000.0, 16.0);
+            spinMap.put(4250.0, 12.0);
+            spinMap.put(4500.0, 9.0);
+            spinMap.put(4750.0, 3.0);
             spinMap.put(5000.0, 1.0);
             spinMap.put(6000.0, 1.0);
         }
