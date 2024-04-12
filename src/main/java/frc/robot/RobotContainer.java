@@ -527,9 +527,7 @@ public class RobotContainer { // implements RobotConstants{
         copilot.rightTrigger().whileTrue(drivetrain.applyRequest(() -> drive.withRotationalRate(
                         calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
                                         () -> drivetrain.getState().Pose,
-                                        () -> new Translation2d(
-                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond))
+                                        () -> new Translation2d())
                                 .plus(AutoAim.calculateShooterSpin(() -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose, () -> new Translation2d(drivetrain.getState().speeds.vxMetersPerSecond, drivetrain.getState().speeds.vyMetersPerSecond))))
                                 .getDegrees()))
                 .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
@@ -542,14 +540,10 @@ public class RobotContainer { // implements RobotConstants{
                                 shooter,
                                 () -> AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose,
-                                        () -> new Translation2d(
-                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond)),
+                                        () -> new Translation2d()),
                                 () -> AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose,
-                                        () -> new Translation2d(
-                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond))))
+                                        () -> new Translation2d())))
                 .onFalse(new InstantCommand(() -> shooter.stop()))
                 
                         .and(driver.leftTrigger().negate())
@@ -557,9 +551,7 @@ public class RobotContainer { // implements RobotConstants{
                                         fourBar,
                                         () -> AutoAim.calculateFourBarPosition(
                                                 () -> drivetrain.getState().Pose,
-                                                () -> new Translation2d(
-                                                        drivetrain.getState().speeds.vxMetersPerSecond,
-                                                        drivetrain.getState().speeds.vyMetersPerSecond))).onlyIf(driver.leftTrigger().negate()))
+                                                () -> new Translation2d())).onlyIf(driver.leftTrigger().negate()))
 
                                 .and(() -> fourBar.onTarget()).and(() -> Math.abs((-(gyro.getAngle() - gyroOffset)) - targetAngle) < ShooterConstants.gyroAngleAimTolerance)
                                         .whileTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1.0)))

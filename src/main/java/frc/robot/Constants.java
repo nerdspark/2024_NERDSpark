@@ -505,7 +505,7 @@ public final class Constants {
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
-        public static final double shootMoveMultiplier = 0;//0.11; // theoretically speed of shot in m/s
+        public static final double shootMoveMultiplier = 0.11; // theoretically speed of shot in m/s
         public static final double stillShotSpeed = 0.3;
 
         public static final double shooterTolerance = 100;
