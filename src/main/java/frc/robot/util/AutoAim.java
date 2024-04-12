@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.BiasConstants;
+import frc.robot.Constants.FixedShotConstants;
 import frc.robot.Constants.FourBarConstants;
 import frc.robot.Constants.ShooterConstants;
 import java.util.function.Supplier;
@@ -18,6 +19,17 @@ public class AutoAim {
     private static double distanceOffset = 0;
 
     public AutoAim() {}
+
+    public static boolean shootWhenNearSpeaker(Supplier<Pose2d> poseSupplier) {
+        Pose2d speakerPose;
+        if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+            speakerPose = Constants.SpeakerConstants.speakerLocBlue;
+        } else {
+            speakerPose = Constants.SpeakerConstants.speakerLocRed;
+        }
+        double distanceToSpeaker = poseSupplier.get().getTranslation().getDistance(speakerPose.getTranslation());
+        return distanceToSpeaker < FixedShotConstants.drivingLongShotDistance;
+    }
 
     public static double calculateFourBarPosition(Supplier<Pose2d> poseSupplier, Supplier<Translation2d> speeds) {
         Pose2d speakerPose;

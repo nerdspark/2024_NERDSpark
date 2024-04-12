@@ -47,6 +47,9 @@ public final class Constants {
     }
 
     public final class FixedShotConstants {
+        public static final double drivingLongShotShootTime = 1.0;
+        public static final double drivingLongShotSpeed = 5.0;
+        public static final double drivingLongShotDistance = 8.0;
         public static final double fourBarLong = 1.6;
         public static final double fourBarSide = 1.6;
         public static final double fourBarFeed = FourBarConstants.fourBarHome;
@@ -266,6 +269,10 @@ public final class Constants {
             public static final Translation2d amp = new Translation2d(1.5, 26.5); // dropoff - Y
             public static final double ampMultiplierX = 8.5;
             public static final double ampMultiplierY = 5;
+            public static final double armAutoAmpTargetPoseY=7.7;//meters
+            public static final double armAutoAmpTargetPoseX=1.0;//meters TODO tune
+            public static final double armAutoAmpToleranceX = Units.inchesToMeters(3);
+            public static final double armAutoAmpToleranceY = Units.inchesToMeters(6);
         }
 
         public static final class TrapSetpoints {
@@ -273,7 +280,7 @@ public final class Constants {
 
             public static final double winchAmpLimit = 50;
 
-            public static final double trapArmAngle = Units.degreesToRadians(105);
+            public static final double trapArmAngle = Units.degreesToRadians(109);
             public static final double trapArmDifference = Units.degreesToRadians(29);
 
             public static final double trapMicroadjust = Units.degreesToRadians(25);
@@ -365,7 +372,7 @@ public final class Constants {
 
     public final class DrivetrainConstants {
         public static final double gyroP = 0.033;
-        public static final double gyroI = 0.03;
+        public static final double gyroI = 0.00;
         public static final double gyroD = 0.0041;
         public static final double IZone = 5.0;
 
@@ -498,7 +505,7 @@ public final class Constants {
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
-        public static final double shootMoveMultiplier = 0.11; // theoretically speed of shot in m/s
+        public static final double shootMoveMultiplier = 0;//0.11; // theoretically speed of shot in m/s
         public static final double stillShotSpeed = 0.3;
 
         public static final double shooterTolerance = 100;
@@ -528,11 +535,11 @@ public final class Constants {
         static {
             //key: rpm
             //value: angle curve deg
-            spinMap.put(0.0, 22.0);
-            spinMap.put(1000.0, 22.0);
-            spinMap.put(2000.0, 22.0);
-            spinMap.put(3000.0, 20.0);
-            spinMap.put(3500.0, 18.0);
+            spinMap.put(0.0, 17.0);
+            spinMap.put(1000.0, 17.0);
+            spinMap.put(2000.0, 17.0);
+            spinMap.put(3000.0, 17.0);
+            spinMap.put(3500.0, 17.0);
             spinMap.put(4000.0, 16.0);
             spinMap.put(4250.0, 12.0);
             spinMap.put(4500.0, 9.0);
