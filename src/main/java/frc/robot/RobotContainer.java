@@ -103,7 +103,7 @@ public class RobotContainer { // implements RobotConstants{
     private final CommandSwerveDrivetrain drivetrain;
 
     private final XboxController driverRaw = new XboxController(0);
-//     private final XboxController copilotRaw = new XboxController(1);
+    //     private final XboxController copilotRaw = new XboxController(1);
     private final SwerveRequest.FieldCentric drive =
             new SwerveRequest.FieldCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -378,53 +378,67 @@ public class RobotContainer { // implements RobotConstants{
 
         // long drivingshot
         driver.povUp()
-                .whileTrue((new WaitUntilCommand(() -> AutoAim.shootWhenNearSpeaker(() ->
-        drivetrain.getState().Pose))
-                        .andThen(new WaitCommand(FixedShotConstants.drivingLongShotShootTime).deadlineWith((new
-        IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)))))
-                                .deadlineWith(
-                                new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
+                .whileTrue((new WaitUntilCommand(() -> AutoAim.shootWhenNearSpeaker(() -> drivetrain.getState().Pose))
+                                .andThen(new WaitCommand(FixedShotConstants.drivingLongShotShootTime)
+                                        .deadlineWith((new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)))))
+                        .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
                                 .alongWith(new ShooterCommand(
                                         shooter,
                                         () -> FixedShotConstants.RPMLongRicochet,
                                         () -> FixedShotConstants.RPMLongRicochet))
                                 .alongWith(drivetrain.applyRequest(() -> drive.withRotationalRate(
-                                        calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-                                                () -> drivetrain.getState().Pose,
-                                                () -> new Translation2d())
-                                                .plus(AutoAim.calculateShooterSpin(() ->
-        FixedShotConstants.RPMLongRicochet))
-                                                .getDegrees()))
-                                        .withVelocityX(xLimiter.calculate(FixedShotConstants.drivingLongShotSpeed *
-        AutoAim.calculateAngleToSpeaker(
-                                                () -> drivetrain.getState().Pose,
-                                                () -> new Translation2d()).getCos()))
-                                        .withVelocityY(yLimiter.calculate(FixedShotConstants.drivingLongShotSpeed *
-        AutoAim.calculateAngleToSpeaker(
-                                                () -> drivetrain.getState().Pose,
-                                                () -> new Translation2d()).getSin()))))))
+                                                calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
+                                                                () -> drivetrain.getState().Pose,
+                                                                () -> new Translation2d())
+                                                        .plus(AutoAim.calculateShooterSpin(
+                                                                () -> FixedShotConstants.RPMLongRicochet))
+                                                        .getDegrees()))
+                                        .withVelocityX(xLimiter.calculate(FixedShotConstants.drivingLongShotSpeed
+                                                * AutoAim.calculateAngleToSpeaker(
+                                                                () -> drivetrain.getState().Pose,
+                                                                () -> new Translation2d())
+                                                        .getCos()))
+                                        .withVelocityY(yLimiter.calculate(FixedShotConstants.drivingLongShotSpeed
+                                                * AutoAim.calculateAngleToSpeaker(
+                                                                () -> drivetrain.getState().Pose,
+                                                                () -> new Translation2d())
+                                                        .getSin()))))))
                 .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // long drivetoshot
-        driver.povRight().and(() -> DriverStation.getAlliance().get().equals(Alliance.Red)).or(driver.povLeft().and(() -> DriverStation.getAlliance().get().equals(Alliance.Blue)))
+        driver.povRight()
+                .and(() -> DriverStation.getAlliance().get().equals(Alliance.Red))
+                .or(driver.povLeft().and(() -> DriverStation.getAlliance().get().equals(Alliance.Blue)))
                 .whileTrue((new WaitCommand(DriveToShotConstants.aimingWait)
                                 .alongWith(new DriveToPoseCommand(
                                                 drivetrain,
                                                 () -> drivetrain.getState().Pose,
                                                 () -> new Pose2d(
                                                         DriverStation.getAlliance()
-                                                                                .get().equals(Alliance.Red)
+                                                                        .get()
+                                                                        .equals(Alliance.Red)
                                                                 ? FieldConstants.fieldLength
                                                                         - DriveToShotConstants.longshotX
                                                                 : DriveToShotConstants.longshotX,
                                                         DriveToShotConstants.longshotY,
                                                         new Rotation2d()
                                                                 .fromDegrees(
-        DriverStation.getAlliance().get().equals(Alliance.Red) ?
-        DriveToShotConstants.longshotAngleRed : DriveToShotConstants.longshotAngleBlue)),
-                                                () -> new Rotation2d().fromDegrees(gyro.getAngle() - gyroOffset +
-        (DriverStation.getAlliance().get().equals(Alliance.Red) ? 0 : 180)))
-                                        .andThen(new WaitCommand(DriveToShotConstants.stopWait).alongWith(drivetrain.applyRequest(() -> brake))))
+                                                                        DriverStation.getAlliance()
+                                                                                        .get()
+                                                                                        .equals(Alliance.Red)
+                                                                                ? DriveToShotConstants.longshotAngleRed
+                                                                                : DriveToShotConstants
+                                                                                        .longshotAngleBlue)),
+                                                () -> new Rotation2d()
+                                                        .fromDegrees(gyro.getAngle()
+                                                                - gyroOffset
+                                                                + (DriverStation.getAlliance()
+                                                                                .get()
+                                                                                .equals(Alliance.Red)
+                                                                        ? 0
+                                                                        : 180)))
+                                        .andThen(new WaitCommand(DriveToShotConstants.stopWait)
+                                                .alongWith(drivetrain.applyRequest(() -> brake))))
                                 .andThen(new WaitUntilCommand(() -> fourBar.onTarget()))
                                 .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.SHOOT)))
                         .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
@@ -434,22 +448,46 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> DriveToShotConstants.longshotRPM))));
 
         // // side drivetoshot
-        driver.povRight().and(() -> DriverStation.getAlliance().get().equals(Alliance.Blue)).or(driver.povLeft().and(() -> DriverStation.getAlliance().get().equals(Alliance.Red)))
-        .whileTrue((new WaitCommand(DriveToShotConstants.aimingWait).alongWith(new DriveToPoseCommand(drivetrain, () ->
-        drivetrain.getState().Pose,
-                        () -> new Pose2d(
-                                DriverStation.getAlliance().get().equals(Alliance.Red) ? FieldConstants.fieldLength -
-        DriveToShotConstants.sideshotX : DriveToShotConstants.sideshotX,
-                                DriveToShotConstants.sideshotY,
-                                new Rotation2d().fromDegrees(DriverStation.getAlliance().get().equals(Alliance.Red) ?
-        DriveToShotConstants.sideshotAngleRed : DriveToShotConstants.sideshotAngleBlue)), () -> new
-        Rotation2d().fromDegrees(gyro.getAngle() - gyroOffset +
-        (DriverStation.getAlliance().get().equals(Alliance.Red) ? 0 : 180)))
-                        .andThen(new WaitCommand(DriveToShotConstants.stopWait).alongWith(drivetrain.applyRequest(() -> brake))))
-                        .andThen(new WaitUntilCommand(() -> fourBar.onTarget()))
-                        .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.SHOOT)))
-                .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarSide).alongWith(new
-        ShooterCommand(shooter, () -> DriveToShotConstants.longshotRPM, () -> DriveToShotConstants.longshotRPM))));
+        driver.povRight()
+                .and(() -> DriverStation.getAlliance().get().equals(Alliance.Blue))
+                .or(driver.povLeft().and(() -> DriverStation.getAlliance().get().equals(Alliance.Red)))
+                .whileTrue((new WaitCommand(DriveToShotConstants.aimingWait)
+                                .alongWith(new DriveToPoseCommand(
+                                                drivetrain,
+                                                () -> drivetrain.getState().Pose,
+                                                () -> new Pose2d(
+                                                        DriverStation.getAlliance()
+                                                                        .get()
+                                                                        .equals(Alliance.Red)
+                                                                ? FieldConstants.fieldLength
+                                                                        - DriveToShotConstants.sideshotX
+                                                                : DriveToShotConstants.sideshotX,
+                                                        DriveToShotConstants.sideshotY,
+                                                        new Rotation2d()
+                                                                .fromDegrees(
+                                                                        DriverStation.getAlliance()
+                                                                                        .get()
+                                                                                        .equals(Alliance.Red)
+                                                                                ? DriveToShotConstants.sideshotAngleRed
+                                                                                : DriveToShotConstants
+                                                                                        .sideshotAngleBlue)),
+                                                () -> new Rotation2d()
+                                                        .fromDegrees(gyro.getAngle()
+                                                                - gyroOffset
+                                                                + (DriverStation.getAlliance()
+                                                                                .get()
+                                                                                .equals(Alliance.Red)
+                                                                        ? 0
+                                                                        : 180)))
+                                        .andThen(new WaitCommand(DriveToShotConstants.stopWait)
+                                                .alongWith(drivetrain.applyRequest(() -> brake))))
+                                .andThen(new WaitUntilCommand(() -> fourBar.onTarget()))
+                                .andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.SHOOT)))
+                        .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarSide)
+                                .alongWith(new ShooterCommand(
+                                        shooter,
+                                        () -> DriveToShotConstants.longshotRPM,
+                                        () -> DriveToShotConstants.longshotRPM))));
 
         // // feed drivetoshot
         // driver.povDown()
@@ -789,16 +827,17 @@ public class RobotContainer { // implements RobotConstants{
                         () -> BlockSetpoints.elbow + (copilot.getRightY() * BlockSetpoints.microadjust),
                         () -> BlockSetpoints.shoulder + (copilot.getRightY() * BlockSetpoints.microadjust)));
 
-        //autoamp
+        // autoamp
         copilot.rightBumper()
                 .whileTrue((new WaitUntilCommand(() -> AutoAim.shootWhenNearAmp(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))
-                                .andThen(new GripperOutCommand(arm, ArmConstants.outPowerGripper).withTimeout(AmpSetpoints.armAutoAmpShootDuration)
-                                                        /*.alongWith(new InstantCommand(() -> copilotRaw.setRumble(RumbleType.kBothRumble, 1))).alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))*/ ))
-                                
+                                .andThen(
+                                        new GripperOutCommand(arm, ArmConstants.outPowerGripper)
+                                                .withTimeout(AmpSetpoints.armAutoAmpShootDuration)
+                                        /*.alongWith(new InstantCommand(() -> copilotRaw.setRumble(RumbleType.kBothRumble, 1))).alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))*/ ))
                         .deadlineWith(new ArmCommand(
                                 arm,
                                 () -> AmpSetpoints.amp.plus(new Translation2d(
@@ -808,12 +847,14 @@ public class RobotContainer { // implements RobotConstants{
                                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                                         drivetrain.getState().speeds.vyMetersPerSecond)),
                                         -copilot.getLeftY() * AmpSetpoints.ampMultiplierY)),
-                                () -> false)).andThen(new GripperOutCommand(arm, 0)))
-                .onFalse(new GripperOutCommand(arm, 0)
+                                () -> false))
+                        .andThen(new GripperOutCommand(arm, 0)))
+                .onFalse(
+                        new GripperOutCommand(arm, 0)
                         // .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0))
-                        //         .alongWith(new InstantCommand(() -> copilotRaw.setRumble(RumbleType.kBothRumble, 0))))
-                                );
-
+                        //         .alongWith(new InstantCommand(() -> copilotRaw.setRumble(RumbleType.kBothRumble,
+                        // 0))))
+                        );
     }
 
     //     @Override
