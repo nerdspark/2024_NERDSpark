@@ -276,11 +276,11 @@ public final class Constants {
             public static final double armAutoAmpMaxSpeed =
                     8.0; // max meters per second to use for amp moving calculation
             public static final double armAutoAmpMovingMultiplier =
-                    0.03; // theoretical time (sec) for note to go from arm to amp
+                    0.03; // theoretical time (sec) for note to go from arm to amp (for shooting)
             public static final double armAutoAmpArmPositioningMovingMultiplier =
-                    0.19; // theoretical lag in arm positioning controls
+                    0.19; // theoretical lag in arm positioning controls (for arm positioning)
             public static final double armAutoAmpShootDuration = 0.5; // sec to shoot note for
-            public static final double armAutoAmpArmUpTolerance = 1.5; // meters within amp to raise arm
+            public static final double armAutoAmpArmUpTolerance = 0.4; // meters within amp to raise arm
         }
 
         public static final class TrapSetpoints {

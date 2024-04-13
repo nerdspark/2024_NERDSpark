@@ -100,7 +100,7 @@ public class RobotContainer { // implements RobotConstants{
     private final CommandSwerveDrivetrain drivetrain;
 
     private final XboxController driverRaw = new XboxController(0);
-    private final XboxController copilotRaw = new XboxController(1);
+//     private final XboxController copilotRaw = new XboxController(1);
     private final SwerveRequest.FieldCentric drive =
             new SwerveRequest.FieldCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -409,12 +409,9 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> new Translation2d(
                                                 drivetrain.getState().speeds.vxMetersPerSecond,
                                                 drivetrain.getState().speeds.vyMetersPerSecond)))
-                                .andThen(
-                                        new WaitCommand(AmpSetpoints.armAutoAmpShootDuration)
-                                                .deadlineWith(
-                                                        new GripperOutCommand(arm, ArmConstants.outPowerGripper)
+                                .andThen(new GripperOutCommand(arm, ArmConstants.outPowerGripper).withTimeout(AmpSetpoints.armAutoAmpShootDuration)
                                                         /*.alongWith(new InstantCommand(() -> copilotRaw.setRumble(RumbleType.kBothRumble, 1))).alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1)))*/ ))
-                                .andThen(new GripperOutCommand(arm, 0)))
+                                
                         .deadlineWith(new ArmCommand(
                                 arm,
                                 () -> AmpSetpoints.amp.plus(new Translation2d(
@@ -424,10 +421,11 @@ public class RobotContainer { // implements RobotConstants{
                                                         drivetrain.getState().speeds.vxMetersPerSecond,
                                                         drivetrain.getState().speeds.vyMetersPerSecond)),
                                         -copilot.getLeftY() * AmpSetpoints.ampMultiplierY)),
-                                () -> false)))
+                                () -> false)).andThen(new GripperOutCommand(arm, 0)))
                 .onFalse(new GripperOutCommand(arm, 0)
-                        .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0))
-                                .alongWith(new InstantCommand(() -> copilotRaw.setRumble(RumbleType.kBothRumble, 0)))));
+                        // .alongWith(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0))
+                        //         .alongWith(new InstantCommand(() -> copilotRaw.setRumble(RumbleType.kBothRumble, 0))))
+                                );
 
         // old long drivetoshot
         // driver.povRight().or(driver.povLeft())
