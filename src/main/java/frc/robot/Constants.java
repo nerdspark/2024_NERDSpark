@@ -20,7 +20,7 @@ import frc.robot.util.Alert;
 public final class Constants {
 
     public static final boolean PracticeBot =
-            false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+            true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
         public static final double kP = 0.95; // 0.65; // 0.85
