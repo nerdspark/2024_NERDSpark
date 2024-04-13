@@ -96,7 +96,7 @@ public class AprilTagVision extends SubsystemBase {
 
         speakerTagDistance = 0.0;
         speakerTagAngle = 0.0;
-        if(!RobotState.isAutonomous()) {
+        if (!RobotState.isAutonomous()) {
             enableVisionUpdates = true;
         }
 
