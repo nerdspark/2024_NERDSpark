@@ -7,7 +7,6 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.util.FieldConstants;
@@ -58,7 +57,7 @@ public class PhotonVisionRunnable implements Runnable {
             SmartDashboard.putBoolean("Something's wrong", false);
         }
 
-        if (photonPoseEstimator != null && photonCamera != null && !RobotState.isAutonomous()) {
+        if (photonPoseEstimator != null && photonCamera != null) {
 
             var photonResults = photonCamera.getLatestResult();
 

@@ -35,4 +35,8 @@ public class Shooter extends SubsystemBase {
     public void stop() {
         io.stop();
     }
+
+    public double[] getSpeed() {
+        return io.getSpeed();
+    }
 }

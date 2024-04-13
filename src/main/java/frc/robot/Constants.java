@@ -24,9 +24,9 @@ public final class Constants {
 
     public final class FourBarGains {
         public static final double kP = 0.95; // 0.65; // 0.85
-        public static final double kI = 0.001; // 0; // 0.2
+        public static final double kI = 0.002; // 0; // 0.2
         public static final double kD = 0.10; // 0.006; // 0.01
-        public static final double kIZone = 0.2;
+        public static final double kIZone = 0.1;
 
         public static final double kS = 0.0;
         public static final double kV = 0.0;
@@ -40,24 +40,27 @@ public final class Constants {
         // public static final double servoOutTolerance = 50.0;
         public static final double winchDist = 48 * 12;
 
-        public static final double rumbleWait = 0.2;
+        public static final double rumbleWait = 0.3;
 
         public static final int servoPort = 9;
         public static final int winchPort = 6;
     }
 
     public final class FixedShotConstants {
+        public static final double drivingLongShotShootTime = 1.0;
+        public static final double drivingLongShotSpeed = 5.0;
+        public static final double drivingLongShotDistance = 8.0;
         public static final double fourBarLong = 1.6;
         public static final double fourBarSide = 1.6;
         public static final double fourBarFeed = FourBarConstants.fourBarHome;
         // public static final double fourBarPodium = 1.95;
 
         public static final double RPMLongFeed = 3200.0;
-        public static final double RPMLongRicochet = 5000.0;
+        public static final double RPMLongRicochet = 5800.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
         public static final double RPMHome = 4500.0;
-        public static final double RPMFeed = 3800.0;
+        public static final double RPMFeed = 4200.0;
     }
 
     public final class DriveToShotConstants {
@@ -78,7 +81,7 @@ public final class Constants {
 
         public static final double feedshotX = 9.8; // long way
         public static final double feedshotY = 1.9; // short way
-        public static final double feedshotRPM = 3800.0;
+        // public static final double feedshotRPM = 4200.0;
         public static final double feedshotAngleRed = -45; // deg
         public static final double feedshotAngleSpin = 9;
         public static final double feedshotAngleBlue = 180 - feedshotAngleRed - (feedshotAngleSpin * 2); // deg
@@ -127,12 +130,18 @@ public final class Constants {
             fourBarMap.put(4.08, 2.04);
             fourBarMap.put(4.45, 2.00);
             fourBarMap.put(5.0, 1.98);
-            fourBarMap.put(5.25, 1.93);
-            fourBarMap.put(5.53, 1.85);
-            fourBarMap.put(5.75, 1.81);
-            fourBarMap.put(6.00, 1.75);
-            fourBarMap.put(6.35, 1.66);
-            fourBarMap.put(6.8, FixedShotConstants.fourBarLong);
+
+            fourBarMap.put(5.25, 1.97);
+            fourBarMap.put(5.53, 1.94);
+            fourBarMap.put(5.75, 1.89);
+            fourBarMap.put(6.00, 1.85);
+            fourBarMap.put(6.20, 1.81);
+            fourBarMap.put(6.35, 1.78);
+            fourBarMap.put(6.55, 1.73);
+            fourBarMap.put(6.8, 1.70);
+            fourBarMap.put(7.0, 1.65);
+            fourBarMap.put(7.2, 1.62);
+            fourBarMap.put(7.4, FixedShotConstants.fourBarLong);
             fourBarMap.put(15.1, FixedShotConstants.fourBarLong);
 
             // 3.24.24 shoot tune
@@ -257,9 +266,21 @@ public final class Constants {
 
         public static final class AmpSetpoints {
             // AMP DROPOFF
-            public static final Translation2d amp = new Translation2d(1.5, 26.5); // dropoff - Y
-            public static final double ampMultiplierX = 8.5;
+            public static final Translation2d amp = new Translation2d(2.2, 25.5); // dropoff - Y
+            public static final double ampMultiplierX = 9.5;
             public static final double ampMultiplierY = 5;
+            public static final double armAutoAmpTargetPoseY = 7.75; // meters in
+            public static final double armAutoAmpTargetPoseX = 1.78; // meters sideways
+            public static final double armAutoAmpToleranceY = Units.inchesToMeters(6.0); // in
+            public static final double armAutoAmpToleranceX = Units.inchesToMeters(4.0); // sideways
+            public static final double armAutoAmpMaxSpeed =
+                    8.0; // max meters per second to use for amp moving calculation
+            public static final double armAutoAmpMovingMultiplier =
+                    0.03; // theoretical time (sec) for note to go from arm to amp (for shooting)
+            public static final double armAutoAmpArmPositioningMovingMultiplier =
+                    0.19; // theoretical lag in arm positioning controls (for arm positioning)
+            public static final double armAutoAmpShootDuration = 0.5; // sec to shoot note for
+            public static final double armAutoAmpArmUpTolerance = 0.4; // meters within amp to raise arm
         }
 
         public static final class TrapSetpoints {
@@ -267,7 +288,7 @@ public final class Constants {
 
             public static final double winchAmpLimit = 50;
 
-            public static final double trapArmAngle = Units.degreesToRadians(105);
+            public static final double trapArmAngle = Units.degreesToRadians(109);
             public static final double trapArmDifference = Units.degreesToRadians(29);
 
             public static final double trapMicroadjust = Units.degreesToRadians(25);
@@ -323,9 +344,9 @@ public final class Constants {
         public static final double blueRECenterNote5 = 1.91; // 1.80
         public static final double blueRECenterNote6 = 1.89; // 1.87
 
-        public static final double blueWeirdSideDropring2 = 1.70;
+        public static final double blueWeirdSideDropring2 = 1.64;
 
-        public static final double redWeirdSideDropRing2 = 1.70;
+        public static final double redWeirdSideDropRing2 = 1.64;
 
         // public static final double blueStarWars1 = 1.95; // 3.5
         // public static final double blueStarWars2 = 1.87; // 2.75
@@ -358,12 +379,12 @@ public final class Constants {
     }
 
     public final class DrivetrainConstants {
-        public static final double gyroP = 0.023;
-        public static final double gyroI = 0.0;
-        public static final double gyroD = 0.0018;
-        public static final double IZone = 10.0;
+        public static final double gyroP = 0.033;
+        public static final double gyroI = 0.00;
+        public static final double gyroD = 0.0041;
+        public static final double IZone = 5.0;
 
-        public static final double autoTurnCeiling = 6.0;
+        public static final double autoTurnCeiling = 5.0;
         public static final double poseSyncTolerance =
                 0.5; // the tolerance at which vision pose and estimated pose have to be in for driver station to report
         // happy
@@ -488,7 +509,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = -0.0; // m
+        public static final double CONSTANT_DISTANCE_ADD = -Units.feetToMeters(0.0); // m
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
@@ -496,23 +517,44 @@ public final class Constants {
         public static final double stillShotSpeed = 0.3;
 
         public static final double shooterTolerance = 100;
+        public static final double gyroAngleAimTolerance = 2; // deg
 
         static {
             // Key: Distance
-            // Value: Shooter Position
-            shooterMap.put(15.1, 5600.0);
-            shooterMap.put(9.0, 5600.0);
-            shooterMap.put(8.0, 5600.0);
-            shooterMap.put(7.5, 5600.0);
-            shooterMap.put(7.0, 5600.0);
+            // Value: Shooter RPM
+            shooterMap.put(15.1, 5850.0);
+            shooterMap.put(9.0, 5800.0);
+            shooterMap.put(8.0, 5750.0);
+            shooterMap.put(7.8, 5700.0);
+            shooterMap.put(7.5, 5650.0);
+            shooterMap.put(7.0, 5550.0);
+            shooterMap.put(6.75, 5500.0);
             shooterMap.put(6.44, 5500.0);
-            shooterMap.put(5.9436, 5300.0);
+            shooterMap.put(5.9436, 5450.0);
             shooterMap.put(5.334, 5100.0);
             shooterMap.put(4.7752, 5000.0);
             shooterMap.put(4.1402, 4900.0);
             shooterMap.put(3.429, 4700.0);
             shooterMap.put(2.7178, 4400.0);
             shooterMap.put(0.762, 4200.0);
+        }
+
+        public static InterpolatingDoubleTreeMap spinMap = new InterpolatingDoubleTreeMap();
+
+        static {
+            // key: rpm
+            // value: angle curve deg
+            spinMap.put(0.0, 17.0);
+            spinMap.put(1000.0, 17.0);
+            spinMap.put(2000.0, 17.0);
+            spinMap.put(3000.0, 17.0);
+            spinMap.put(3500.0, 17.0);
+            spinMap.put(4000.0, 16.0);
+            spinMap.put(4250.0, 12.0);
+            spinMap.put(4500.0, 9.0);
+            spinMap.put(4750.0, 3.0);
+            spinMap.put(5000.0, 1.0);
+            spinMap.put(6000.0, 1.0);
         }
     }
 

@@ -52,10 +52,8 @@
         "y": 6.04
       },
       "prevControl": {
-
         "x": 9.280989792367693,
         "y": 6.255626876819401
-
       },
       "nextControl": null,
       "isLocked": false,
@@ -130,6 +128,26 @@
               }
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "vision on",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "vision off",
+      "waypointRelativePos": 1.5500000000000003,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
         }
       }
     }

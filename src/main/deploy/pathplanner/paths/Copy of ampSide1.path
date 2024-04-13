@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 8.22,
-        "y": 7.39
+        "y": 7.59
       },
       "prevControl": {
         "x": 5.822923166206254,
-        "y": 7.478780623480545
+        "y": 7.678780623480545
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +49,7 @@
   "eventMarkers": [
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.6,
+      "waypointRelativePos": 1.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -89,7 +89,7 @@
     },
     {
       "name": "spit",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 1.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -103,11 +103,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "vision off",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.4,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

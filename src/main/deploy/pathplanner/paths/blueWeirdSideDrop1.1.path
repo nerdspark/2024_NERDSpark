@@ -126,6 +126,57 @@
           ]
         }
       }
+    },
+    {
+      "name": "vision off",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision on",
+      "waypointRelativePos": 1.1,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision ON"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision off",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
