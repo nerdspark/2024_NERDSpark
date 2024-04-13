@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.45,
+      "x": 15.09,
       "y": 7.38
     },
-    "rotation": 0
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -28,31 +28,25 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide1"
+                        "pathName": "RedAmpSide1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide2"
+                        "pathName": "RedAmpSide2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "PUampSide3"
+                        "pathName": "Copy of RedAmpSide3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "PUampSide4"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "PUampSide5"
+                        "pathName": "Copy of RedAmpSide4"
                       }
                     }
                   ]

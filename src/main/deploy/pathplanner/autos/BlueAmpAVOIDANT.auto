@@ -28,31 +28,25 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide1"
+                        "pathName": "ampSide1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide2"
+                        "pathName": "ampSide2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "PUampSide3"
+                        "pathName": "Copy of ampSide3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "PUampSide4"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "PUampSide5"
+                        "pathName": "Copy of ampSide4"
                       }
                     }
                   ]

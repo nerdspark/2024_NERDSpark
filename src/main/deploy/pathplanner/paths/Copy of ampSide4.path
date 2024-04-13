@@ -51,7 +51,7 @@
   "eventMarkers": [
     {
       "name": "forcedIntake",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "sequential",
         "data": {
@@ -100,6 +100,23 @@
               "type": "named",
               "data": {
                 "name": "fourBarToShooter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision on",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision ON"
               }
             }
           ]

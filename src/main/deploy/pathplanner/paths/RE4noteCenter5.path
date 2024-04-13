@@ -8,10 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-
         "x": 6.496594987905087,
         "y": 7.074896192236645
-
       },
       "isLocked": false,
       "linkedName": null
@@ -54,10 +52,8 @@
         "y": 5.94
       },
       "prevControl": {
-
         "x": 7.147617714038845,
         "y": 6.116042773396089
-
       },
       "nextControl": null,
       "isLocked": false,
@@ -132,6 +128,26 @@
               }
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "vision on",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "vision off",
+      "waypointRelativePos": 1.25,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
         }
       }
     }
