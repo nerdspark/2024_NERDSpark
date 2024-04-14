@@ -388,33 +388,35 @@ public class RobotContainer { // implements RobotConstants{
         driver.povDown().whileTrue(drivetrain.applyRequest(() -> brake));
 
         // long drivingshot
-        // driver.povUp()
-        //         .whileTrue((new WaitUntilCommand(() -> AutoAim.shootWhenNearSpeaker(() -> drivetrain.getState().Pose))
-        //                         .andThen(new WaitCommand(FixedShotConstants.drivingLongShotShootTime)
-        //                                 .deadlineWith((new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)))))
-        //                 .deadlineWith(new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
-        //                         .alongWith(new ShooterCommand(
-        //                                 shooter,
-        //                                 () -> FixedShotConstants.RPMLongRicochet,
-        //                                 () -> FixedShotConstants.RPMLongRicochet))
-        //                         .alongWith(drivetrain.applyRequest(() -> drive.withRotationalRate(
-        //                                         calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
-        //                                                         () -> drivetrain.getState().Pose,
-        //                                                         () -> new Translation2d())
-        //                                                 .plus(AutoAim.calculateShooterSpin(
-        //                                                         () -> FixedShotConstants.RPMLongRicochet))
-        //                                                 .getDegrees()))
-        //                                 .withVelocityX(xLimiter.calculate(FixedShotConstants.drivingLongShotSpeed
-        //                                         * AutoAim.calculateAngleToSpeaker(
-        //                                                         () -> drivetrain.getState().Pose,
-        //                                                         () -> new Translation2d())
-        //                                                 .getCos()))
-        //                                 .withVelocityY(yLimiter.calculate(FixedShotConstants.drivingLongShotSpeed
-        //                                         * AutoAim.calculateAngleToSpeaker(
-        //                                                         () -> drivetrain.getState().Pose,
-        //                                                         () -> new Translation2d())
-        //                                                 .getSin()))))))
-        //         .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
+        driver.povUp()
+                .whileTrue((new WaitUntilCommand(() -> AutoAim.shootWhenNearSpeaker(() -> drivetrain.getState().Pose))
+                                .andThen(new WaitCommand(FixedShotConstants.drivingLongShotShootTime)
+                                        // .deadlineWith((new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)))
+                                        ))
+                        .deadlineWith(//new FourBarCommand(fourBar, () -> FixedShotConstants.fourBarLong)
+                                // .alongWith(new ShooterCommand(
+                                //         shooter,
+                                //         () -> FixedShotConstants.RPMLongRicochet,
+                                //         () -> FixedShotConstants.RPMLongRicochet))
+                                // .alongWith(
+                                        drivetrain.applyRequest(() -> drive.withRotationalRate(
+                                                calculateAutoTurn(() -> AutoAim.calculateAngleToSpeaker(
+                                                                () -> drivetrain.getState().Pose,
+                                                                () -> new Translation2d())
+                                                        .plus(AutoAim.calculateShooterSpin(
+                                                                () -> FixedShotConstants.RPMLongRicochet))
+                                                        .getDegrees()))
+                                        .withVelocityX(xLimiter.calculate(-FixedShotConstants.drivingLongShotSpeed
+                                                * AutoAim.calculateAngleToSpeaker(
+                                                                () -> drivetrain.getState().Pose,
+                                                                () -> new Translation2d())
+                                                        .getCos()))
+                                        .withVelocityY(yLimiter.calculate(FixedShotConstants.drivingLongShotSpeed
+                                                * AutoAim.calculateAngleToSpeaker(
+                                                                () -> drivetrain.getState().Pose,
+                                                                () -> new Translation2d())
+                                                        .getSin())))));
+                // .onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
 
         // long drivetoshot
         // driver.povRight()

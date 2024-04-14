@@ -10,6 +10,8 @@ import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AvoidPolesConstants;
 
@@ -32,7 +34,7 @@ public class AvoidPoles {
                 SmartDashboard.putString("poseToPole", String.format("(%.3f, %.3f)", poseToPole.getX(), poseToPole.getY()));
             }
         }
-        correction = correction.times(joystickSpeeds.get().getNorm()).times(AvoidPolesConstants.correctionGain);
+        correction = correction.times(joystickSpeeds.get().getNorm()).times(DriverStation.getAlliance().get().equals(Alliance.Red) ? AvoidPolesConstants.correctionGain : -AvoidPolesConstants.correctionGain);
         SmartDashboard.putString("correction", String.format("(%.3f, %.3f)", correction.getX(), correction.getY()));
         Translation2d output = joystickSpeeds.get().plus(correction);
         return output;
