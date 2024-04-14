@@ -45,6 +45,7 @@ public class AprilTagVision extends SubsystemBase {
     private static final double zMargin = 0.75;
 
     private double timestamp = 0;
+    public boolean poseUpdated = false;
 
     // Path for logging vision data
     private static final String VISION_PATH = "AprilTagVision/Inst";
@@ -109,8 +110,9 @@ public class AprilTagVision extends SubsystemBase {
         sendResultsToPoseEstimator(visionUpdates);
         // }
 
-        SmartDashboard.putBoolean("Pose updated?", timer.get() - timestamp < 2);
-        SmartDashboard.putNumber("System Time", timer.get());
+        poseUpdated = Math.abs(timer.getFPGATimestamp() - timestamp) < 2.0;
+        SmartDashboard.putBoolean("Pose updated?", poseUpdated);
+        SmartDashboard.putNumber("System Time", timer.getFPGATimestamp());
         SmartDashboard.putNumber("Pose update timestamp", timestamp);
     }
 

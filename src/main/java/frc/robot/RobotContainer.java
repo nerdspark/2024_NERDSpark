@@ -207,14 +207,16 @@ public class RobotContainer { // implements RobotConstants{
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(drivetrain.getState().speeds.vxMetersPerSecond, drivetrain.getState().speeds.vyMetersPerSecond),
                                         () -> new Translation2d(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed,
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed), 
+                                        () -> aprilTagVision.poseUpdated)
                                 .getX()))
                         .withVelocityY(
                                 yLimiter.calculate(AvoidPoles.adjustJoystick(
                                         () -> drivetrain.getState().Pose,
                                         () -> new Translation2d(drivetrain.getState().speeds.vxMetersPerSecond, drivetrain.getState().speeds.vyMetersPerSecond),
                                         () -> new Translation2d(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed,
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed), 
+                                        () -> aprilTagVision.poseUpdated)
                                 .getY()))
                         .withRotationalRate(calculateAutoTurn(() -> 0.0))));
 
