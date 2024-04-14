@@ -21,7 +21,7 @@ import frc.robot.util.FieldConstants;
 public final class Constants {
 
     public static final boolean PracticeBot =
-            true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+            false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
         public static final double kP = 0.95; // 0.65; // 0.85
@@ -526,6 +526,9 @@ public final class Constants {
     }
 
     public static class ShooterConstants {
+        public static final double stopShootRPMThreshold = 2000.5;
+        public static final double stopShootWait = 0.5;
+
         public static Measure<Distance> MAXIMUM_READYSHOOT_DISTANCE = Meters.of(Units.feetToMeters(15));
 
         public static double SHOOTER_SPEED = 10;
