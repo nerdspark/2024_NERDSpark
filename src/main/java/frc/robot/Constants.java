@@ -16,6 +16,7 @@ import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
+import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
@@ -502,6 +503,23 @@ public final class Constants {
         public static final double readyToShootPattern = 0.35; // flashing color [gr] // (0.15 flash green)
 
         public static final double badVisionPattern = 0.67; // solid gold
+    }
+
+    public static class AvoidPolesConstants {
+        public static double centerY = FieldConstants.fieldWidth/2.0;
+        public static double centerPoleX = Units.inchesToMeters(121.0 + 12.0);
+        public static double centerToSideY = Units.inchesToMeters(50.76);
+        public static double centerToSideX = Units.inchesToMeters(87.95);
+        public static final Translation2d [] Poles = {
+            new Translation2d(centerPoleX, centerY), 
+            new Translation2d(centerPoleX + centerToSideX, centerY + centerToSideY), 
+            new Translation2d(centerPoleX + centerToSideX, centerY - centerToSideY), 
+            new Translation2d(FieldConstants.fieldLength - centerPoleX, centerY), 
+            new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY + centerToSideY), 
+            new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY - centerToSideY)};
+        public static final double lookAhead = 0;//0.3;// sec
+        public static final double distancePower = -2.0;
+        public static final double correctionGain = 0.3; 
     }
 
     public static class ShooterConstants {

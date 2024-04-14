@@ -78,6 +78,7 @@ import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
 import frc.robot.util.AutoAim;
+import frc.robot.util.AvoidPoles;
 import frc.robot.util.FieldConstants;
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
@@ -200,11 +201,21 @@ public class RobotContainer { // implements RobotConstants{
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
-        drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+        drivetrain.setDefaultCommand( 
                 drivetrain.applyRequest(() -> drive.withVelocityX(
-                                xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                                xLimiter.calculate(AvoidPoles.adjustJoystick(
+                                        () -> drivetrain.getState().Pose,
+                                        () -> new Translation2d(drivetrain.getState().speeds.vxMetersPerSecond, drivetrain.getState().speeds.vyMetersPerSecond),
+                                        () -> new Translation2d(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed,
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
+                                .getX()))
                         .withVelocityY(
-                                yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
+                                yLimiter.calculate(AvoidPoles.adjustJoystick(
+                                        () -> drivetrain.getState().Pose,
+                                        () -> new Translation2d(drivetrain.getState().speeds.vxMetersPerSecond, drivetrain.getState().speeds.vyMetersPerSecond),
+                                        () -> new Translation2d(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed,
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
+                                .getY()))
                         .withRotationalRate(calculateAutoTurn(() -> 0.0))));
 
         // if (Utils.isSimulation()) {
