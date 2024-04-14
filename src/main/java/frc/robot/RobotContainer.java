@@ -388,6 +388,7 @@ public class RobotContainer { // implements RobotConstants{
                         yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))));
 
         driver.povDown().whileTrue(drivetrain.applyRequest(() -> brake));
+                // .and(fourBar.onTarget).and(shooter.getSpeed[1] > 2000).whileTrue(new WaitCommand(0.5).andThen(new IntakeCommand(intake, () -> 1.0, IntakeMode.FORCEINTAKE)));
 
         // long drivingshot
         driver.povUp()

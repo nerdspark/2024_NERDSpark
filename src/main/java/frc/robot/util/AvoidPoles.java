@@ -29,12 +29,12 @@ public class AvoidPoles {
             // if (poseToPole.getAngle().minus(robotSpeeds.get().getAngle()).getRotations() < 0) {
             //     correctionSpeed *= -1;
             // }
-            if (poseToPole.getNorm() < 1.5) {
+            if (poseToPole.getNorm() < AvoidPolesConstants.distanceThreshold) {
                 correction = correction.plus(new Translation2d(correctionSpeed, normalDirection));
                 SmartDashboard.putString("poseToPole", String.format("(%.3f, %.3f)", poseToPole.getX(), poseToPole.getY()));
             }
         }
-        if (robotSpeeds.get().getNorm() > 4.0 && visionUpdated.get() && Timer.getMatchTime() > 5) {
+        if (robotSpeeds.get().getNorm() > AvoidPolesConstants.robotSpeedThreshold && visionUpdated.get() && Timer.getMatchTime() > AvoidPolesConstants.timeThreshold) {
             correction = correction.times(joystickSpeeds.get().getNorm()).times(DriverStation.getAlliance().get().equals(Alliance.Red) ? AvoidPolesConstants.correctionGain : -AvoidPolesConstants.correctionGain);
         } else {
             correction = new Translation2d();

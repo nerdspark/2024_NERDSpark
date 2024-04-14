@@ -506,10 +506,13 @@ public final class Constants {
     }
 
     public static class AvoidPolesConstants {
-        public static double centerY = FieldConstants.fieldWidth/2.0;
-        public static double centerPoleX = Units.inchesToMeters(121.0 + 12.0);
-        public static double centerToSideY = Units.inchesToMeters(50.76);
-        public static double centerToSideX = Units.inchesToMeters(87.95);
+        public static final double centerY = FieldConstants.fieldWidth/2.0;
+        public static final double centerPoleX = Units.inchesToMeters(121.0 + 12.0);
+        public static final double centerToSideY = Units.inchesToMeters(50.76);
+        public static final double centerToSideX = Units.inchesToMeters(87.95);
+        public static final double robotSpeedThreshold = 4.0; // m/s
+        public static final double distanceThreshold = 1.5; // m
+        public static final double timeThreshold = 5.0; // sec to end of match
         public static final Translation2d [] Poles = {
             new Translation2d(centerPoleX, centerY), 
             new Translation2d(centerPoleX + centerToSideX, centerY + centerToSideY), 
