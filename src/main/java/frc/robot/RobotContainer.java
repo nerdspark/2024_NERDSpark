@@ -444,8 +444,8 @@ public class RobotContainer { // implements RobotConstants{
                                                                                 : DriveToShotConstants
                                                                                         .longshotAngleBlue)),
                                                 () -> new Rotation2d()
-                                                        .fromDegrees(gyro.getAngle()
-                                                                - gyroOffset
+                                                        .fromDegrees(-(gyro.getAngle()
+                                                                - gyroOffset)
                                                                 + (DriverStation.getAlliance()
                                                                                 .get()
                                                                                 .equals(Alliance.Red)
@@ -486,8 +486,8 @@ public class RobotContainer { // implements RobotConstants{
                                                                                 : DriveToShotConstants
                                                                                         .sideshotAngleBlue)),
                                                 () -> new Rotation2d()
-                                                        .fromDegrees(gyro.getAngle()
-                                                                - gyroOffset
+                                                        .fromDegrees(-(gyro.getAngle()
+                                                                - gyroOffset)
                                                                 + (DriverStation.getAlliance()
                                                                                 .get()
                                                                                 .equals(Alliance.Red)
