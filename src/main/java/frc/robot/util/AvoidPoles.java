@@ -10,6 +10,7 @@ import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AvoidPolesConstants;
 
 /** Add your docs here. */
@@ -17,18 +18,22 @@ public class AvoidPoles {
     public AvoidPoles() {}
     public static Translation2d adjustJoystick(Supplier<Pose2d> poseSupplier, Supplier<Translation2d> robotSpeeds, Supplier<Translation2d> joystickSpeeds) {
         Translation2d pose = poseSupplier.get().getTranslation().plus(robotSpeeds.get().times(AvoidPolesConstants.lookAhead));
-        double speed = robotSpeeds.get().getNorm();
+        // double speed = robotSpeeds.get().getNorm();
         Translation2d correction = new Translation2d();
         for (int i = 0; i < AvoidPolesConstants.Poles.length; i++) {
             Translation2d poseToPole = AvoidPolesConstants.Poles[i].minus(pose);
             double correctionSpeed = Math.pow(poseToPole.getNorm(), AvoidPolesConstants.distancePower);
-            Rotation2d normalDirection = poseToPole/*robotSpeeds.get()*/.getAngle().plus(new Rotation2d(Math.PI/2));
-            if (poseToPole.getAngle().minus(robotSpeeds.get().getAngle()).getRotations() > 0) {
-                correctionSpeed *= -1;
+            Rotation2d normalDirection = poseToPole/*robotSpeeds.get()*/.getAngle();//.plus(new Rotation2d(Math.PI/2.0));
+            // if (poseToPole.getAngle().minus(robotSpeeds.get().getAngle()).getRotations() < 0) {
+            //     correctionSpeed *= -1;
+            // }
+            if (poseToPole.getNorm() < 1.5) {
+                correction = correction.plus(new Translation2d(correctionSpeed, normalDirection));
+                SmartDashboard.putString("poseToPole", String.format("(%.3f, %.3f)", poseToPole.getX(), poseToPole.getY()));
             }
-            correction = correction.plus(new Translation2d(correctionSpeed, normalDirection));
         }
-        correction.times(speed).times(AvoidPolesConstants.correctionGain);
+        correction = correction.times(joystickSpeeds.get().getNorm()).times(AvoidPolesConstants.correctionGain);
+        SmartDashboard.putString("correction", String.format("(%.3f, %.3f)", correction.getX(), correction.getY()));
         Translation2d output = joystickSpeeds.get().plus(correction);
         return output;
     }

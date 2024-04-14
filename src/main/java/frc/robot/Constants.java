@@ -517,7 +517,7 @@ public final class Constants {
             new Translation2d(FieldConstants.fieldLength - centerPoleX, centerY), 
             new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY + centerToSideY), 
             new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY - centerToSideY)};
-        public static final double lookAhead = 0;//0.3;// sec
+        public static final double lookAhead = 0.8;//0.3;// sec
         public static final double distancePower = -2.0;
         public static final double correctionGain = 0.3; 
     }
