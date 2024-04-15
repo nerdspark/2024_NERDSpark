@@ -276,6 +276,7 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("fourBarToWSR2", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing2));
         NamedCommands.registerCommand("fourBarToWSR3", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing3));
         NamedCommands.registerCommand("fourBarToWSR4", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRing4));
+        
         NamedCommands.registerCommand("gripperOut", new GripperOutCommand(arm, 1).withTimeout(1));
 
         // NamedCommands.registerCommand("fourBarToRRPShoot", new FourBarCommand(fourBar, () ->
