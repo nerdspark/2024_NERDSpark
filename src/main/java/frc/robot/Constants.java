@@ -40,7 +40,7 @@ public final class Constants {
         // public static final double servoOutTolerance = 50.0;
         public static final double winchDist = 48 * 12;
 
-        public static final double rumbleWait = 0.2;
+        public static final double rumbleWait = 0.3;
 
         public static final int servoPort = 9;
         public static final int winchPort = 6;
@@ -266,13 +266,21 @@ public final class Constants {
 
         public static final class AmpSetpoints {
             // AMP DROPOFF
-            public static final Translation2d amp = new Translation2d(1.5, 26.5); // dropoff - Y
-            public static final double ampMultiplierX = 8.5;
+            public static final Translation2d amp = new Translation2d(2.2, 25.5); // dropoff - Y
+            public static final double ampMultiplierX = 9.5;
             public static final double ampMultiplierY = 5;
-            public static final double armAutoAmpTargetPoseY=7.7;//meters
-            public static final double armAutoAmpTargetPoseX=1.0;//meters TODO tune
-            public static final double armAutoAmpToleranceX = Units.inchesToMeters(3);
-            public static final double armAutoAmpToleranceY = Units.inchesToMeters(6);
+            public static final double armAutoAmpTargetPoseY = 7.75; // meters in
+            public static final double armAutoAmpTargetPoseX = 1.78; // meters sideways
+            public static final double armAutoAmpToleranceY = Units.inchesToMeters(6.0); // in
+            public static final double armAutoAmpToleranceX = Units.inchesToMeters(4.0); // sideways
+            public static final double armAutoAmpMaxSpeed =
+                    8.0; // max meters per second to use for amp moving calculation
+            public static final double armAutoAmpMovingMultiplier =
+                    0.03; // theoretical time (sec) for note to go from arm to amp (for shooting)
+            public static final double armAutoAmpArmPositioningMovingMultiplier =
+                    0.19; // theoretical lag in arm positioning controls (for arm positioning)
+            public static final double armAutoAmpShootDuration = 0.5; // sec to shoot note for
+            public static final double armAutoAmpArmUpTolerance = 0.4; // meters within amp to raise arm
         }
 
         public static final class TrapSetpoints {
@@ -509,7 +517,7 @@ public final class Constants {
         public static final double stillShotSpeed = 0.3;
 
         public static final double shooterTolerance = 100;
-        public static final double gyroAngleAimTolerance = 2; //deg
+        public static final double gyroAngleAimTolerance = 2; // deg
 
         static {
             // Key: Distance
@@ -532,9 +540,10 @@ public final class Constants {
         }
 
         public static InterpolatingDoubleTreeMap spinMap = new InterpolatingDoubleTreeMap();
+
         static {
-            //key: rpm
-            //value: angle curve deg
+            // key: rpm
+            // value: angle curve deg
             spinMap.put(0.0, 17.0);
             spinMap.put(1000.0, 17.0);
             spinMap.put(2000.0, 17.0);
