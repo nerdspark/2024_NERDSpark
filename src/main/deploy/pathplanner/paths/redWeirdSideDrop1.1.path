@@ -177,6 +177,23 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 1.4,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "RfourBarToBWSDR2"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {

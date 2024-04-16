@@ -150,6 +150,23 @@
           "commands": []
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.2,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "redRECenterNote5"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {

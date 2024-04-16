@@ -70,6 +70,11 @@
       "waypointRelativePos": 1.4,
       "rotationDegrees": 167.0,
       "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2.8499999999999996,
+      "rotationDegrees": -165.0,
+      "rotateFast": false
     }
   ],
   "constraintZones": [],
@@ -124,7 +129,7 @@
             {
               "type": "named",
               "data": {
-                "name": "redAmpSide3"
+                "name": "redAmpSide2"
               }
             }
           ]
@@ -164,11 +169,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.15000000000000002,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "redAmpSide2"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
