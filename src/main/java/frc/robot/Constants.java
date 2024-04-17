@@ -533,7 +533,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = Units.feetToMeters(-0.5); // m
+        public static final double CONSTANT_DISTANCE_ADD = Units.feetToMeters(-0.0); // m
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
@@ -548,16 +548,16 @@ public final class Constants {
             // Value: Shooter RPM
             shooterMap.put(15.1, 5850.0);
             shooterMap.put(9.0, 5800.0);
-            shooterMap.put(8.0, 5750.0);
-            shooterMap.put(7.8, 5700.0);
-            shooterMap.put(7.5, 5650.0);
-            shooterMap.put(7.0, 5550.0);
-            shooterMap.put(6.75, 5500.0);
-            shooterMap.put(6.44, 5500.0);
-            shooterMap.put(5.9436, 5450.0);
-            shooterMap.put(5.334, 5100.0);
-            shooterMap.put(4.7752, 5000.0);
-            shooterMap.put(4.1402, 4900.0);
+            // shooterMap.put(8.0, 5750.0);
+            // shooterMap.put(7.8, 5700.0);
+            // shooterMap.put(7.5, 5650.0);
+            // shooterMap.put(7.0, 5550.0);
+            shooterMap.put(6.75, 5800.0);
+            shooterMap.put(6.44, 5800.0);
+            shooterMap.put(5.9436, 5600.0);
+            shooterMap.put(5.334, 5400.0);
+            shooterMap.put(4.7752, 5200.0);
+            shooterMap.put(4.1402, 5000.0);
             shooterMap.put(3.429, 4700.0);
             shooterMap.put(2.7178, 4400.0);
             shooterMap.put(0.762, 4200.0);
@@ -575,10 +575,10 @@ public final class Constants {
             spinMap.put(3500.0, 12.0);
             spinMap.put(4000.0, 11.0);
             spinMap.put(4250.0, 10.0);
-            spinMap.put(4500.0, 8.0);
-            spinMap.put(4750.0, 3.0);
-            spinMap.put(5000.0, 1.0);
-            spinMap.put(6000.0, 1.0);
+            spinMap.put(4500.0, 7.0);
+            spinMap.put(4750.0, 5.0);
+            spinMap.put(5000.0, 4.0);
+            spinMap.put(6000.0, 3.0);
         }
     }
 
