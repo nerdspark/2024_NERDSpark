@@ -270,7 +270,7 @@ public final class Constants {
             public static final Translation2d amp = new Translation2d(2.2, 25.5); // dropoff - Y
             public static final double ampMultiplierX = 9.5;
             public static final double ampMultiplierY = 5;
-            public static final double armAutoAmpTargetPoseY = 7.75; // meters in
+            public static final double armAutoAmpTargetPoseY = 7.79; // meters in
             public static final double armAutoAmpTargetPoseX = 1.78; // meters sideways
             public static final double armAutoAmpToleranceY = Units.inchesToMeters(6.0); // in
             public static final double armAutoAmpToleranceX = Units.inchesToMeters(4.0); // sideways
@@ -533,7 +533,7 @@ public final class Constants {
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = -Units.feetToMeters(0.0); // m
+        public static final double CONSTANT_DISTANCE_ADD = Units.feetToMeters(-0.5); // m
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
@@ -568,14 +568,14 @@ public final class Constants {
         static {
             // key: rpm
             // value: angle curve deg
-            spinMap.put(0.0, 17.0);
-            spinMap.put(1000.0, 17.0);
-            spinMap.put(2000.0, 17.0);
-            spinMap.put(3000.0, 17.0);
-            spinMap.put(3500.0, 17.0);
-            spinMap.put(4000.0, 16.0);
-            spinMap.put(4250.0, 12.0);
-            spinMap.put(4500.0, 9.0);
+            spinMap.put(0.0, 13.0);
+            spinMap.put(1000.0, 13.0);
+            spinMap.put(2000.0, 13.0);
+            spinMap.put(3000.0, 13.0);
+            spinMap.put(3500.0, 12.0);
+            spinMap.put(4000.0, 11.0);
+            spinMap.put(4250.0, 10.0);
+            spinMap.put(4500.0, 8.0);
             spinMap.put(4750.0, 3.0);
             spinMap.put(5000.0, 1.0);
             spinMap.put(6000.0, 1.0);
