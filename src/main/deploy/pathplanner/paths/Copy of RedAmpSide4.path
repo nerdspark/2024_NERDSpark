@@ -36,7 +36,7 @@
     },
     {
       "waypointRelativePos": 0.75,
-      "rotationDegrees": 167.0,
+      "rotationDegrees": 164.0,
       "rotateFast": false
     }
   ],
@@ -56,7 +56,7 @@
   "eventMarkers": [
     {
       "name": "forcedIntake",
-      "waypointRelativePos": 0.75,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -64,47 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 1,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "softIntake",
-      "waypointRelativePos": 1,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "onlySoftIntake"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToShooter"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -144,17 +104,34 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "redAmpSide2"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.6,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 167.0,
+    "rotation": 164.0,
     "rotateFast": false
   },
   "reversed": false,

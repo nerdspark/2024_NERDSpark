@@ -56,7 +56,7 @@
     },
     {
       "name": "forceIntake",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {

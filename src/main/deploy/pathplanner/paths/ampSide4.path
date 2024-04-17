@@ -53,12 +53,12 @@
   ],
   "constraintZones": [
     {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.95,
-      "maxWaypointRelativePos": 2.0,
+      "name": "slowToShoot",
+      "minWaypointRelativePos": 0.35,
+      "maxWaypointRelativePos": 0.75,
       "constraints": {
         "maxVelocity": 4.86,
-        "maxAcceleration": 3.5,
+        "maxAcceleration": 3.3,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0
       }
@@ -155,11 +155,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide4"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

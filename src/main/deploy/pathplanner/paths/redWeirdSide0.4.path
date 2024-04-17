@@ -80,24 +80,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "forceIntakeZero",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntakeZero"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -172,6 +155,23 @@
               "type": "named",
               "data": {
                 "name": "Vision OFF"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "RfourBarToWSR3"
               }
             }
           ]

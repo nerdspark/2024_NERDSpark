@@ -20,12 +20,12 @@
         "y": 6.6
       },
       "prevControl": {
-        "x": 5.779771722562757,
-        "y": 6.884375020648698
+        "x": 5.740569181104751,
+        "y": 6.697861681922395
       },
       "nextControl": {
-        "x": 5.6880849485039136,
-        "y": 6.44815824207384
+        "x": 5.699430818895249,
+        "y": 6.502138318077605
       },
       "isLocked": false,
       "linkedName": null
@@ -153,11 +153,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide2"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.6,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

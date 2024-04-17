@@ -51,7 +51,7 @@
   "eventMarkers": [
     {
       "name": "forcedIntake",
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -60,46 +60,6 @@
               "type": "named",
               "data": {
                 "name": "forcedIntakeShoot"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 1,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "softIntake",
-      "waypointRelativePos": 1,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "onlySoftIntake"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToShooter"
               }
             }
           ]
@@ -122,11 +82,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide2"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

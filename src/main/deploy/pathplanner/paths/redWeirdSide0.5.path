@@ -53,7 +53,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -71,6 +71,23 @@
               "type": "named",
               "data": {
                 "name": "Vision ON"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
               }
             }
           ]
