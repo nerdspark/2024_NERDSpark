@@ -50,12 +50,12 @@ public class ShooterIOSparkMax implements ShooterIO {
         shooterController1.setI(2E-7);
         shooterController1.setD(0.0125);
         shooterController1.setIZone(000);
-        shooterController1.setFF(0.000153);
+        shooterController1.setFF(0.000143);
         shooterController2.setP(0.00038);
         shooterController2.setI(2E-7);
         shooterController2.setD(0.0125);
         shooterController2.setIZone(000);
-        shooterController2.setFF(0.000153);
+        shooterController2.setFF(0.000143);
     }
 
     @Override
