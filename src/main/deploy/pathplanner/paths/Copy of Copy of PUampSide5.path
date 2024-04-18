@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.311,
-        "y": 5.69
+        "x": 12.87,
+        "y": 7.66
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.137574939063999,
-        "y": 5.969041302244454
+        "x": 12.87,
+        "y": 6.716755286763565
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 10.821,
+        "x": 12.87,
         "y": 6.6
       },
       "prevControl": {
-        "x": 9.827332090667484,
-        "y": 6.351480911054307
+        "x": 12.87,
+        "y": 7.350911713308416
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,15 +30,15 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8,
-      "rotationDegrees": 167.0,
-      "rotateFast": false
+      "waypointRelativePos": 0.3,
+      "rotationDegrees": 161.0,
+      "rotateFast": true
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "forcedIntakeShoot",
+      "name": "shoot",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
@@ -55,50 +55,16 @@
       }
     },
     {
-      "name": "fbToShoot",
+      "name": "back up four bar to amp side 2",
       "waypointRelativePos": 0.2,
       "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "RedAmpSide2"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "vision on",
-      "waypointRelativePos": 0.0,
-      "command": {
         "type": "parallel",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
-                "name": "Vision ON"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "vision off",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Vision OFF"
+                "name": "fourBarToHome"
               }
             }
           ]
@@ -108,19 +74,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 167.0,
+    "rotation": 161.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "RedAmpSide",
   "previewStartingState": {
-    "rotation": -165.0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

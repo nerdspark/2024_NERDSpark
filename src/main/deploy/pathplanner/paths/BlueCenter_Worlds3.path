@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.311,
-        "y": 5.69
+        "x": 2.51,
+        "y": 5.74
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.137574939063999,
-        "y": 5.969041302244454
+        "x": 1.3863435819357188,
+        "y": 6.296846681224329
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 10.821,
-        "y": 6.6
+        "x": 2.81,
+        "y": 4.828551754543641
       },
       "prevControl": {
-        "x": 9.827332090667484,
-        "y": 6.351480911054307
+        "x": 1.2224408924457817,
+        "y": 4.630502671409967
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,18 +30,18 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8,
-      "rotationDegrees": 167.0,
+      "waypointRelativePos": 0.35,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "forcedIntakeShoot",
-      "waypointRelativePos": 0.95,
+      "name": "forceintake",
+      "waypointRelativePos": 0.35,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
@@ -55,25 +55,8 @@
       }
     },
     {
-      "name": "fbToShoot",
-      "waypointRelativePos": 0.2,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "RedAmpSide2"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "vision on",
-      "waypointRelativePos": 0.0,
+      "name": "softintake",
+      "waypointRelativePos": 0.55,
       "command": {
         "type": "parallel",
         "data": {
@@ -81,24 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Vision ON"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "vision off",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Vision OFF"
+                "name": "onlySoftIntake"
               }
             }
           ]
@@ -114,13 +80,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 167.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "RedAmpSide",
+  "folder": "BlueCenter_Worlds",
   "previewStartingState": {
-    "rotation": -165.0,
+    "rotation": -25.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

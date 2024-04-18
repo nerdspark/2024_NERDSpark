@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 15.09,
-      "y": 7.38
+      "x": 1.32,
+      "y": 5.42
     },
-    "rotation": 180.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -28,37 +28,31 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "RedAmpSide1"
+                        "pathName": "BlueCenter_Worlds1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "RedAmpSide2"
+                        "pathName": "BlueCenter_Worlds3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of RedAmpSide3"
+                        "pathName": "BlueCenter_Worlds4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of RedAmpSide4"
+                        "pathName": "BlueCenter_Worlds5"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of Copy of redPUampSide4"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Copy of Copy of PUampSide5"
+                        "pathName": "BlueCenter_Worlds6"
                       }
                     }
                   ]
