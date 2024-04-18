@@ -234,8 +234,10 @@ public class RobotContainer { // implements RobotConstants{
                 () -> copilot.leftTrigger().getAsBoolean(),
                 () -> intake.getBeamBreak(),
                 () -> (fourBar.onTarget()
-                        && (Math.abs((-(gyro.getAngle() - gyroOffset)) - targetAngle)
-                                < ShooterConstants.gyroAngleAimTolerance)),
+                        && (Math.abs((-(gyro.getAngle() - gyroOffset)) - targetAngle) < ShooterConstants.gyroAngleAimTolerance))
+
+                        && (Math.abs(((shooter.getSpeed()[0] + shooter.getSpeed()[1])/2.0) - AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose, () -> new Translation2d())) < 50.0),
+
                 () -> (drivetrain
                                 .getCurrentPose()
                                 .getTranslation()
@@ -597,6 +599,7 @@ public class RobotContainer { // implements RobotConstants{
                 .and(() -> fourBar.onTarget())
                 .and(() -> Math.abs((-(gyro.getAngle() - gyroOffset)) - targetAngle)
                         < ShooterConstants.gyroAngleAimTolerance)
+                .and(() -> Math.abs(((shooter.getSpeed()[0] + shooter.getSpeed()[1])/2.0) - AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose, () -> new Translation2d())) < 50.0)  
                 .whileTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1.0)))
                 .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.0)));
 
