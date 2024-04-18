@@ -3,53 +3,59 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.09,
-        "y": 7.375872720369022
+        "x": 10.821,
+        "y": 6.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.437095232571966,
-        "y": 7.580751082228836
+        "x": 10.400991503882263,
+        "y": 6.631481338932949
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.711,
-        "y": 7.6900195418914015
+        "x": 10.339527995323538,
+        "y": 7.273433539435204
       },
       "prevControl": {
-        "x": 14.280021821810777,
-        "y": 7.683190263160047
+        "x": 10.349457952930207,
+        "y": 6.975534811235114
       },
       "nextControl": {
-        "x": 12.702507944150435,
-        "y": 7.702123248785868
+        "x": 10.319040159137296,
+        "y": 7.888068625022468
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.22,
-        "y": 7.34
+        "x": 12.873190403688819,
+        "y": 7.662702426973805
       },
       "prevControl": {
-        "x": 9.465380318043874,
-        "y": 7.708312329176269
+        "x": 11.64833001272939,
+        "y": 7.699072809091597
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.05,
+      "rotationDegrees": 0.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 1.5,
+      "name": "fbtointake",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -65,8 +71,8 @@
       }
     },
     {
-      "name": "softIntake",
-      "waypointRelativePos": 1.75,
+      "name": "softintake",
+      "waypointRelativePos": 1.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -86,40 +92,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "vision off",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Vision OFF"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "spit",
-      "waypointRelativePos": 1.25,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "gripperOut"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
@@ -130,13 +102,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "RedAmpSide",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": 167.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
