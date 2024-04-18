@@ -16,6 +16,7 @@ import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
+import frc.robot.util.AutoAim;
 import frc.robot.util.FieldConstants;
 
 public final class Constants {
@@ -70,10 +71,10 @@ public final class Constants {
 
         public static final double longshotX = 6.8; // long way
         public static final double longshotY = 6.4; // short way
-        public static final double longshotRPM = 5400.0;
-        public static final double longshotAngleRed = 13; // deg
+        public static final double longshotRPM = 5800.0;
+        public static final double longshotAngleRed = 13;//AutoAim.calculateAngleToSpeaker(() -> new Pose2d(FieldConstants.fieldLength - longshotX, longshotY, new Rotation2d()), () -> new Translation2d()).plus(AutoAim.calculateShooterSpin(() -> longshotRPM)).getDegrees(); // deg
         public static final double longshotAngleSpin = 3;
-        public static final double longshotAngleBlue = 180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
+        public static final double longshotAngleBlue = /*AutoAim.calculateAngleToSpeaker(() -> new Pose2d(longshotX, longshotY, new Rotation2d()), () -> new Translation2d()).plus(AutoAim.calculateShooterSpin(() -> longshotRPM)).getDegrees();*/180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
 
         public static final double sideshotX = 5.4; // long way
         public static final double sideshotY = 0.8; // short way
@@ -270,7 +271,7 @@ public final class Constants {
             public static final Translation2d amp = new Translation2d(2.2, 25.5); // dropoff - Y
             public static final double ampMultiplierX = 9.5;
             public static final double ampMultiplierY = 5;
-            public static final double armAutoAmpTargetPoseY = 7.79; // meters in
+            public static final double armAutoAmpTargetPoseY = 7.86; // meters in
             public static final double armAutoAmpTargetPoseX = 1.78; // meters sideways
             public static final double armAutoAmpToleranceY = Units.inchesToMeters(6.0); // in
             public static final double armAutoAmpToleranceX = Units.inchesToMeters(4.0); // sideways
@@ -546,7 +547,7 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter RPM
-            shooterMap.put(15.1, 5850.0);
+            shooterMap.put(15.1, 5800.0);
             shooterMap.put(9.0, 5800.0);
             // shooterMap.put(8.0, 5750.0);
             // shooterMap.put(7.8, 5700.0);
@@ -577,8 +578,8 @@ public final class Constants {
             spinMap.put(4250.0, 10.0);
             spinMap.put(4500.0, 7.0);
             spinMap.put(4750.0, 5.0);
-            spinMap.put(5000.0, 4.0);
-            spinMap.put(6000.0, 3.0);
+            spinMap.put(5000.0, 4.2);
+            spinMap.put(6000.0, 3.8);
         }
     }
 
