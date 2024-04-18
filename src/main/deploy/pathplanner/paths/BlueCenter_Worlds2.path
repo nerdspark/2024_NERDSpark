@@ -1,0 +1,74 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.452689731143294,
+        "y": 5.026600837677315
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.906347432843503,
+        "y": 6.1124561555481485
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.96,
+        "y": 6.3036759599530745
+      },
+      "prevControl": {
+        "x": 3.515782878802676,
+        "y": 6.116182940597954
+      },
+      "nextControl": {
+        "x": 2.3931698655139675,
+        "y": 6.494895764358001
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.51,
+        "y": 5.736845825467043
+      },
+      "prevControl": {
+        "x": 0.6251190708657218,
+        "y": 6.419773698341781
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.05,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.86,
+    "maxAcceleration": 3.3,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -25.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "BlueCenter_Worlds",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
