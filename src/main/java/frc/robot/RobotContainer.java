@@ -769,7 +769,7 @@ public class RobotContainer { // implements RobotConstants{
         driver.back()
                 // .and(driver.b())
                 .and(() -> Math.abs(fourBar.getFourBarAngle() - FourBarConstants.fourBarHome) > 0.1)
-                .whileTrue(new WaitCommand(ClimbConstants.rumbleWait).andThen(new GrapplerCommand(climb)));
+                .whileTrue(new GrapplerCommand(climb));
         driver.a().whileTrue(new WinchCommand(climb).onlyIf(() -> climb.getServoOut()));
         driver.y().whileTrue(new UnwindCommand(climb).onlyIf(() -> climb.getServoOut()));
 

@@ -26,7 +26,7 @@ public class GrapplerCommand extends Command {
     @Override
     public void execute() {
         // if (servoRelease) {
-        Climb.setServoPosition(ClimbConstants.servoOutPos);
+        Climb.setServoPosition(ClimbConstants.servoInPos);
         // } else {
         // Climb.setServoPosition(ClimbConstants.servoInPos);
         // }
@@ -35,7 +35,7 @@ public class GrapplerCommand extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Climb.setServoPosition(ClimbConstants.servoInPos);
+        Climb.setServoPosition(ClimbConstants.servoOutPos);
     }
 
     // Returns true when the command should end.
