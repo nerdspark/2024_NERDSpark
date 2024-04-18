@@ -332,7 +332,7 @@ public final class Constants {
         public static final double red_weirdSideRing4 = 2.075;
 
         public static final double blueAmpSide1 = 2.98; // 2.7
-        public static final double blueAmpSide2 = 1.87; // 2.45
+        public static final double blueAmpSide2 = 1.85; // 2.45
         public static final double blueAmpSide3 = 1.93; // 2.45
         public static final double blueAmpSide4 = 2.01; // 1.9
 

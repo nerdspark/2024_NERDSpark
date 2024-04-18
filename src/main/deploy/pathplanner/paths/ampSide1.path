@@ -106,7 +106,7 @@
     },
     {
       "name": "spit",
-      "waypointRelativePos": 1.65,
+      "waypointRelativePos": 1.15,
       "command": {
         "type": "sequential",
         "data": {

@@ -52,7 +52,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of BlueAmpSide5"
+                        "pathName": "PUampSide4"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "puampside4.5"
                       }
                     }
                   ]
