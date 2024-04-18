@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.23,
-        "y": 5.69
+        "y": 5.89
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.301962041711038,
-        "y": 6.108553893936856
+        "y": 6.308553893936855
       },
       "isLocked": false,
       "linkedName": null
@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 8.21,
-        "y": 4.1
+        "y": 4.3
       },
       "prevControl": {
         "x": 6.983288455888077,
-        "y": 6.10334864375192
+        "y": 6.30334864375192
       },
       "nextControl": null,
       "isLocked": false,
@@ -174,7 +174,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.6,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

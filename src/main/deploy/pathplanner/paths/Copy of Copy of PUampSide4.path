@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.76,
-        "y": 7.62
+        "x": 5.72,
+        "y": 6.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.6043474509751885,
-        "y": 7.256322531172379
+        "x": 6.177002895316332,
+        "y": 6.6188914144210065
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.72,
-        "y": 6.6
+        "x": 6.422580138607571,
+        "y": 7.215293290985443
       },
       "prevControl": {
-        "x": 4.7408440660111735,
-        "y": 7.088074223654385
+        "x": 6.370522056973237,
+        "y": 6.78147594403266
+      },
+      "nextControl": {
+        "x": 6.49274506526221,
+        "y": 7.80000101310744
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.76,
+        "y": 7.62
+      },
+      "prevControl": {
+        "x": 4.958056357070601,
+        "y": 7.635385312058816
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,37 +46,15 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.2,
-      "rotationDegrees": 90.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 0.55,
-      "rotationDegrees": 6.0,
+      "waypointRelativePos": 1.05,
+      "rotationDegrees": 180.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarShoot",
-      "waypointRelativePos": 0.15,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "blueAmpSide2"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "shoot",
+      "name": "fbtointake",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
@@ -69,7 +63,30 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntakeShoot"
+                "name": "fourBarToIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "softintake",
+      "waypointRelativePos": 1.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "onlySoftIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
               }
             }
           ]
@@ -79,19 +96,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 6.0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "BlueAmpSide",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": 6.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
