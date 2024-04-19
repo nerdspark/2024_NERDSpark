@@ -336,7 +336,7 @@ public final class Constants {
         public static final double blueAmpSide3 = 1.93; // 2.45
         public static final double blueAmpSide4 = 2.01; // 1.9
 
-        public static final double redAmpSide2 = 1.83;
+        public static final double redAmpSide2 = 1.845;
         public static final double redAmpSide3 = 1.95;
         public static final double redAmpSide4 = 1.97;
 
