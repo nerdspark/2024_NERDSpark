@@ -8,19 +8,19 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.35368944779132,
-        "y": 2.233104577751223
+        "x": 10.264405929307317,
+        "y": 1.6324493094898658
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.12,
+        "x": 8.52,
         "y": 2.63
       },
       "prevControl": {
-        "x": 8.77246661527773,
+        "x": 9.172466615277731,
         "y": 2.445001517254646
       },
       "nextControl": null,
@@ -109,7 +109,7 @@
   "reversed": false,
   "folder": "RedWeirdSideDrop",
   "previewStartingState": {
-    "rotation": -148.0,
+    "rotation": -149.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
