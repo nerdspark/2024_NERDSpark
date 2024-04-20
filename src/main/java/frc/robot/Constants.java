@@ -529,7 +529,7 @@ public final class Constants {
 
     public static class ShooterConstants {
         public static final double stopShootRPMThreshold = 2000.5;
-        public static final double stopShootWait = 0.5;
+        public static final double stopShootWait = 0.2;
 
         public static Measure<Distance> MAXIMUM_READYSHOOT_DISTANCE = Meters.of(Units.feetToMeters(15));
 
