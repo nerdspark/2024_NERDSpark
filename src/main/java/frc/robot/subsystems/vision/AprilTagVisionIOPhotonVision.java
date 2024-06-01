@@ -179,18 +179,18 @@ public class AprilTagVisionIOPhotonVision implements AprilTagVisionIO {
 
             // if (distanceUsedForCalculatingStdDev < 8 && currentCameraTimeStamp > prevCameraTimeStamp) {
             // if(currentCameraTimeStamp > prevCameraTimeStamp) {
-                inputs.poseEstimates.add(new PoseEstimate(
-                        cameraPose.estimatedPose.transformBy(
-                                estomator.getRobotToCameraTransform().inverse()),
-                        cameraPose.timestampSeconds,
-                        distanceUsedForCalculatingStdDev,
-                        tagIDsFrontCamera,
-                        poseAmbiguity,
-                        poseStrategyUsed,
-                        distanceToSpeakerTag,
-                        angleToSpeakerTag)); //
-                prevCameraTimeStamp = currentCameraTimeStamp;
-            
+            inputs.poseEstimates.add(new PoseEstimate(
+                    cameraPose.estimatedPose.transformBy(
+                            estomator.getRobotToCameraTransform().inverse()),
+                    cameraPose.timestampSeconds,
+                    distanceUsedForCalculatingStdDev,
+                    tagIDsFrontCamera,
+                    poseAmbiguity,
+                    poseStrategyUsed,
+                    distanceToSpeakerTag,
+                    angleToSpeakerTag)); //
+            prevCameraTimeStamp = currentCameraTimeStamp;
+
             // }
 
             // inputs.poseEstimates = poseEstimates;

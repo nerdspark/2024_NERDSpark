@@ -22,6 +22,7 @@
   ],
   "autoFolders": [
     "Development",
+    "ChoreoAutos",
     "TestAutos"
   ],
   "defaultMaxVel": 4.86,
