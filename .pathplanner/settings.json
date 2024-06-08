@@ -7,11 +7,12 @@
     "Blue6NoteCenter",
     "BlueAmpSide",
     "BlueCenter",
+    "BlueCenter_Worlds",
     "BlueVisionTest6Note",
     "BlueWeirdSide",
     "BlueWeirdSideDrop",
     "Blue_DIFORDER_Amp",
-    "BlueCenter_Worlds",
+    "SmidgeRedWeird",
     "RedAmpSide",
     "RedCenter",
     "RedRE4noteCenter",
@@ -21,8 +22,9 @@
     "TestPaths"
   ],
   "autoFolders": [
-    "Development",
     "ChoreoAutos",
+    "Development",
+    "SmidgeAutos",
     "TestAutos"
   ],
   "defaultMaxVel": 4.86,
