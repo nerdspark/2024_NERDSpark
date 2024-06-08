@@ -145,7 +145,6 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.getModule(0).getDriveMotor().setInverted(false); // fl
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(true); // bL
-
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
             lights = new BlinkinLights(new BlinkinLightsIOSparkMax(BlinkinLightsConstants.lightChannelSmidge));
         } else {
