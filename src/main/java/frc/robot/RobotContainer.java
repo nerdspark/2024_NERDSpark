@@ -34,6 +34,7 @@ import frc.robot.Constants.ArmConstants.BlockSetpoints;
 import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.BlinkinLightsConstants;
 import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.DriveToShotConstants;
 import frc.robot.Constants.DrivetrainConstants;
@@ -146,6 +147,7 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.getModule(2).getDriveMotor().setInverted(true); // bL
 
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
+            lights = new BlinkinLights(new BlinkinLightsIOSparkMax(BlinkinLightsConstants.lightChannelSmidge));
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
@@ -155,7 +157,7 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
             climb = new Climb(new ClimbIOSparkMax());
             arm = new Arm(new ArmIOSparkMax());
-            lights = new BlinkinLights(new BlinkinLightsIOSparkMax());
+            lights = new BlinkinLights(new BlinkinLightsIOSparkMax(BlinkinLightsConstants.lightChannelSmudge));
             scheduleArmCommands();
         }
 
