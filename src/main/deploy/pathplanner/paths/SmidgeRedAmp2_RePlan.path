@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.11,
-        "y": 1.92
+        "x": 10.735626161590886,
+        "y": 6.535871436730487
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.18628330969592,
-        "y": 1.606801790116036
+        "x": 11.254651344975688,
+        "y": 6.494895764358002
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.22,
-        "y": 2.35
+        "x": 12.5,
+        "y": 6.4
       },
       "prevControl": {
-        "x": 7.567541091286217,
-        "y": 2.1649743393199716
+        "x": 10.756659278339445,
+        "y": 6.552522549808402
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,16 +30,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": 20.0,
+      "waypointRelativePos": 0.95,
+      "rotationDegrees": 165.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fourBarToIntake",
-      "waypointRelativePos": 0.3,
+      "name": "FourBarToShoot",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "sequential",
         "data": {
@@ -47,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToIntake"
+                "name": "smidgeRedAmpShoot"
               }
             }
           ]
@@ -55,8 +55,8 @@
       }
     },
     {
-      "name": "softIntake",
-      "waypointRelativePos": 0.45,
+      "name": "Shoot2",
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -64,13 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "onlySoftIntake"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "fourBarToWSR3"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -79,21 +73,21 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.86,
-    "maxAcceleration": 3.8,
+    "maxVelocity": 5.55,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 20.0,
+    "rotation": 165.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "BlueWeirdSide",
+  "folder": "SmidgeRedAmp",
   "previewStartingState": {
-    "rotation": -45.0,
-    "velocity": 0
+    "rotation": 180.0,
+    "velocity": 3.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

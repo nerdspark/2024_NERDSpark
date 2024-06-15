@@ -12,13 +12,16 @@
     "BlueWeirdSide",
     "BlueWeirdSideDrop",
     "Blue_DIFORDER_Amp",
-    "SmidgeRedWeird",
+    "SmidgeBlueCenter",
     "RedAmpSide",
     "RedCenter",
     "RedRE4noteCenter",
     "RedWeirdSide",
     "RedWeirdSideDrop",
     "Red_DIFORDER_Amp",
+    "SmidgeRedAmp",
+    "SmidgeRedCenter",
+    "SmidgeRedWeird",
     "TestPaths"
   ],
   "autoFolders": [
@@ -28,7 +31,7 @@
     "TestAutos"
   ],
   "defaultMaxVel": 4.86,
-  "defaultMaxAccel": 3.0,
+  "defaultMaxAccel": 3.8,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "maxModuleSpeed": 4.86

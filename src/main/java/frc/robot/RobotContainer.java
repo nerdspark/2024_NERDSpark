@@ -357,6 +357,10 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("redAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide3));
         NamedCommands.registerCommand("redAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide4));
 
+        NamedCommands.registerCommand("smidgeRedWeirdShoot", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRedSmidge));
+        NamedCommands.registerCommand("smidgeRedAmpShoot", new FourBarCommand(fourBar, () -> AutoConstants.ampSideRedSmidge));
+        NamedCommands.registerCommand("smidgeRedCenterShoot", new FourBarCommand(fourBar, () -> AutoConstants.centerRedSmidge));
+
         NamedCommands.registerCommand(
                 "Vision ON", new InstantCommand(() -> aprilTagVision.setEnableVisionUpdates(true)));
         NamedCommands.registerCommand(
