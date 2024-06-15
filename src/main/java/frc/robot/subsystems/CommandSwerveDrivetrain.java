@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
 
 import static edu.wpi.first.units.Units.Volts;
-
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
@@ -26,6 +25,7 @@ import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -244,6 +244,16 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     @Override
     public void periodic() {
+        // SignalLogger.writeDoubleArray("driveAppliedOutputs", new double[] {
+            SmartDashboard.putNumber("drive output 0", getModule(0).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+            SmartDashboard.putNumber("drive output 1", getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+            SmartDashboard.putNumber("drive output 2", getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+            SmartDashboard.putNumber("drive output 3", getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+            // getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
+            // getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
+            // getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
+
+        // });
 
         // if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
         //     targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();

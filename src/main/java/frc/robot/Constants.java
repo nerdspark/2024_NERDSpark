@@ -22,7 +22,7 @@ import frc.robot.util.FieldConstants;
 public final class Constants {
 
     public static final boolean PracticeBot =
-            false; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
+            true; // SMIDGE true; SMUDGE false TODO TODO TODO TODO TODO CHANGHACANHEHNCHANGE
 
     public final class FourBarGains {
         public static final double kP = 0.95; // 0.65; // 0.85
@@ -504,8 +504,9 @@ public final class Constants {
     }
 
     public static class BlinkinLightsConstants {
+        public static final int lightChannelSmudge = 0;
 
-        public static final int lightChannel = 0;
+        public static final int lightChannelSmidge = 9;
 
         public static final double doesNotHaveNotePattern = 0.61; // solid red
         public static final double hasNotePattern = 0.93; // Solid white
