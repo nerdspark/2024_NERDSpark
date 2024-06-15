@@ -14,9 +14,9 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.actions.startUp;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
-import frc.robot.util.AutoAim;
 import frc.robot.util.FieldConstants;
 
 public final class Constants {
@@ -72,9 +72,14 @@ public final class Constants {
         public static final double longshotX = 6.8; // long way
         public static final double longshotY = 6.4; // short way
         public static final double longshotRPM = 5800.0;
-        public static final double longshotAngleRed = 13;//AutoAim.calculateAngleToSpeaker(() -> new Pose2d(FieldConstants.fieldLength - longshotX, longshotY, new Rotation2d()), () -> new Translation2d()).plus(AutoAim.calculateShooterSpin(() -> longshotRPM)).getDegrees(); // deg
+        public static final double longshotAngleRed =
+                13; // AutoAim.calculateAngleToSpeaker(() -> new Pose2d(FieldConstants.fieldLength - longshotX,
+        // longshotY, new Rotation2d()), () -> new Translation2d()).plus(AutoAim.calculateShooterSpin(() ->
+        // longshotRPM)).getDegrees(); // deg
         public static final double longshotAngleSpin = 3;
-        public static final double longshotAngleBlue = /*AutoAim.calculateAngleToSpeaker(() -> new Pose2d(longshotX, longshotY, new Rotation2d()), () -> new Translation2d()).plus(AutoAim.calculateShooterSpin(() -> longshotRPM)).getDegrees();*/180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
+        public static final double
+                longshotAngleBlue = /*AutoAim.calculateAngleToSpeaker(() -> new Pose2d(longshotX, longshotY, new Rotation2d()), () -> new Translation2d()).plus(AutoAim.calculateShooterSpin(() -> longshotRPM)).getDegrees();*/
+                        180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
 
         public static final double sideshotX = 5.4; // long way
         public static final double sideshotY = 0.8; // short way
@@ -351,6 +356,10 @@ public final class Constants {
 
         public static final double redWeirdSideDropRing2 = 1.70;
 
+        public static final double weirdSideRedSmidge = 1.9;
+        public static final double ampSideRedSmidge = 1.9;
+        public static final double centerRedSmidge = 1.9;
+
         // public static final double blueStarWars1 = 1.95; // 3.5
         // public static final double blueStarWars2 = 1.87; // 2.75
         // public static final double blueStarWars3 = 1.87;
@@ -405,7 +414,7 @@ public final class Constants {
             AVERAGE_DISTANCE
         }
 
-        public static boolean USE_VISION = true;
+        public static boolean USE_VISION = false;
         public static boolean USE_FRONT_CAMERA = true;
         public static boolean USE_ADV_KIT_VISION = true;
         public static boolean MULTI_TAG_RESULT_ENABLED = true;
@@ -509,23 +518,24 @@ public final class Constants {
     }
 
     public static class AvoidPolesConstants {
-        public static final double centerY = FieldConstants.fieldWidth/2.0;
+        public static final double centerY = FieldConstants.fieldWidth / 2.0;
         public static final double centerPoleX = Units.inchesToMeters(121.0 + 12.0);
         public static final double centerToSideY = Units.inchesToMeters(50.76);
         public static final double centerToSideX = Units.inchesToMeters(87.95);
         public static final double robotSpeedThreshold = 4.0; // m/s
         public static final double distanceThreshold = 1.5; // m
         public static final double timeThreshold = 5.0; // sec to end of match
-        public static final Translation2d [] Poles = {
-            new Translation2d(centerPoleX, centerY), 
-            new Translation2d(centerPoleX + centerToSideX, centerY + centerToSideY), 
-            new Translation2d(centerPoleX + centerToSideX, centerY - centerToSideY), 
-            new Translation2d(FieldConstants.fieldLength - centerPoleX, centerY), 
-            new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY + centerToSideY), 
-            new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY - centerToSideY)};
-        public static final double lookAhead = 0.8;//0.3;// sec
+        public static final Translation2d[] Poles = {
+            new Translation2d(centerPoleX, centerY),
+            new Translation2d(centerPoleX + centerToSideX, centerY + centerToSideY),
+            new Translation2d(centerPoleX + centerToSideX, centerY - centerToSideY),
+            new Translation2d(FieldConstants.fieldLength - centerPoleX, centerY),
+            new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY + centerToSideY),
+            new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY - centerToSideY)
+        };
+        public static final double lookAhead = 0.8; // 0.3;// sec
         public static final double distancePower = -2.0;
-        public static final double correctionGain = 0.3; 
+        public static final double correctionGain = 0.3;
     }
 
     public static class ShooterConstants {
