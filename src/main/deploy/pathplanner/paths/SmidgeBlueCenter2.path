@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9234614306206286,
-        "y": 4.459770703191282
+        "x": 1.8785672579098507,
+        "y": 4.459769133404107
       },
       "isLocked": false,
       "linkedName": null
@@ -20,12 +20,12 @@
         "y": 4.17977027531264
       },
       "prevControl": {
-        "x": 2.5404144463069454,
-        "y": 4.190576193389481
+        "x": 2.3415849036027683,
+        "y": 4.190570210883242
       },
       "nextControl": {
-        "x": 2.3415855536930525,
-        "y": 4.168964357235798
+        "x": 2.5404150963972314,
+        "y": 4.168970339742038
       },
       "isLocked": false,
       "linkedName": null
@@ -36,12 +36,12 @@
         "y": 4.87
       },
       "prevControl": {
-        "x": 1.716144315705641,
-        "y": 4.405136473361303
+        "x": 1.7258682160493353,
+        "y": 4.405136604429398
       },
       "nextControl": {
-        "x": 1.725855684294359,
-        "y": 5.3348635266386975
+        "x": 1.716131783950665,
+        "y": 5.334863395570602
       },
       "isLocked": false,
       "linkedName": null
@@ -52,8 +52,8 @@
         "y": 5.61391880834959
       },
       "prevControl": {
-        "x": 2.9670981662673466,
-        "y": 5.559284578519611
+        "x": 2.17474838837663,
+        "y": 5.559286763852961
       },
       "nextControl": null,
       "isLocked": false,
@@ -63,7 +63,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.85,
-      "rotationDegrees": 10.0,
+      "rotationDegrees": -30.0,
       "rotateFast": false
     },
     {
@@ -140,7 +140,7 @@
   "reversed": false,
   "folder": "SmidgeBlueCenter",
   "previewStartingState": {
-    "rotation": 10.0,
+    "rotation": -10.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
