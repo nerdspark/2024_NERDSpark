@@ -57,7 +57,7 @@
     },
     {
       "waypointRelativePos": 1.85,
-      "rotationDegrees": 165.0,
+      "rotationDegrees": 160.0,
       "rotateFast": false
     }
   ],
@@ -105,7 +105,7 @@
     },
     {
       "name": "Shoot2",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 1.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -119,23 +119,40 @@
           ]
         }
       }
+    },
+    {
+      "name": "FourBarToShot",
+      "waypointRelativePos": 1.35,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "smidgeRedAmpShoot"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 5.55,
-    "maxAcceleration": 5.0,
+    "maxVelocity": 4.86,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 165.0,
+    "rotation": 160.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "SmidgeRedAmp",
   "previewStartingState": {
-    "rotation": 165.0,
+    "rotation": 160.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

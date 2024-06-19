@@ -357,7 +357,7 @@ public final class Constants {
         public static final double redWeirdSideDropRing2 = 1.70;
 
         public static final double weirdSideRedSmidge = 1.9;
-        public static final double ampSideRedSmidge = 1.9;
+        public static final double ampSideRedSmidge = 1.95;
         public static final double centerRedSmidge = 1.9;
 
         // public static final double blueStarWars1 = 1.95; // 3.5

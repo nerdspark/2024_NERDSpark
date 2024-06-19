@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 15.12,
-      "y": 2
+      "x": 15.09,
+      "y": 7.38
     },
     "rotation": 180.0
   },
@@ -16,16 +16,9 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "shootSpeed"
-                      }
-                    }
-                  ]
+                  "name": "shootSpeed"
                 }
               },
               {
@@ -35,25 +28,37 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedWeird1"
+                        "pathName": "Copy of Copy of RedAmpSide1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedWeird2"
+                        "pathName": "Copy of RedAmpSide2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedWeird3"
+                        "pathName": "Copy of Copy of RedAmpSide3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedWeird4a"
+                        "pathName": "Copy of Copy of RedAmpSide4"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Copy of Copy of Copy of redPUampSide4"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Copy of Copy of Copy of PUampSide5"
                       }
                     }
                   ]
