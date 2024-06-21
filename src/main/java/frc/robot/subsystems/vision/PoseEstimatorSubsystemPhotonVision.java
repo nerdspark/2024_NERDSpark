@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
-public class PoseEstimatorSubsystem extends SubsystemBase {
+public class PoseEstimatorSubsystemPhotonVision extends SubsystemBase {
 
     private final CommandSwerveDrivetrain driveTrain;
 
@@ -31,7 +31,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
-    public PoseEstimatorSubsystem(CommandSwerveDrivetrain driveTrain) {
+    public PoseEstimatorSubsystemPhotonVision(CommandSwerveDrivetrain driveTrain) {
 
         this.driveTrain = driveTrain;
         if (VisionConstants.USE_VISION == true) {

@@ -74,7 +74,8 @@ import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.vision.AprilTagVision;
 import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
-import frc.robot.subsystems.vision.PoseEstimatorSubsystem;
+import frc.robot.subsystems.vision.PoseEstimatorSubsystemLimeLight;
+import frc.robot.subsystems.vision.PoseEstimatorSubsystemPhotonVision;
 import frc.robot.util.AutoAim;
 import frc.robot.util.AvoidPoles;
 import frc.robot.util.JoystickMap;
@@ -114,7 +115,9 @@ public class RobotContainer { // implements RobotConstants{
     private final Pigeon2 gyro = new Pigeon2(RobotMap.pigeonID, "canivore1");
     public double gyroOffset = gyro.getAngle();
     private AprilTagVision aprilTagVision;
-    private PoseEstimatorSubsystem poseEstimatorSubSystem;
+    private PoseEstimatorSubsystemPhotonVision poseEstimatorSubSystemPhotonVision;
+    private PoseEstimatorSubsystemLimeLight poseEstimatorSubSystemLimeLight;
+
     // private NoteVisionSubsystem noteVisionSubsystem =
     //         new NoteVisionSubsystem(Constants.VisionConstants.NOTE_CAMERA_NAME);
 
@@ -168,14 +171,19 @@ public class RobotContainer { // implements RobotConstants{
         autoChooser = AutoBuilder.buildAutoChooser();
         Shuffleboard.getTab("Autonomous").add(autoChooser);
         if (Constants.VisionConstants.USE_VISION == true) {
-            if (Constants.VisionConstants.USE_ADV_KIT_VISION == true) {
-                aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
-                aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
-                aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
+            if (Constants.PracticeBot) {
+
+                poseEstimatorSubSystemLimeLight = new PoseEstimatorSubsystemLimeLight(drivetrain);
             } else {
-                poseEstimatorSubSystem = new PoseEstimatorSubsystem(drivetrain);
+                if (Constants.VisionConstants.USE_ADV_KIT_VISION == true) {
+                    aprilTagVision = new AprilTagVision(new AprilTagVisionIOPhotonVision());
+                    aprilTagVision.setDataInterfaces(drivetrain::addVisionData);
+                    aprilTagVision.setPoseProvider(drivetrain::getCurrentPose);
+                    drivetrain.setAprilTagVision(aprilTagVision);
+                } else {
+                    poseEstimatorSubSystemPhotonVision = new PoseEstimatorSubsystemPhotonVision(drivetrain);
+                }
             }
-            drivetrain.setAprilTagVision(aprilTagVision);
         }
 
         configureButtonBindings();
@@ -409,6 +417,13 @@ public class RobotContainer { // implements RobotConstants{
         // autoaim robot
         driver.leftBumper().whileTrue(drivetrain.applyRequest(() -> drive.withRotationalRate(calculateAutoTurn(
                         DriverStation.getAlliance().get().equals(Alliance.Red) ? () -> 270.0 : () -> 90.0))
+
+                // () -> AutoAim.calculateAngleToSpeaker(
+                //         () -> drivetrain.getState().Pose,
+                //         () -> new Translation2d(
+                //                 drivetrain.getState().speeds.vxMetersPerSecond,
+                //                 drivetrain.getState().speeds.vyMetersPerSecond))
+                // .getDegrees()))
                 .withVelocityX(xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
                 .withVelocityY(
                         yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))));
@@ -634,8 +649,10 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftTrigger()
                 .whileTrue(new ShooterCommand(
                         shooter,
+
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose, () -> new Translation2d()),
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose, () -> new Translation2d())))
+
                 .onFalse(new InstantCommand(() -> shooter.stop()))
                 .and(driver.leftTrigger().negate())
                 .whileTrue(new FourBarCommand(
@@ -650,8 +667,6 @@ public class RobotContainer { // implements RobotConstants{
                                 - AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose, () -> new Translation2d()))
                         < 50.0)
-                .whileTrue(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 1.0)))
-                .onFalse(new InstantCommand(() -> driverRaw.setRumble(RumbleType.kBothRumble, 0.0)));
 
         // copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 
@@ -697,6 +712,7 @@ public class RobotContainer { // implements RobotConstants{
                         .onlyIf(driver.leftTrigger().negate()))
                 .whileTrue(new ShooterCommand(
                         shooter, () -> FixedShotConstants.RPMLongFeed, () -> FixedShotConstants.RPMLongFeed));
+
         copilot.start().onFalse(new InstantCommand(shooter::stop));
 
         copilot.x()
@@ -732,6 +748,7 @@ public class RobotContainer { // implements RobotConstants{
                 .whileTrue(
                         new ShooterCommand(shooter, () -> FixedShotConstants.RPMFeed, () -> FixedShotConstants.RPMFeed)
                                 .onlyIf(copilot.start().negate()));
+
         copilot.back().onFalse(new InstantCommand(shooter::stop));
 
         copilot.povLeft().and(() -> copilot.getRightY() > 0.8).onTrue(new InstantCommand(() -> m_AutoAim.decDist()));
