@@ -382,6 +382,14 @@ public final class Constants {
 
     public static class VisionConstants {
 
+        public static final String Limelight1 = "limelight-front";
+        public static final String Limelight2 = "limelight-left";
+        public static final String Limelight3 = "limelight-right";
+
+        public static boolean USE_FRONT_LIMELIGHT = true;
+        public static boolean USE_BACK_LEFT_LIMELIGHT = true;
+        public static boolean USE_BACK_RIGHT_LIMELIGHT = true;
+
         public static enum VisionDeviationDistanceStrategy {
             SMALEST_DISTANCE,
             AVERAGE_DISTANCE
@@ -524,9 +532,10 @@ public final class Constants {
         }
 
         public static InterpolatingDoubleTreeMap spinMap = new InterpolatingDoubleTreeMap();
+
         static {
-            //key: rpm
-            //value: angle curve deg
+            // key: rpm
+            // value: angle curve deg
             spinMap.put(0.0, 8.0);
             spinMap.put(1000.0, 8.0);
             spinMap.put(2000.0, 8.0);
