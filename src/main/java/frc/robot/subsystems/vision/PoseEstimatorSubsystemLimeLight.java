@@ -131,7 +131,7 @@ public class PoseEstimatorSubsystemLimeLight extends SubsystemBase {
         double thetaStdDev = calculateThetaStdDev(distanceUsedForCalculatingStdDev, cameraPose.tagCount);
         if (cameraPose.tagCount != 0 && Math.abs(driveTrain.getPigeon2().getRate()) < 720) {
             driveTrain.addVisionMeasurement(
-                    cameraPose.pose, cameraPose.timestampSeconds, VecBuilder.fill(xyStdDev, xyStdDev, 1));
+                    cameraPose.pose, cameraPose.timestampSeconds, VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev));
         }
     }
 }
