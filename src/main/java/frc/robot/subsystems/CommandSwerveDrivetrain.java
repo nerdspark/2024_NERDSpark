@@ -2,14 +2,11 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide;
 
-import static edu.wpi.first.units.Units.Volts;
-import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -28,7 +25,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.generated.TunerConstantsSmidge;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.vision.AprilTagVision;
@@ -74,9 +70,12 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
 
-    // private final SwerveRequest.SysIdSwerveTranslation TranslationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
-    // private final SwerveRequest.SysIdSwerveRotation RotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
-    // private final SwerveRequest.SysIdSwerveSteerGains SteerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
+    // private final SwerveRequest.SysIdSwerveTranslation TranslationCharacterization = new
+    // SwerveRequest.SysIdSwerveTranslation();
+    // private final SwerveRequest.SysIdSwerveRotation RotationCharacterization = new
+    // SwerveRequest.SysIdSwerveRotation();
+    // private final SwerveRequest.SysIdSwerveSteerGains SteerCharacterization = new
+    // SwerveRequest.SysIdSwerveSteerGains();
 
     // /* Use one of these sysidroutines for your particular test */
     // private SysIdRoutine SysIdRoutineTranslation = new SysIdRoutine(
@@ -245,13 +244,21 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     @Override
     public void periodic() {
         // SignalLogger.writeDoubleArray("driveAppliedOutputs", new double[] {
-            SmartDashboard.putNumber("drive output 0", getModule(0).getDriveMotor().getSupplyCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("drive output 1", getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("drive output 2", getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("drive output 3", getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble());
-            // getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
-            // getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
-            // getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
+        SmartDashboard.putNumber(
+                "drive output 0",
+                getModule(0).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(
+                "drive output 1",
+                getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(
+                "drive output 2",
+                getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(
+                "drive output 3",
+                getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        // getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
+        // getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
+        // getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
 
         // });
 

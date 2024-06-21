@@ -491,7 +491,7 @@
                 {
                     "name": "FourBar",
                     "target": 2,
-                    "targetTimestamp": 1.0092518861106505,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "named",
@@ -503,7 +503,7 @@
                 {
                     "name": "Intake",
                     "target": 2,
-                    "targetTimestamp": 1.0092518861106505,
+                    "targetTimestamp": null,
                     "offset": 0.4,
                     "command": {
                         "type": "sequential",
@@ -526,7 +526,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "RedAmpAvoid2": {
             "waypoints": [
@@ -869,7 +869,7 @@
                 {
                     "name": "FourBarToShoot",
                     "target": "first",
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "named",
@@ -881,7 +881,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": 1.7425477770867108,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -891,7 +891,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "RedAmpAvoid3": {
             "waypoints": [
@@ -1234,7 +1234,7 @@
                 {
                     "name": "FourBarIntake",
                     "target": "first",
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.6,
                     "command": {
                         "type": "named",
@@ -1246,7 +1246,7 @@
                 {
                     "name": "Intake",
                     "target": 0,
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.7,
                     "command": {
                         "type": "sequential",
@@ -1269,7 +1269,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "RedAmpAvoid4": {
             "waypoints": [
@@ -1612,7 +1612,7 @@
                 {
                     "name": "FourBarToShoot",
                     "target": 0,
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "named",
@@ -1624,7 +1624,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": 1.7583049572751164,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -1634,7 +1634,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "RedAmpAvoid5": {
             "waypoints": [
@@ -2375,7 +2375,7 @@
                 {
                     "name": "fourBarToIntake",
                     "target": "first",
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.9,
                     "command": {
                         "type": "named",
@@ -2387,7 +2387,7 @@
                 {
                     "name": "softIntake",
                     "target": 1,
-                    "targetTimestamp": 0.7614701555764065,
+                    "targetTimestamp": null,
                     "offset": 0.2,
                     "command": {
                         "type": "sequential",
@@ -2410,7 +2410,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "RedAmpAvoid6": {
             "waypoints": [
@@ -2825,7 +2825,7 @@
                 {
                     "name": "fourBarToShoot",
                     "target": 0,
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "named",
@@ -2837,7 +2837,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": 2.061594803388238,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -2847,7 +2847,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "RedAmpAvoid7": {
             "waypoints": [
@@ -3403,7 +3403,7 @@
                 {
                     "name": "FourBar",
                     "target": 1,
-                    "targetTimestamp": 0.7081212920107437,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -3415,7 +3415,7 @@
                 {
                     "name": "Intake",
                     "target": 1,
-                    "targetTimestamp": 0.7081212920107437,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "sequential",
@@ -3432,7 +3432,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "RedAmpAvoid8": {
             "waypoints": [
@@ -3701,7 +3701,7 @@
                 {
                     "name": "fourBar",
                     "target": 0,
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -3713,7 +3713,7 @@
                 {
                     "name": "shoot",
                     "target": 1,
-                    "targetTimestamp": 1.0423992182226696,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -3723,7 +3723,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         }
     },
     "splitTrajectoriesAtStopPoints": false,

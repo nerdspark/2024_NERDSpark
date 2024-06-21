@@ -28,8 +28,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-//sysid import
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.AmpSetpoints;
 import frc.robot.Constants.ArmConstants.BlockSetpoints;
@@ -37,8 +35,6 @@ import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.BlinkinLightsConstants;
-import frc.robot.Constants.ClimbConstants;
-import frc.robot.Constants.DriveToShotConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
 import frc.robot.Constants.FourBarConstants;
@@ -360,9 +356,12 @@ public class RobotContainer { // implements RobotConstants{
         NamedCommands.registerCommand("redAmpSide3", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide3));
         NamedCommands.registerCommand("redAmpSide4", new FourBarCommand(fourBar, () -> AutoConstants.redAmpSide4));
 
-        NamedCommands.registerCommand("smidgeRedWeirdShoot", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRedSmidge));
-        NamedCommands.registerCommand("smidgeRedAmpShoot", new FourBarCommand(fourBar, () -> AutoConstants.ampSideRedSmidge));
-        NamedCommands.registerCommand("smidgeRedCenterShoot", new FourBarCommand(fourBar, () -> AutoConstants.centerRedSmidge));
+        NamedCommands.registerCommand(
+                "smidgeRedWeirdShoot", new FourBarCommand(fourBar, () -> AutoConstants.weirdSideRedSmidge));
+        NamedCommands.registerCommand(
+                "smidgeRedAmpShoot", new FourBarCommand(fourBar, () -> AutoConstants.ampSideRedSmidge));
+        NamedCommands.registerCommand(
+                "smidgeRedCenterShoot", new FourBarCommand(fourBar, () -> AutoConstants.centerRedSmidge));
 
         NamedCommands.registerCommand(
                 "Vision ON", new InstantCommand(() -> aprilTagVision.setEnableVisionUpdates(true)));
@@ -386,7 +385,6 @@ public class RobotContainer { // implements RobotConstants{
         // driver.back().and(driver.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
         // driver.start().and(driver.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         // driver.start().and(driver.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-
 
         // intake
         driver.leftTrigger()

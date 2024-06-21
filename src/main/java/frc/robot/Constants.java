@@ -14,7 +14,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
-import frc.robot.actions.startUp;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
 import frc.robot.util.FieldConstants;
@@ -358,7 +357,7 @@ public final class Constants {
 
         public static final double weirdSideRedSmidge = 1.9;
         public static final double ampSideRedSmidge = 1.95;
-        public static final double centerRedSmidge = 1.9;
+        public static final double centerRedSmidge = 1.95;
 
         // public static final double blueStarWars1 = 1.95; // 3.5
         // public static final double blueStarWars2 = 1.87; // 2.75

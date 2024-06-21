@@ -1,7 +1,6 @@
 package frc.robot.subsystems.blikinLights;
 
 import edu.wpi.first.wpilibj.PWM;
-import frc.robot.Constants.BlinkinLightsConstants;
 
 public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
 

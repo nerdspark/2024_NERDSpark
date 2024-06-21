@@ -3,7 +3,6 @@ package frc.robot;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain.SwerveDriveState;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.DoubleArrayPublisher;
@@ -110,7 +109,9 @@ public class Telemetry {
             SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
         }
 
-        SignalLogger.writeDoubleArray("odometry", new double[] {pose.getX(), pose.getY(), pose.getRotation().getDegrees()});
+        SignalLogger.writeDoubleArray(
+                "odometry",
+                new double[] {pose.getX(), pose.getY(), pose.getRotation().getDegrees()});
         SignalLogger.writeDouble("odom period", state.OdometryPeriod, "seconds");
     }
 }
