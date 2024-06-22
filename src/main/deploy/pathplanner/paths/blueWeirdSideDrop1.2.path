@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.18731055220868,
-        "y": 2.233104577751223
+        "x": 5.872954879812894,
+        "y": 1.5202400775171925
       },
       "isLocked": false,
       "linkedName": null
@@ -97,7 +97,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -109,7 +109,7 @@
   "reversed": false,
   "folder": "BlueWeirdSideDrop",
   "previewStartingState": {
-    "rotation": -44.0,
+    "rotation": -41.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -36,12 +36,12 @@
         "y": 4.528063490478756
       },
       "prevControl": {
-        "x": 4.486836124787031,
-        "y": 5.019771558948568
+        "x": 4.357119797394956,
+        "y": 4.90446595752143
       },
       "nextControl": {
-        "x": 5.2113759677360445,
-        "y": 3.909838182516036
+        "x": 5.429276589354169,
+        "y": 4.009038307093955
       },
       "isLocked": false,
       "linkedName": null
@@ -120,6 +120,57 @@
               "type": "named",
               "data": {
                 "name": "blueAmpSide4"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision on",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision ON"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision off",
+      "waypointRelativePos": 0.8999999999999999,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide3"
               }
             }
           ]

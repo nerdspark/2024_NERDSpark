@@ -36,12 +36,12 @@
         "y": 6.283188123766833
       },
       "prevControl": {
-        "x": 6.0076899178043455,
-        "y": 6.413925479234915
+        "x": 5.999986167341282,
+        "y": 6.389082956832744
       },
       "nextControl": {
-        "x": 6.740498105273668,
-        "y": 6.16026110664938
+        "x": 6.738322308553448,
+        "y": 6.186207700050727
       },
       "isLocked": false,
       "linkedName": null
@@ -49,11 +49,11 @@
     {
       "anchor": {
         "x": 8.23,
-        "y": 5.69
+        "y": 5.89
       },
       "prevControl": {
-        "x": 7.170742665184752,
-        "y": 6.023675532074432
+        "x": 7.1125352507115265,
+        "y": 6.127736927838528
       },
       "nextControl": null,
       "isLocked": false,
@@ -69,6 +69,11 @@
     {
       "waypointRelativePos": 1.5,
       "rotationDegrees": 6.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2.8499999999999996,
+      "rotationDegrees": -15.0,
       "rotateFast": false
     }
   ],
@@ -124,7 +129,7 @@
             {
               "type": "named",
               "data": {
-                "name": "blueAmpSide2"
+                "name": "blueAmpSide2a"
               }
             }
           ]
@@ -164,11 +169,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide2"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

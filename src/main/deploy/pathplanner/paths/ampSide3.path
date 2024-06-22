@@ -159,6 +159,23 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide3"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {

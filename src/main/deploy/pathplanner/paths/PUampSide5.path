@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.76,
-        "y": 7.52
+        "y": 7.62
       },
       "prevControl": null,
       "nextControl": {
         "x": 4.6043474509751885,
-        "y": 7.156322531172378
+        "y": 7.256322531172379
       },
       "isLocked": false,
       "linkedName": null
@@ -30,12 +30,12 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.25,
+      "waypointRelativePos": 0.2,
       "rotationDegrees": 90.0,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 0.75,
+      "waypointRelativePos": 0.55,
       "rotationDegrees": 6.0,
       "rotateFast": false
     }
@@ -43,8 +43,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fbtointake",
-      "waypointRelativePos": 0.5,
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -52,7 +52,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToIntake"
+                "name": "blueAmpSide2"
               }
             }
           ]
@@ -60,7 +60,7 @@
       }
     },
     {
-      "name": "softintake",
+      "name": "shoot",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
@@ -79,7 +79,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

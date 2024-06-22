@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.23,
-        "y": 5.69
+        "y": 5.89
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.301962041711038,
-        "y": 6.108553893936856
+        "y": 6.308553893936855
       },
       "isLocked": false,
       "linkedName": null
@@ -20,12 +20,12 @@
         "y": 6.6
       },
       "prevControl": {
-        "x": 5.779771722562757,
-        "y": 6.884375020648698
+        "x": 5.740569181104751,
+        "y": 6.697861681922395
       },
       "nextControl": {
-        "x": 5.6880849485039136,
-        "y": 6.44815824207384
+        "x": 5.699430818895249,
+        "y": 6.502138318077605
       },
       "isLocked": false,
       "linkedName": null
@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 8.21,
-        "y": 4.1
+        "y": 4.3
       },
       "prevControl": {
         "x": 6.983288455888077,
-        "y": 6.10334864375192
+        "y": 6.30334864375192
       },
       "nextControl": null,
       "isLocked": false,
@@ -113,7 +113,58 @@
             {
               "type": "named",
               "data": {
-                "name": "blueAmpSide2"
+                "name": "blueAmpSide2a"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision on",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision ON"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision off",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide2a"
               }
             }
           ]
@@ -123,7 +174,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

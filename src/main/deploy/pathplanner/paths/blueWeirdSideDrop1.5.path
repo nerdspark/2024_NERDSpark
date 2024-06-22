@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 1.041,
-        "y": 2.3
+        "y": 2.05
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.1175723988994744,
-        "y": 2.157884229189945
+        "y": 1.907884229189945
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.01,
-        "y": 3.4
+        "x": 2.11,
+        "y": 3.3
       },
       "prevControl": {
-        "x": 2.9565444791563986,
-        "y": 2.795590217241819
+        "x": 2.8956141809888902,
+        "y": 2.615865446429489
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.65,
-      "rotationDegrees": -57.0,
+      "rotationDegrees": -54.0,
       "rotateFast": false
     }
   ],
@@ -53,6 +53,23 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.2,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -63,7 +80,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -52.0,
+    "rotation": -54.0,
     "rotateFast": false
   },
   "reversed": false,

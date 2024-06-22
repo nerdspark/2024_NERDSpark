@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.14289742306327,
-        "y": 1.2608075344787786
+        "x": 5.054364068842098,
+        "y": 0.5730135676795581
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.01,
-        "y": 3.4
+        "x": 2.11,
+        "y": 3.3
       },
       "prevControl": {
-        "x": 2.795323916946481,
-        "y": 2.826281535031686
+        "x": 2.8953239169464813,
+        "y": 2.726281535031686
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.75,
-      "rotationDegrees": -57.0,
+      "rotationDegrees": -54.0,
       "rotateFast": false
     }
   ],
@@ -65,6 +65,57 @@
           ]
         }
       }
+    },
+    {
+      "name": "vision on",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision ON"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision off",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -75,7 +126,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -57.0,
+    "rotation": -54.0,
     "rotateFast": false
   },
   "reversed": false,

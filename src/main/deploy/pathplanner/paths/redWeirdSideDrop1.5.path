@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 15.5,
-        "y": 2.0
+        "y": 1.8
       },
       "prevControl": null,
       "nextControl": {
         "x": 14.423436675114473,
-        "y": 1.8578155075385303
+        "y": 1.6578155075385304
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 14.53,
-        "y": 3.35
+        "x": 14.33,
+        "y": 3.25
       },
       "prevControl": {
-        "x": 13.583435391478544,
-        "y": 2.745621742275689
+        "x": 13.383435391478544,
+        "y": 2.6456217422756887
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,6 +48,23 @@
               "type": "named",
               "data": {
                 "name": "forcedIntakeShoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.25,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
               }
             }
           ]

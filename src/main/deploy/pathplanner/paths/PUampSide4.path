@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 7.14903434557463,
-        "y": 7.331818179075788
+        "y": 7.23
       },
       "prevControl": {
-        "x": 7.298005454775095,
-        "y": 6.64016660064505
+        "x": 7.2988889725088395,
+        "y": 6.538539308341711
       },
       "nextControl": {
-        "x": 7.012537730538646,
-        "y": 7.965552463171434
+        "x": 7.040986369338552,
+        "y": 7.728556033330068
       },
       "isLocked": false,
       "linkedName": null
@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 3.76,
-        "y": 7.517063585196054
+        "y": 7.62
       },
       "prevControl": {
-        "x": 4.9592202606732965,
-        "y": 7.653560200232039
+        "x": 4.958056357070601,
+        "y": 7.635385312058816
       },
       "nextControl": null,
       "isLocked": false,
@@ -86,7 +86,7 @@
             {
               "type": "named",
               "data": {
-                "name": "blueAmpSide2"
+                "name": "fourBarToHome"
               }
             }
           ]
@@ -96,7 +96,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

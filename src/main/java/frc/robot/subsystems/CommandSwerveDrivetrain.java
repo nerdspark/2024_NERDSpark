@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.generated.TunerConstantsSmidge;
@@ -68,6 +69,49 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     private AprilTagVision aprilTagVision;
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
+
+    // private final SwerveRequest.SysIdSwerveTranslation TranslationCharacterization = new
+    // SwerveRequest.SysIdSwerveTranslation();
+    // private final SwerveRequest.SysIdSwerveRotation RotationCharacterization = new
+    // SwerveRequest.SysIdSwerveRotation();
+    // private final SwerveRequest.SysIdSwerveSteerGains SteerCharacterization = new
+    // SwerveRequest.SysIdSwerveSteerGains();
+
+    // /* Use one of these sysidroutines for your particular test */
+    // private SysIdRoutine SysIdRoutineTranslation = new SysIdRoutine(
+    //         new SysIdRoutine.Config(
+    //                 null,
+    //                 Volts.of(4),
+    //                 null,
+    //                 (state) -> SignalLogger.writeString("state", state.toString())),
+    //         new SysIdRoutine.Mechanism(
+    //                 (volts) -> setControl(TranslationCharacterization.withVolts(volts)),
+    //                 null,
+    //                 this));
+
+    // private final SysIdRoutine SysIdRoutineRotation = new SysIdRoutine(
+    //         new SysIdRoutine.Config(
+    //                 null,
+    //                 Volts.of(4),
+    //                 null,
+    //                 (state) -> SignalLogger.writeString("state", state.toString())),
+    //         new SysIdRoutine.Mechanism(
+    //                 (volts) -> setControl(RotationCharacterization.withVolts(volts)),
+    //                 null,
+    //                 this));
+    // private final SysIdRoutine SysIdRoutineSteer = new SysIdRoutine(
+    //         new SysIdRoutine.Config(
+    //                 null,
+    //                 Volts.of(7),
+    //                 null,
+    //                 (state) -> SignalLogger.writeString("state", state.toString())),
+    //         new SysIdRoutine.Mechanism(
+    //                 (volts) -> setControl(SteerCharacterization.withVolts(volts)),
+    //                 null,
+    //                 this));
+
+    // /* Change this to the sysid routine you want to test */
+    // private final SysIdRoutine RoutineToApply = SysIdRoutineTranslation;
 
     public CommandSwerveDrivetrain(
             SwerveDrivetrainConstants driveTrainConstants,
@@ -135,6 +179,18 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         return run(() -> this.setControl(requestSupplier.get()));
     }
 
+    /*
+     * Both the sysid commands are specific to one particular sysid routine, change
+     * which one you're trying to characterize
+     */
+    // public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    //     return RoutineToApply.quasistatic(direction);
+    // }
+
+    // public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    //     return RoutineToApply.dynamic(direction);
+    // }
+
     public ChassisSpeeds getCurrentRobotChassisSpeeds() {
         // SignalLogger.writeDoubleArray("Odometry", new double[] {
         //     this.getState().Pose.getX(),
@@ -187,6 +243,24 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     @Override
     public void periodic() {
+        // SignalLogger.writeDoubleArray("driveAppliedOutputs", new double[] {
+        SmartDashboard.putNumber(
+                "drive output 0",
+                getModule(0).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(
+                "drive output 1",
+                getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(
+                "drive output 2",
+                getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(
+                "drive output 3",
+                getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        // getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
+        // getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
+        // getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
+
+        // });
 
         // if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
         //     targetPoseSpeaker = FieldConstants.Speaker.centerSpeakerOpening.getTranslation();

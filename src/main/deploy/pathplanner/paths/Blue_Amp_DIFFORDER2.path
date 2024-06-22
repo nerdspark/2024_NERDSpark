@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.690795709382394,
-        "y": 6.288594049872185
+        "x": 6.638058924342457,
+        "y": 6.228553893936855
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 7.39
       },
       "prevControl": {
-        "x": 7.071036279839781,
-        "y": 6.971077125052112
+        "x": 7.013669254423562,
+        "y": 7.027579505200299
       },
       "nextControl": null,
       "isLocked": false,
@@ -109,6 +109,40 @@
               "type": "named",
               "data": {
                 "name": "blueAmpSide3"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision on",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision ON"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vision off",
+      "waypointRelativePos": 1.2,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
               }
             }
           ]
