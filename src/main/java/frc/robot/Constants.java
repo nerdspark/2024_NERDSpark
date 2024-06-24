@@ -413,15 +413,15 @@ public final class Constants {
         public static final String Limelight3 = "limelight-right";
 
         public static boolean USE_FRONT_LIMELIGHT = true;
-        public static boolean USE_BACK_LEFT_LIMELIGHT = true;
-        public static boolean USE_BACK_RIGHT_LIMELIGHT = true;
+        public static boolean USE_BACK_LEFT_LIMELIGHT = false;
+        public static boolean USE_BACK_RIGHT_LIMELIGHT = false;
 
         public static enum VisionDeviationDistanceStrategy {
             SMALEST_DISTANCE,
             AVERAGE_DISTANCE
         }
 
-        public static boolean USE_VISION = false;
+        public static boolean USE_VISION = true;
         public static boolean USE_FRONT_CAMERA = true;
         public static boolean USE_ADV_KIT_VISION = true;
         public static boolean MULTI_TAG_RESULT_ENABLED = true;
@@ -601,7 +601,6 @@ public final class Constants {
             spinMap.put(5000.0, 4.0);
             spinMap.put(5800.0, 3.3);
             spinMap.put(6000.0, 3.1);
-
         }
     }
 
