@@ -656,10 +656,8 @@ public class RobotContainer { // implements RobotConstants{
         copilot.leftTrigger()
                 .whileTrue(new ShooterCommand(
                         shooter,
-
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose, () -> new Translation2d()),
                         () -> AutoAim.calculateShooterRPM(() -> drivetrain.getState().Pose, () -> new Translation2d())))
-
                 .onFalse(new InstantCommand(() -> shooter.stop()))
                 .and(driver.leftTrigger().negate())
                 .whileTrue(new FourBarCommand(
@@ -673,7 +671,7 @@ public class RobotContainer { // implements RobotConstants{
                 .and(() -> Math.abs(((shooter.getSpeed()[0] + shooter.getSpeed()[1]) / 2.0)
                                 - AutoAim.calculateShooterRPM(
                                         () -> drivetrain.getState().Pose, () -> new Translation2d()))
-                        < 50.0)
+                        < 50.0);
 
         // copilot.leftTrigger().onFalse(new InstantCommand(() -> shooter.stop()));
 

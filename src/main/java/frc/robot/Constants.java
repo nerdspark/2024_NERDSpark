@@ -605,7 +605,6 @@ public final class Constants {
             spinMap.put(5000.0, 4.0);
             spinMap.put(5800.0, 3.3);
             spinMap.put(6000.0, 3.1);
-
         }
     }
 
