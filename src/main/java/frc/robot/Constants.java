@@ -412,6 +412,14 @@ public final class Constants {
 
     public static class VisionConstants {
 
+        public static final String Limelight1 = "limelight-front";
+        public static final String Limelight2 = "limelight-left";
+        public static final String Limelight3 = "limelight-right";
+
+        public static boolean USE_FRONT_LIMELIGHT = true;
+        public static boolean USE_BACK_LEFT_LIMELIGHT = true;
+        public static boolean USE_BACK_RIGHT_LIMELIGHT = true;
+
         public static enum VisionDeviationDistanceStrategy {
             SMALEST_DISTANCE,
             AVERAGE_DISTANCE
@@ -597,6 +605,7 @@ public final class Constants {
             spinMap.put(5000.0, 4.0);
             spinMap.put(5800.0, 3.3);
             spinMap.put(6000.0, 3.1);
+
         }
     }
 
