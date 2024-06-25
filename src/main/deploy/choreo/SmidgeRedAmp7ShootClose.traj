@@ -424,31 +424,5 @@
       "timestamp": 1.9798258626651382
     }
   ],
-  "eventMarkers": [
-    {
-      "timestamp": 0.7026339302112979,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "fourBarToIntake"
-        }
-      }
-    },
-    {
-      "timestamp": 1.0026339302112979,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "onlySoftIntake"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+  "eventMarkers": []
 }

@@ -27,6 +27,7 @@
   "autoFolders": [
     "ChoreoAutos",
     "Development",
+    "TeleOpAutomation",
     "SmidgeAutos",
     "TestAutos"
   ],

@@ -491,7 +491,7 @@
                 {
                     "name": "FourBar",
                     "target": 2,
-                    "targetTimestamp": 1.0092518861106505,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "named",
@@ -503,7 +503,7 @@
                 {
                     "name": "Intake",
                     "target": 2,
-                    "targetTimestamp": 1.0092518861106505,
+                    "targetTimestamp": null,
                     "offset": 0.4,
                     "command": {
                         "type": "sequential",
@@ -526,7 +526,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "SmidgeRedAmp2ShootClose": {
             "waypoints": [
@@ -878,7 +878,7 @@
                 {
                     "name": "FourBarToShoot",
                     "target": "first",
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "named",
@@ -890,7 +890,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": 1.7452867056058377,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -900,7 +900,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "SmidgeRedAmp3ShootClose": {
             "waypoints": [
@@ -1252,7 +1252,7 @@
                 {
                     "name": "FourBarIntake",
                     "target": "first",
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.6,
                     "command": {
                         "type": "named",
@@ -1264,7 +1264,7 @@
                 {
                     "name": "Intake",
                     "target": 0,
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.7,
                     "command": {
                         "type": "sequential",
@@ -1287,7 +1287,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "SmidgeRedAmp4ShootClose": {
             "waypoints": [
@@ -1639,7 +1639,7 @@
                 {
                     "name": "FourBarToShoot",
                     "target": 0,
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "named",
@@ -1651,7 +1651,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": 1.760799030153799,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -1661,7 +1661,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "SmidgeRedAmp5ShootClose": {
             "waypoints": [
@@ -2393,7 +2393,7 @@
                 {
                     "name": "fourBarToIntake",
                     "target": "first",
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.9,
                     "command": {
                         "type": "named",
@@ -2405,7 +2405,7 @@
                 {
                     "name": "softIntake",
                     "target": 1,
-                    "targetTimestamp": 0.7621337676840976,
+                    "targetTimestamp": null,
                     "offset": 0.2,
                     "command": {
                         "type": "sequential",
@@ -2428,7 +2428,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "SmidgeRedAmp6ShootClose": {
             "waypoints": [
@@ -2843,7 +2843,7 @@
                 {
                     "name": "fourBarToShoot",
                     "target": 0,
-                    "targetTimestamp": 0,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "named",
@@ -2855,7 +2855,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": 2.064802568886459,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -2865,7 +2865,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "SmidgeRedAmp7ShootClose": {
             "waypoints": [
@@ -3421,7 +3421,7 @@
                 {
                     "name": "FourBar",
                     "target": 1,
-                    "targetTimestamp": 0.7026339302112979,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -3433,7 +3433,7 @@
                 {
                     "name": "Intake",
                     "target": 1,
-                    "targetTimestamp": 0.7026339302112979,
+                    "targetTimestamp": null,
                     "offset": 0.3,
                     "command": {
                         "type": "sequential",
@@ -3450,7 +3450,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "SmidgeRedAmp8ShootClose": {
             "waypoints": [
@@ -3727,7 +3727,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": 1.0423992182226753,
+                    "targetTimestamp": null,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -3737,7 +3737,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         }
     },
     "splitTrajectoriesAtStopPoints": false,

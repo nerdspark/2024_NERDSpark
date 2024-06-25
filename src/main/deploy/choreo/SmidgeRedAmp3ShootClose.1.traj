@@ -262,37 +262,5 @@
       "timestamp": 1.7650077625313996
     }
   ],
-  "eventMarkers": [
-    {
-      "timestamp": 0.6,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "fourBarToIntake"
-        }
-      }
-    },
-    {
-      "timestamp": 0.7,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "onlySoftIntake"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "smidgeRedAmpShoot"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+  "eventMarkers": []
 }
