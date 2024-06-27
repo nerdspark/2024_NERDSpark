@@ -1627,7 +1627,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": null,
+                    "targetTimestamp": 3.8558286543550504,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -1637,7 +1637,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "ChoreoSmidgeRedSource4": {
             "waypoints": [
@@ -2384,7 +2384,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": null,
+                    "targetTimestamp": 4.225425956967032,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -2394,7 +2394,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "ChoreoSmidgeRedSource5": {
             "waypoints": [
@@ -3096,7 +3096,7 @@
                 {
                     "name": "Shoot",
                     "target": "last",
-                    "targetTimestamp": null,
+                    "targetTimestamp": 2.8038709563618376,
                     "offset": 0,
                     "command": {
                         "type": "named",
@@ -3106,7 +3106,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         }
     },
     "splitTrajectoriesAtStopPoints": false,
