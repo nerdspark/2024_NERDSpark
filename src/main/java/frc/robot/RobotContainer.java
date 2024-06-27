@@ -210,17 +210,9 @@ public class RobotContainer { // implements RobotConstants{
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
         drivetrain.setDefaultCommand(
                 drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(
+                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                        .withVelocityY(yLimiter.calculate(
                                                 -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
-                        .withVelocityY(yLimiter.calculate(AvoidPoles.adjustJoystick(
-                                        () -> drivetrain.getState().Pose,
-                                        () -> new Translation2d(
-                                                drivetrain.getState().speeds.vxMetersPerSecond,
-                                                drivetrain.getState().speeds.vyMetersPerSecond),
-                                        () -> new Translation2d(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed,
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed),
-                                        () -> false)
-                                .getY()))
                         .withRotationalRate(calculateAutoTurn(() -> 0.0))));
 
         // if (Utils.isSimulation()) {
