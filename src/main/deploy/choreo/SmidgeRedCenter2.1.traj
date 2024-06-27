@@ -379,15 +379,6 @@
           "name": "fourBarToIntake"
         }
       }
-    },
-    {
-      "timestamp": 2.485192875573777,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "forcedIntakeShoot"
-        }
-      }
     }
   ]
 }

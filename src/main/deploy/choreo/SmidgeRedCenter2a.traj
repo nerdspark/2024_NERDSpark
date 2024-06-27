@@ -255,29 +255,11 @@
   ],
   "eventMarkers": [
     {
-      "timestamp": 0.3,
+      "timestamp": 0.5,
       "command": {
         "type": "named",
         "data": {
           "name": "smidgeRedCenterShoot"
-        }
-      }
-    },
-    {
-      "timestamp": 0.9906963327640024,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "fourBarToIntake"
-        }
-      }
-    },
-    {
-      "timestamp": 1.8349028243672216,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "forcedIntakeShoot"
         }
       }
     }

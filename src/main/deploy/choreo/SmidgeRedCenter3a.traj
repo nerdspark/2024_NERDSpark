@@ -309,7 +309,7 @@
       }
     },
     {
-      "timestamp": 0,
+      "timestamp": 0.9,
       "command": {
         "type": "sequential",
         "data": {
