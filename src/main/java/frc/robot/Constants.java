@@ -44,6 +44,7 @@ public final class Constants {
         public static final double rumbleWait = 0.3;
 
         public static final int servoPort = 9;
+        public static final int servoPortSmidge = 0;
         public static final int winchPort = 6;
     }
 
@@ -293,6 +294,7 @@ public final class Constants {
             // TRAP DROPOFF
 
             public static final double winchAmpLimit = 50;
+            public static final double winchAmpLimitSmidge = 20;
 
             public static final double trapArmAngle = Units.degreesToRadians(109);
             public static final double trapArmDifference = Units.degreesToRadians(29);
@@ -417,15 +419,15 @@ public final class Constants {
         public static final String Limelight3 = "limelight-right";
 
         public static boolean USE_FRONT_LIMELIGHT = true;
-        public static boolean USE_BACK_LEFT_LIMELIGHT = true;
-        public static boolean USE_BACK_RIGHT_LIMELIGHT = true;
+        public static boolean USE_BACK_LEFT_LIMELIGHT = false;
+        public static boolean USE_BACK_RIGHT_LIMELIGHT = false;
 
         public static enum VisionDeviationDistanceStrategy {
             SMALEST_DISTANCE,
             AVERAGE_DISTANCE
         }
 
-        public static boolean USE_VISION = false;
+        public static boolean USE_VISION = true;
         public static boolean USE_FRONT_CAMERA = true;
         public static boolean USE_ADV_KIT_VISION = true;
         public static boolean MULTI_TAG_RESULT_ENABLED = true;

@@ -244,18 +244,18 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     @Override
     public void periodic() {
         // SignalLogger.writeDoubleArray("driveAppliedOutputs", new double[] {
-        SmartDashboard.putNumber(
-                "drive output 0",
-                getModule(0).getDriveMotor().getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber(
-                "drive output 1",
-                getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber(
-                "drive output 2",
-                getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber(
-                "drive output 3",
-                getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        // SmartDashboard.putNumber(
+        //         "drive output 0",
+        //         getModule(0).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        // SmartDashboard.putNumber(
+        //         "drive output 1",
+        //         getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        // SmartDashboard.putNumber(
+        //         "drive output 2",
+        //         getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble());
+        // SmartDashboard.putNumber(
+        //         "drive output 3",
+        //         getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble());
         // getModule(1).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
         // getModule(2).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
         // getModule(3).getDriveMotor().getSupplyCurrent().getValueAsDouble(),
