@@ -13,7 +13,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.Servo;
-import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.ClimbConstants;
 
 public class ClimbIOSparkMax implements ClimbIO {
@@ -24,8 +23,8 @@ public class ClimbIOSparkMax implements ClimbIO {
     private boolean servoOut = false;
     private double initialPose;
 
-    public ClimbIOSparkMax() {
-        grapplingServo = new Servo(ClimbConstants.servoPort);
+    public ClimbIOSparkMax(int servoPort, double currentLimit) {
+        grapplingServo = new Servo(servoPort);
         climbMotor = new TalonFX(ClimbConstants.winchPort, "canivore1");
         climbMotor.setPosition(0);
         initialPose = grapplingServo.getPosition();
@@ -34,9 +33,8 @@ public class ClimbIOSparkMax implements ClimbIO {
 
         TalonFXConfiguration climbConfig = new TalonFXConfiguration();
         climbConfig.Slot0 = new Slot0Configs().withKP(0.2).withKS(1);
-        climbConfig.CurrentLimits = new CurrentLimitsConfigs()
-                .withStatorCurrentLimit(TrapSetpoints.winchAmpLimit)
-                .withStatorCurrentLimitEnable(true);
+        climbConfig.CurrentLimits =
+                new CurrentLimitsConfigs().withStatorCurrentLimit(currentLimit).withStatorCurrentLimitEnable(true);
         climbConfig.MotorOutput = new MotorOutputConfigs()
                 .withNeutralMode(NeutralModeValue.Brake)
                 .withInverted(InvertedValue.Clockwise_Positive);

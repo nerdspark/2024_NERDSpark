@@ -44,6 +44,7 @@ public final class Constants {
         public static final double rumbleWait = 0.3;
 
         public static final int servoPort = 9;
+        public static final int servoPortSmidge = 0;
         public static final int winchPort = 6;
     }
 
@@ -293,6 +294,7 @@ public final class Constants {
             // TRAP DROPOFF
 
             public static final double winchAmpLimit = 50;
+            public static final double winchAmpLimitSmidge = 20;
 
             public static final double trapArmAngle = Units.degreesToRadians(109);
             public static final double trapArmDifference = Units.degreesToRadians(29);

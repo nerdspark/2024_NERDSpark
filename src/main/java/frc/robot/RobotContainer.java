@@ -35,6 +35,7 @@ import frc.robot.Constants.ArmConstants.PickupSetpoints;
 import frc.robot.Constants.ArmConstants.TrapSetpoints;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.BlinkinLightsConstants;
+import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.FixedShotConstants;
 import frc.robot.Constants.FourBarConstants;
@@ -77,7 +78,6 @@ import frc.robot.subsystems.vision.AprilTagVisionIOPhotonVision;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystemLimeLight;
 import frc.robot.subsystems.vision.PoseEstimatorSubsystemPhotonVision;
 import frc.robot.util.AutoAim;
-import frc.robot.util.AvoidPoles;
 import frc.robot.util.JoystickMap;
 import java.util.function.Supplier;
 
@@ -147,7 +147,9 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(true); // bL
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
+            climb = new Climb(new ClimbIOSparkMax(ClimbConstants.servoPortSmidge, TrapSetpoints.winchAmpLimitSmidge));
             lights = new BlinkinLights(new BlinkinLightsIOSparkMax(BlinkinLightsConstants.lightChannelSmidge));
+            scheduleClimb();
         } else {
             drivetrain = TunerConstantsSmudge.DriveTrain;
 
@@ -155,10 +157,11 @@ public class RobotContainer { // implements RobotConstants{
             drivetrain.getModule(1).getDriveMotor().setInverted(true); // FR
             drivetrain.getModule(2).getDriveMotor().setInverted(false); // bL
             drivetrain.getModule(3).getDriveMotor().setInverted(true); // br
-            climb = new Climb(new ClimbIOSparkMax());
+            climb = new Climb(new ClimbIOSparkMax(ClimbConstants.servoPort, TrapSetpoints.winchAmpLimit));
             arm = new Arm(new ArmIOSparkMax());
             lights = new BlinkinLights(new BlinkinLightsIOSparkMax(BlinkinLightsConstants.lightChannelSmudge));
             scheduleArmCommands();
+            scheduleClimb();
         }
 
         drivetrain.setRobotIntake(intake);
@@ -208,12 +211,10 @@ public class RobotContainer { // implements RobotConstants{
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         //     new DriveCommand(drivetrain,() -> driver.getLeftX(),() -> driver.getRightX(),() -> driver.getLeftY(),()
         // -> driver.getRightY(),() -> driverRaw.getPOV()));
-        drivetrain.setDefaultCommand(
-                drivetrain.applyRequest(() -> drive.withVelocityX(xLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
-                        .withVelocityY(yLimiter.calculate(
-                                                -JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
-                        .withRotationalRate(calculateAutoTurn(() -> 0.0))));
+        drivetrain.setDefaultCommand(drivetrain.applyRequest(() -> drive.withVelocityX(
+                        xLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightY()) * MaxSpeed))
+                .withVelocityY(yLimiter.calculate(-JoystickMap.JoystickPowerCalculate(driver.getRightX()) * MaxSpeed))
+                .withRotationalRate(calculateAutoTurn(() -> 0.0))));
 
         // if (Utils.isSimulation()) {
         //     drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
@@ -234,11 +235,12 @@ public class RobotContainer { // implements RobotConstants{
                                         - AutoAim.calculateShooterRPM(
                                                 () -> drivetrain.getState().Pose, () -> new Translation2d()))
                                 < 50.0),
-                () -> (
-                        drivetrain
+                () -> (drivetrain
                                 .getCurrentPose()
                                 .getTranslation()
-                                .getDistance(poseEstimatorSubSystemLimeLight.getCurrentPose().getTranslation())
+                                .getDistance(poseEstimatorSubSystemLimeLight
+                                        .getCurrentPose()
+                                        .getTranslation())
                         < DrivetrainConstants.poseSyncTolerance)));
     }
 
@@ -809,13 +811,7 @@ public class RobotContainer { // implements RobotConstants{
     //                         : 0.0),
     //                 IntakeMode.FORCEINTAKE));
     // copilot.leftBumper().onFalse(new IntakeCommand(intake, () -> 0.0, IntakeMode.FORCEINTAKE));
-
-    private void scheduleArmCommands() {
-
-        // // Climb commands
-        // climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
-
-        // shoot grappler
+    private void scheduleClimb() {
         driver.a()
                 .or(driver.back())
                 .or(driver.y())
@@ -829,6 +825,15 @@ public class RobotContainer { // implements RobotConstants{
                 .whileTrue(new GrapplerCommand(climb));
         driver.a().whileTrue(new WinchCommand(climb).onlyIf(() -> climb.getServoOut()));
         driver.y().whileTrue(new UnwindCommand(climb).onlyIf(() -> climb.getServoOut()));
+        copilot.rightStick().onTrue(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb));
+    }
+
+    private void scheduleArmCommands() {
+
+        // // Climb commands
+        // climb.setDefaultCommand(new ClimbCommand(climb, () -> false, () -> false));
+
+        // shoot grappler
 
         // .whileTrue(new WinchCommand(climb, () -> false)
         //         .alongWith(new WaitCommand(ClimbConstants.rumbleWait)
@@ -877,7 +882,6 @@ public class RobotContainer { // implements RobotConstants{
                         () -> false));
 
         // TRAP COMMAND
-        copilot.rightStick().onTrue(new FourBarCommand(fourBar, () -> TrapSetpoints.fourBarClimb));
 
         copilot.rightStick()
                 .onTrue(new ArmCommandAngles(
