@@ -140,7 +140,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "visionTestBlue6Note",
+  "folder": null,
   "previewStartingState": {
     "rotation": 30.0,
     "velocity": 0

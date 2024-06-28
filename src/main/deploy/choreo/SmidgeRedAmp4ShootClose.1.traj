@@ -262,5 +262,24 @@
       "timestamp": 1.760799030153799
     }
   ],
-  "eventMarkers": []
+  "eventMarkers": [
+    {
+      "timestamp": 0.3,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "smidgeRedAmpShoot"
+        }
+      }
+    },
+    {
+      "timestamp": 1.760799030153799,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "forcedIntakeShoot"
+        }
+      }
+    }
+  ]
 }

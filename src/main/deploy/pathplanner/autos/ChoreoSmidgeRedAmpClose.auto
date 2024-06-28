@@ -51,6 +51,12 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "forcedIntakeShoot"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "SmidgeRedAmp3ShootClose.1"
@@ -60,6 +66,12 @@
                       "type": "path",
                       "data": {
                         "pathName": "SmidgeRedAmp4ShootClose.1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "forcedIntakeShoot"
                       }
                     },
                     {
@@ -75,6 +87,12 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "forcedIntakeShoot"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "SmidgeRedAmp7ShootClose.1"
@@ -84,6 +102,12 @@
                       "type": "path",
                       "data": {
                         "pathName": "SmidgeRedAmp8ShootClose.1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "forcedIntakeShoot"
                       }
                     }
                   ]
