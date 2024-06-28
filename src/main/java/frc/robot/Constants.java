@@ -419,8 +419,8 @@ public final class Constants {
         public static final String Limelight3 = "limelight-right";
 
         public static boolean USE_FRONT_LIMELIGHT = true;
-        public static boolean USE_BACK_LEFT_LIMELIGHT = false;
-        public static boolean USE_BACK_RIGHT_LIMELIGHT = false;
+        public static boolean USE_BACK_LEFT_LIMELIGHT = true;
+        public static boolean USE_BACK_RIGHT_LIMELIGHT = true;
 
         public static enum VisionDeviationDistanceStrategy {
             SMALEST_DISTANCE,
