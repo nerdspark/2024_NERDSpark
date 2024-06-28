@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 15.12,
-      "y": 2.0
+      "x": 1.45,
+      "y": 7.38
     },
-    "rotation": 180.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -16,16 +16,9 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "shootSpeed"
-                      }
-                    }
-                  ]
+                  "name": "shootSpeed"
                 }
               },
               {
@@ -35,19 +28,37 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedWeird1"
+                        "pathName": "smidgeAmpSide1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedWeird2"
+                        "pathName": "smidgeAmpSide2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedWeird4a"
+                        "pathName": "smidgeAmpSide3"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "smidgeAmpSide4"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "smidgePUampSide4"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "smidgePuampside4.5"
                       }
                     }
                   ]

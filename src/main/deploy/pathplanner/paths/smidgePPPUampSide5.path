@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 15.010754645786747,
-        "y": 6.371968747240549
+        "y": 6.5
       },
       "prevControl": {
         "x": 15.092705990531716,
-        "y": 6.836359700795371
+        "y": 6.964390953554822
       },
       "nextControl": null,
       "isLocked": false,
@@ -57,17 +57,17 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 145.0,
-    "rotateFast": false
+    "rotation": 130.0,
+    "rotateFast": true
   },
   "reversed": false,
-  "folder": "RedAmpSide",
+  "folder": "SmidgeRedAmp",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

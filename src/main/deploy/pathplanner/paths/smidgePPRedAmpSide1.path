@@ -3,59 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 10.821,
-        "y": 6.6
+        "x": 15.09,
+        "y": 7.375872720369022
       },
       "prevControl": null,
       "nextControl": {
-        "x": 11.89660354547794,
-        "y": 7.061725898844035
+        "x": 14.437095232571966,
+        "y": 7.580751082228836
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.945387164102154,
-        "y": 7.382701999095163
+        "x": 13.711,
+        "y": 7.6900195418914015
       },
       "prevControl": {
-        "x": 13.055038999186571,
-        "y": 7.358959381364081
+        "x": 14.280021821810777,
+        "y": 7.683190263160047
       },
       "nextControl": {
-        "x": 14.96977897341426,
-        "y": 7.410019114010152
+        "x": 12.702507944150435,
+        "y": 7.702123248785868
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 15.304413631122886,
-        "y": 7.382701999095163
+        "x": 8.22,
+        "y": 7.34
       },
       "prevControl": {
-        "x": 14.079553240163458,
-        "y": 7.419072381212955
+        "x": 9.465380318043874,
+        "y": 7.708312329176269
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.8,
-      "rotationDegrees": 0.0,
-      "rotateFast": true
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fbtointake",
-      "waypointRelativePos": 0.8,
+      "name": "fourBarToIntake",
+      "waypointRelativePos": 1.35,
       "command": {
         "type": "sequential",
         "data": {
@@ -71,8 +65,8 @@
       }
     },
     {
-      "name": "softintake",
-      "waypointRelativePos": 0.95,
+      "name": "softIntake",
+      "waypointRelativePos": 1.4,
       "command": {
         "type": "sequential",
         "data": {
@@ -82,27 +76,43 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "redAmpSide2"
+              }
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "VisionOff",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": []
         }
       }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.86,
+    "maxVelocity": 5.55,
     "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "RedAmpSide",
+  "folder": "SmidgeRedAmp",
   "previewStartingState": {
-    "rotation": 162.58073020980655,
+    "rotation": 180.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

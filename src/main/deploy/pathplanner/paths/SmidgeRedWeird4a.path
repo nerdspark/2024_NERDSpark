@@ -16,15 +16,15 @@
     },
     {
       "anchor": {
-        "x": 15.3,
+        "x": 15.5,
         "y": 2.0
       },
       "prevControl": {
-        "x": 15.200000000000001,
+        "x": 15.4,
         "y": 2.0
       },
       "nextControl": {
-        "x": 15.4,
+        "x": 15.8,
         "y": 2.0
       },
       "isLocked": false,
@@ -36,8 +36,8 @@
         "y": 2.746
       },
       "prevControl": {
-        "x": 14.382461002741989,
-        "y": 2.2744015099921198
+        "x": 13.623638687255994,
+        "y": 2.5664217842944126
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,7 +56,7 @@
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.8,
+      "waypointRelativePos": 1.65,
       "rotationDegrees": -145.0,
       "rotateFast": true
     }
@@ -75,11 +75,11 @@
     },
     {
       "name": "StopRotateToShoot",
-      "minWaypointRelativePos": 1.55,
+      "minWaypointRelativePos": 0.9,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
         "maxVelocity": 5.556,
-        "maxAcceleration": 3.0,
+        "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0
       }
@@ -115,6 +115,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "smidgeRedWeirdShoot"
+              }
             }
           ]
         }
@@ -130,7 +136,7 @@
             {
               "type": "named",
               "data": {
-                "name": null
+                "name": "smidgeRedWeirdShoot"
               }
             }
           ]
@@ -153,11 +159,31 @@
           ]
         }
       }
+    },
+    {
+      "name": "VisionOff",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "VisionOn",
+      "waypointRelativePos": 1.2,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 5.556,
-    "maxAcceleration": 5.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

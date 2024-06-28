@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 12.87,
-        "y": 7.66
+        "x": 8.21,
+        "y": 4.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 12.959612471931496,
-        "y": 7.203599136543003
+        "x": 7.246531927743191,
+        "y": 6.069354446547374
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.12,
+        "x": 5.72,
         "y": 6.6
       },
       "prevControl": {
-        "x": 13.053165707471015,
-        "y": 6.911245275482004
+        "x": 6.70054546759925,
+        "y": 6.191096467703624
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,15 +30,27 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.3,
-      "rotationDegrees": 161.0,
-      "rotateFast": true
+      "waypointRelativePos": 0.55,
+      "rotationDegrees": 6.0,
+      "rotateFast": false
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.95,
+      "maxWaypointRelativePos": 1.5,
+      "constraints": {
+        "maxVelocity": 4.86,
+        "maxAcceleration": 3.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
-      "name": "shoot",
+      "name": "forcedIntake",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
@@ -55,16 +67,26 @@
       }
     },
     {
-      "name": "back up four bar to amp side 2",
-      "waypointRelativePos": 0.2,
+      "name": "vision on",
+      "waypointRelativePos": 0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
-                "name": "fourBarToHome"
+                "name": "blueAmpSide2a"
               }
             }
           ]
@@ -74,19 +96,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 161.0,
+    "rotation": 6.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "SmidgeRedAmp",
+  "folder": "SmidgeBlueAmp",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": -50.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
