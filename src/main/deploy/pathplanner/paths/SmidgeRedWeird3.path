@@ -97,6 +97,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "smidgeRedWeirdShoot"
+              }
             }
           ]
         }
@@ -112,7 +118,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToWSRSmidge"
+                "name": "smidgeRedWeirdShoot"
               }
             }
           ]
@@ -135,11 +141,31 @@
           ]
         }
       }
+    },
+    {
+      "name": "VisionOff",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "VisionOn",
+      "waypointRelativePos": 1.15,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 5.556,
-    "maxAcceleration": 5.0,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

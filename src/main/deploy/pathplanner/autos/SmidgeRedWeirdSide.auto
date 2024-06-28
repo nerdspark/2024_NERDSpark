@@ -3,7 +3,7 @@
   "startingPose": {
     "position": {
       "x": 15.12,
-      "y": 2
+      "y": 2.0
     },
     "rotation": 180.0
   },
@@ -42,12 +42,6 @@
                       "type": "path",
                       "data": {
                         "pathName": "SmidgeRedWeird2"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "SmidgeRedWeird3"
                       }
                     },
                     {

@@ -3,28 +3,28 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 13.157,
-        "y": 2.746
+        "x": 3.381,
+        "y": 2.75
       },
       "prevControl": null,
       "nextControl": {
-        "x": 11.828310758190469,
-        "y": 1.6324493094898658
+        "x": 2.8111598800124917,
+        "y": 1.8208336257454945
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 15.5,
+        "x": 1.04115,
         "y": 2.0
       },
       "prevControl": {
-        "x": 15.4,
+        "x": 1.1411499999999997,
         "y": 2.0
       },
       "nextControl": {
-        "x": 15.6,
+        "x": 0.7411499999999993,
         "y": 2.0
       },
       "isLocked": false,
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 13.157,
+        "x": 3.381,
         "y": 2.746
       },
       "prevControl": {
-        "x": 14.382461002741989,
-        "y": 2.2744015099921198
+        "x": 2.914366331988408,
+        "y": 2.5664087422003843
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,29 +46,40 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 0.0,
+      "waypointRelativePos": 0.35,
+      "rotationDegrees": 180.0,
       "rotateFast": true
     },
     {
       "waypointRelativePos": 1.3,
-      "rotationDegrees": 0.0,
+      "rotationDegrees": 180.0,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 1.65,
-      "rotationDegrees": -145.0,
+      "rotationDegrees": -42.0,
       "rotateFast": true
     }
   ],
   "constraintZones": [
     {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 1.25,
-      "maxWaypointRelativePos": 2.0,
+      "name": "PickUpRotation",
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 0.6,
       "constraints": {
         "maxVelocity": 3.0,
         "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    },
+    {
+      "name": "StopRotateToShoot",
+      "minWaypointRelativePos": 0.9,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 5.556,
+        "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0
       }
@@ -104,6 +115,12 @@
               "data": {
                 "name": "onlySoftIntake"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "smidgeBlueWeirdShoot"
+              }
             }
           ]
         }
@@ -119,7 +136,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fourBarToWSRSmidge"
+                "name": "smidgeBlueWeirdShoot"
               }
             }
           ]
@@ -142,23 +159,43 @@
           ]
         }
       }
+    },
+    {
+      "name": "VisionOff",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "VisionOn",
+      "waypointRelativePos": 1.2,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 5.556,
-    "maxAcceleration": 5.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -145.0,
+    "rotation": -42.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "SmidgeRedWeird",
+  "folder": "SmidgeBlueWeird",
   "previewStartingState": {
-    "rotation": -145.0,
+    "rotation": -42.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

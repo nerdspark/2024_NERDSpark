@@ -361,6 +361,10 @@ public final class Constants {
         public static final double ampSideRedSmidge = 1.95;
         public static final double centerRedSmidge = 1.95;
 
+        public static final double weirdSideBlueSmidge = 1.9;
+        public static final double ampSideBlueSmidge = 1.95;
+        public static final double centerBlueSmidge = 1.95;
+
         // public static final double blueStarWars1 = 1.95; // 3.5
         // public static final double blueStarWars2 = 1.87; // 2.75
         // public static final double blueStarWars3 = 1.87;

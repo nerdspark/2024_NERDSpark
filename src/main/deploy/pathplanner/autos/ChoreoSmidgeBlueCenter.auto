@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 15.09,
-      "y": 7.38
+      "x": 1.348,
+      "y": 5.422
     },
-    "rotation": 180.0
+    "rotation": -2.057156298245418e-20
   },
   "command": {
     "type": "sequential",
@@ -28,25 +28,31 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedAmp1"
+                        "pathName": "SmidgeBlueCenter1.1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedAmp2"
+                        "pathName": "SmidgeBlueCenter2.1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedAmp3"
+                        "pathName": "SmidgeBlueCenter3.1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SmidgeRedAmp4"
+                        "pathName": "SmidgeBlueCenter4.1"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SmidgeBlueCenter5.1"
                       }
                     }
                   ]
@@ -58,6 +64,6 @@
       ]
     }
   },
-  "folder": "SmidgeAutos",
-  "choreoAuto": false
+  "folder": "ChoreoAutos",
+  "choreoAuto": true
 }

@@ -145,15 +145,5 @@
       "timestamp": 1.0029306604435893
     }
   ],
-  "eventMarkers": [
-    {
-      "timestamp": 1.0029306604435893,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "forcedIntakeShoot"
-        }
-      }
-    }
-  ]
+  "eventMarkers": []
 }
