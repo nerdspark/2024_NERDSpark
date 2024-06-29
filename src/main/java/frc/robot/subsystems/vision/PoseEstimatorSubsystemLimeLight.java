@@ -16,6 +16,7 @@ public class PoseEstimatorSubsystemLimeLight extends SubsystemBase {
 
     private final CommandSwerveDrivetrain driveTrain;
 
+    private boolean visionEnable = false;
     private final Field2d field2d = new Field2d();
 
     static {
@@ -40,15 +41,17 @@ public class PoseEstimatorSubsystemLimeLight extends SubsystemBase {
     public void periodic() {
         // Update pose estimator with drivetrain sensors
 
-        if (VisionConstants.USE_VISION == true) {
-            if (VisionConstants.USE_FRONT_LIMELIGHT) {
-                updatePoseEstimates(VisionConstants.Limelight1);
-            }
-            if (VisionConstants.USE_BACK_LEFT_LIMELIGHT) {
-                updatePoseEstimates(VisionConstants.Limelight2);
-            }
-            if (VisionConstants.USE_BACK_RIGHT_LIMELIGHT) {
-                updatePoseEstimates(VisionConstants.Limelight3);
+        if(visionEnable) {
+            if (VisionConstants.USE_VISION == true) {
+                if (VisionConstants.USE_FRONT_LIMELIGHT) {
+                    updatePoseEstimates(VisionConstants.Limelight1);
+                }
+                if (VisionConstants.USE_BACK_LEFT_LIMELIGHT) {
+                    updatePoseEstimates(VisionConstants.Limelight2);
+                }
+                if (VisionConstants.USE_BACK_RIGHT_LIMELIGHT) {
+                    updatePoseEstimates(VisionConstants.Limelight3);
+                }
             }
         }
 
@@ -133,5 +136,8 @@ public class PoseEstimatorSubsystemLimeLight extends SubsystemBase {
             driveTrain.addVisionMeasurement(
                     cameraPose.pose, cameraPose.timestampSeconds, VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev));
         }
+    }
+    public void enableVision(boolean enable) {
+        visionEnable = enable;
     }
 }

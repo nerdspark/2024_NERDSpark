@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 8.557086247120472,
-        "y": 0.8197651407689271
+        "y": 0.7
       },
       "prevControl": {
         "x": 8.655567022421693,
-        "y": 0.8371299585356201
+        "y": 0.7173648177666929
       },
       "nextControl": {
         "x": 8.45860547181925,
-        "y": 0.8024003230022342
+        "y": 0.682635182233307
       },
       "isLocked": false,
       "linkedName": null
@@ -141,9 +141,33 @@
       "name": "VisionON",
       "waypointRelativePos": 1.1,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision ON"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "VisionOff",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
+              }
+            }
+          ]
         }
       }
     }

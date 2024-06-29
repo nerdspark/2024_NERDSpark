@@ -366,9 +366,9 @@ public class RobotContainer { // implements RobotConstants{
                 "smidgeBlueCenterShoot", new FourBarCommand(fourBar, () -> AutoConstants.centerBlueSmidge));
 
         NamedCommands.registerCommand(
-                "Vision ON", new InstantCommand(() -> aprilTagVision.setEnableVisionUpdates(true)));
+                "Vision ON", new InstantCommand(() -> poseEstimatorSubSystemLimeLight.enableVision(true)));
         NamedCommands.registerCommand(
-                "Vision OFF", new InstantCommand(() -> aprilTagVision.setEnableVisionUpdates(false)));
+                "Vision OFF", new InstantCommand(() -> poseEstimatorSubSystemLimeLight.enableVision(false)));
     }
 
     private void configureButtonBindings() {

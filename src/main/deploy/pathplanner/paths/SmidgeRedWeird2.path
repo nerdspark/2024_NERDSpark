@@ -151,9 +151,16 @@
       "name": "VisionOff",
       "waypointRelativePos": 0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision OFF"
+              }
+            }
+          ]
         }
       }
     },
@@ -161,9 +168,16 @@
       "name": "VisionOn",
       "waypointRelativePos": 1.15,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Vision ON"
+              }
+            }
+          ]
         }
       }
     }
