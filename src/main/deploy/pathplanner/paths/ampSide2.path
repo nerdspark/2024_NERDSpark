@@ -81,7 +81,7 @@
   "eventMarkers": [
     {
       "name": "forcedIntakeShoot",
-      "waypointRelativePos": 0.85,
+      "waypointRelativePos": 0.75,
       "command": {
         "type": "sequential",
         "data": {

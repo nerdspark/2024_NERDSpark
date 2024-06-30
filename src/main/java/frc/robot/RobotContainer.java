@@ -688,9 +688,7 @@ public class RobotContainer { // implements RobotConstants{
                                                                                 ? 2.0
                                                                                 : -2.0),
                                                                 new Rotation2d())),
-                                                () -> new Translation2d(
-                                                        drivetrain.getState().speeds.vxMetersPerSecond,
-                                                        drivetrain.getState().speeds.vyMetersPerSecond))
+                                                () -> new Translation2d())
                                         .plus(AutoAim.calculateShooterSpin(() -> FixedShotConstants.RPMFeed))
                                         .getDegrees()))
                                 .withVelocityX(xLimiter.calculate(

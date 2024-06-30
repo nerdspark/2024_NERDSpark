@@ -61,7 +61,7 @@ public final class Constants {
         public static final double RPMLongRicochet = 5800.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
-        public static final double RPMHome = 4500.0;
+        public static final double RPMHome = 5200.0;
         public static final double RPMFeed = 4200.0;
     }
 
