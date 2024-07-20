@@ -9,6 +9,14 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.commands.PathfindingCommand;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+
+import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -196,7 +204,10 @@ public class RobotContainer { // implements RobotConstants{
         //                 DriverStation.getAlliance().get() == Alliance.Blue
         //                         ? SpeakerConstants.speakerLocBlue.getTranslation()
         //                         : SpeakerConstants.speakerLocRed.getTranslation()));
-    }
+
+        FollowPathCommand.warmupCommand().schedule();
+   
+}
 
     private void configureDefaultCommands() {
         // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically

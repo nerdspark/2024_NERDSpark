@@ -124,7 +124,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                         new PIDConstants(5, 0, 0),
                         TunerConstantsSmidge.kSpeedAt12VoltsMps,
                         driveBaseRadius,
-                        new ReplanningConfig()),
+                        new ReplanningConfig(false, false)),
                 // flips the path if on red alliance (do we want this? remove if we're making red-specific paths)
                 // () -> DriverStation.getAlliance()
                 //         .filter(value -> value == DriverStation.Alliance.Red)

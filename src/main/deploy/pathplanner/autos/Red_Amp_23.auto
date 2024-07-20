@@ -5,7 +5,7 @@
       "x": 1.45,
       "y": 7.38
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -28,37 +28,31 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ampSide1"
+                        "pathName": "DIFFORDER_red1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ampSide2"
+                        "pathName": "Copy of RedAmpSide3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide3"
+                        "pathName": "Copy of RedAmpSide4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ampSide4"
+                        "pathName": "Red_Amp_23_2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Blue_Amp_23_2"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "puampside4.5"
+                        "pathName": "Copy of Copy of PUampSide5"
                       }
                     },
                     {

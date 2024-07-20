@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 8.31,
-        "y": 5.69
+        "y": 5.79
       },
       "prevControl": {
         "x": 9.549352874819009,
-        "y": 6.141087556186367
+        "y": 6.241087556186367
       },
       "nextControl": null,
       "isLocked": false,
@@ -117,7 +117,7 @@
     },
     {
       "name": "spit",
-      "waypointRelativePos": 1.15,
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "sequential",
         "data": {

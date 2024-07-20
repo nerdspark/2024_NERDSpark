@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.466594987905087,
-        "y": 6.924896192236645
+        "x": 6.528790464682499,
+        "y": 6.890993930625351
       },
       "isLocked": false,
       "linkedName": null
@@ -32,28 +32,12 @@
     },
     {
       "anchor": {
-        "x": 6.385375611378803,
-        "y": 6.283188123766833
-      },
-      "prevControl": {
-        "x": 5.999986167341282,
-        "y": 6.389082956832744
-      },
-      "nextControl": {
-        "x": 6.738322308553448,
-        "y": 6.186207700050727
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 8.23,
-        "y": 5.89
+        "y": 5.69
       },
       "prevControl": {
-        "x": 7.1125352507115265,
-        "y": 6.127736927838528
+        "x": 7.163913386456006,
+        "y": 6.071480483175665
       },
       "nextControl": null,
       "isLocked": false,
@@ -67,12 +51,12 @@
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.5,
+      "waypointRelativePos": 1.25,
       "rotationDegrees": 6.0,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 2.8499999999999996,
+      "waypointRelativePos": 1.95,
       "rotationDegrees": -15.0,
       "rotateFast": false
     }
@@ -98,7 +82,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.7,
+      "waypointRelativePos": 1.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -115,7 +99,7 @@
     },
     {
       "name": "softIntake",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 1.55,
       "command": {
         "type": "sequential",
         "data": {
@@ -155,7 +139,7 @@
     },
     {
       "name": "vision off",
-      "waypointRelativePos": 1.45,
+      "waypointRelativePos": 1.25,
       "command": {
         "type": "parallel",
         "data": {

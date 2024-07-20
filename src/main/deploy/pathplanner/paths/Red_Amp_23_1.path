@@ -3,45 +3,72 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 10.821,
-        "y": 6.6
+        "x": 15.09,
+        "y": 7.38
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.80391894887836,
-        "y": 7.471482622568879
+        "x": 13.603923227664788,
+        "y": 7.6763609844313
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.37,
-        "y": 7.662702426973805
+        "x": 11.329773410991908,
+        "y": 7.38
       },
       "prevControl": {
-        "x": 12.156116137170343,
-        "y": 7.621726754601321
+        "x": 12.32191841365379,
+        "y": 7.6725657068538595
+      },
+      "nextControl": {
+        "x": 10.134649633461116,
+        "y": 7.027579505200299
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.31,
+        "y": 5.69
+      },
+      "prevControl": {
+        "x": 9.267331234910198,
+        "y": 6.010016974616939
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.45,
-      "rotationDegrees": 0.0,
-      "rotateFast": true
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "fbtointake",
-      "waypointRelativePos": 0.2,
+      "name": "dropRing",
+      "waypointRelativePos": 0.4,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "gripperOut"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "FBToIntake",
+      "waypointRelativePos": 0.65,
+      "command": {
+        "type": "parallel",
         "data": {
           "commands": [
             {
@@ -55,10 +82,10 @@
       }
     },
     {
-      "name": "softintake",
-      "waypointRelativePos": 0.35,
+      "name": "PickupRing",
+      "waypointRelativePos": 0.95,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
@@ -86,14 +113,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "RedAmpSide",
   "previewStartingState": {
-    "rotation": 167.0,
+    "rotation": 180.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

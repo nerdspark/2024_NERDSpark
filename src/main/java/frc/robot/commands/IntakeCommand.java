@@ -118,7 +118,7 @@ public class IntakeCommand extends Command {
                 return false;
 
             case SHOOT:
-                return timer.get() < 1.0 ? false : !Intake.getBeamBreak();
+                return timer.get() < 0.5 ? false : !Intake.getBeamBreak();
 
             case SOFTINTAKE:
                 return Intake.getBeamBreak();

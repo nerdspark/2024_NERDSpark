@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.26,
-        "y": 7.62
+        "x": 10.82,
+        "y": 6.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3600051345437127,
-        "y": 7.307579933078942
+        "x": 10.96099235963955,
+        "y": 7.51928757367011
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.11,
-        "y": 6.8
+        "x": 13.37,
+        "y": 7.66
       },
       "prevControl": {
-        "x": 3.305370904713733,
-        "y": 7.095872292487772
+        "x": 12.615140464797857,
+        "y": 7.580751082228836
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,16 +30,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.25,
-      "rotationDegrees": 18.0,
-      "rotateFast": true
+      "waypointRelativePos": 0.2,
+      "rotationDegrees": 0,
+      "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "forceintake",
-      "waypointRelativePos": 1.0,
+      "name": "FBtoIntake",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -47,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntakeShoot"
+                "name": "fourBarToIntake"
               }
             }
           ]
@@ -55,12 +55,18 @@
       }
     },
     {
-      "name": "hone",
-      "waypointRelativePos": 0,
+      "name": "SoftIntake",
+      "waypointRelativePos": 0.2,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "onlySoftIntake"
+              }
+            },
             {
               "type": "named",
               "data": {
@@ -80,13 +86,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 18.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "BlueAmpSide",
+  "folder": "RedAmpSide",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": 164.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
