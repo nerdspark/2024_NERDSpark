@@ -197,7 +197,7 @@ public final class Constants {
         public static final double shoulderRadPerRot = 1 / (1.0 / 36.0 * 14.0 / 32.0); // * 2048;
         public static final double elbowRadPerRot = 1 / (1.0 / 12.0 * virtual4BarGearRatio); // * 2048;
 
-        public static final double shoulderOffset = -0.07; // radians, fwd = 0
+        public static final double shoulderOffset = 0.03; // radians, fwd = 0
         public static final double elbowOffset = 2.68; // negative of measurement
 
         public static final Translation2d armBasePosition = new Translation2d();
@@ -248,7 +248,7 @@ public final class Constants {
 
             // PICKUP SEQUENCE
 
-            public static final double pickupElbow = ArmConstants.elbowOffset - 0.44;
+            public static final double pickupElbow = ArmConstants.elbowOffset - 0.41;
             public static final double pickupShoulder = ArmConstants.shoulderOffset;
             public static final double pullOutDifference = 0.5;
             public static final double pullOutElbow = pickupElbow + pullOutDifference;
