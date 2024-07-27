@@ -131,7 +131,7 @@
       "name": "vision on",
       "waypointRelativePos": 0.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -148,7 +148,7 @@
       "name": "vision off",
       "waypointRelativePos": 0.8,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
