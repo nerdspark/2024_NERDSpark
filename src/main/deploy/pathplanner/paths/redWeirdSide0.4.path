@@ -32,11 +32,11 @@
     },
     {
       "anchor": {
-        "x": 8.52,
+        "x": 8.3,
         "y": 4.31
       },
       "prevControl": {
-        "x": 10.57069320463769,
+        "x": 10.350693204637691,
         "y": 4.31
       },
       "nextControl": null,
@@ -72,7 +72,7 @@
   "eventMarkers": [
     {
       "name": "forceIntake",
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 0.75,
       "command": {
         "type": "sequential",
         "data": {
@@ -80,24 +80,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "forceIntakeZero",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "forcedIntakeZero"
+                "name": "forcedIntakeShoot"
               }
             }
           ]
@@ -148,7 +131,7 @@
       "name": "vision on",
       "waypointRelativePos": 0.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -165,13 +148,30 @@
       "name": "vision off",
       "waypointRelativePos": 0.8,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
                 "name": "Vision OFF"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "RfourBarToWSR3"
               }
             }
           ]

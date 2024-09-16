@@ -48,6 +48,12 @@
                       "data": {
                         "pathName": "DIFFORDER_red4"
                       }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "DIFFORDER_red5"
+                      }
                     }
                   ]
                 }

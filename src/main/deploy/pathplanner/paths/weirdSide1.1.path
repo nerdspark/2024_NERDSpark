@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5434169926969086,
-        "y": 2.69098751244571
+        "x": 1.0175625305833602,
+        "y": 2.2675722312633733
       },
       "isLocked": false,
       "linkedName": null
@@ -61,7 +61,7 @@
   "eventMarkers": [
     {
       "name": "shootRing1",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -120,7 +120,7 @@
       "name": "vision off",
       "waypointRelativePos": 0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {

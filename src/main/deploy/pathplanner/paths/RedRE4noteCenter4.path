@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 8.29,
-        "y": 7.84
+        "y": 7.49
       },
       "prevControl": {
         "x": 9.164892053978987,
-        "y": 7.634408783929046
+        "y": 7.284408783929046
       },
       "nextControl": null,
       "isLocked": false,
@@ -80,7 +80,7 @@
             {
               "type": "named",
               "data": {
-                "name": "forcedIntake"
+                "name": "forcedIntakeShoot"
               }
             }
           ]

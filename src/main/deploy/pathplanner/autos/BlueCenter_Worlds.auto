@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.35,
-      "y": 5.43
+      "x": 1.32,
+      "y": 5.42
     },
     "rotation": 0
   },
@@ -28,37 +28,31 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "visionTestBlue6Note1"
+                        "pathName": "BlueCenter_Worlds1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "visionTestBlue6Note2"
+                        "pathName": "BlueCenter_Worlds3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "visionTestBlue6Note3"
+                        "pathName": "BlueCenter_Worlds4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "visionTestBlue6Note4"
+                        "pathName": "BlueCenter_Worlds5"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "visionTestBlue6Note5"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "visionTestBlue6Note6"
+                        "pathName": "BlueCenter_Worlds6"
                       }
                     }
                   ]

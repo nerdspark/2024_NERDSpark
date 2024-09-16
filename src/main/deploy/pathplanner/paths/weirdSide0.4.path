@@ -20,12 +20,12 @@
         "y": 3.233079965566812
       },
       "prevControl": {
-        "x": 4.092571886211389,
-        "y": 1.538634441444447
+        "x": 4.193177139450893,
+        "y": 1.666595703133602
       },
       "nextControl": {
-        "x": 4.599463025732154,
-        "y": 3.9223927732448125
+        "x": 4.619659579164548,
+        "y": 4.239016846889008
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 4.24
       },
       "prevControl": {
-        "x": 6.169306795362309,
-        "y": 4.24
+        "x": 6.098545904771414,
+        "y": 4.227575226413871
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,12 +47,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.95,
-      "rotationDegrees": -42.0,
+      "rotationDegrees": -39.0,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 0.6,
-      "rotationDegrees": -42.0,
+      "rotationDegrees": -39.0,
       "rotateFast": false
     }
   ],
@@ -131,7 +131,7 @@
       "name": "vision on",
       "waypointRelativePos": 0.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -148,13 +148,30 @@
       "name": "vision off",
       "waypointRelativePos": 0.9,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
                 "name": "Vision OFF"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToWSR3"
               }
             }
           ]

@@ -13,6 +13,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -46,6 +47,8 @@ public class AprilTagVision extends SubsystemBase {
 
     private double timestamp = 0;
 
+    public boolean poseUpdated = false;
+
     // Path for logging vision data
     private static final String VISION_PATH = "AprilTagVision/Inst";
 
@@ -75,6 +78,7 @@ public class AprilTagVision extends SubsystemBase {
 
     public AprilTagVision(AprilTagVisionIO... io) {
         // System.out.println("[Init] Creating AprilTagVision");
+        timer.reset();
         timer.start();
         this.io = io;
         inputs = new AprilTagVisionIOInputs[io.length];
@@ -109,8 +113,13 @@ public class AprilTagVision extends SubsystemBase {
         sendResultsToPoseEstimator(visionUpdates);
         // }
 
-        SmartDashboard.putBoolean("Pose updated?", timer.get() - timestamp < 2);
-        SmartDashboard.putNumber("System Time", timer.get());
+        // if(timestamp == 0) {
+        //     timer.reset();
+        // }
+
+        poseUpdated = Math.abs(timer.get() - timestamp) < 2.0;
+        SmartDashboard.putBoolean("Pose updated?", poseUpdated);
+        SmartDashboard.putNumber("Timer", timer.get());
         SmartDashboard.putNumber("Pose update timestamp", timestamp);
     }
 
@@ -127,7 +136,7 @@ public class AprilTagVision extends SubsystemBase {
                     continue;
                 }
 
-                double timestamp = poseEstimates.timestampSeconds();
+                timestamp = poseEstimates.timestampSeconds();
                 SmartDashboard.putNumber("timestamp", poseEstimates.timestampSeconds());
 
                 Pose3d robotPose = poseEstimates.pose();
@@ -152,6 +161,8 @@ public class AprilTagVision extends SubsystemBase {
                 speakerTagDistance = poseEstimates.speakerTagDistance();
                 speakerTagAngle = Units.radiansToDegrees(poseEstimates.speakerTagAngle());
                 reportedVisionPose = robotPose;
+                //  SmartDashboard.putNumber("xYStdDev", xyStdDev);
+                // SmartDashboard.putNumber("thetaStdDev", thetaStdDev);
 
                 logData(
                         instanceIndex,

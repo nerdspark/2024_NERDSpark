@@ -48,6 +48,24 @@
                       "data": {
                         "pathName": "Copy of ampSide4"
                       }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Blue_Amp_23_2"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "puampside4.5"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "forcedIntakeShoot"
+                      }
                     }
                   ]
                 }

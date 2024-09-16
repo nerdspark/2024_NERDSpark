@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.291,
-        "y": 6.04
+        "y": 5.69
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.103428545420261,
-        "y": 6.214651204446918
+        "x": 9.035135758132787,
+        "y": 5.969041302244454
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 6.64
       },
       "prevControl": {
-        "x": 9.902454156683705,
-        "y": 6.4282923594088315
+        "x": 9.929771271598696,
+        "y": 6.290017402495581
       },
       "nextControl": null,
       "isLocked": false,
@@ -58,16 +58,33 @@
       "name": "vision on",
       "waypointRelativePos": 0.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": []
+        }
+      }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "redRECenterNote6"
+              }
+            }
+          ]
         }
       }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.6,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

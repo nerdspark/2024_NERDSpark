@@ -968,7 +968,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueCenter2Comp": {
             "waypoints": [
@@ -1323,7 +1323,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueCenter3Comp": {
             "waypoints": [
@@ -1669,7 +1669,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueCenter4Comp": {
             "waypoints": [
@@ -2247,7 +2247,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueCenter5Comp": {
             "waypoints": [
@@ -2833,7 +2833,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueCenter6Comp2": {
             "waypoints": [
@@ -3633,7 +3633,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueCenter7Comp": {
             "waypoints": [
@@ -3998,7 +3998,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueCenter6RingComp1": {
             "waypoints": [
@@ -4363,7 +4363,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueCenter4Comp2": {
             "waypoints": [
@@ -5051,7 +5051,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueAmp1": {
             "waypoints": [
@@ -5749,7 +5749,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueAmp2": {
             "waypoints": [
@@ -7135,7 +7135,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "ChoreoBlueAmp4": {
             "waypoints": [
@@ -7500,7 +7500,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         }
     },
     "splitTrajectoriesAtStopPoints": false,

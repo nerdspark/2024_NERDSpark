@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 11.398066198279382,
-        "y": 1.0607408131414107
+        "y": 0.6353746150927475
       },
       "isLocked": false,
       "linkedName": null
@@ -99,11 +99,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToHome"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

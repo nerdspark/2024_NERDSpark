@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.35,
-      "y": 5.43
+      "x": 1.45,
+      "y": 7.38
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -28,37 +28,37 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "BlueVisionTest6Note1"
+                        "pathName": "Blue_Amp_DIFFORDER1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "BlueVisionTest6Note2"
+                        "pathName": "Copy of ampSide3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "BlueVisionTest6Note3"
+                        "pathName": "Copy of ampSide4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "BlueVisionTest6Note4"
+                        "pathName": "Blue_Amp_23_2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "BlueVisionTest6Note5"
+                        "pathName": "puampside4.5"
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "BlueVisionTest6Note6"
+                        "name": "forcedIntakeShoot"
                       }
                     }
                   ]

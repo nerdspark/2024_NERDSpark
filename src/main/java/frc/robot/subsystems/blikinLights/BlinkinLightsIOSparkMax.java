@@ -8,12 +8,12 @@ public class BlinkinLightsIOSparkMax implements BlinkinLightsIO {
     private PWM lights;
     // private AddressableLED led;
 
-    public BlinkinLightsIOSparkMax() {
+    public BlinkinLightsIOSparkMax(int lightChannel) {
         // led = new AddressableLED(BlinkinLightsConstants.lightChannel);
         // led.start();
         // led.setLength();
         // led.setRGB();
-        lights = new PWM(BlinkinLightsConstants.lightChannel);
+        lights = new PWM(lightChannel);
 
         lights.setPulseTimeMicroseconds(2125);
         lights.setSpeed(0.67); // TODO debug value to see if this works

@@ -56,7 +56,7 @@
     },
     {
       "name": "forceIntake",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -92,7 +92,7 @@
       "name": "starting vision off",
       "waypointRelativePos": 0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {

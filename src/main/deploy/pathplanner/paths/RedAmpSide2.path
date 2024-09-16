@@ -21,27 +21,11 @@
       },
       "prevControl": {
         "x": 10.82,
-        "y": 6.657334945289213
+        "y": 6.657334945289212
       },
       "nextControl": {
         "x": 10.82,
-        "y": 6.5373349452892136
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 10.161,
-        "y": 6.21
-      },
-      "prevControl": {
-        "x": 10.97192318672485,
-        "y": 6.474459922870073
-      },
-      "nextControl": {
-        "x": 9.5268438266026,
-        "y": 6.00318769588819
+        "y": 6.537334945289214
       },
       "isLocked": false,
       "linkedName": null
@@ -52,8 +36,8 @@
         "y": 5.69
       },
       "prevControl": {
-        "x": 9.308306907282683,
-        "y": 6.043919236228233
+        "x": 8.599432948963546,
+        "y": 5.768921277576235
       },
       "nextControl": null,
       "isLocked": false,
@@ -67,8 +51,13 @@
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.4,
+      "waypointRelativePos": 1.2,
       "rotationDegrees": 167.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.8,
+      "rotationDegrees": -165.0,
       "rotateFast": false
     }
   ],
@@ -93,7 +82,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.7,
+      "waypointRelativePos": 1.35,
       "command": {
         "type": "sequential",
         "data": {
@@ -110,7 +99,7 @@
     },
     {
       "name": "softIntake",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 1.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -124,7 +113,7 @@
             {
               "type": "named",
               "data": {
-                "name": "redAmpSide3"
+                "name": "redAmpSide2"
               }
             }
           ]
@@ -135,7 +124,7 @@
       "name": "vision on",
       "waypointRelativePos": 0.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -150,9 +139,9 @@
     },
     {
       "name": "vision off",
-      "waypointRelativePos": 1.85,
+      "waypointRelativePos": 1.45,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -164,11 +153,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.15000000000000002,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "redAmpSide2"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

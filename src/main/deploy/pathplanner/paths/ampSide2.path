@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.466594987905087,
-        "y": 6.924896192236645
+        "x": 6.528790464682499,
+        "y": 6.890993930625351
       },
       "isLocked": false,
       "linkedName": null
@@ -32,28 +32,12 @@
     },
     {
       "anchor": {
-        "x": 6.385375611378803,
-        "y": 6.283188123766833
-      },
-      "prevControl": {
-        "x": 6.0076899178043455,
-        "y": 6.413925479234915
-      },
-      "nextControl": {
-        "x": 6.740498105273668,
-        "y": 6.16026110664938
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 8.23,
         "y": 5.69
       },
       "prevControl": {
-        "x": 7.170742665184752,
-        "y": 6.023675532074432
+        "x": 7.163913386456006,
+        "y": 6.071480483175665
       },
       "nextControl": null,
       "isLocked": false,
@@ -67,8 +51,13 @@
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.5,
+      "waypointRelativePos": 1.25,
       "rotationDegrees": 6.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.95,
+      "rotationDegrees": -15.0,
       "rotateFast": false
     }
   ],
@@ -76,7 +65,7 @@
   "eventMarkers": [
     {
       "name": "forcedIntakeShoot",
-      "waypointRelativePos": 0.85,
+      "waypointRelativePos": 0.75,
       "command": {
         "type": "sequential",
         "data": {
@@ -93,7 +82,7 @@
     },
     {
       "name": "fourBarToIntake",
-      "waypointRelativePos": 1.7,
+      "waypointRelativePos": 1.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -110,7 +99,7 @@
     },
     {
       "name": "softIntake",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 1.55,
       "command": {
         "type": "sequential",
         "data": {
@@ -124,7 +113,7 @@
             {
               "type": "named",
               "data": {
-                "name": "blueAmpSide2"
+                "name": "blueAmpSide2a"
               }
             }
           ]
@@ -135,7 +124,7 @@
       "name": "vision on",
       "waypointRelativePos": 0.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -150,9 +139,9 @@
     },
     {
       "name": "vision off",
-      "waypointRelativePos": 1.45,
+      "waypointRelativePos": 1.25,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -164,11 +153,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "blueAmpSide2"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.86,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

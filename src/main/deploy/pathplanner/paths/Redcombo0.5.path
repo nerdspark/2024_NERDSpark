@@ -47,6 +47,23 @@
           ]
         }
       }
+    },
+    {
+      "name": "fourBarShoot",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fourBarToRCR4"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {

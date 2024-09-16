@@ -16,6 +16,8 @@ import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.config.RobotIdentity;
 import frc.robot.util.Alert;
+import frc.robot.util.AutoAim;
+import frc.robot.util.FieldConstants;
 
 public final class Constants {
 
@@ -59,7 +61,7 @@ public final class Constants {
         public static final double RPMLongRicochet = 5800.0;
         // public static final double RPMPodium = 3000.0;
         public static final double RPMPointBlank = 3500.0;
-        public static final double RPMHome = 4500.0;
+        public static final double RPMHome = 5200.0;
         public static final double RPMFeed = 4200.0;
     }
 
@@ -69,10 +71,10 @@ public final class Constants {
 
         public static final double longshotX = 6.8; // long way
         public static final double longshotY = 6.4; // short way
-        public static final double longshotRPM = 5400.0;
-        public static final double longshotAngleRed = 13; // deg
+        public static final double longshotRPM = 5800.0;
+        public static final double longshotAngleRed = 13;//AutoAim.calculateAngleToSpeaker(() -> new Pose2d(FieldConstants.fieldLength - longshotX, longshotY, new Rotation2d()), () -> new Translation2d()).plus(AutoAim.calculateShooterSpin(() -> longshotRPM)).getDegrees(); // deg
         public static final double longshotAngleSpin = 3;
-        public static final double longshotAngleBlue = 180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
+        public static final double longshotAngleBlue = /*AutoAim.calculateAngleToSpeaker(() -> new Pose2d(longshotX, longshotY, new Rotation2d()), () -> new Translation2d()).plus(AutoAim.calculateShooterSpin(() -> longshotRPM)).getDegrees();*/180 - longshotAngleRed - (longshotAngleSpin * 2); // deg
 
         public static final double sideshotX = 5.4; // long way
         public static final double sideshotY = 0.8; // short way
@@ -195,7 +197,7 @@ public final class Constants {
         public static final double shoulderRadPerRot = 1 / (1.0 / 36.0 * 14.0 / 32.0); // * 2048;
         public static final double elbowRadPerRot = 1 / (1.0 / 12.0 * virtual4BarGearRatio); // * 2048;
 
-        public static final double shoulderOffset = -0.07; // radians, fwd = 0
+        public static final double shoulderOffset = 0.03; // radians, fwd = 0
         public static final double elbowOffset = 2.68; // negative of measurement
 
         public static final Translation2d armBasePosition = new Translation2d();
@@ -246,7 +248,7 @@ public final class Constants {
 
             // PICKUP SEQUENCE
 
-            public static final double pickupElbow = ArmConstants.elbowOffset - 0.44;
+            public static final double pickupElbow = ArmConstants.elbowOffset - 0.41;
             public static final double pickupShoulder = ArmConstants.shoulderOffset;
             public static final double pullOutDifference = 0.5;
             public static final double pullOutElbow = pickupElbow + pullOutDifference;
@@ -269,7 +271,7 @@ public final class Constants {
             public static final Translation2d amp = new Translation2d(2.2, 25.5); // dropoff - Y
             public static final double ampMultiplierX = 9.5;
             public static final double ampMultiplierY = 5;
-            public static final double armAutoAmpTargetPoseY = 7.75; // meters in
+            public static final double armAutoAmpTargetPoseY = 7.86; // meters in
             public static final double armAutoAmpTargetPoseX = 1.78; // meters sideways
             public static final double armAutoAmpToleranceY = Units.inchesToMeters(6.0); // in
             public static final double armAutoAmpToleranceX = Units.inchesToMeters(4.0); // sideways
@@ -330,11 +332,12 @@ public final class Constants {
         public static final double red_weirdSideRing4 = 2.075;
 
         public static final double blueAmpSide1 = 2.98; // 2.7
-        public static final double blueAmpSide2 = 1.87; // 2.45
+        public static final double blueAmpSide2a = 1.89; // 2.7
+        public static final double blueAmpSide2 = 1.89; // 2.45 //1.85
         public static final double blueAmpSide3 = 1.93; // 2.45
         public static final double blueAmpSide4 = 2.01; // 1.9
 
-        public static final double redAmpSide2 = 1.79;
+        public static final double redAmpSide2 = 1.845;
         public static final double redAmpSide3 = 1.95;
         public static final double redAmpSide4 = 1.97;
 
@@ -344,9 +347,9 @@ public final class Constants {
         public static final double blueRECenterNote5 = 1.91; // 1.80
         public static final double blueRECenterNote6 = 1.89; // 1.87
 
-        public static final double blueWeirdSideDropring2 = 1.64;
+        public static final double blueWeirdSideDropring2 = 1.75;
 
-        public static final double redWeirdSideDropRing2 = 1.64;
+        public static final double redWeirdSideDropRing2 = 1.70;
 
         // public static final double blueStarWars1 = 1.95; // 3.5
         // public static final double blueStarWars2 = 1.87; // 2.75
@@ -492,8 +495,9 @@ public final class Constants {
     }
 
     public static class BlinkinLightsConstants {
+        public static final int lightChannelSmudge = 0;
 
-        public static final int lightChannel = 0;
+        public static final int lightChannelSmidge = 9;
 
         public static final double doesNotHaveNotePattern = 0.61; // solid red
         public static final double hasNotePattern = 0.93; // Solid white
@@ -504,12 +508,35 @@ public final class Constants {
         public static final double badVisionPattern = 0.67; // solid gold
     }
 
+    public static class AvoidPolesConstants {
+        public static final double centerY = FieldConstants.fieldWidth/2.0;
+        public static final double centerPoleX = Units.inchesToMeters(121.0 + 12.0);
+        public static final double centerToSideY = Units.inchesToMeters(50.76);
+        public static final double centerToSideX = Units.inchesToMeters(87.95);
+        public static final double robotSpeedThreshold = 4.0; // m/s
+        public static final double distanceThreshold = 1.5; // m
+        public static final double timeThreshold = 5.0; // sec to end of match
+        public static final Translation2d [] Poles = {
+            new Translation2d(centerPoleX, centerY), 
+            new Translation2d(centerPoleX + centerToSideX, centerY + centerToSideY), 
+            new Translation2d(centerPoleX + centerToSideX, centerY - centerToSideY), 
+            new Translation2d(FieldConstants.fieldLength - centerPoleX, centerY), 
+            new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY + centerToSideY), 
+            new Translation2d(FieldConstants.fieldLength - centerPoleX + centerToSideX, centerY - centerToSideY)};
+        public static final double lookAhead = 0.8;//0.3;// sec
+        public static final double distancePower = -2.0;
+        public static final double correctionGain = 0.3; 
+    }
+
     public static class ShooterConstants {
+        public static final double stopShootRPMThreshold = 2000.5;
+        public static final double stopShootWait = 0.2;
+
         public static Measure<Distance> MAXIMUM_READYSHOOT_DISTANCE = Meters.of(Units.feetToMeters(15));
 
         public static double SHOOTER_SPEED = 10;
 
-        public static final double CONSTANT_DISTANCE_ADD = -Units.feetToMeters(0.0); // m
+        public static final double CONSTANT_DISTANCE_ADD = Units.feetToMeters(-0.0); // m
 
         public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
 
@@ -522,21 +549,22 @@ public final class Constants {
         static {
             // Key: Distance
             // Value: Shooter RPM
-            shooterMap.put(15.1, 5850.0);
-            shooterMap.put(9.0, 5800.0);
-            shooterMap.put(8.0, 5750.0);
-            shooterMap.put(7.8, 5700.0);
-            shooterMap.put(7.5, 5650.0);
-            shooterMap.put(7.0, 5550.0);
-            shooterMap.put(6.75, 5500.0);
-            shooterMap.put(6.44, 5500.0);
-            shooterMap.put(5.9436, 5450.0);
-            shooterMap.put(5.334, 5100.0);
-            shooterMap.put(4.7752, 5000.0);
-            shooterMap.put(4.1402, 4900.0);
+            shooterMap.put(15.1, 5800.0);
+            // shooterMap.put(9.0, 5800.0);
+            // shooterMap.put(8.0, 5750.0);
+            // shooterMap.put(7.8, 5700.0);
+            // shooterMap.put(7.5, 5650.0);
+            // shooterMap.put(7.0, 5800.0);
+            // shooterMap.put(6.75, 5800.0);
+            shooterMap.put(6.44, 5800.0);
+            shooterMap.put(5.9436, 5600.0);
+            shooterMap.put(5.334, 5400.0);
+            shooterMap.put(4.7752, 5200.0);
+            shooterMap.put(4.1402, 5000.0);
             shooterMap.put(3.429, 4700.0);
             shooterMap.put(2.7178, 4400.0);
             shooterMap.put(0.762, 4200.0);
+            shooterMap.put(0.0, 4100.0);
         }
 
         public static InterpolatingDoubleTreeMap spinMap = new InterpolatingDoubleTreeMap();
@@ -544,17 +572,18 @@ public final class Constants {
         static {
             // key: rpm
             // value: angle curve deg
-            spinMap.put(0.0, 17.0);
-            spinMap.put(1000.0, 17.0);
-            spinMap.put(2000.0, 17.0);
-            spinMap.put(3000.0, 17.0);
-            spinMap.put(3500.0, 17.0);
-            spinMap.put(4000.0, 16.0);
-            spinMap.put(4250.0, 12.0);
-            spinMap.put(4500.0, 9.0);
-            spinMap.put(4750.0, 3.0);
-            spinMap.put(5000.0, 1.0);
-            spinMap.put(6000.0, 1.0);
+            spinMap.put(0.0, 13.0);
+            spinMap.put(1000.0, 13.0);
+            spinMap.put(2000.0, 13.0);
+            spinMap.put(3000.0, 13.0);
+            spinMap.put(3500.0, 12.0);
+            spinMap.put(4000.0, 11.0);
+            spinMap.put(4250.0, 10.0);
+            spinMap.put(4500.0, 7.0);
+            spinMap.put(4750.0, 5.0);
+            spinMap.put(5000.0, 4.0);
+            spinMap.put(5800.0, 3.3);
+            spinMap.put(6000.0, 3.1);
         }
     }
 
